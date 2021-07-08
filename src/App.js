@@ -1,22 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import * as d3 from 'd3';
 
-function App() {
+const App = () => {
+    d3.selectAll('p').style("color", "blue")
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Welcome dashboard with D3
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
