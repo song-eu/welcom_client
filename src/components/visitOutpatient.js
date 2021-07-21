@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import MonthlyBarChart from './chart/monthlyBarChart';
 import DeptHorizonBarChart from './chart/deptHorizonBarChart';
+import GenderAgeBarChart from './chart/genderAgeBarChart';
 import * as d3 from 'd3'
 
 const VisitOutpatient = (props) => {
@@ -28,6 +29,7 @@ const VisitOutpatient = (props) => {
             </div>
             <MonthlyBarChart />
             <DeptHorizonBarChart />
+            <GenderAgeBarChart />
         </div>
     )
 }

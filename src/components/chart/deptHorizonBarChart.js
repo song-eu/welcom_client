@@ -17,6 +17,7 @@ const DeptHorizonBarChart = (props) => {
         var margin = {top: 20, right: 20, bottom: 30, left: 40},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;  
+        const xMaxValue = d3.max(data, (d) => d.value)
         const color = d3.scaleLinear().domain([0, xMaxValue]).range([0, 1]);
 
         var y = d3.scaleBand()
@@ -47,8 +48,8 @@ const DeptHorizonBarChart = (props) => {
         .attr("height", y.bandwidth());
 
         svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x));
+         //  .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisTop(x));
     
         // add the y Axis
         svg.append("g")
@@ -62,3 +63,4 @@ const DeptHorizonBarChart = (props) => {
 }
 
 export default DeptHorizonBarChart;
+
