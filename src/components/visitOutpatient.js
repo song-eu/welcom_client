@@ -5,7 +5,8 @@ import DeptHorizonBarChart from './chart/deptHorizonBarChart';
 import GenderAgeBarChart from './chart/genderAgeBarChart';
 import CircleCart from './chart/circleChart';
 import { BackgroudWrap, SmallBoxstyle, HeaderWrap,BigBoxstyle } from './style/backgraound';
-
+import moment from 'moment';
+// 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitOutpatient = (props) => {
     let totalThisMonth, avgThisMonth, totalOutpatient;
@@ -16,6 +17,10 @@ const VisitOutpatient = (props) => {
     const [outBarchartData, setoutBarchartData ] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const outPatientVisitBarChart = 'Monthly Oupatinet Visit'
+    const outPatientHBarChart = `Visit Top 10 Department in ${moment().format('MMMM')}`
+    var currMonthName  = moment().format('MMMM');
+    console.log('currMonthName', currMonthName)
 
     const fetchData = async () => {
         try{
@@ -35,10 +40,7 @@ const VisitOutpatient = (props) => {
 
     return(
             <div>
-                <HeaderWrap>
-                    <h1>SNUH Data Dashboard</h1>
-                </HeaderWrap>
-                <div>Visit</div>
+                <h1>Outpatient Visit</h1>
                 
                 <div className="firstLine">
                     <BigBoxstyle>
@@ -61,12 +63,13 @@ const VisitOutpatient = (props) => {
                             </div>
                         </SmallBoxstyle>
                     </BigBoxstyle>
-                    {outBarchartData? <MonthlyBarChart data={outBarchartData} />:null}
+                    {outBarchartData? <MonthlyBarChart data={outBarchartData} header = {outPatientVisitBarChart}/>:null}
                 </div>
-                
-                <DeptHorizonBarChart />
-                <GenderAgeBarChart />
-                <CircleCart />
+                <div>
+                    <DeptHorizonBarChart header = {outPatientHBarChart}/>
+                    <GenderAgeBarChart />
+                    <CircleCart />
+                </div>
             </div>
     )
 }

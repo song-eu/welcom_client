@@ -91,8 +91,8 @@ const GenderAgeBarChart = (props) => {
 
 
 
-        const svg = d3.select("div").append(("svg"))
-            .attr("viewBox", [0, 0, width, height]);
+        const svg = d3.select("#negBarChart").append(("svg"))
+           .attr("viewBox", [0, 0, width, height]);
         
         svg.append("g")
             .selectAll("g")
@@ -118,7 +118,7 @@ const GenderAgeBarChart = (props) => {
         
     }, [])
     return (
-        <div>
+        <div id = "negBarChart">
 
         </div>
     )

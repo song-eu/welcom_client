@@ -23,12 +23,13 @@ export const BigBoxstyle = styled.div`
     position: relative;
     float: left;
     width: 322px;
-    height: 505px;
+    height: 548px;
     border: 1px solid black;
 `
 
 export const SmallBoxstyle = styled.div`
-    margin:15px 10px 15px 10px;
+    margin:35px 10px 0px 10px;
+    top: 41px;
     width: 300px;
     height: 100px;
     position: relative;
@@ -41,9 +42,7 @@ export const SmallBoxstyle = styled.div`
     font-weight: 700;
     font-family: 'Roboto', sans-serif;
     
-    justify-content: center;
-    align-items: center;
-    vertical-align: middle;
+
 
     & .countText{
         color: #333;

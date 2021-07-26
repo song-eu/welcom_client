@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { MonthlyBarChartStyle } from '../style/MonthlyBarChartStyle';
+import { MonthlyBarChartStyle } from '../style/chartStyle';
 import * as d3 from 'd3';
 
 const MonthlyBarChart = (props) => {
@@ -75,6 +75,7 @@ const MonthlyBarChart = (props) => {
 
     return(
         <MonthlyBarChartStyle>
+            <h1>{props.header}</h1>
             <div id= "barchart">
             </div>
         </MonthlyBarChartStyle>
