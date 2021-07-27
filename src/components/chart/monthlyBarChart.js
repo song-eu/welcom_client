@@ -1,24 +1,28 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import * as d3 from 'd3'
+import { MonthlyBarChartStyle } from '../style/chartStyle';
+import * as d3 from 'd3';
 
 const MonthlyBarChart = (props) => {
-    const width = 500;
+
+    const width = 900;
     const height = 500;
     const margin = {top: 40, left: 40, bottom: 40, right: 40};
     
-    const data = [
-        {name: 'a', value: 10},
-        {name: 'b', value: 29},
-        {name: 'c', value: 32},
-        {name: 'd', value: 25},
-        {name: 'e', value: 23},
-        {name: 'f', value: 15}
+    var sample = [
+        {NAME: 'a', VALUE: 10},
+        {NAME: 'b', VALUE: 29},
+        {NAME: 'c', VALUE: 32},
+        {NAME: 'd', VALUE: 25},
+        {NAME: 'e', VALUE: 23},
+        {NAME: 'f', VALUE: 15}
     ];
-    useEffect(() => {
+    var data = props.data? props.data:sample
 
+
+    useEffect(() => {
         const x = d3.scaleBand()
         // .scaleBand() 그래프의 막대의 반복되는 범위를 정해줍니다.
-        .domain(data.map(d => d.name))
+        .domain(data.map(d => d.NAME))
         // .domain() 각각의 막대에 순서대로 막대에 매핑합니다.
         .range([margin.left, width - margin.right])
         // 시작위치와 끝 위치로 눈금의 범위를 지정합니다.
@@ -27,7 +31,7 @@ const MonthlyBarChart = (props) => {
         
         // line chart와 동일
         const y = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.value)]).nice()
+        .domain([0, d3.max(data, d => d.VALUE)]).nice()
             .range([height - margin.bottom, margin.top]);
         
         // line chart와 동일
@@ -43,7 +47,10 @@ const MonthlyBarChart = (props) => {
         .call(g => g.select('.domain').remove());
         
         // line chart와 동일
-        const svg = d3.select('div').append('svg').style('width', width).style('height', height);
+        const svg = d3.select('#barchart')
+                        .append('svg')
+                        .style('width', width)
+                        .style('height', height);
         
         svg.append('g').call(xAxis);
         svg.append('g').call(yAxis);
@@ -60,15 +67,18 @@ const MonthlyBarChart = (props) => {
         // .enter() Join 된 데이터에 각 자리에 대한 노드를 반환하고
         // .append() 반환된 노드 데이터를 담고 react 엘리먼트를 추가합니다.
         // ex. data = [1, 2, 3, 4] 값을 가지고 있었다면 1, 2, 3, 4 데이터와 매핑된 rect 엘리먼트가 4개 추가됩니다.
-        .attr('x', d => x(d.name))
-        .attr('y', d => y(d.value))
-        .attr('height', d => y(0) - y(d.value))
+        .attr('x', d => x(d.NAME))
+        .attr('y', d => y(d.VALUE))
+        .attr('height', d => y(0) - y(d.VALUE))
         .attr('width', x.bandwidth());
     }, [])
 
     return(
-        <div>
-        </div>
+        <MonthlyBarChartStyle>
+            <h1>{props.header}</h1>
+            <div id= "barchart">
+            </div>
+        </MonthlyBarChartStyle>
     )
 }
 

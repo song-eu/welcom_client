@@ -2,16 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import * as d3 from 'd3';
 import VisitOutpatient from './components/visitOutpatient';
+import {HeaderWrap } from './components/style/backgraound';
+
 
 const App = () => {
-    d3.selectAll('p').style("color", "blue")
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Welcome dashboard with D3
-        </p>
-      </header>
+      <HeaderWrap>
+          <h1>SNUH Data Dashboard</h1>
+      </HeaderWrap>
       <Router>  
         <Route exact path="/" component = {VisitOutpatient}/>
       </Router>

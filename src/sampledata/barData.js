@@ -1,4 +1,4 @@
-export default {
+export const sampleData = {
     "nodes": [
         { date: '2013-01', value: 53 },
         { date: '2013-02', value: 165 },

@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import axios from 'axios';
 import MonthlyBarChart from './chart/monthlyBarChart';
 import DeptHorizonBarChart from './chart/deptHorizonBarChart';
 import GenderAgeBarChart from './chart/genderAgeBarChart';
 import CircleCart from './chart/circleChart';
-import * as d3 from 'd3'
+import { BackgroudWrap, SmallBoxstyle, HeaderWrap,BigBoxstyle } from './style/backgraound';
+import moment from 'moment';
+// 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitOutpatient = (props) => {
     let totalThisMonth, avgThisMonth, totalOutpatient;
@@ -11,28 +14,63 @@ const VisitOutpatient = (props) => {
     const divRef = useRef();
     const [graphHeight, setGraphData] = useState(0);
     let incomingData = [23,4335,6,45354,23,132,99999];
+    const [outBarchartData, setoutBarchartData ] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const outPatientVisitBarChart = 'Monthly Oupatinet Visit'
+    const outPatientHBarChart = `Visit Top 10 Department in ${moment().format('MMMM')}`
+    var currMonthName  = moment().format('MMMM');
+    console.log('currMonthName', currMonthName)
+
+    const fetchData = async () => {
+        try{
+            const response = await axios.get('http://localhost:30000/api/visitOut/');
+            console.log('res: ', response)
+            setoutBarchartData(response.data)
+        } catch(e) {
+            console.log(e);
+            setError(true);
+        }
+    }
+    useEffect(() =>{
+        fetchData();
+    }, [])
+
 
 
     return(
-        <div>
-            <h1>Visit Outpatient</h1>
-            <div className = "totalThisMonth">
-                <div>이번달 총 외래 환자 수</div>
-                <div>{totalThisMonth? totalThisMonth:3000} 명</div>
+            <div>
+                <h1>Outpatient Visit</h1>
+                
+                <div className="firstLine">
+                    <BigBoxstyle>
+                        <SmallBoxstyle>
+                            <div className = "totalThisMonth">
+                                <div className ='countText'>이번달 총 외래 환자 수</div>
+                                <div className = 'countNumber'>{totalThisMonth? totalThisMonth:3000} 명</div>
+                            </div>
+                        </SmallBoxstyle>
+                        <SmallBoxstyle>
+                        <div className = "avgThisMonth">
+                            <div className ='countText'>월 평균 외래 환자 수</div>
+                            <div className = 'countNumber'>{avgThisMonth? avgThisMonth:3000} 명</div>
+                        </div>
+                        </SmallBoxstyle>
+                        <SmallBoxstyle>
+                        <div className = "totalOutpatient">
+                                <div className ='countText'>서울대병원 총 외래 환자 수</div>
+                                <div className = 'countNumber'>{totalOutpatient? totalOutpatient:30000} 명</div>
+                            </div>
+                        </SmallBoxstyle>
+                    </BigBoxstyle>
+                    {outBarchartData? <MonthlyBarChart data={outBarchartData} header = {outPatientVisitBarChart}/>:null}
+                </div>
+                <div>
+                    <DeptHorizonBarChart header = {outPatientHBarChart}/>
+                    <GenderAgeBarChart />
+                    <CircleCart />
+                </div>
             </div>
-            <div className = "avgThisMonth">
-                <div>월 평균 외래 환자 수</div>
-                <div>{avgThisMonth? avgThisMonth:3000} 명</div>
-            </div>
-            <div className = "totalOutpatient">
-                <div>서울대병원 총 외래 환자 수</div>
-                <div>{totalOutpatient? totalOutpatient:30000} 명</div>
-            </div>
-            <MonthlyBarChart />
-            <DeptHorizonBarChart />
-            <GenderAgeBarChart />
-            <CircleCart />
-        </div>
     )
 }
 export default VisitOutpatient;

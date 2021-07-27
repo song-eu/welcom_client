@@ -1,22 +1,28 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import * as d3 from 'd3'
+import {HorizonBarChartSytle} from '../style/chartStyle'
 
 const DeptHorizonBarChart = (props) => {
     
     const data = [
-        {name: 'a', value: 10},
-        {name: 'b', value: 29},
-        {name: 'c', value: 32},
-        {name: 'd', value: 25},
-        {name: 'e', value: 23},
-        {name: 'f', value: 15}
+        {name: '간담췌외과', value: 55},
+        {name: '신경외과', value: 29},
+        {name: '성형외과', value: 32},
+        {name: '비뇨기과', value: 25},
+        {name: '순환기내과', value: 23},
+        {name: '정신과', value: 15},
+        {name: '소아외과', value: 5},
+        {name: '가정의학과', value: 40},
+        {name: '치과', value: 10},
+        {name: '응급의학과', value: 17},
+        {name: '호흡기내과', value: 24},
+        {name: '외과', value: 30}
     ];
 
-
     useEffect(() => {
-        var margin = {top: 20, right: 20, bottom: 30, left: 40},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;  
+        var margin = {top: 20, right: 20, bottom: 30, left: 80},
+        width = 600 - margin.left - margin.right,
+        height = 550 - margin.top - margin.bottom;  
         const xMaxValue = d3.max(data, (d) => d.value)
         const color = d3.scaleLinear().domain([0, xMaxValue]).range([0, 1]);
 
@@ -27,7 +33,7 @@ const DeptHorizonBarChart = (props) => {
         var x = d3.scaleLinear()
           .range([0, width]);
         
-        var svg = d3.select("div").append("svg")
+        var svg = d3.select("#hbarchart").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
@@ -57,8 +63,11 @@ const DeptHorizonBarChart = (props) => {
     }, [])
 
     return(
-        <div>
-        </div>
+        <HorizonBarChartSytle>
+            <h1>{props.header}</h1>
+            <div id = "hbarchart">
+            </div>
+        </HorizonBarChartSytle>
     )
 }
 
