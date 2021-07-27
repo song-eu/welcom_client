@@ -15,9 +15,17 @@ export const HeaderWrap = styled.header`
   & h1 {
     position: relative;
     letter-spacing: 10px;
+    left: 3%
   }
-
 `
+export const OutPatientBg = styled.div`
+  
+  & .firstLine {
+    border: 1px solid #C06C84;
+    overflow: hidden;
+  }
+`;
+
 export const BigBoxstyle = styled.div`
     display: inline-block;
     position: relative;
@@ -28,7 +36,7 @@ export const BigBoxstyle = styled.div`
 `
 
 export const SmallBoxstyle = styled.div`
-    margin:35px 10px 0px 10px;
+    margin:39px 10px 0px 10px;
     top: 41px;
     width: 300px;
     height: 100px;

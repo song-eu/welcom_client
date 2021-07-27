@@ -4,7 +4,7 @@ import MonthlyBarChart from './chart/monthlyBarChart';
 import DeptHorizonBarChart from './chart/deptHorizonBarChart';
 import GenderAgeBarChart from './chart/genderAgeBarChart';
 import CircleCart from './chart/circleChart';
-import { BackgroudWrap, SmallBoxstyle, HeaderWrap,BigBoxstyle } from './style/backgraound';
+import { BackgroudWrap, SmallBoxstyle, HeaderWrap,BigBoxstyle, OutPatientBg } from './style/backgraound';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
@@ -19,6 +19,7 @@ const VisitOutpatient = (props) => {
     const [error, setError] = useState(null);
     const outPatientVisitBarChart = 'Monthly Oupatinet Visit'
     const outPatientHBarChart = `Visit Top 10 Department in ${moment().format('MMMM')}`
+    const outPatientGenderChart = 'Visit by Age and Sex'
     var currMonthName  = moment().format('MMMM');
     console.log('currMonthName', currMonthName)
 
@@ -39,7 +40,8 @@ const VisitOutpatient = (props) => {
 
 
     return(
-            <div>
+            <OutPatientBg>
+<div>
                 <h1>Outpatient Visit</h1>
                 
                 <div className="firstLine">
@@ -67,10 +69,11 @@ const VisitOutpatient = (props) => {
                 </div>
                 <div>
                     <DeptHorizonBarChart header = {outPatientHBarChart}/>
-                    <GenderAgeBarChart />
+                    <GenderAgeBarChart header = {outPatientGenderChart}/>
                     <CircleCart />
                 </div>
             </div>
+            </OutPatientBg>
     )
 }
 export default VisitOutpatient;

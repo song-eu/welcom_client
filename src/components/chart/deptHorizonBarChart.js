@@ -21,8 +21,8 @@ const DeptHorizonBarChart = (props) => {
 
     useEffect(() => {
         var margin = {top: 20, right: 20, bottom: 30, left: 80},
-        width = 600 - margin.left - margin.right,
-        height = 550 - margin.top - margin.bottom;  
+        width = 500 - margin.left - margin.right,
+        height = 450 - margin.top - margin.bottom;  
         const xMaxValue = d3.max(data, (d) => d.value)
         const color = d3.scaleLinear().domain([0, xMaxValue]).range([0, 1]);
 

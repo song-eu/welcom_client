@@ -1,23 +1,36 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import * as d3 from 'd3'
-
+import {GenderChartSytle} from '../style/chartStyle'
 
 const GenderAgeBarChart = (props) => {
     const data = [
-        {name: 'a', category: 'male', value: 10},
-        {name: 'a', category: 'female', value: 29},
-        {name: 'b', category: 'male', value: 32},
-        {name: 'b', category: 'female', value: 25},
-        {name: 'c', category: 'male', value: 23},
-        {name: 'c', category: 'female', value: 15}
+        {name: '0-10', category: 'male', value: 10},
+        {name: '0-10', category: 'female', value: 29},
+        {name: '11-20', category: 'male', value: 32},
+        {name: '11-20', category: 'female', value: 25},
+        {name: '21-30', category: 'male', value: 23},
+        {name: '21-30', category: 'female', value: 15},
+        {name: '31-40', category: 'male', value: 10},
+        {name: '31-40', category: 'female', value: 29},
+        {name: '41-50', category: 'male', value: 32},
+        {name: '41-50', category: 'female', value: 25},
+        {name: '51-60', category: 'male', value: 23},
+        {name: '51-60', category: 'female', value: 15},
+        {name: '61-70', category: 'male', value: 32},
+        {name: '61-70', category: 'female', value: 25},
+        {name: '71-80', category: 'male', value: 23},
+        {name: '71-80', category: 'female', value: 15},
+        {name: '81-90', category: 'male', value: 32},
+        {name: '81-90', category: 'female', value: 25},
     ];
     const width = 500;
-   // const height = 500;
+    //const height = 550;
    // const margin = {top: 40, left: 40, bottom: 40, right: 40};
+   console.log('props.header', props.header)
 
     useEffect(() => {
 
-        const margin = ({top: 40, right: 30, bottom: 0, left: 80})
+        const margin = ({top: 40, right: 30, bottom: 40, left: 50})
 
         Object.assign(data, {
             format: ".0%",
@@ -40,7 +53,8 @@ const GenderAgeBarChart = (props) => {
                 .offset(d3.stackOffsetDiverging)
                 (d3.rollups(data, data => d3.rollup(data, ([d]) => d.value, d => d.category), d => d.name))
         
-        const height = bias.length * 33 + margin.top + margin.bottom
+        //const height = bias.length * 33 + margin.top + margin.bottom
+        const height = bias.length * 40 + margin.top + margin.bottom
         
         var formatValue = (x) => {
             return (Math.abs(x));
@@ -53,13 +67,13 @@ const GenderAgeBarChart = (props) => {
         var y = d3.scaleBand()
             .domain(bias.map(([name]) => name))
             .rangeRound([margin.top, height - margin.bottom])
-            .padding(2 / 33);
+            .padding(2 / 20);
 
         //var color = d3.scaleOrdinal()
         //        .domain([].concat(data.males, data.females))
       //          .range(d3.schemeSpectral[data.males.length + data.females.length]);
        var color = (x) => {
-           return x==='male'? '#1ec0ff':'#fe4365'
+           return x==='male'? '#355C7D':'#C06C84'
        } 
 
         var xAxis = g => g
@@ -70,30 +84,36 @@ const GenderAgeBarChart = (props) => {
             .tickSizeOuter(0))
         .call(g => g.select(".domain").remove())
         .call(g => g.append("text")
-            .attr("x", x(0) + 20)
+            .attr("x", x(0) + 60)
             .attr("y", -24)
             .attr("fill", "currentColor")
             .attr("text-anchor", "start")
             .text(data.female))
         .call(g => g.append("text")
-            .attr("x", x(0) - 20)
+            .attr("x", x(0) - 60)
             .attr("y", -24)
             .attr("fill", "currentColor")
             .attr("text-anchor", "end")
             .text(data.male))
 
         var yAxis = g => g
+            .attr("transform", `translate(${x(0)},0)`)
             .call(d3.axisLeft(y).tickSizeOuter(0))
-            .call(g => g.selectAll(".tick").data(bias).attr("transform", ([name, min]) => `translate(${x(min)},${y(name) + y.bandwidth() / 2})`))
-            .call(g => g.select(".domain").attr("transform", `translate(${x(0)},0)`));
+            // .call(g => g.selectAll(".tick")
+            //         .data(bias)
+            //         .attr("transform", ([name, max]) => `translate(${x(0)},${y(name) + y.bandwidth() / 2})`))
+
             
 
 
 
 
         const svg = d3.select("#negBarChart").append(("svg"))
-           .attr("viewBox", [0, 0, width, height]);
-        
+          // .attr("viewBox", [0, 0, width, height]);
+          .style('width', width)
+          .style('height', height);
+
+        console.log('data series', series)
         svg.append("g")
             .selectAll("g")
             .data(series)
@@ -107,8 +127,8 @@ const GenderAgeBarChart = (props) => {
             .attr("width", d => x(d[1]) - x(d[0]))
             .attr("height", y.bandwidth())
             .append("title")
-            .text(({key, data: [name, value]}) => `${name}
-        ${formatValue(value.get(key))} ${key}`);
+        //     .text(({key, data: [name, value]}) => `${name}
+        // ${formatValue(value.get(key))} ${key}`);
         
         svg.append("g")
             .call(xAxis);
@@ -118,9 +138,11 @@ const GenderAgeBarChart = (props) => {
         
     }, [])
     return (
-        <div id = "negBarChart">
-
-        </div>
+        <GenderChartSytle>
+            <h1>{props.header}</h1>
+            <div id = "negBarChart">
+            </div>
+        </GenderChartSytle>
     )
 }
 
