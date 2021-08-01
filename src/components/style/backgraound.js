@@ -19,20 +19,25 @@ export const HeaderWrap = styled.header`
   }
 `
 export const OutPatientBg = styled.div`
-  
-  & .firstLine {
-    border: 1px solid #C06C84;
-    overflow: hidden;
-  }
+  display: flex;
+  border: 1px solid #C06C84;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const BigBoxstyle = styled.div`
-    display: inline-block;
-    position: relative;
-    float: left;
-    width: 322px;
-    height: 548px;
-    border: 1px solid black;
+  flex:1;
+  display: inline-block;
+  position: relative;
+  float: left;
+  width: 322px;
+  height: 548px;
+  border: 1px solid black;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  
 `
 
 export const SmallBoxstyle = styled.div`

@@ -5,7 +5,6 @@ import {HorizonBarChartSytle} from '../style/chartStyle'
 const DeptHorizonBarChart = (props) => {
     
     const data = [
-        {name: '간담췌외과', value: 55},
         {name: '신경외과', value: 29},
         {name: '성형외과', value: 32},
         {name: '비뇨기과', value: 25},
@@ -13,7 +12,6 @@ const DeptHorizonBarChart = (props) => {
         {name: '정신과', value: 15},
         {name: '소아외과', value: 5},
         {name: '가정의학과', value: 40},
-        {name: '치과', value: 10},
         {name: '응급의학과', value: 17},
         {name: '호흡기내과', value: 24},
         {name: '외과', value: 30}

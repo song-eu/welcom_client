@@ -61,17 +61,19 @@ const GenderAgeBarChart = (props) => {
           }
 
         var x = d3.scaleLinear()
+            //최소값, 최대값 배열로 보내줌 -> [-32, 29]
             .domain(d3.extent(series.flat(2)))
             .rangeRound([margin.left, width - margin.right]);
+     
         
         var y = d3.scaleBand()
             .domain(bias.map(([name]) => name))
             .rangeRound([margin.top, height - margin.bottom])
             .padding(2 / 20);
 
-        //var color = d3.scaleOrdinal()
+        // var color = d3.scaleOrdinal()
         //        .domain([].concat(data.males, data.females))
-      //          .range(d3.schemeSpectral[data.males.length + data.females.length]);
+        //        .range(d3.schemeSpectral[data.males.length + data.females.length]);
        var color = (x) => {
            return x==='male'? '#355C7D':'#C06C84'
        } 
@@ -84,7 +86,7 @@ const GenderAgeBarChart = (props) => {
             .tickSizeOuter(0))
         .call(g => g.select(".domain").remove())
         .call(g => g.append("text")
-            .attr("x", x(0) + 60)
+            .attr("x", x(0) + 60) // male, femail top arrow location
             .attr("y", -24)
             .attr("fill", "currentColor")
             .attr("text-anchor", "start")
