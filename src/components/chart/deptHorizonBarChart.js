@@ -5,7 +5,6 @@ import {HorizonBarChartSytle} from '../style/chartStyle'
 const DeptHorizonBarChart = (props) => {
     
     const data = [
-        {name: '간담췌외과', value: 55},
         {name: '신경외과', value: 29},
         {name: '성형외과', value: 32},
         {name: '비뇨기과', value: 25},
@@ -13,7 +12,6 @@ const DeptHorizonBarChart = (props) => {
         {name: '정신과', value: 15},
         {name: '소아외과', value: 5},
         {name: '가정의학과', value: 40},
-        {name: '치과', value: 10},
         {name: '응급의학과', value: 17},
         {name: '호흡기내과', value: 24},
         {name: '외과', value: 30}
@@ -21,8 +19,8 @@ const DeptHorizonBarChart = (props) => {
 
     useEffect(() => {
         var margin = {top: 20, right: 20, bottom: 30, left: 80},
-        width = 600 - margin.left - margin.right,
-        height = 550 - margin.top - margin.bottom;  
+        width = 500 - margin.left - margin.right,
+        height = 450 - margin.top - margin.bottom;  
         const xMaxValue = d3.max(data, (d) => d.value)
         const color = d3.scaleLinear().domain([0, xMaxValue]).range([0, 1]);
 
