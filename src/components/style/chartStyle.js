@@ -4,7 +4,7 @@ export const MonthlyBarChartStyle = styled.div`
     position: relative;
     float: left;
     border: 1px solid tomato;
-    left: 120px;
+    margin-left: 60px;
     & #barchart {
         backgroud: tomato;
         border: 1px solid tomato;

@@ -60,9 +60,7 @@ const GenderAgeDivergingChart = (props) => {
         d3.max(exampleData, (d) => d.female)
         );
         // SET UP SCALES
-        var color = (x) => {
-            return x==='male'? '#355C7D':'#C06C84'
-        } 
+        const color = d3.scaleLinear().domain([0,1]).range([0.29, 0.74]);
         
         // the xScale goes from 0 to the width of a region
         //  it will be reversed for the left x-axis
@@ -144,7 +142,7 @@ const GenderAgeDivergingChart = (props) => {
         .data(exampleData)
         .enter().append('rect')
             .attr('class', 'bar left')
-            .attr("fill", '#355C7D')
+            .attr("fill", d3.interpolateSpectral(color(1)))
             .attr('x', 0)
             .attr('y', function(d) { return yScale(d.group); })
             .attr('width', function(d) { return xScale(d.male); })
@@ -154,7 +152,7 @@ const GenderAgeDivergingChart = (props) => {
         .data(exampleData)
         .enter().append('rect')
             .attr('class', 'bar right')
-            .attr("fill", '#C06C84')
+            .attr("fill", d3.interpolateRdYlBu(color(0)))
             .attr('x', 0)
             .attr('y', function(d) { return yScale(d.group); })
             .attr('width', function(d) { return xScale(d.female); })

@@ -80,9 +80,11 @@ const MonthlyBarChart = (props) => {
             .attr('fill', '#BBD2C5')
             .attr('class', 'bar')
             .attr('x', d => x(d.NAME))
-            .attr('y', d => y(d.VALUE))
-            .attr('height', d => y(0) - y(d.VALUE))
             .attr('width', x.bandwidth())
+            //.attr('y', d => y(d.VALUE))
+            //.attr('height', d => y(0) - y(d.VALUE))
+            .attr('y', y(0))
+            //.attr('height', (d) => y(0))
             //항목마다 mouse over 효과 추가
             .on('mouseenter', function (actual, i) {
                 d3.selectAll('.value')
@@ -124,7 +126,7 @@ const MonthlyBarChart = (props) => {
                         return idx!== i? text : '';
 
                     })
-        
+                
             })
             .on('mouseleave', function (actual, i) {
                 d3.selectAll('.value')
@@ -140,6 +142,12 @@ const MonthlyBarChart = (props) => {
                 svg.selectAll('#limit').remove()
                 svg.selectAll('.divergence').remove()   
         })
+        barGroups.selectAll('rect')
+        .transition()
+        .duration(800)
+        .attr('y', (d) => y(d.VALUE))
+        .attr('height', (d) =>  y(0)- y(d.VALUE) )
+        .delay((d, i) => i*100)
         // .selectAll() | .select() 메서드는 해당 엘리먼트를 찾지만, 가상의 요소로 선택되기도 합니다.
         // .data() 앞에 선택된 select에 (data)배열에 Join하여 새 선택항목을 반환합니다.
         // DOM에 없는 선택된 엘리먼트에 각 데이터에 대한 자리의 노드를 반환합니다.

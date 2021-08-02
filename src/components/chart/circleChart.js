@@ -7,7 +7,8 @@ import * as d3 from 'd3'
 const CircleCart = (props) => {
     let data = [
         {nation:'Korean', value: 70},
-        {nation:'Unknown', value: 20}
+        {nation:'Unknown', value: 20},
+        {nation:'American', value: 20}
     ];
 
     useEffect(() => {
