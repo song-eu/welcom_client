@@ -44,7 +44,7 @@ const VisitOutpatient = (props) => {
     return(
             
         <div>
-            <h1>Outpatient Visit</h1>
+            <h1> <span>Outpatient Visit</span> / <span>Inpatient Visit</span></h1>
             <OutPatientBg>
             <div className="firstLine">
                 <BigBoxstyle>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { PieChartStyle } from '../style/chartStyle';
 import * as d3 from 'd3'
+import * as d3Legend from 'd3-svg-legend'
 
 
 
@@ -12,21 +13,21 @@ const CircleCart = (props) => {
     ];
 
     useEffect(() => {
-        var margin = { top: 30, right: 60, bottom: 10, left: 20 },
+        var margin = { top: 30, right: 80, bottom: 30, left: 80 },
         width = 500 - margin.left - margin.right,
-        height = 490 - margin.top - margin.bottom,
+        height = 510 - margin.top - margin.bottom,
         tooltip = { width: 100, height: 100, x: 10, y: -30 },
         labelHeight = 18;
 
         var svg = d3.select("#pieChart").append("svg")
-        //.attr("viewBox", [0,0, width + margin.left + margin.right, height + margin.top + margin.bottom])
+        //.attr("viewBox", [height/2, width/2, width + margin.left + margin.right, height + margin.top + margin.bottom])
         .attr("width", width + margin.left + margin.right)
         .attr("height", height)
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 30)
-        .attr("text-anchor", "middle")
-        .append("g")
-        .attr("transform", "translate(" + (width+margin.left+margin.right)/2 + "," + (height)/2 + ")");
+        // .attr("font-family", "sans-serif")
+        // .attr("font-size", 30)
+        // .attr("text-anchor", "middle")
+        const graph = svg.append("g")
+        .attr("transform", `translate(${width/2 +20} , ${height/2+5})`);
 
         var pie = d3.pie()
                 .sort(null)
@@ -44,67 +45,109 @@ const CircleCart = (props) => {
 
         var colorInterpolator = d3.interpolate('#F2C94C','#007991')
       
-        var color = d3.scaleOrdinal()
+        var color = d3.scaleOrdinal(d3['schemeSet3'])
                     .domain(data.map(d => d.nation))
-                    .range(d3.quantize(colorInterpolator, data.length).reverse())
+                    //.range(d3.quantize(colorInterpolator, data.length).reverse())
         
         const arcs = pie(data);
+        // Animation
+        const arcTweenEnter = d => {
+          let i = d3.interpolate(d.endAngle, d.startAngle);
+
+          return function(t) {
+            d.startAngle = i(t);
+            return arc(d);
+          };
+        };
         
-        svg.append("g")
-          .selectAll("path")
-          .data(arcs)
-          .enter().append("path")
-            .attr("fill", d => color(d.data.nation))
-            // Value 사이의 텀 조정
-            .attr("stroke", "white")
-            .attr("d", arc)
-          .append("title")
-            .text(d => `${d.data.nation}: ${d.data.value.toLocaleString()}`)
+        const path = graph.selectAll("path").data(pie(data));
+
+        path
+          .enter()
+          .append("path")
+          .attr("class", "arc")
+          .attr("d", arc)
+          .attr("fill", d => color(d.data.nation))
+          .attr("stroke", "white")
+          .attr("stroke-width", 3)
+          .transition()
+          .duration(750)
+          .attrTween("d", arcTweenEnter);
+
+        // Legend setup
+        const legendGroup = svg
+        .append("g")
+        .attr("transform", `translate(${width+35}, 30)`);
+
+        const legend = d3Legend
+        .legendColor()
+        .shape("circle")
+        .shapePadding(10)
+        .scale(color);
+
+        // update and call legend
+        legendGroup.call(legend);
+        // text white
+        legendGroup.selectAll("text").attr("fill", "#373737");
+
+
+
+
+        // svg.append("g")
+        //   .selectAll("path")
+        //   .data(arcs)
+        //   .enter().append("path")
+        //     .attr("fill", d => color(d.data.nation))
+        //     // Value 사이의 텀 조정
+        //     .attr("stroke", "white")
+        //     .attr("d", arc)
+        //   .append("title")
+        //     .text(d => `${d.data.nation}: ${d.data.value.toLocaleString()}`)
   
-          svg.selectAll("text")
-          .data(arcs)
-          .enter().append("text")
-            .attr("transform", d => `translate(${arcLabel().centroid(d)})`)
-            .attr('dy', '0.35em')
-            .call(text => text.append("tspan")
-                .attr("x", 0)
-                .attr("y", "-0.7em")
-                .attr("font-weight", "bold")
-                .text(d => data.nation))
-            .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
-                .attr("x", 0)
-                .attr("y", "0.7em")
-                .attr("fill-opacity", 0.7)
-                .text(d => d.data.value.toLocaleString()));
+        //   svg.selectAll("text")
+        //   .data(arcs)
+        //   .enter().append("text")
+        //     .attr("transform", d => `translate(${arcLabel().centroid(d)})`)
+        //     .attr('dy', '0.35em')
+        //     .call(text => text.append("tspan")
+        //         .attr("x", 0)
+        //         .attr("y", "-0.7em")
+        //         .attr("font-weight", "bold")
+        //         .text(d => data.nation))
+        //     .call(text => text.filter(d => (d.endAngle - d.startAngle) > 0.25).append("tspan")
+        //         .attr("x", 0)
+        //         .attr("y", "0.7em")
+        //         .attr("fill-opacity", 0.7)
+        //         .text(d => d.data.value.toLocaleString()));
 
-        const legend = svg
-          .append('g')
-          .attr('transform', `translate(${(height/2 -margin.right)},${(-width/2)})`);
+        // const legend = svg
+        //   .append('g')
+        //   .attr('transform', `translate(${(height/2 -margin.right)},${(-width/2)})`);
 
-        legend
-          .selectAll(null)
-          .data(arcs)
-          .enter()
-          .append('rect')
-          .attr('y', d => labelHeight * d.index * 1.8)
-          .attr('width', labelHeight-2)
-          .attr('height', labelHeight-2)
-          .attr('fill', d => color(d.index))
-          .attr('stroke', 'white')
-          .style('stroke-width', '1px');
+        // legend
+        //   .selectAll(null)
+        //   .data(arcs)
+        //   .enter()
+        //   .append('rect')
+        //   .attr('y', d => labelHeight * d.index * 1.8)
+        //   .attr('width', labelHeight-2)
+        //   .attr('height', labelHeight-2)
+        //   .attr('fill', d => color(d.index))
+        //   .attr('stroke', 'white')
+        //   .style('stroke-width', '1px');
 
-        legend
-          .selectAll(null)
-          .data(arcs)
-          .enter()
-          .append('text')
-          .text(d => d.data.nation)
-          .attr('x', (labelHeight-2) * 3)
-          .attr('y', d => labelHeight * d.index * 1.8 + labelHeight-4)
-          .style('font-family', 'sans-serif')
-          .style('font-size', `${labelHeight-2}px`);
+        // legend
+        //   .selectAll(null)
+        //   .data(arcs)
+        //   .enter()
+        //   .append('text')
+        //   .text(d => d.data.nation)
+        //   .attr('x', (labelHeight-2) * 3)
+        //   .attr('y', d => labelHeight * d.index * 1.8 + labelHeight-4)
+        //   .style('font-family', 'sans-serif')
+        //   .style('font-size', `${labelHeight-2}px`);
           
-        console.log('arcs', arcs)
+        // console.log('arcs', arcs)
 
           }, [])
           

@@ -13,6 +13,7 @@ const App = () => {
       </HeaderWrap>
       <Router>  
         <Route exact path="/" component = {VisitOutpatient}/>
+        <Route exact path="/visitOut" component = {VisitOutpatient}/>
       </Router>
     </div>
   );

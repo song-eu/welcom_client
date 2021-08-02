@@ -145,8 +145,11 @@ const GenderAgeDivergingChart = (props) => {
             .attr("fill", d3.interpolateSpectral(color(1)))
             .attr('x', 0)
             .attr('y', function(d) { return yScale(d.group); })
-            .attr('width', function(d) { return xScale(d.male); })
-            .attr('height', yScale.bandwidth());
+        //    .attr('width', function(d) { return xScale(d.male); })
+            .attr('height', yScale.bandwidth())
+            .transition()
+            .duration(800)
+            .attr('width', (d) => xScale(d.male))
 
         rightBarGroup.selectAll('.bar.right')
         .data(exampleData)
@@ -155,8 +158,11 @@ const GenderAgeDivergingChart = (props) => {
             .attr("fill", d3.interpolateRdYlBu(color(0)))
             .attr('x', 0)
             .attr('y', function(d) { return yScale(d.group); })
-            .attr('width', function(d) { return xScale(d.female); })
-            .attr('height', yScale.bandwidth());
+        //    .attr('width', function(d) { return xScale(d.female); })
+            .attr('height', yScale.bandwidth())
+            .transition()
+            .duration(800)
+            .attr('width', (d) => xScale(d.female));
 
 
         // so sick of string concatenation for translations
