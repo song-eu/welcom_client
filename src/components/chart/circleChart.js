@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { PieChartStyle } from '../style/chartStyle';
-import * as d3 from 'd3'
+import * as d3module from 'd3'
+import d3Tip from "d3-tip"
 import * as d3Legend from 'd3-svg-legend'
 
-
+const d3 = {
+  ...d3module,
+  tip: d3Tip
+}
 
 const CircleCart = (props) => {
     let data = [
@@ -48,7 +52,24 @@ const CircleCart = (props) => {
         var color = d3.scaleOrdinal(d3['schemeSet3'])
                     .domain(data.map(d => d.nation))
                     //.range(d3.quantize(colorInterpolator, data.length).reverse())
-        
+        // Tooltip
+        const tip = d3.tip()
+        .attr("class", "toolTip")
+        .attr("id", "toolTip")
+        .style('padding', '10px')
+        .style('background', '#444')
+        .style('color', 'rgb(238, 148, 75)')
+        .style('border-radius','4px')
+        .html(d => {
+          let content = `<div class="name">${d.data.nation}</div>`;
+          content += `<div class="cost">${d.value}</div>`;
+          //content += `<div class="delete">Click slice to delete</div>`;
+          console.log('tooltip check', d)
+          return content;
+        });
+
+        graph.call(tip);
+
         const arcs = pie(data);
         // Animation
         const arcTweenEnter = d => {
@@ -70,9 +91,32 @@ const CircleCart = (props) => {
           .attr("fill", d => color(d.data.nation))
           .attr("stroke", "white")
           .attr("stroke-width", 3)
+          .on('mouseover', function(d, i, n) {
+            console.log(d, n, i)
+            tip.show(i, this); 
+            d3.selectAll('path')
+            .attr('opacity', 0.6)
+
+            d3.select(this)
+              .transition("changeSliceFill")
+              .duration(100)
+              .attr('opacity', 1)
+          })
+          .on('mouseleave', function (actual, i) {
+            d3.selectAll('path')
+            .attr('opacity', 1)
+    
+            d3.select(this)
+                .transition()
+                .duration(300)
+                .attr('opacity', 1)
+
+          })
           .transition()
           .duration(750)
-          .attrTween("d", arcTweenEnter);
+          .attrTween("d", arcTweenEnter)
+          .delay(function(d,i){console.log(i) ; return(i*50)})
+
 
         // Legend setup
         const legendGroup = svg

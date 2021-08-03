@@ -150,6 +150,51 @@ const GenderAgeDivergingChart = (props) => {
             .transition()
             .duration(800)
             .attr('width', (d) => xScale(d.male))
+            .delay(function(d,i){console.log(i) ; return(i*70)})
+
+        leftBarGroup.selectAll('.bar.left')
+        .on('mouseover', function(d, i, n) {
+            //console.log(d, n, i)
+            //tip.show(i, this); 
+            // d3.selectAll('rect')
+            // .attr('opacity', 0.6)
+                    
+            d3.select(this)
+                .append('text')
+                .attr('class', 'malevalue')
+                .attr('color', '#616161')
+                //.attr('x', (a) => xScale(a.male) )
+                .attr('y', (a) => yScale(a.male) + yScale.bandwidth()/2) 
+                //.attr('text-anchor', 'middle')
+                .text((a) => `${a.male}`)
+
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .attr('fill', d3.interpolateSpectral(color(0.8)))
+          })
+          .on('mouseleave', function (actual, i) {
+            // d3.selectAll('rect')
+            // .attr('opacity', 1)
+            
+
+            d3.select(this)
+                .transition()
+                .duration(300)
+                .attr('fill', d3.interpolateSpectral(color(1)))
+
+            //svg.selectAll('.malevalue').remove()  
+
+
+                // barGroups 
+                // .append('text')
+                // .attr('class', 'value')
+                // .attr('x', (a) => xScale(a.language) + xScale.bandwidth() / 2)
+                // .attr('y', (a) => yScale(a.value) + 30)
+                // .attr('text-anchor', 'middle')
+                // .text((a) => `${a.value}%`)
+
+          })
 
         rightBarGroup.selectAll('.bar.right')
         .data(exampleData)
@@ -160,9 +205,31 @@ const GenderAgeDivergingChart = (props) => {
             .attr('y', function(d) { return yScale(d.group); })
         //    .attr('width', function(d) { return xScale(d.female); })
             .attr('height', yScale.bandwidth())
+            .on('mouseover', function(d, i, n) {
+                console.log(d, n, i)
+                //tip.show(i, this); 
+                // d3.selectAll('rect')
+                // .attr('opacity', 0.6)
+    
+                d3.select(this)
+                  .transition("changeSliceFill")
+                  .duration(100)
+                  .attr('fill', d3.interpolateSpectral(color(0.2)))
+              })
+              .on('mouseleave', function (actual, i) {
+                // d3.selectAll('rect')
+                // .attr('opacity', 1)
+        
+                d3.select(this)
+                    .transition()
+                    .duration(300)
+                    .attr('fill', d3.interpolateSpectral(color(0)))
+    
+              })
             .transition()
             .duration(800)
-            .attr('width', (d) => xScale(d.female));
+            .attr('width', (d) => xScale(d.female))
+            .delay(function(d,i){console.log(i) ; return(i*70)})
 
 
         // so sick of string concatenation for translations

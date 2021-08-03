@@ -71,7 +71,8 @@ const DeptHorizonBarChart = (props) => {
         .transition()
         .duration(800)
         .attr('width', (d) => x(d.value))
-        .attr('fill', ({ value }) => d3.interpolateGnBu(color(value)));
+        .attr('fill', ({ value }) => d3.interpolateGnBu(color(value)))
+        .delay(function(d,i){console.log(i) ; return(-i*50)})
         //.attr("height", function(d) { return height - y(0); }) // always equal to 0
         //.attr("y", function(d) { return y(0); })
 

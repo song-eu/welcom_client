@@ -78,5 +78,16 @@ flex:1;
         backgroud: #45a247;
         border: 1px solid #1488CC;
     }
+    & #toolTip {
+        position: absolute;
+        border: 0 none;
+        border-radius: 4px 4px 4px 4px;
+    /*     background-color: white; */
+        background: rgba(0, 0, 0, 0.8);
+        color : white;
+        padding: 1px 10px 1px 10px;
+        text-align: center;
+    }
+
 }
 `;
