@@ -20,7 +20,6 @@ const CircleCart = (props) => {
         var margin = { top: 30, right: 80, bottom: 30, left: 80 },
         width = 500 - margin.left - margin.right,
         height = 510 - margin.top - margin.bottom,
-        tooltip = { width: 100, height: 100, x: 10, y: -30 },
         labelHeight = 18;
 
         var svg = d3.select("#pieChart").append("svg")
@@ -64,7 +63,7 @@ const CircleCart = (props) => {
           let content = `<div class="name">${d.data.nation}</div>`;
           content += `<div class="cost">${d.value}</div>`;
           //content += `<div class="delete">Click slice to delete</div>`;
-          console.log('tooltip check', d)
+          //console.log('tooltip check', d)
           return content;
         });
 
@@ -92,7 +91,7 @@ const CircleCart = (props) => {
           .attr("stroke", "white")
           .attr("stroke-width", 3)
           .on('mouseover', function(d, i, n) {
-            console.log(d, n, i)
+            //console.log(d, n, i)
             tip.show(i, this); 
             d3.selectAll('path')
             .attr('opacity', 0.6)

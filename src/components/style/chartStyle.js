@@ -16,6 +16,9 @@ export const MonthlyBarChartStyle = styled.div`
         margin-bottom: 7px;
         text-align: center;
     }
+    & malevalue{
+        
+    }
 `;
 
 export const HorizonBarChartSytle = styled.div`

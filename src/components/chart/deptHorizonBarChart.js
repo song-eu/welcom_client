@@ -1,6 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import * as d3 from 'd3'
 import {HorizonBarChartSytle} from '../style/chartStyle'
+import * as d3module from 'd3'
+import d3Tip from "d3-tip"
+
+const d3 = {
+  ...d3module,
+  tip: d3Tip
+}
 
 const DeptHorizonBarChart = (props) => {
     
@@ -42,7 +48,45 @@ const DeptHorizonBarChart = (props) => {
                 .attr("transform", 
                     "translate(" + margin.left + "," + margin.top + ")");
 
+        function onMouseOver(d, i) {
+            console.log(d)
+            let pos = d3.select(this).node().getBoundingClientRect();
+    
+            tip.show(i, this)
+            console.log('pos?', pos)
+            console.log('depToolTip',d3.selectAll('#depToolTip').node().getBoundingClientRect() )
+            
+            //tip.style('left', pos['right'] + 10)
+            tip.style('left', `${(pos['width'] < d3.selectAll('#depToolTip').node().getBoundingClientRect().width?
+                             pos['right'] + d3.selectAll('#depToolTip').node().getBoundingClientRect().width*0.5: pos['right']- d3.selectAll('#depToolTip').node().getBoundingClientRect().width*0.5)}px`)
+            tip.style('top', `${(window.pageYOffset + pos['y'] - 4)}px`)
+    
+            d3.select(this)
+            .transition()
+            .duration(100)
+            //.attr('fill', d3.interpolateSpectral(color(0.8))) #ffc500
+            .attr('fill', '#ffc500')
+        }
+                
 
+        const tip = d3.tip()
+        .attr("class", "depToolTip")
+        .attr("id", "depToolTip")
+        .style('padding', '12px')
+        //.style('background', 'rgba(0, 0, 0, 0.8)')
+        .style('color', 'Black')
+        .html((d) => {
+            //console.log(d)
+            return "<strong>"+ d.name + " : </strong> <span style='color:red'>" + d.value + " 명 </span>";
+        })
+        //.style("display", "inline-block") 
+        // .style('left', d3.select(this).attr("cx") + "px")
+        // .style('top', d3.select(this).attr("cy") + "px")
+        // .style("left",(d) => xScale(d.male)  + "px")
+        // .style("top", (d) => yScale(d.group)+ "px")
+        //.offset([-10, 0])
+            
+        svg.call(tip)
 
         x.domain([0, d3.max(data, function(d){ return d.value; })])
         svg.append("g")
@@ -65,16 +109,27 @@ const DeptHorizonBarChart = (props) => {
         //.attr("width", function(d) {return x(0) - width; } )
         //.attr('fill', (d) => d3.interpolateYlGn(color(d.value)))
         //.attr('fill', '#69b3a2')
+        .on('mouseover', onMouseOver)
+        .on('mouseleave', function (actual, i) {
+            tip.hide()
+            d3.select(this)
+            .transition()
+            .duration(300)
+            .attr('fill', ({ value }) => d3.interpolateGnBu(color(value)))
+
+          })
         .attr("x", x(0))
         .attr("y", function(d) { return y(d.name); })
         .attr("height", y.bandwidth())
         .transition()
-        .duration(800)
+        .duration(2000)
         .attr('width', (d) => x(d.value))
         .attr('fill', ({ value }) => d3.interpolateGnBu(color(value)))
-        .delay(function(d,i){console.log(i) ; return(-i*50)})
+        .delay(function(d,i){return(-i*50)})
+
         //.attr("height", function(d) { return height - y(0); }) // always equal to 0
         //.attr("y", function(d) { return y(0); })
+        
 
     }, [])
 

@@ -1,6 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import * as d3 from 'd3'
+import * as d3module from 'd3'
 import {GenderChartSytle} from '../style/chartStyle'
+import d3Tip from "d3-tip"
+
+const d3 = {
+  ...d3module,
+  tip: d3Tip
+}
 
 const GenderAgeDivergingChart = (props) => {
     // SET UP DIMENSIONS
@@ -105,6 +111,36 @@ const GenderAgeDivergingChart = (props) => {
         .call(d3.axisBottom(xScale.copy().range([pointA, 0]))
        // .tickFormat(d3.format('%'))
         );
+
+        const tip = d3.tip()
+        .attr("class", "toolTip")
+        .attr("id", "toolTip")
+        .style('padding', '12px')
+        //.style('background', 'rgba(0, 0, 0, 0.8)')
+        .style('color', 'Black')
+        //.style("display", "inline-block") 
+        // .style('left', d3.select(this).attr("cx") + "px")
+        // .style('top', d3.select(this).attr("cy") + "px")
+        // .style("left",(d) => xScale(d.male)  + "px")
+        // .style("top", (d) => yScale(d.group)+ "px")
+        .offset([-10, 0])
+
+        const fTip = d3.tip()
+        .attr("class", "toolTipF")
+        .attr("id", "toolTipF")
+        .style('padding', '12px')
+        //.style('background', 'rgba(0, 0, 0, 0.8)')
+        .style('color', 'Black')
+        //.style("display", "inline-block") 
+        // .style('left', d3.select(this).attr("cx") + "px")
+        // .style('top', d3.select(this).attr("cy") + "px")
+        // .style("left",(d) => xScale(d.male)  + "px")
+        // .style("top", (d) => yScale(d.group)+ "px")
+        .offset([-10, 0])
+
+
+        svg.call(tip)
+        svg.call(fTip)
        
 
         // MAKE GROUPS FOR EACH SIDE OF CHART
@@ -150,7 +186,7 @@ const GenderAgeDivergingChart = (props) => {
             .transition()
             .duration(800)
             .attr('width', (d) => xScale(d.male))
-            .delay(function(d,i){console.log(i) ; return(i*70)})
+            .delay(function(d,i){console.log(i) ; return(i*70)})            
 
         leftBarGroup.selectAll('.bar.left')
         .on('mouseover', function(d, i, n) {
@@ -158,43 +194,36 @@ const GenderAgeDivergingChart = (props) => {
             //tip.show(i, this); 
             // d3.selectAll('rect')
             // .attr('opacity', 0.6)
-                    
-            d3.select(this)
-                .append('text')
-                .attr('class', 'malevalue')
-                .attr('color', '#616161')
-                //.attr('x', (a) => xScale(a.male) )
-                .attr('y', (a) => yScale(a.male) + yScale.bandwidth()/2) 
-                //.attr('text-anchor', 'middle')
-                .text((a) => `${a.male}`)
+            let pos = d3.select(this).node().getBoundingClientRect();
+            
+            tip
+            .html(d => {
+                //console.log('d??', d)
+                return "<strong>Male:</strong> <span style='color:red'>" + d.male + "</span>";
+            })
+            .show(i, this)
+            
+            tip.style('left', xScale(i.male))
+            tip.style('left', `${(pos['width'] < d3.selectAll('#toolTip').node().getBoundingClientRect().width?
+                         pos['left']  - d3.selectAll('#toolTip').node().getBoundingClientRect().width*0.5: pos['left']+ d3.selectAll('#toolTip').node().getBoundingClientRect().width*0.5)}px`)
+            tip.style('top', `${(window.pageYOffset + pos['y'] - 5)}px`)
 
             d3.select(this)
-              .transition()
-              .duration(100)
-              .attr('fill', d3.interpolateSpectral(color(0.8)))
+            .transition()
+            .duration(100)
+            .attr('fill', d3.interpolateSpectral(color(0.8)))
+
           })
           .on('mouseleave', function (actual, i) {
-            // d3.selectAll('rect')
-            // .attr('opacity', 1)
-            
-
+            tip.hide()
             d3.select(this)
                 .transition()
                 .duration(300)
                 .attr('fill', d3.interpolateSpectral(color(1)))
 
-            //svg.selectAll('.malevalue').remove()  
-
-
-                // barGroups 
-                // .append('text')
-                // .attr('class', 'value')
-                // .attr('x', (a) => xScale(a.language) + xScale.bandwidth() / 2)
-                // .attr('y', (a) => yScale(a.value) + 30)
-                // .attr('text-anchor', 'middle')
-                // .text((a) => `${a.value}%`)
-
           })
+
+
 
         rightBarGroup.selectAll('.bar.right')
         .data(exampleData)
@@ -206,31 +235,37 @@ const GenderAgeDivergingChart = (props) => {
         //    .attr('width', function(d) { return xScale(d.female); })
             .attr('height', yScale.bandwidth())
             .on('mouseover', function(d, i, n) {
-                console.log(d, n, i)
-                //tip.show(i, this); 
-                // d3.selectAll('rect')
-                // .attr('opacity', 0.6)
+                let pos = d3.select(this).node().getBoundingClientRect();
+            
+                fTip
+                .html(d => {
+                    //console.log('d??', d)
+                    return "<strong>Female:</strong> <span style='color:red'>" + d.female + "</span>";
+                })
+                .show(i, this)
+                
+                fTip.style('left', xScale(i.female))
+                fTip.style('left', `${(pos['width'] < d3.selectAll('#toolTipF').node().getBoundingClientRect().width?
+                             pos['right'] + d3.selectAll('#toolTipF').node().getBoundingClientRect().width*0.5: pos['right']- d3.selectAll('#toolTipF').node().getBoundingClientRect().width*0.5)}px`)
+                fTip.style('top', `${(window.pageYOffset + pos['y'] - 5)}px`)
     
                 d3.select(this)
-                  .transition("changeSliceFill")
-                  .duration(100)
-                  .attr('fill', d3.interpolateSpectral(color(0.2)))
+                .transition()
+                .duration(100)
+                .attr('fill', d3.interpolateSpectral(color(0.2)))
               })
               .on('mouseleave', function (actual, i) {
-                // d3.selectAll('rect')
-                // .attr('opacity', 1)
-        
+                fTip.hide()
                 d3.select(this)
-                    .transition()
-                    .duration(300)
-                    .attr('fill', d3.interpolateSpectral(color(0)))
+                .transition()
+                .duration(300)
+                .attr('fill', d3.interpolateSpectral(color(0)))
     
               })
             .transition()
             .duration(800)
             .attr('width', (d) => xScale(d.female))
             .delay(function(d,i){console.log(i) ; return(i*70)})
-
 
         // so sick of string concatenation for translations
         function translation(x,y) {
