@@ -58,7 +58,7 @@ const DeptHorizonBarChart = (props) => {
             
             //tip.style('left', pos['right'] + 10)
             tip.style('left', `${(pos['width'] < d3.selectAll('#depToolTip').node().getBoundingClientRect().width?
-                             pos['right'] + d3.selectAll('#depToolTip').node().getBoundingClientRect().width*0.5: pos['right']- d3.selectAll('#depToolTip').node().getBoundingClientRect().width*0.5)}px`)
+                             pos['right'] + d3.selectAll('#depToolTip').node().getBoundingClientRect().width*0.5: pos['right']- d3.selectAll('#depToolTip').node().getBoundingClientRect().width*0.6)}px`)
             tip.style('top', `${(window.pageYOffset + pos['y'] - 4)}px`)
     
             d3.select(this)

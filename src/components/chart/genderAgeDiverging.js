@@ -246,7 +246,7 @@ const GenderAgeDivergingChart = (props) => {
                 
                 fTip.style('left', xScale(i.female))
                 fTip.style('left', `${(pos['width'] < d3.selectAll('#toolTipF').node().getBoundingClientRect().width?
-                             pos['right'] + d3.selectAll('#toolTipF').node().getBoundingClientRect().width*0.5: pos['right']- d3.selectAll('#toolTipF').node().getBoundingClientRect().width*0.5)}px`)
+                             pos['right'] + d3.selectAll('#toolTipF').node().getBoundingClientRect().width*0.6: pos['right']- d3.selectAll('#toolTipF').node().getBoundingClientRect().width*0.5)}px`)
                 fTip.style('top', `${(window.pageYOffset + pos['y'] - 5)}px`)
     
                 d3.select(this)
