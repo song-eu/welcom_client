@@ -1,18 +1,18 @@
 export const sampleData = {
     "nodes": [
-        { date: '2013-01', value: 53 },
-        { date: '2013-02', value: 165 },
-        { date: '2013-03', value: 269 },
-        { date: '2013-04', value: 344 },
-        { date: '2013-05', value: 376 },
-        { date: '2013-06', value: 410 },
-        { date: '2013-07', value: 421 },
-        { date: '2013-08', value: 405 },
-        { date: '2013-09', value: 376 },
-        { date: '2013-10', value: 359 },
-        { date: '2013-11', value: 392 },
-        { date: '2013-12', value: 433 },
-        { date: '2014-01', value: 455 },
-        { date: '2014-02', value: 478 }
+        { NAME: '2013-01', VALUE: 53 },
+        { NAME: '2013-02', VALUE: 165 },
+        { NAME: '2013-03', VALUE: 269 },
+        { NAME: '2013-04', VALUE: 344 },
+        { NAME: '2013-05', VALUE: 376 },
+        { NAME: '2013-06', VALUE: 410 },
+        { NAME: '2013-07', VALUE: 421 },
+        { NAME: '2013-08', VALUE: 405 },
+        { NAME: '2013-09', VALUE: 376 },
+        { NAME: '2013-10', VALUE: 359 },
+        { NAME: '2013-11', VALUE: 392 },
+        { NAME: '2013-12', VALUE: 433 },
+        { NAME: '2014-01', VALUE: 455 },
+        { NAME: '2014-02', VALUE: 478 }
     ]
 }

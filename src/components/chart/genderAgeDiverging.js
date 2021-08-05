@@ -195,6 +195,7 @@ const GenderAgeDivergingChart = (props) => {
             // d3.selectAll('rect')
             // .attr('opacity', 0.6)
             let pos = d3.select(this).node().getBoundingClientRect();
+            let tipNodeWidth = d3.selectAll('#toolTip').node().getBoundingClientRect().width
             
             tip
             .html(d => {
@@ -203,10 +204,10 @@ const GenderAgeDivergingChart = (props) => {
             })
             .show(i, this)
             
-            tip.style('left', xScale(i.male))
-            tip.style('left', `${(pos['width'] < d3.selectAll('#toolTip').node().getBoundingClientRect().width?
-                         pos['left']  - d3.selectAll('#toolTip').node().getBoundingClientRect().width*0.5: pos['left']+ d3.selectAll('#toolTip').node().getBoundingClientRect().width*0.5)}px`)
-            tip.style('top', `${(window.pageYOffset + pos['y'] - 5)}px`)
+            //tip.style('left', xScale(i.male))
+            tip.style('left', `${(pos['width'] < tipNodeWidth+12?
+                         pos['left']  - tipNodeWidth: pos['left'])}px`)
+            .style('top', `${(window.pageYOffset + pos['y'] - 5)}px`)
 
             d3.select(this)
             .transition()
@@ -236,6 +237,7 @@ const GenderAgeDivergingChart = (props) => {
             .attr('height', yScale.bandwidth())
             .on('mouseover', function(d, i, n) {
                 let pos = d3.select(this).node().getBoundingClientRect();
+                let tipNodeWidthF = d3.selectAll('#toolTipF').node().getBoundingClientRect().width;
             
                 fTip
                 .html(d => {
@@ -245,8 +247,8 @@ const GenderAgeDivergingChart = (props) => {
                 .show(i, this)
                 
                 fTip.style('left', xScale(i.female))
-                fTip.style('left', `${(pos['width'] < d3.selectAll('#toolTipF').node().getBoundingClientRect().width?
-                             pos['right'] + d3.selectAll('#toolTipF').node().getBoundingClientRect().width*0.6: pos['right']- d3.selectAll('#toolTipF').node().getBoundingClientRect().width*0.5)}px`)
+                fTip.style('left', `${(pos['width'] < tipNodeWidthF + 12?
+                             pos['right'] : pos['right']- tipNodeWidthF)}px`)
                 fTip.style('top', `${(window.pageYOffset + pos['y'] - 5)}px`)
     
                 d3.select(this)

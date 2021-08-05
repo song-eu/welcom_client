@@ -48,13 +48,13 @@ const CircleCart = (props) => {
 
         var colorInterpolator = d3.interpolate('#F2C94C','#007991')
       
-        var color = d3.scaleOrdinal(d3['schemeSet3'])
+        var color = d3.scaleOrdinal(d3['schemeSet2'])
                     .domain(data.map(d => d.nation))
                     //.range(d3.quantize(colorInterpolator, data.length).reverse())
         // Tooltip
         const tip = d3.tip()
-        .attr("class", "toolTip")
-        .attr("id", "toolTip")
+        .attr("class", "toolTipC")
+        .attr("id", "toolTipC")
         .style('padding', '10px')
         .style('background', '#444')
         .style('color', 'rgb(238, 148, 75)')
@@ -102,6 +102,7 @@ const CircleCart = (props) => {
               .attr('opacity', 1)
           })
           .on('mouseleave', function (actual, i) {
+            tip.hide()
             d3.selectAll('path')
             .attr('opacity', 1)
     

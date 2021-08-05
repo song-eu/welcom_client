@@ -20,7 +20,7 @@ export const HeaderWrap = styled.header`
 `
 export const OutPatientBg = styled.div`
   display: flex;
-  border: 1px solid #C06C84;
+  --border: 1px solid #C06C84;
   overflow: hidden;
   align-items: center;
   justify-content: center;
@@ -28,12 +28,15 @@ export const OutPatientBg = styled.div`
 
 export const BigBoxstyle = styled.div`
   flex:1;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  --align-items: center;
+  --justify-content: center;
   position: relative;
   float: left;
   width: 322px;
   height: 548px;
-  border: 1px solid black;
+  border: 1px solid #00B4DB;
   overflow: hidden;
   align-items: center;
   justify-content: center;
@@ -41,30 +44,39 @@ export const BigBoxstyle = styled.div`
 `
 
 export const SmallBoxstyle = styled.div`
-    margin:39px 10px 0px 10px;
-    top: 41px;
-    width: 300px;
-    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: position;
+    overflow: hidden;
+    --margin:39px 10px 0px 10px;
+    --top: 41px;
+    width: 200px;
+    height: 200px;
     position: relative;
     text-align: center;
-    border: 1px solid #373737;
-    border-radius:5px;
-    background: #fff;
+    border: 2px solid white;
+    --border-radius:5px;
+    background: linear-gradient(to top left,  #0083B0,#00B4DB);
+    color: white;
     
     font-size: 24px;
     font-weight: 700;
     font-family: 'Roboto', sans-serif;
-    
-
 
     & .countText{
-        color: #333;
-        position: relative;
-        padding-top: 16px
+      flex:1;
+      color: #fff;
+      position: relative;
+      --padding-top: 16px;
+
+
     }
     & .countNumber {
-        position: relative;
-        color: #373737;
-        padding-top: 10px
+      flex:1;
+      position: relative;
+      color: #fff;
+      --padding-top: 10px;
+
     }
 `

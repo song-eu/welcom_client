@@ -5,6 +5,7 @@ import DeptHorizonBarChart from './chart/deptHorizonBarChart';
 import GenderAgeBarChart from './chart/genderAgeBarChart';
 import GenderAgeDivergingChart from './chart/genderAgeDiverging'
 import CircleCart from './chart/circleChart';
+import StackedBarChart from './chart/stackedBarChart'
 import { BackgroudWrap, SmallBoxstyle, HeaderWrap,BigBoxstyle, OutPatientBg } from './style/backgraound';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
@@ -36,7 +37,7 @@ const VisitOutpatient = (props) => {
         }
     }
     useEffect(() =>{
-        fetchData();
+//        fetchData();
     }, [])
 
 
@@ -67,7 +68,7 @@ const VisitOutpatient = (props) => {
                         </div>
                     </SmallBoxstyle>
                 </BigBoxstyle>
-                {outBarchartData? <MonthlyBarChart data={outBarchartData} header = {outPatientVisitBarChart}/>:null}
+                {outBarchartData? <StackedBarChart data={outBarchartData} header = {outPatientVisitBarChart}/>:<StackedBarChart header = {outPatientVisitBarChart}/>}
             </div>
             </OutPatientBg>
             <OutPatientBg>

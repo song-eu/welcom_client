@@ -5,29 +5,37 @@ import {sampleData} from '../../sampledata/barData'
 import GenderAgeDivergingChart from './genderAgeDiverging';
 import { act } from 'react-dom/cjs/react-dom-test-utils.production.min';
 
-const MonthlyBarChart = (props) => {
+const StackedBarChart = (props) => {
 
     const width = 900;
     const height = 500;
     const margin = {top: 40, left: 40, bottom: 40, right: 40};
     
     var sample = [
-        {NAME: 'a', VALUE: 10},
-        {NAME: 'b', VALUE: 29},
-        {NAME: 'c', VALUE: 32},
-        {NAME: 'd', VALUE: 25},
-        {NAME: 'e', VALUE: 23},
-        {NAME: 'f', VALUE: 32},
-        {NAME: 'g', VALUE: 25},
-        {NAME: 'h', VALUE: 23},
-        {NAME: 'i', VALUE: 15}
+        { NAME: '2013-01', VALUE: 53, VALUE2: 100, VALUE3: 425 },
+        { NAME: '2013-02', VALUE: 165, VALUE2: 134, VALUE3: 54  },
+        { NAME: '2013-03', VALUE: 269, VALUE2: 125, VALUE3: 345  },
+        { NAME: '2013-04', VALUE: 344, VALUE2: 145, VALUE3: 730  },
+        { NAME: '2013-05', VALUE: 376, VALUE2: 435, VALUE3: 366  },
+        { NAME: '2013-06', VALUE: 410, VALUE2: 843, VALUE3: 414  },
+        { NAME: '2013-07', VALUE: 421, VALUE2: 354, VALUE3: 30  },
+        { NAME: '2013-08', VALUE: 405, VALUE2: 76, VALUE3: 70  },
+        { NAME: '2013-09', VALUE: 376, VALUE2: 43, VALUE3: 658  },
+        { NAME: '2013-10', VALUE: 359, VALUE2: 965, VALUE3: 308  },
+        { NAME: '2013-11', VALUE: 392, VALUE2: 347, VALUE3: 970  },
+        { NAME: '2013-12', VALUE: 433, VALUE2: 107, VALUE3: 64  },
+        { NAME: '2014-01', VALUE: 455, VALUE2: 560, VALUE3: 686  },
+        { NAME: '2014-02', VALUE: 478, VALUE2: 501, VALUE3: 820  }
     ];
     // 소아 암병원 어린이 본원 강남 ? 소아?
-    var data = props.data? props.data:sampleData.nodes
-    console.log('data?'. data, sampleData)
+    var data = sample
+    //console.log('data?'. data, sampleData)
     //var data = sampleData
 
     useEffect(() => {
+        const index = new Map(data.map((d, i) => [d, i]));
+        console.log('data.columns', index)
+        //const subgroups = data.columns.slice(1)
         var x = d3.scaleBand()
         // .scaleBand() 그래프의 막대의 반복되는 범위를 정해줍니다.
         .domain(data.map(d => d.NAME))
@@ -75,6 +83,10 @@ const MonthlyBarChart = (props) => {
             .call(g => g.selectAll(".tick:not(:first-of-type) line")
                         .attr("class", "axis_y_tick")
                         .attr("stroke", "#bdc3c7"));
+        
+        // const stackedData = d3.stack()
+        // .keys(subgroups)
+        // (data)
         
         const barGroups = svg.selectAll()
                     .data(data)
@@ -151,8 +163,8 @@ const MonthlyBarChart = (props) => {
         barGroups.selectAll('rect')
         .transition()
         .duration(800)
-        .attr('y', (d) => y(d.VALUE))
-        .attr('height', (d) =>  y(0)- y(d.VALUE) )
+        .attr('y', (d) => y(d[1]))
+        .attr('height', (d) =>  y(d[0])- y(d[1]) )
         .delay((d, i) => i*100)
         // .selectAll() | .select() 메서드는 해당 엘리먼트를 찾지만, 가상의 요소로 선택되기도 합니다.
         // .data() 앞에 선택된 select에 (data)배열에 Join하여 새 선택항목을 반환합니다.
@@ -185,4 +197,4 @@ const MonthlyBarChart = (props) => {
     )
 }
 
-export default MonthlyBarChart;
+export default StackedBarChart;
