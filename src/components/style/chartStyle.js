@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const MonthlyBarChartStyle = styled.div`
     position: relative;
@@ -16,21 +16,25 @@ export const MonthlyBarChartStyle = styled.div`
         margin-bottom: 7px;
         text-align: center;
     }
-    & malevalue{
-        
+    & #stackBarchart {
+        float: left;
     }
-`;
+    & #legendStack {
+        float: left;
+        overflow: hidden;
+    }
+`
 
 export const HorizonBarChartSytle = styled.div`
-flex:1;
+    flex: 1;
     position: relative;
-    --border: 1px solid #1488CC;
+    --border: 1px solid #1488cc;
     float: left;
     overflow: hidden;
 
     & #hbarchart {
-        backgroud: #1488CC;
-        --border: 1px solid #1488CC;
+        backgroud: #1488cc;
+        --border: 1px solid #1488cc;
     }
     & h1 {
         position: relative;
@@ -39,15 +43,14 @@ flex:1;
         margin-bottom: 7px;
         text-align: center;
     }
-
-`;
+`
 
 export const GenderChartSytle = styled.div`
-    flex:1;
-    position:relative;
+    flex: 1;
+    position: relative;
     float: left;
     overflow: hidden;
-    --border: 1px solid #FF8C00;
+    --border: 1px solid #ff8c00;
     margin-left: 30px;
     & h1 {
         position: relative;
@@ -57,10 +60,10 @@ export const GenderChartSytle = styled.div`
         text-align: center;
     }
     & div {
-        backgroud: #FF8C00;
-        --border: 1px solid #1488CC;
+        backgroud: #ff8c00;
+        --border: 1px solid #1488cc;
     }
-`;
+`
 
 export const PieChartStyle = styled.div`
 flex:1;
@@ -93,4 +96,4 @@ flex:1;
     }
 
 }
-`;
+`

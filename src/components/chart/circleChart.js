@@ -1,141 +1,145 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { PieChartStyle } from '../style/chartStyle';
+import React, { useEffect, useState, useCallback, useRef } from 'react'
+import { PieChartStyle } from '../style/chartStyle'
 import * as d3module from 'd3'
-import d3Tip from "d3-tip"
+import d3Tip from 'd3-tip'
 import * as d3Legend from 'd3-svg-legend'
 
 const d3 = {
-  ...d3module,
-  tip: d3Tip
+    ...d3module,
+    tip: d3Tip,
 }
 
 const CircleCart = (props) => {
     let data = [
-        {nation:'Korean', value: 70},
-        {nation:'Unknown', value: 20},
-        {nation:'American', value: 20}
-    ];
+        { nation: 'Korean', value: 70 },
+        { nation: 'Unknown', value: 20 },
+        { nation: 'American', value: 20 },
+    ]
 
     useEffect(() => {
         var margin = { top: 30, right: 80, bottom: 30, left: 80 },
-        width = 500 - margin.left - margin.right,
-        height = 510 - margin.top - margin.bottom,
-        labelHeight = 18;
+            width = 500 - margin.left - margin.right,
+            height = 510 - margin.top - margin.bottom,
+            labelHeight = 18
 
-        var svg = d3.select("#pieChart").append("svg")
-        //.attr("viewBox", [height/2, width/2, width + margin.left + margin.right, height + margin.top + margin.bottom])
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height)
+        var svg = d3
+            .select('#pieChart')
+            .append('svg')
+            //.attr("viewBox", [height/2, width/2, width + margin.left + margin.right, height + margin.top + margin.bottom])
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height)
         // .attr("font-family", "sans-serif")
         // .attr("font-size", 30)
         // .attr("text-anchor", "middle")
-        const graph = svg.append("g")
-        .attr("transform", `translate(${width/2 +20} , ${height/2+5})`);
+        const graph = svg
+            .append('g')
+            .attr(
+                'transform',
+                `translate(${width / 2 + 20} , ${height / 2 + 5})`
+            )
 
-        var pie = d3.pie()
-                .sort(null)
-                .value(d => d.value);
-        
-        var arc = d3.arc()
-        .innerRadius(Math.min(width, height) / 2 - Math.min(width, height) / 4)
-        .outerRadius(Math.min(width, height) / 2)
-        .cornerRadius(10);
+        var pie = d3
+            .pie()
+            .sort(null)
+            .value((d) => d.value)
 
-        var arcLabel = function(){
-            const radius = Math.min(width, height) / 2 * 0.8;
-            return d3.arc().innerRadius(radius).outerRadius(radius);
+        var arc = d3
+            .arc()
+            .innerRadius(
+                Math.min(width, height) / 2 - Math.min(width, height) / 4
+            )
+            .outerRadius(Math.min(width, height) / 2)
+            .cornerRadius(10)
+
+        var arcLabel = function () {
+            const radius = (Math.min(width, height) / 2) * 0.8
+            return d3.arc().innerRadius(radius).outerRadius(radius)
         }
 
-        var colorInterpolator = d3.interpolate('#F2C94C','#007991')
-      
-        var color = d3.scaleOrdinal(d3['schemeSet2'])
-                    .domain(data.map(d => d.nation))
-                    //.range(d3.quantize(colorInterpolator, data.length).reverse())
+        var colorInterpolator = d3.interpolate('#F2C94C', '#007991')
+
+        var color = d3
+            .scaleOrdinal(d3['schemeSet2'])
+            .domain(data.map((d) => d.nation))
+        //.range(d3.quantize(colorInterpolator, data.length).reverse())
         // Tooltip
-        const tip = d3.tip()
-        .attr("class", "toolTipC")
-        .attr("id", "toolTipC")
-        .style('padding', '10px')
-        .style('background', '#444')
-        .style('color', 'rgb(238, 148, 75)')
-        .style('border-radius','4px')
-        .html(d => {
-          let content = `<div class="name">${d.data.nation}</div>`;
-          content += `<div class="cost">${d.value}</div>`;
-          //content += `<div class="delete">Click slice to delete</div>`;
-          //console.log('tooltip check', d)
-          return content;
-        });
+        const tip = d3
+            .tip()
+            .attr('class', 'toolTipC')
+            .attr('id', 'toolTipC')
+            .style('padding', '10px')
+            .style('background', '#444')
+            .style('color', 'rgb(238, 148, 75)')
+            .style('border-radius', '4px')
+            .html((d) => {
+                let content = `<div class="name">${d.data.nation}</div>`
+                content += `<div class="cost">${d.value}</div>`
+                //content += `<div class="delete">Click slice to delete</div>`;
+                //console.log('tooltip check', d)
+                return content
+            })
 
-        graph.call(tip);
+        graph.call(tip)
 
-        const arcs = pie(data);
+        const arcs = pie(data)
         // Animation
-        const arcTweenEnter = d => {
-          let i = d3.interpolate(d.endAngle, d.startAngle);
+        const arcTweenEnter = (d) => {
+            let i = d3.interpolate(d.endAngle, d.startAngle)
 
-          return function(t) {
-            d.startAngle = i(t);
-            return arc(d);
-          };
-        };
-        
-        const path = graph.selectAll("path").data(pie(data));
+            return function (t) {
+                d.startAngle = i(t)
+                return arc(d)
+            }
+        }
 
-        path
-          .enter()
-          .append("path")
-          .attr("class", "arc")
-          .attr("d", arc)
-          .attr("fill", d => color(d.data.nation))
-          .attr("stroke", "white")
-          .attr("stroke-width", 3)
-          .on('mouseover', function(d, i, n) {
-            //console.log(d, n, i)
-            tip.show(i, this); 
-            d3.selectAll('path')
-            .attr('opacity', 0.6)
+        const path = graph.selectAll('path').data(pie(data))
 
-            d3.select(this)
-              .transition("changeSliceFill")
-              .duration(100)
-              .attr('opacity', 1)
-          })
-          .on('mouseleave', function (actual, i) {
-            tip.hide()
-            d3.selectAll('path')
-            .attr('opacity', 1)
-    
-            d3.select(this)
-                .transition()
-                .duration(300)
-                .attr('opacity', 1)
+        path.enter()
+            .append('path')
+            .attr('class', 'arc')
+            .attr('d', arc)
+            .attr('fill', (d) => color(d.data.nation))
+            .attr('stroke', 'white')
+            .attr('stroke-width', 3)
+            .on('mouseover', function (d, i, n) {
+                //console.log(d, n, i)
+                tip.show(i, this)
+                d3.selectAll('path').attr('opacity', 0.6)
 
-          })
-          .transition()
-          .duration(750)
-          .attrTween("d", arcTweenEnter)
-          .delay(function(d,i){console.log(i) ; return(i*50)})
+                d3.select(this)
+                    .transition('changeSliceFill')
+                    .duration(100)
+                    .attr('opacity', 1)
+            })
+            .on('mouseleave', function (actual, i) {
+                tip.hide()
+                d3.selectAll('path').attr('opacity', 1)
 
+                d3.select(this).transition().duration(300).attr('opacity', 1)
+            })
+            .transition()
+            .duration(750)
+            .attrTween('d', arcTweenEnter)
+            .delay(function (d, i) {
+                //console.log(i) ;
+                return i * 50
+            })
 
         // Legend setup
         const legendGroup = svg
-        .append("g")
-        .attr("transform", `translate(${width+35}, 30)`);
+            .append('g')
+            .attr('transform', `translate(${width + 35}, 30)`)
 
         const legend = d3Legend
-        .legendColor()
-        .shape("circle")
-        .shapePadding(10)
-        .scale(color);
+            .legendColor()
+            .shape('circle')
+            .shapePadding(10)
+            .scale(color)
 
         // update and call legend
-        legendGroup.call(legend);
+        legendGroup.call(legend)
         // text white
-        legendGroup.selectAll("text").attr("fill", "#373737");
-
-
-
+        legendGroup.selectAll('text').attr('fill', '#373737')
 
         // svg.append("g")
         //   .selectAll("path")
@@ -147,7 +151,7 @@ const CircleCart = (props) => {
         //     .attr("d", arc)
         //   .append("title")
         //     .text(d => `${d.data.nation}: ${d.data.value.toLocaleString()}`)
-  
+
         //   svg.selectAll("text")
         //   .data(arcs)
         //   .enter().append("text")
@@ -190,19 +194,16 @@ const CircleCart = (props) => {
         //   .attr('y', d => labelHeight * d.index * 1.8 + labelHeight-4)
         //   .style('font-family', 'sans-serif')
         //   .style('font-size', `${labelHeight-2}px`);
-          
+
         // console.log('arcs', arcs)
+    }, [])
 
-          }, [])
-          
-          return(
-            <PieChartStyle>
-              <h1>{props.header}</h1>
-              <div id= "pieChart">
-              </div>
-            </PieChartStyle>
+    return (
+        <PieChartStyle>
+            <h1>{props.header}</h1>
+            <div id="pieChart"></div>
+        </PieChartStyle>
     )
-
 }
 
 export default CircleCart
