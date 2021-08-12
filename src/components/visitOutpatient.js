@@ -6,6 +6,7 @@ import GenderAgeBarChart from './chart/genderAgeBarChart'
 import GenderAgeDivergingChart from './chart/genderAgeDiverging'
 import CircleCart from './chart/circleChart'
 import StackedBarChart from './chart/stackedBarChart'
+import StackedBarChartTest from './chart/stackedBarCharttest'
 import {
     BackgroudWrap,
     SmallBoxstyle,
@@ -61,19 +62,19 @@ const VisitOutpatient = (props) => {
             </PageHeaderWrap>
 
             <CategoryButtons>
-                <div id="CateButton" className="category">
+                <div id="data1" className="category">
                     본원
                 </div>
-                <div id="CateButton" className="category">
+                <div id="data2" className="category">
                     암병원
                 </div>
-                <div id="CateButton" className="category">
+                <div id="data3" className="category">
                     어린이
                 </div>
-                <div id="CateButton" className="category">
+                <div id="data4" className="category">
                     강남
                 </div>
-                <div id="CateButton" className="category">
+                <div id="data5" className="category">
                     소아
                 </div>
             </CategoryButtons>
@@ -113,12 +114,12 @@ const VisitOutpatient = (props) => {
                         </SmallBoxstyle>
                     </BigBoxstyle>
                     {outBarchartData ? (
-                        <StackedBarChart
+                        <StackedBarChartTest
                             data={outBarchartData}
                             header={outPatientVisitBarChart}
                         />
                     ) : (
-                        <StackedBarChart header={outPatientVisitBarChart} />
+                        <StackedBarChartTest header={outPatientVisitBarChart} />
                     )}
                 </div>
             </OutPatientBg>

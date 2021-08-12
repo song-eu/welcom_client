@@ -10,7 +10,7 @@ const d3 = {
     tip: d3Tip,
 }
 
-const StackedBarChart = (props) => {
+const StackedBarChartTest = (props) => {
     const width = 800
     const height = 500
     const margin = { top: 40, left: 20, bottom: 40, right: 20 }
@@ -37,8 +37,8 @@ const StackedBarChart = (props) => {
 
     useEffect(() => {
         var svg = d3
-            .select('#stackBarchart')
-            .append('svg')
+            .select(svgRef.current)
+            //.append('svg')
             //.attr('width', 1000)
             .attr('width', width + margin.left)
             .attr('height', height)
@@ -187,9 +187,12 @@ const StackedBarChart = (props) => {
         var groups = svg
             .selectAll('g.cols')
             .data(dataset)
-            .enter()
-            .append('g')
-            .attr('class', (d) => 'myRect ' + d.key)
+            .join(
+                (enter) =>
+                    enter.append('g').attr('class', (d) => 'myRect ' + d.key),
+                (update) => update.attr('class', 'update'),
+                (exit) => exit.remove()
+            )
             .style('fill', function (d, i) {
                 return colors[i]
             })
@@ -199,28 +202,33 @@ const StackedBarChart = (props) => {
             .data(function (d) {
                 return d
             })
-            .enter()
-            .append('rect')
-            .attr('x', function (d) {
-                return x(d.data.NAME)
-            })
-            .attr('y', function (d) {
-                return height - margin.bottom
-            })
-            .attr('height', function (d) {
-                return 0
-            })
-            .attr('width', x.bandwidth())
-            .on('mouseover', mouseover)
-            .on('mouseleave', mouseleave)
-            .transition()
-            .duration(800)
-            .attr('y', function (d) {
-                return y(d[1])
-            })
-            .attr('height', function (d) {
-                return y(d[0]) - y(d[1])
-            })
+            .join(
+                (enter) =>
+                    enter
+                        .append('rect')
+                        .attr('x', function (d) {
+                            return x(d.data.NAME)
+                        })
+                        .attr('y', function (d) {
+                            return height - margin.bottom
+                        })
+                        .attr('height', function (d) {
+                            return 0
+                        })
+                        .attr('width', x.bandwidth())
+                        .on('mouseover', mouseover)
+                        .on('mouseleave', mouseleave)
+                        .transition()
+                        .duration(800)
+                        .attr('y', function (d) {
+                            return y(d[1])
+                        })
+                        .attr('height', function (d) {
+                            return y(d[0]) - y(d[1])
+                        }),
+                (update) => update.attr('class', 'update'),
+                (exit) => exit.remove()
+            )
 
         // Draw legend
         var legendItemSize = 12
@@ -258,16 +266,27 @@ const StackedBarChart = (props) => {
             .text(function (d, i) {
                 return col[i]
             })
-    }, [])
+
+        svg.exit().remove()
+    }, [data])
 
     return (
         <MonthlyBarChartStyle>
-            <button onClick> Update Data </button>
+            <button
+                onClick={() =>
+                    data === data2 ? setData(data1) : setData(data2)
+                }
+            >
+                {' '}
+                Update Data{' '}
+            </button>
             <h1>{props.header}</h1>
-            <div id="stackBarchart" ref={svgRef}></div>
+            <div id="stackBarchart">
+                <svg ref={svgRef}></svg>
+            </div>
             <div id="legendStack"></div>
         </MonthlyBarChartStyle>
     )
 }
 
-export default StackedBarChart
+export default StackedBarChartTest

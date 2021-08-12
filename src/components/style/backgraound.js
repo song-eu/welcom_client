@@ -30,14 +30,14 @@ export const PageHeaderWrap = styled.header`
 export const CategoryButtons = styled.div`
     display: flex;
     overflow: hidden;
-    margin-left: 500px;
-    margin-right: 500px;
+    // margin-left: 500px;
+    // margin-right: 500px;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
     & .category {
-        flex: 100px;
-
+        // flex: 100px;
+        width: 100px;
         display: flex;
         align-items: center;
         justify-content: center;
