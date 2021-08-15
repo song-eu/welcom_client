@@ -11,14 +11,14 @@ const d3 = {
 }
 
 const StackedBarChart = (props) => {
-    const width = 800
-    const height = 500
+    const width = 1000
+    const height = 600
     const margin = { top: 40, left: 20, bottom: 40, right: 20 }
     const svgRef = useRef()
 
     // 소아 암병원 어린이 본원 강남 ? 소아?
-    var data1 = sampleData.stack_sample1
-    var data2 = sampleData.stack_sample2
+    var data1 = sampleData.data1
+    var data2 = sampleData.data2
     const [data, setData] = useState(data1)
 
     var metaData = [
@@ -165,7 +165,7 @@ const StackedBarChart = (props) => {
             }).show(i, this)
 
             //
-            tip.style('left', `${pos['right'] + 130}px`).style(
+            tip.style('x', `${pos['right']}px`).style(
                 'top',
                 `${window.pageYOffset + pos['y'] - 4}px`
             )
@@ -262,7 +262,6 @@ const StackedBarChart = (props) => {
 
     return (
         <MonthlyBarChartStyle>
-            <button onClick> Update Data </button>
             <h1>{props.header}</h1>
             <div id="stackBarchart" ref={svgRef}></div>
             <div id="legendStack"></div>

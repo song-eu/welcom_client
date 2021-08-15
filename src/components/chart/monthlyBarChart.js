@@ -6,9 +6,12 @@ import GenderAgeDivergingChart from './genderAgeDiverging'
 import { act } from 'react-dom/cjs/react-dom-test-utils.production.min'
 
 const MonthlyBarChart = (props) => {
-    const width = 900
-    const height = 500
+    const width = 1000
+    const height = 600
     const margin = { top: 40, left: 40, bottom: 40, right: 40 }
+    const [data, setData] = useState(sampleData.monthBarData.data1)
+    const { header, selectData } = props
+    const svgRef = useRef()
 
     var sample = [
         { NAME: 'a', VALUE: 10 },
@@ -22,11 +25,13 @@ const MonthlyBarChart = (props) => {
         { NAME: 'i', VALUE: 15 },
     ]
     // 소아 암병원 어린이 본원 강남 ? 소아?
-    var data = props.data ? props.data : sampleData.nodes
-    console.log('data?'.data, sampleData)
     //var data = sampleData
 
     useEffect(() => {
+        if (selectData != null) {
+            setData(sampleData.monthBarData[selectData])
+        }
+
         var x = d3
             .scaleBand()
             // .scaleBand() 그래프의 막대의 반복되는 범위를 정해줍니다.
@@ -66,6 +71,7 @@ const MonthlyBarChart = (props) => {
         // line chart와 동일
         const svg = d3
             .select('#barchart')
+            .call((g) => g.select('svg').remove())
             .append('svg')
             .style('width', width - margin.left)
             .style('height', height)
@@ -81,7 +87,14 @@ const MonthlyBarChart = (props) => {
                     .attr('stroke', '#bdc3c7')
             )
 
-        const barGroups = svg.selectAll().data(data).enter().append('g')
+        const barGroups = svg
+            .selectAll()
+            .data(data)
+            .join(
+                (enter) => enter.append('g'),
+                (update) => update.attr('class', 'update'),
+                (exit) => exit.remove()
+            )
 
         barGroups
             .append('rect')
@@ -164,20 +177,12 @@ const MonthlyBarChart = (props) => {
         // .enter() Join 된 데이터에 각 자리에 대한 노드를 반환하고
         // .append() 반환된 노드 데이터를 담고 react 엘리먼트를 추가합니다.
         // ex. data = [1, 2, 3, 4] 값을 가지고 있었다면 1, 2, 3, 4 데이터와 매핑된 rect 엘리먼트가 4개 추가됩니다.
-
-        // barGroups
-        //     .append('text')
-        //     .attr('class', 'value')
-        //     .attr('x', (a) => x(a.NAME) + x.bandwidth()/2)
-        //     .attr('y', (a) => y(a.VALUE) +30)
-        //     .attr('text-anchor', 'middle')
-        //     .text((a) => `${a.VALUE}`)
-    }, [])
+    }, [data, selectData])
 
     return (
         <MonthlyBarChartStyle>
-            <h1>{props.header}</h1>
-            <div id="barchart"></div>
+            <h1>{header}</h1>
+            <div id="barchart" ref={svgRef}></div>
         </MonthlyBarChartStyle>
     )
 }

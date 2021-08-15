@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { HorizonBarChartSytle } from '../style/chartStyle'
 import * as d3module from 'd3'
 import d3Tip from 'd3-tip'
+import { sampleData } from '../../sampledata/barData'
 
 const d3 = {
     ...d3module,
@@ -9,26 +10,23 @@ const d3 = {
 }
 
 const DeptHorizonBarChart = (props) => {
-    const data = [
-        { name: '신경외과', value: 29 },
-        { name: '성형외과', value: 32 },
-        { name: '비뇨기과', value: 25 },
-        { name: '순환기내과', value: 23 },
-        { name: '정신과', value: 15 },
-        { name: '소아외과', value: 5 },
-        { name: '가정의학과', value: 40 },
-        { name: '응급의학과', value: 17 },
-        { name: '호흡기내과', value: 24 },
-        { name: '외과', value: 30 },
-    ]
+    const [data, setData] = useState(sampleData.depHorizonData.data1)
+    const { header, selectData } = props
+    const svgRef = useRef()
+
+    var margin = { top: 20, right: 20, bottom: 30, left: 80 },
+        width = 600 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom
+
     data.sort((a, b) => {
         return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
     })
 
     useEffect(() => {
-        var margin = { top: 20, right: 20, bottom: 30, left: 80 },
-            width = 500 - margin.left - margin.right,
-            height = 450 - margin.top - margin.bottom
+        if (selectData != null) {
+            setData(sampleData.depHorizonData[selectData])
+        }
+
         const xMaxValue = d3.max(data, (d) => d.value)
         const color = d3.scaleLinear().domain([0, xMaxValue]).range([0, 0.6])
 
@@ -38,6 +36,7 @@ const DeptHorizonBarChart = (props) => {
 
         var svg = d3
             .select('#hbarchart')
+            .call((g) => g.select('svg').remove())
             .append('svg')
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
@@ -64,11 +63,11 @@ const DeptHorizonBarChart = (props) => {
             tip.style(
                 'left',
                 `${
-                    pos['width'] < tipNodeWidth + 20
+                    pos['width'] < tipNodeWidth + 40
                         ? pos['right']
-                        : pos['right'] - tipNodeWidth - 20
+                        : pos['right'] - tipNodeWidth
                 }px`
-            ).style('top', `${window.pageYOffset + pos['y'] - 4}px`)
+            ).style('top', `${window.pageYOffset + pos['y'] - 1}px`)
 
             d3.select(this)
                 .transition()
@@ -121,10 +120,16 @@ const DeptHorizonBarChart = (props) => {
         // add the y Axis
         svg.append('g').call(d3.axisLeft(y))
 
-        var bar = svg.selectAll('.bar').data(data)
+        var bar = svg
+            .selectAll('.bar')
+            .data(data)
+            .join(
+                (enter) => enter.append('g'),
+                (update) => update.attr('class', 'update'),
+                (exit) => exit.remove()
+            )
 
-        bar.enter()
-            .append('rect')
+        bar.append('rect')
             .attr('class', 'bar')
             //.attr("x", function(d) { return x(0); })
             //.attr("width", function(d) {return x(0) - width; } )
@@ -155,12 +160,12 @@ const DeptHorizonBarChart = (props) => {
 
         //.attr("height", function(d) { return height - y(0); }) // always equal to 0
         //.attr("y", function(d) { return y(0); })
-    }, [])
+    }, [data, selectData])
 
     return (
         <HorizonBarChartSytle>
-            <h1>{props.header}</h1>
-            <div id="hbarchart"></div>
+            <h1>{header}</h1>
+            <div id="hbarchart" ref={svgRef}></div>
         </HorizonBarChartSytle>
     )
 }

@@ -4,7 +4,7 @@ export const MonthlyBarChartStyle = styled.div`
     position: relative;
     float: left;
     --border: 1px solid tomato;
-    margin-left: 60px;
+    margin-left: 30px;
     & #barchart {
         backgroud: tomato;
         --border: 1px solid tomato;
@@ -51,7 +51,7 @@ export const GenderChartSytle = styled.div`
     float: left;
     overflow: hidden;
     --border: 1px solid #ff8c00;
-    margin-left: 30px;
+    margin-left: 10px;
     & h1 {
         position: relative;
         font-size: 24px;

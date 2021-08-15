@@ -11,14 +11,15 @@ const d3 = {
 }
 
 const StackedBarChartTest = (props) => {
+    const { header, selectData } = props
     const width = 800
     const height = 500
     const margin = { top: 40, left: 20, bottom: 40, right: 20 }
     const svgRef = useRef()
 
     // 소아 암병원 어린이 본원 강남 ? 소아?
-    var data1 = sampleData.stack_sample1
-    var data2 = sampleData.stack_sample2
+    var data1 = sampleData.data1
+    var data2 = sampleData.data2
     const [data, setData] = useState(data1)
 
     var metaData = [
@@ -29,6 +30,7 @@ const StackedBarChartTest = (props) => {
         { name: '암병원' },
         { name: '본원' },
     ]
+
     var col = metaData
         .map((d, i) => {
             return d.name
@@ -36,10 +38,17 @@ const StackedBarChartTest = (props) => {
         .slice(1)
 
     useEffect(() => {
+        console.log('props??', props)
+        if (selectData != null) {
+            setData(sampleData[selectData])
+        }
+
         var svg = d3
             .select(svgRef.current)
-            //.append('svg')
+            .call((g) => g.select('svg').remove())
+            .append('svg')
             //.attr('width', 1000)
+            //.attr('viewBox', `0, 0, ${width + margin.left}, ${height}`)
             .attr('width', width + margin.left)
             .attr('height', height)
             .append('g')
@@ -237,6 +246,7 @@ const StackedBarChartTest = (props) => {
 
         var legend = d3
             .select('#legendStack')
+            .call((g) => g.select('svg').remove())
             .append('svg')
             .attr('width', '150px')
             .attr('height', '100px')
@@ -268,22 +278,12 @@ const StackedBarChartTest = (props) => {
             })
 
         svg.exit().remove()
-    }, [data])
+    }, [data, props.selectData])
 
     return (
         <MonthlyBarChartStyle>
-            <button
-                onClick={() =>
-                    data === data2 ? setData(data1) : setData(data2)
-                }
-            >
-                {' '}
-                Update Data{' '}
-            </button>
-            <h1>{props.header}</h1>
-            <div id="stackBarchart">
-                <svg ref={svgRef}></svg>
-            </div>
+            <h1>{header}</h1>
+            <div id="stackBarchart" ref={svgRef}></div>
             <div id="legendStack"></div>
         </MonthlyBarChartStyle>
     )

@@ -3,6 +3,7 @@ import { PieChartStyle } from '../style/chartStyle'
 import * as d3module from 'd3'
 import d3Tip from 'd3-tip'
 import * as d3Legend from 'd3-svg-legend'
+import { sampleData } from '../../sampledata/barData'
 
 const d3 = {
     ...d3module,
@@ -10,20 +11,22 @@ const d3 = {
 }
 
 const CircleCart = (props) => {
-    let data = [
-        { nation: 'Korean', value: 70 },
-        { nation: 'Unknown', value: 20 },
-        { nation: 'American', value: 20 },
-    ]
+    var margin = { top: 30, right: 80, bottom: 30, left: 80 },
+        width = 660 - margin.left - margin.right,
+        height = 660 - margin.top - margin.bottom,
+        labelHeight = 18
+    const [data, setData] = useState(sampleData.circleCharData.data1)
+    const { header, selectData } = props
+    const svgRef = useRef()
 
     useEffect(() => {
-        var margin = { top: 30, right: 80, bottom: 30, left: 80 },
-            width = 500 - margin.left - margin.right,
-            height = 510 - margin.top - margin.bottom,
-            labelHeight = 18
+        if (selectData != null) {
+            setData(sampleData.circleCharData[selectData])
+        }
 
         var svg = d3
             .select('#pieChart')
+            .call((g) => g.select('svg').remove())
             .append('svg')
             //.attr("viewBox", [height/2, width/2, width + margin.left + margin.right, height + margin.top + margin.bottom])
             .attr('width', width + margin.left + margin.right)
@@ -92,10 +95,16 @@ const CircleCart = (props) => {
             }
         }
 
-        const path = graph.selectAll('path').data(pie(data))
+        const path = graph
+            .selectAll('path')
+            .data(pie(data))
+            .join(
+                (enter) => enter.append('g'),
+                (update) => update.attr('class', 'update'),
+                (exit) => exit.remove()
+            )
 
-        path.enter()
-            .append('path')
+        path.append('path')
             .attr('class', 'arc')
             .attr('d', arc)
             .attr('fill', (d) => color(d.data.nation))
@@ -196,12 +205,12 @@ const CircleCart = (props) => {
         //   .style('font-size', `${labelHeight-2}px`);
 
         // console.log('arcs', arcs)
-    }, [])
+    }, [data, selectData])
 
     return (
         <PieChartStyle>
-            <h1>{props.header}</h1>
-            <div id="pieChart"></div>
+            <h1>{header}</h1>
+            <div id="pieChart" ref={svgRef}></div>
         </PieChartStyle>
     )
 }
