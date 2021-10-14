@@ -8,6 +8,7 @@ import GenderAgeDivergingChart from './chart/genderAgeDiverging'
 import CircleCart from './chart/circleChart'
 import StackedBarChart from './chart/stackedBarChart'
 import StackedBarChartTest from './chart/stackedBarCharttest'
+import PersonMap from './chart/personMap'
 import {
     SmallBoxstyleOut,
     BackgroudWrap,
@@ -182,7 +183,9 @@ const VisitOutpatient = (props) => {
                 </div>
             </OutPatientBg>
             <OutPatientBg>
-                <div></div>
+                <div>
+                    <PersonMap />
+                </div>
             </OutPatientBg>
         </div>
     )
