@@ -3,10 +3,12 @@ import { PieChartStyle } from '../style/chartStyle'
 import { MapContainer } from '../style/mapStyle'
 import * as d3module from 'd3'
 import d3Tip from 'd3-tip'
-import * as topojson from 'topojson'
+
 import { geoEqualEarth, geoPath } from 'd3-geo'
 import * as d3Legend from 'd3-svg-legend'
 import { sampleData } from '../../sampledata/barData'
+import koreaGeoData from './source/skorea-provinces-2018-topo-simple.json'
+import * as topojson from 'topojson'
 
 const d3 = {
     ...d3module,
@@ -14,63 +16,56 @@ const d3 = {
 }
 
 const PersonMap = (props) => {
-    const koreaMap = require('./HangJeongDong_ver20210701.geojson')
-    const width = 800,
-        height = 700
+    const width = 1000,
+        height = 1200
     //const projection = geoEqualEarth();
     //const path = geoPath(projection);
-    const chartWidth = 300
-    const chartHeight = 300
-    const backgroundColor = '#EAF2FA'
-    const landColor = '#09A573'
-    const landStroke = '#FCF5E9'
-    const markerColor = '#E26F99'
-    const center = d3.geoCentroid(koreaMap)
-
-    const canvas = d3.select('#map-canvas')
-
-    const svg = canvas.append('svg').attr('width', width).attr('height', height)
-
-    const projection = d3.geoMercator().translate([width / 2, height / 2])
-
-    const path = d3.geoPath().projection(projection)
+    const geojson = topojson.feature(
+        koreaGeoData,
+        koreaGeoData.objects.skorea_provinces_2018_geo
+    )
+    const center = d3.geoCentroid(geojson)
+    console.log('geojson???', geojson)
 
     useEffect(() => {
+        const svg = d3
+            .select('#map-canvas')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .style('background-color', '#f2f2f7') //지도 배경색 변경
         const projection = d3
             .geoMercator()
-            .scale(1000) //스케일
-            //.rotate([-10, 1, 0]) //지도 회전
-            .center([127, 37.6]) //서울 중심좌표
-            .translate([width / 2, height / 2])
+            .scale(1) //스케일
+            .translate([0, 0])
+        // .rotate([-10, 1, 0]) //지도 회전
+        // .center([127, 37.6]) //서울 중심좌표
+        // .translate([width / 2, height / 2])
+        const path = d3.geoPath().projection(projection)
+        const bounds = path.bounds(geojson)
+        const widthScale = (bounds[1][0] - bounds[0][0]) / width
+        const hieghtScale = (bounds[1][1] - bounds[0][1]) / height
+        const scale = 1 / Math.max(widthScale, hieghtScale)
+        const xoffset =
+            width / 2 - (scale * (bounds[1][0] + bounds[0][0])) / 2 + 10
+        const yoffset =
+            height / 2 - (scale * (bounds[1][1] + bounds[0][1])) / 2 + 80
+        const offset = [xoffset, yoffset]
+        projection.scale(scale).translate(offset)
 
-        const pathGenerator = d3.geoPath(projection)
-        const svg = d3
-            .select('#mapView')
-            .append('svg')
-            .attr('width', chartWidth)
-            .attr('height', chartHeight)
-        var map = svg.append('g').attr('id', 'map')
-        var places = svg.append('g').attr('id', 'places')
-
-        d3.json(
-            './source/sido_simplified_topo_q1e4.json',
-            function (err, data) {
-                console.log(data)
-            }
-        )
-
-        //C:\welcome_dashboard\welcom_client\src\components\chart\source\sido_simplified_topo_q1e4.json
+        var map = svg
+            .append('g')
+            .selectAll('path')
+            .data(geojson.features)
+            .enter()
+            .append('path')
+            .attr('d', path)
+            .attr('fill', '#9980FA') // 지도 내부 색깔
+            // 자목 색 #ed8b70
+            // 회색 #9980FA
+            .attr('stroke', '#fff') // 지도 선 색깔 변경
+        // 오렌지색 liner #de6a6c
     })
-
-    // svg.selectAll('circle')
-    //     .data(markers)
-    //     .join('circle')
-    //     .attr('cx', (d) => projection(d.geometry.coordinates)[0])
-    //     .attr('cy', (d) => projection(d.geometry.coordinates)[1])
-    //     .attr('r', 4)
-    //     .attr('fill-opacity', 0.5)
-    //     .attr('fill', markerColor)
-    //     .attr('stroke', markerColor)
 
     return (
         <MapContainer>
