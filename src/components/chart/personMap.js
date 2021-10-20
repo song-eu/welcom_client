@@ -7,8 +7,10 @@ import d3Tip from 'd3-tip'
 import { geoEqualEarth, geoPath } from 'd3-geo'
 import * as d3Legend from 'd3-svg-legend'
 import { sampleData } from '../../sampledata/barData'
+import ChangeGeoLocation from '../../modules/ChangeGeoLocation'
 import koreaGeoData from './source/skorea-provinces-2018-topo-simple.json'
 import * as topojson from 'topojson'
+import mapData from './source/1_year_weekly_visits_addr.csv'
 
 const d3 = {
     ...d3module,
@@ -27,7 +29,7 @@ const PersonMap = (props) => {
     const center = d3.geoCentroid(geojson)
     console.log('geojson???', geojson)
 
-    useEffect(() => {
+    useEffect(async () => {
         const svg = d3
             .select('#map-canvas')
             .append('svg')
@@ -65,6 +67,30 @@ const PersonMap = (props) => {
             // 회색 #9980FA
             .attr('stroke', '#fff') // 지도 선 색깔 변경
         // 오렌지색 liner #de6a6c
+
+        // d3.csv(mapData, (data) => {
+        //     console.log('data??', data)
+        // })
+
+        let mapData = await ChangeGeoLocation(geojson, 'data')
+        console.log('translated map data?', mapData)
+
+        map.selectAll('circle')
+            .append('g')
+            .attr('fill', 'brown')
+            .attr('fill-opacity', 0.5)
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 0.5)
+            .data(
+                mapData
+                    .filter((d) => d.loc)
+                    .sort((a, b) => d3.descending(a.cnt, b.cnt))
+            )
+            .join('circle')
+            .attr('transform', (d) => `translate(${d.loc})`)
+            .attr('r', (d) => d3.scaleSqrt().range([0.5, 15])(d.cnt))
+            .append('title')
+            .text((d) => `${d.name} ${d.cnt}`)
     })
 
     return (
