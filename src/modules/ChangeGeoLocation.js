@@ -32,8 +32,11 @@ const ChangeGeoLocation = async (geojson, data) => {
                                                 name: geojson.features[i]
                                                     .properties.name,
                                                 cnt: 0,
-                                                loc: geojson.features[i]
-                                                    .geometry.coordinates[0][0],
+                                                // loc: geojson.features[i]
+                                                //     .geometry.coordinates[0][0],
+                                                loc: d3.geoCentroid(
+                                                    geojson.features[i].geometry
+                                                ),
                                             }
                                     } else {
                                         result[map.SIDO_ADDR.substring(0, 2)] =
@@ -43,9 +46,12 @@ const ChangeGeoLocation = async (geojson, data) => {
                                                 name: geojson.features[i]
                                                     .properties.name,
                                                 cnt: 0,
-                                                loc: geojson.features[i]
-                                                    .geometry
-                                                    .coordinates[0][0][0],
+                                                // loc: geojson.features[i]
+                                                //     .geometry
+                                                //     .coordinates[0][0][0],
+                                                loc: d3.geoCentroid(
+                                                    geojson.features[i].geometry
+                                                ),
                                             }
                                     }
                                 }
