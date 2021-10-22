@@ -45,7 +45,7 @@ const App = () => {
         <div className="App">
             <Router>
                 <HeaderWrap>
-                    <h1>SNUH Data Dashboard</h1>
+                    <h1>SNUH HIVE</h1>
                     <div className="pageButtons">
                         <Link to="/visitOut">
                             <HeaderButton

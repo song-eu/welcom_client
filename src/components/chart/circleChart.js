@@ -111,18 +111,18 @@ const CircleCart = (props) => {
             .attr('stroke', 'white')
             .attr('stroke-width', 3)
             .on('mouseover', function (d, i, n) {
-                //console.log(d, n, i)
+                console.log(d, n, i)
                 tip.show(i, this)
-                d3.selectAll('path').attr('opacity', 0.6)
+                //d3.selectAll('arc').attr('opacity', 0.6)
 
                 d3.select(this)
                     .transition('changeSliceFill')
                     .duration(100)
-                    .attr('opacity', 1)
+                    .attr('opacity', 0.6)
             })
             .on('mouseleave', function (actual, i) {
                 tip.hide()
-                d3.selectAll('path').attr('opacity', 1)
+                //d3.selectAll('arc').attr('opacity', 1)
 
                 d3.select(this).transition().duration(300).attr('opacity', 1)
             })
