@@ -2,10 +2,13 @@ import React, { useEffect } from 'react'
 import { MapContainer } from '../style/mapStyle'
 import * as d3module from 'd3'
 import d3Tip from 'd3-tip'
-
+import { sliderBottom } from 'd3-simple-slider'
 import ChangeGeoLocation from '../../modules/ChangeGeoLocation'
 import koreaGeoData from './source/skorea-provinces-2018-topo-simple.json'
 import * as topojson from 'topojson'
+import moment from 'moment'
+import { margin } from 'polished'
+import { range, timeFormat } from 'd3'
 
 const d3 = {
     ...d3module,
@@ -22,6 +25,12 @@ const PersonMap = (props) => {
     )
     const center = d3.geoCentroid(geojson)
     console.log('geojson???', geojson)
+    // slide bar 의 최소 / 최대 날짜 및 현재 날짜 설정 가능
+    // data 기준이 현재날짜 - 12 month 이므로 해당날짜로 설정되어 있으나,
+    // 필요에 따라 변경가능
+    var startYear = moment().subtract(15, 'month'),
+        endYear = moment().subtract(3, 'month'),
+        currYear = endYear
 
     useEffect(() => {
         const svg = d3
@@ -81,8 +90,34 @@ const PersonMap = (props) => {
             })
 
         map.call(tip)
+        var rangeDate = range(0, 12).map(
+            (d) =>
+                //moment(startYear).add(d, 'month').format('YYYY-MM')
+                new Date(
+                    moment(startYear).format('YYYY') + d,
+                    moment(startYear).format('MM'),
+                    1
+                )
+        )
 
-        ChangeGeoLocation(geojson, 'data').then((data) => {
+        var slider = sliderBottom()
+            .min(startYear)
+            .max(endYear)
+            .step(1000 * 60 * 60 * 24 * 12)
+            .width(900)
+            .tickFormat(timeFormat('%Y-%m'))
+            //.tickValues(rangeDate)
+            .default(currYear)
+
+        d3.select('#mapSlider')
+            .append('svg')
+            .attr('width', 1000)
+            .attr('height', 100)
+            .append('g')
+            .attr('transfrom', 'translate(30,30)')
+            .call(slider)
+
+        ChangeGeoLocation(geojson, currYear).then((data) => {
             // console.log('data???', data)
             svg.append('g')
                 .attr('fill', 'gray')
@@ -124,6 +159,8 @@ const PersonMap = (props) => {
     return (
         <MapContainer>
             <h1>Person Map Viewer</h1>
+            <div></div>
+            <div id="mapSlider"></div>
             <div id="map-canvas"></div>
         </MapContainer>
     )

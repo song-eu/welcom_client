@@ -111,7 +111,7 @@ const CircleCart = (props) => {
             .attr('stroke', 'white')
             .attr('stroke-width', 3)
             .on('mouseover', function (d, i, n) {
-                console.log(d, n, i)
+                //console.log(d, n, i)
                 tip.show(i, this)
                 //d3.selectAll('arc').attr('opacity', 0.6)
 
