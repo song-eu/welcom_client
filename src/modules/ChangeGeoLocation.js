@@ -12,7 +12,9 @@ const ChangeGeoLocation = async (geojson, date) => {
             process.env.PUBLIC_URL + '/1_year_weekly_visits_addr.csv',
             (map) => {
                 // 데이터 월 = 마지막 달
-                if (map.DATE.substring(0, 7) === date) {
+                if (
+                    map.DATE.substring(0, 7) === moment(date).format('YYYY-MM')
+                ) {
                     if (map.SIDO_ADDR != '') {
                         for (let i = 0; i < geojson.features.length; i++) {
                             if (

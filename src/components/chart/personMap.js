@@ -29,7 +29,7 @@ const PersonMap = (props) => {
     // data 기준이 현재날짜 - 12 month 이므로 해당날짜로 설정되어 있으나,
     // 필요에 따라 변경가능
     var startYear = moment().subtract(15, 'month'),
-        endYear = moment().subtract(3, 'month'),
+        endYear = moment().subtract(4, 'month'),
         currYear = endYear
 
     useEffect(() => {
@@ -90,32 +90,41 @@ const PersonMap = (props) => {
             })
 
         map.call(tip)
-        var rangeDate = range(0, 12).map(
-            (d) =>
-                //moment(startYear).add(d, 'month').format('YYYY-MM')
-                new Date(
-                    moment(startYear).format('YYYY') + d,
-                    moment(startYear).format('MM'),
-                    1
-                )
-        )
+        //<<----- adding slider ----->>
+        // var rangeDate = d3.range(0, 12).map((d) => {
+        //     //moment(startYear).add(d, 'month').format('YYYY-MM')
+        //     let rangeValue = moment(startYear).add(d, 'month').format('YYYY-MM')
 
-        var slider = sliderBottom()
-            .min(startYear)
-            .max(endYear)
-            .step(1000 * 60 * 60 * 24 * 12)
-            .width(900)
-            .tickFormat(timeFormat('%Y-%m'))
-            //.tickValues(rangeDate)
-            .default(currYear)
+        //     return new Date(
+        //         moment(rangeValue).format('YYYY'),
+        //         moment(rangeValue).format('MM'),
+        //         1
+        //     )
+        // })
+        // console.log('rangedata???', rangeDate)
 
-        d3.select('#mapSlider')
-            .append('svg')
-            .attr('width', 1000)
-            .attr('height', 100)
-            .append('g')
-            .attr('transfrom', 'translate(30,30)')
-            .call(slider)
+        // var slider = sliderBottom()
+        //     .min(d3.min(rangeDate))
+        //     .max(d3.max(rangeDate))
+        //     .step(1000 * 60 * 60 * 24 * 30)
+        //     .width(900)
+        //     .tickFormat(timeFormat('%Y-%m'))
+        //     .tickValues(rangeDate)
+        //     .default(d3.max(rangeDate))
+        //     .on('onchange', (val) => {
+        //         d3.select('p#mapValue-time').text(d3.timeFormat('%Y-%m')(val))
+        //     })
+
+        // d3.select('#mapSlider')
+        //     .append('svg')
+        //     .attr('width', 1000)
+        //     .attr('height', 100)
+        //     .append('g')
+        //     // .attr('transfrom', 'translate(30,30)')
+        //     .call(slider)
+
+        // d3.select('p#mapValue-time').text(d3.timeFormat('%Y')(slider.value()))
+        //<<----- slider ----->>
 
         ChangeGeoLocation(geojson, currYear).then((data) => {
             // console.log('data???', data)
@@ -152,7 +161,7 @@ const PersonMap = (props) => {
                 .attr('cy', (d) => projection(d.loc)[1] - 40)
                 .transition()
                 .duration(500)
-                .attr('r', (d) => d3.scaleSqrt().range([3, 20])(d.cnt) / 100)
+                .attr('r', (d) => d3.scaleSqrt().range([10, 40])(d.cnt) / 100)
         })
     })
 
@@ -160,7 +169,9 @@ const PersonMap = (props) => {
         <MapContainer>
             <h1>Person Map Viewer</h1>
             <div></div>
-            <div id="mapSlider"></div>
+            <div id="mapSlider">
+                <p id="mapValue-time"></p>
+            </div>
             <div id="map-canvas"></div>
         </MapContainer>
     )
