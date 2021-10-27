@@ -32,6 +32,12 @@ const PersonMap = (props) => {
     // slide bar 의 최소 / 최대 날짜 및 현재 날짜 설정 가능
     // data 기준이 현재날짜 - 12 month 이므로 해당날짜로 설정되어 있으나,
     // 필요에 따라 변경가능
+<<<<<<< HEAD
+=======
+    var startYear = moment().subtract(15, 'month'),
+        endYear = moment().subtract(4, 'month'),
+        currYear = endYear
+>>>>>>> d9f73cb04af38b06b155cea260e4ff16d0cb4e98
 
     useEffect(async () => {
         if (dataloc.includes('.csv')) {
@@ -135,6 +141,30 @@ const PersonMap = (props) => {
         //     .tickFormat(timeFormat('%Y-%m'))
         //     //.tickValues(rangeDate)
         //     .default(currYear)
+        //<<----- adding slider ----->>
+        // var rangeDate = d3.range(0, 12).map((d) => {
+        //     //moment(startYear).add(d, 'month').format('YYYY-MM')
+        //     let rangeValue = moment(startYear).add(d, 'month').format('YYYY-MM')
+
+        //     return new Date(
+        //         moment(rangeValue).format('YYYY'),
+        //         moment(rangeValue).format('MM'),
+        //         1
+        //     )
+        // })
+        // console.log('rangedata???', rangeDate)
+
+        // var slider = sliderBottom()
+        //     .min(d3.min(rangeDate))
+        //     .max(d3.max(rangeDate))
+        //     .step(1000 * 60 * 60 * 24 * 30)
+        //     .width(900)
+        //     .tickFormat(timeFormat('%Y-%m'))
+        //     .tickValues(rangeDate)
+        //     .default(d3.max(rangeDate))
+        //     .on('onchange', (val) => {
+        //         d3.select('p#mapValue-time').text(d3.timeFormat('%Y-%m')(val))
+        //     })
 
         // d3.select('#mapSlider')
         //     .append('svg')
