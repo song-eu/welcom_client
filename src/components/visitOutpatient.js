@@ -9,44 +9,33 @@ import CircleCart from './chart/circleChart'
 import StackedBarChart from './chart/stackedBarChart'
 import StackedBarChartTest from './chart/stackedBarCharttest'
 import PersonMap from './chart/personMap'
-import {
-    SmallBoxstyleOut,
-    BackgroudWrap,
-    SmallBoxstyle,
-    HeaderWrap,
-    BigBoxstyle,
-    OutPatientBg,
-    CategoryButtons,
-    PageHeaderWrap,
-} from './style/backgraound'
+import { RowStyle, BoxStyle, CountButton, ButtonRow } from './style/backgraound'
 import moment from 'moment'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitOutpatient = (props) => {
-    let totalThisMonth, avgThisMonth, totalOutpatient
-
-    const divRef = useRef()
-    const [graphHeight, setGraphData] = useState(0)
-    let incomingData = [23, 4335, 6, 45354, 23, 132, 99999]
-    const [outBarchartData, setoutBarchartData] = useState(null)
-    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [selectData, setSelectData] = useState(null)
     const thisMonth = moment().format('MMMM')
-    const outPatientVisitBarChart = 'Monthly Oupatinet Visits'
+    const outPatientVisitBarChart = 'Monthly Oupatinet Visits by Hospital'
     const outPatientHBarChart = `Outpatient Visits by Department in ${thisMonth}`
+    const outPationtTotalBarChart = 'Monthly Visit total (Outpatient & EM)'
     const outPatientGenderChart = 'Outpatient Visit by Age & Gender'
+    const outPatientPersonMap = 'Outpatient Visit by Location'
     const outPatientPieChart = 'Outpatient Visit by Nation'
-    var currMonthName = moment().format('MMMM')
-    //console.log('currMonthName', currMonthName)
+
+    const dataLocation = '/outpatientData'
+    const outBarchartData = dataLocation + '/1year_total_by_hospital.csv'
+    const outDepchartData = dataLocation + '/july_visit_dept_rank.csv'
+    const outPersonMapData = dataLocation + '/1_year_weekly_visits_addr.csv'
+    const outGenderAgeData = dataLocation + '/july_AGE_GENDER_GROUP.csv'
+    const outMonthlyBarData = dataLocation + '/1year_monthly_total.csv'
 
     const fetchData = async () => {
         try {
             const response = await axios.get(
                 'http://localhost:30000/api/visitOut/'
             )
-            console.log('res: ', response)
-            setoutBarchartData(response.data)
         } catch (e) {
             console.log(e)
             setError(true)
@@ -63,130 +52,58 @@ const VisitOutpatient = (props) => {
 
     return (
         <div>
-            <div>
-                <PageHeaderWrap>
-                    <h1>
-                        <div className="selectedLink">Outpatient Visit</div>
-                        <Link to="/visitIn">
-                            <div className="unSelectedLink">
-                                Inpatient Visit
-                            </div>
-                        </Link>
-                    </h1>
-                </PageHeaderWrap>
+            <ButtonRow>
+                <CountButton>
+                    <div>서울대병원 전체</div>
+                    <div>30,000,000명</div>
+                </CountButton>
+                <CountButton>
+                    <div>본원 방문</div>
+                    <div>30,000,000명</div>
+                </CountButton>
+                <CountButton>
+                    <div>어린이병원 방문</div>
+                    <div>30,000,000명</div>
+                </CountButton>
+                <CountButton>
+                    <div>강남병원 방문</div>
+                    <div>30,000,000명</div>
+                </CountButton>
+                <CountButton>
+                    <div>이번달 본원 방문</div>
+                    <div>30,000,000명</div>
+                </CountButton>
+            </ButtonRow>
 
-                <CategoryButtons selected={selectData}>
-                    <div
-                        id="data1"
-                        className="category"
-                        onClick={(e) => onClickUpdate(e)}
-                    >
-                        본원
-                    </div>
-                    <div
-                        id="data2"
-                        className="category"
-                        onClick={(e) => onClickUpdate(e)}
-                    >
-                        암병원
-                    </div>
-                    <div
-                        id="data3"
-                        className="category"
-                        onClick={(e) => onClickUpdate(e)}
-                    >
-                        어린이
-                    </div>
-                    <div
-                        id="data4"
-                        className="category"
-                        onClick={(e) => onClickUpdate(e)}
-                    >
-                        강남
-                    </div>
-                    <div
-                        id="data5"
-                        className="category"
-                        onClick={(e) => onClickUpdate(e)}
-                    >
-                        소아
-                    </div>
-                </CategoryButtons>
-            </div>
-            <OutPatientBg>
-                <div className="firstLine">
-                    <BigBoxstyle>
-                        <SmallBoxstyleOut>
-                            <div className="totalThisMonth">
-                                <div className="countText">
-                                    Average Daily <br /> Outpatient Visits
-                                </div>
-                                <div className="countNumber">
-                                    {totalThisMonth ? totalThisMonth : 3000} 명
-                                </div>
-                            </div>
-                        </SmallBoxstyleOut>
-                        <SmallBoxstyleOut>
-                            <div className="avgThisMonth">
-                                <div className="countText">
-                                    Total Outpatient <br /> Visits in
-                                    {' ' + thisMonth}
-                                </div>
-                                <div className="countNumber">
-                                    {avgThisMonth ? avgThisMonth : 3000} 명
-                                </div>
-                            </div>
-                        </SmallBoxstyleOut>
-                        <SmallBoxstyleOut>
-                            <div className="totalOutpatient">
-                                <div className="countText">
-                                    SNUH Total <br /> Outpatient Visits
-                                </div>
-                                <div className="countNumber">
-                                    {totalOutpatient ? totalOutpatient : 30000}
-                                    명
-                                </div>
-                            </div>
-                        </SmallBoxstyleOut>
-                    </BigBoxstyle>
-                    {outBarchartData ? (
-                        <StackedBarChart
-                            data={outBarchartData}
-                            header={outPatientVisitBarChart}
-                        />
-                    ) : (
-                        <StackedBarChart
-                            header={outPatientVisitBarChart}
-                            // selectData={selectData}
-                        />
-                    )}
-                    <GenderAgeDivergingChart
-                        header={outPatientGenderChart}
-                        selectData={selectData}
+            <RowStyle>
+                <BoxStyle>
+                    <StackedBarChart
+                        data={outBarchartData}
+                        header={outPatientVisitBarChart}
                     />
-                </div>
-            </OutPatientBg>
-            <OutPatientBg>
-                <div>
+
                     <DeptHorizonBarChart
                         header={outPatientHBarChart}
-                        selectData={selectData}
+                        data={outDepchartData}
+                    />
+                </BoxStyle>
+                <BoxStyle>
+                    <PersonMap
+                        header={outPatientPersonMap}
+                        dataloc={outPersonMapData}
+                    />
+                </BoxStyle>
+                <BoxStyle>
+                    <GenderAgeDivergingChart
+                        header={outPatientGenderChart}
+                        dataloc={outGenderAgeData}
                     />
                     <MonthlyBarChart
-                        header={outPatientHBarChart}
-                        selectData={selectData}
+                        header={outPationtTotalBarChart}
+                        dataloc={outMonthlyBarData}
                     />
-                    <CircleCart
-                        header={outPatientPieChart}
-                        selectData={selectData}
-                    />
-                </div>
-            </OutPatientBg>
-            <OutPatientBg>
-                <div>
-                    <PersonMap />
-                </div>
-            </OutPatientBg>
+                </BoxStyle>
+            </RowStyle>
         </div>
     )
 }

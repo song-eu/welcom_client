@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { MapContainer } from '../style/mapStyle'
+import { MapBubbleChartStyle } from '../style/chartStyle'
 import * as d3module from 'd3'
 import d3Tip from 'd3-tip'
 import { sliderBottom } from 'd3-simple-slider'
@@ -7,8 +7,10 @@ import ChangeGeoLocation from '../../modules/ChangeGeoLocation'
 import koreaGeoData from './source/skorea-provinces-2018-topo-simple.json'
 import * as topojson from 'topojson'
 import moment from 'moment'
+import jsonToData from '../../modules/jsonDataRead'
 import { margin } from 'polished'
 import { range, timeFormat } from 'd3'
+import { useState } from 'react'
 
 const d3 = {
     ...d3module,
@@ -16,37 +18,61 @@ const d3 = {
 }
 
 const PersonMap = (props) => {
-    const width = 1000,
-        height = 1400
+    const { dataloc } = props
+    var width = 850,
+        height = 1300
+    const thisMonth = moment().subtract(1, 'month').format('YYYY-MM')
 
     const geojson = topojson.feature(
         koreaGeoData,
         koreaGeoData.objects.skorea_provinces_2018_geo
     )
     const center = d3.geoCentroid(geojson)
-    console.log('geojson???', geojson)
+    //console.log('geojson???', geojson)
     // slide bar 의 최소 / 최대 날짜 및 현재 날짜 설정 가능
     // data 기준이 현재날짜 - 12 month 이므로 해당날짜로 설정되어 있으나,
     // 필요에 따라 변경가능
-    var startYear = moment().subtract(15, 'month'),
-        endYear = moment().subtract(3, 'month'),
-        currYear = endYear
 
-    useEffect(() => {
+    useEffect(async () => {
+        if (dataloc.includes('.csv')) {
+            var data = await ChangeGeoLocation(geojson, dataloc)
+            var circleRange = [10, 40]
+            var projection = d3
+                .geoMercator()
+                .scale(11000) //스케일
+                //.scale(1)
+                //.translate([0, 0])
+                //.rotate([-10, 1, 0]) //지도 회전
+                .center([127, 37.6]) //서울 중심좌표
+                .translate([width / 3, height / 4.9])
+        } else {
+            var data = await jsonToData(dataloc, thisMonth, geojson)
+            data = data[thisMonth]
+            var circleRange = [10, 100]
+            width = 700
+            height = 800
+
+            var projection = d3
+                .geoMercator()
+                .scale(10000 / 1.5) //스케일
+                //.scale(1)
+                //.translate([0, 0])
+                //.rotate([-10, 1, 0]) //지도 회전
+                .center([127, 37.6]) //서울 중심좌표
+                .translate([width / 3, height / 4.9])
+
+            // setWidth(1800)
+        }
+
+        //console.log('getdata person map?', data)
+
         const svg = d3
             .select('#map-canvas')
             .append('svg')
             .attr('width', width)
             .attr('height', height)
             .style('background-color', '#f2f2f7') //지도 배경색 변경
-        const projection = d3
-            .geoMercator()
-            .scale(11000) //스케일
-            //.scale(1)
-            //.translate([0, 0])
-            //.rotate([-10, 1, 0]) //지도 회전
-            .center([127, 37.6]) //서울 중심좌표
-            .translate([width / 3, height / 4])
+
         const path = d3.geoPath().projection(projection)
         // const bounds = path.bounds(geojson)
         // const widthScale = (bounds[1][0] - bounds[0][0]) / width
@@ -90,79 +116,79 @@ const PersonMap = (props) => {
             })
 
         map.call(tip)
-        var rangeDate = range(0, 12).map(
-            (d) =>
-                //moment(startYear).add(d, 'month').format('YYYY-MM')
-                new Date(
-                    moment(startYear).format('YYYY') + d,
-                    moment(startYear).format('MM'),
-                    1
-                )
-        )
+        // <<------- slider ------>>
+        // var rangeDate = range(0, 12).map(
+        //     (d) =>
+        //         //moment(startYear).add(d, 'month').format('YYYY-MM')
+        //         new Date(
+        //             moment(startYear).format('YYYY') + d,
+        //             moment(startYear).format('MM'),
+        //             1
+        //         )
+        // )
 
-        var slider = sliderBottom()
-            .min(startYear)
-            .max(endYear)
-            .step(1000 * 60 * 60 * 24 * 12)
-            .width(900)
-            .tickFormat(timeFormat('%Y-%m'))
-            //.tickValues(rangeDate)
-            .default(currYear)
+        // var slider = sliderBottom()
+        //     .min(startYear)
+        //     .max(endYear)
+        //     .step(1000 * 60 * 60 * 24 * 12)
+        //     .width(900)
+        //     .tickFormat(timeFormat('%Y-%m'))
+        //     //.tickValues(rangeDate)
+        //     .default(currYear)
 
-        d3.select('#mapSlider')
-            .append('svg')
-            .attr('width', 1000)
-            .attr('height', 100)
-            .append('g')
-            .attr('transfrom', 'translate(30,30)')
-            .call(slider)
+        // d3.select('#mapSlider')
+        //     .append('svg')
+        //     .attr('width', 1000)
+        //     .attr('height', 100)
+        //     .append('g')
+        //     .attr('transfrom', 'translate(30,30)')
+        //     .call(slider)
 
-        ChangeGeoLocation(geojson, currYear).then((data) => {
-            // console.log('data???', data)
-            svg.append('g')
-                .attr('fill', 'gray')
-                .attr('fill-opacity', 0.5)
-                .attr('stroke', '#fff')
-                .attr('stroke-width', 0.5)
-                .selectAll('circle')
-                //.attr('class', 'population')
-                .data(data.filter((d) => d.loc))
-                .join('circle')
-                .on('mouseover', function (d, i, n) {
-                    tip.show(i, this)
+        // <<------- slider ------>>
 
-                    d3.select(this)
-                        .attr('stroke', '#F3F9A7')
-                        .attr('stroke-width', 5)
-                        .attr('fill', '#fffbd5')
-                        .attr('opacity', 1)
-                })
-                .on('mouseleave', function (actual, i) {
-                    tip.hide()
+        // console.log('data???', data)
+        svg.append('g')
+            .attr('fill', 'gray')
+            .attr('fill-opacity', 0.5)
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 0.5)
+            .selectAll('circle')
+            //.attr('class', 'population')
+            .data(data.filter((d) => d.loc))
+            .join('circle')
+            .on('mouseover', function (d, i, n) {
+                tip.show(i, this)
 
-                    d3.select(this)
-                        .attr('fill', 'gray')
-                        .attr('fill-opacity', 0.5)
-                        .attr('stroke', '#fff')
-                        .attr('stroke-width', 0.5)
-                })
-                .attr('transform', (d) => `translate(${d.loc})`)
-                .attr('id', (d) => `${d.name}`)
-                .attr('cx', (d) => projection(d.loc)[0] - 125)
-                .attr('cy', (d) => projection(d.loc)[1] - 40)
-                .transition()
-                .duration(500)
-                .attr('r', (d) => d3.scaleSqrt().range([3, 20])(d.cnt) / 100)
-        })
-    })
+                d3.select(this)
+                    .attr('stroke', '#F3F9A7')
+                    .attr('stroke-width', 5)
+                    .attr('fill', '#fffbd5')
+                    .attr('opacity', 1)
+            })
+            .on('mouseleave', function (actual, i) {
+                tip.hide()
+
+                d3.select(this)
+                    .attr('fill', 'gray')
+                    .attr('fill-opacity', 0.5)
+                    .attr('stroke', '#fff')
+                    .attr('stroke-width', 0.5)
+            })
+            .attr('transform', (d) => `translate(${d.loc})`)
+            .attr('id', (d) => `${d.name}`)
+            .attr('cx', (d) => projection(d.loc)[0] - 125)
+            .attr('cy', (d) => projection(d.loc)[1] - 40)
+            .transition()
+            .duration(500)
+            .attr('r', (d) => d3.scaleSqrt().range(circleRange)(d.cnt) / 100)
+    }, [])
 
     return (
-        <MapContainer>
-            <h1>Person Map Viewer</h1>
-            <div></div>
+        <MapBubbleChartStyle>
+            <h1>{props.header}</h1>
             <div id="mapSlider"></div>
             <div id="map-canvas"></div>
-        </MapContainer>
+        </MapBubbleChartStyle>
     )
 }
 

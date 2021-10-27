@@ -9,6 +9,7 @@ import {
 import * as d3 from 'd3'
 import VisitOutpatient from './components/visitOutpatient'
 import VisitInpatient from './components/visitInpatient'
+import ChildrenView from './components/ChildrenView'
 import { HeaderWrap, HeaderButton } from './components/style/backgraound'
 
 const App = () => {
@@ -89,6 +90,7 @@ const App = () => {
                 <Route exact path="/" component={VisitOutpatient} />
                 <Route exact path="/visitOut" component={VisitOutpatient} />
                 <Route exact path="/visitIn" component={VisitInpatient} />
+                <Route exact path="/childrenView" component={ChildrenView} />
             </Router>
         </div>
     )

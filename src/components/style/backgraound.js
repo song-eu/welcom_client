@@ -225,3 +225,44 @@ export const SmallBoxstyleOut = styled.div`
         margin-top: 15px;
     }
 `
+
+export const BoxStyle = styled.div`
+    border: 2px solid #0575e6;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 15px 10 15px 10px;
+    align-items: center;
+`
+
+export const RowStyle = styled.div`
+    border: 2px solid tomato;
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: stretch;
+`
+export const ButtonRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+`
+
+export const CountButton = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    margin: 15px 15px 15px 15px;
+
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 180px;
+    overflow: hidden;
+    border: 2px solid tomato;
+
+    font-size: 40px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+`

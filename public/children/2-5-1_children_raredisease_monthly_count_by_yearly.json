@@ -1,0 +1,783 @@
+{
+"--- 5-1. monthly children rare disease count  10 YEAR MONTLY COUNT\r\nWITH ADDR_GROUP AS (\r\nSELECT  lsp.SIDO_ADDR ,ROUND( (MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12), 1) age,  lsp.PT_BRDY_DT, LSP.SEX_TP_CD\r\n, dg.DGNS_ID , dg.MED_DEPT_CD , dg.DGNS_REG_DT , MED_DEPT_NM, DGNS_REG_SEQ , dg.PT_NO , dg.PACT_ID , CLDG_VOC_ID , CLDG_NM , ICD10_CD , CD_ENG_NM, dg.DGNS_STR_DT \r\nFROM XCDW.FT_STM_DGNS dg\r\n\tLEFT JOIN XCDW.LT_STM_PT lsp\r\n\tON dg.PT_NO  = lsp.PT_NO \r\n\tWHERE DGNS_REG_DT BETWEEN TO_date('2011-01-01','yyyy-mm-dd') AND TO_date('2021-09-30','yyyy-mm-dd')\r\n\tAND DGNS_STR_DT BETWEEN TO_date('2011-01-01','yyyy-mm-dd') AND TO_date('2021-09-30','yyyy-mm-dd')\r\n\tAND ICD10_CD IN ('Q998', 'Q992', 'Q982', 'Q981', 'Q980', 'Q964', 'Q963', 'Q962', 'Q961', 'Q960', 'Q935', 'Q934', 'Q933', 'Q932', 'Q928', 'Q923', 'Q922', 'Q917', 'Q916', 'Q915', 'Q914', 'Q912', 'Q911', 'Q910', 'Q909', \r\n\t\t\t'Q902', 'Q901', 'Q900', 'Q878', 'Q875', 'Q874', 'Q873', 'Q872', 'Q871', 'Q870', 'Q860', 'Q858', 'Q851', 'Q850', 'Q828', 'Q824', 'Q823', 'Q820', 'Q812', 'Q811', 'Q810', 'Q804', 'Q803', 'Q802', 'Q801', 'Q799', 'Q798', 'Q796', \r\n\t\t\t'Q795', 'Q794', 'Q793', 'Q792', 'Q791', 'Q790', 'Q789', 'Q786', 'Q785', 'Q784', 'Q783', 'Q782', 'Q781', 'Q780', 'Q779', 'Q778', 'Q777', 'Q776', 'Q775', 'Q774', 'Q773', 'Q772', 'Q771', 'Q770', 'Q761', 'Q754', 'Q751', 'Q750', \r\n\t\t\t'Q748', 'Q743', 'Q740', 'Q641', 'Q619', 'Q611', 'Q447', 'Q446', 'Q442', 'Q438', 'Q383', 'Q282', 'Q266', 'Q265', 'Q264', 'Q263', 'Q262', 'Q261', 'Q260', 'Q255', 'Q253', 'Q252', 'Q251', 'Q246', 'Q245', 'Q244', 'Q239', 'Q238', \r\n\t\t\t'Q234', 'Q233', 'Q232', 'Q231', 'Q230', 'Q226', 'Q225', 'Q224', 'Q220', 'Q218', 'Q214', 'Q213', 'Q212', 'Q205', 'Q204', 'Q203', 'Q202', 'Q201', 'Q200', 'Q172', 'Q142', 'Q141', 'Q112', 'Q070', 'Q062', 'Q059', 'Q058', 'Q057', \r\n\t\t\t'Q056', 'Q055', 'Q054', 'Q053', 'Q052', 'Q051', 'Q050', 'Q046', 'Q043', 'Q042', 'Q031', 'P354', 'P350', 'N251', 'N047', 'N046', 'N045', 'N044', 'N043', 'N042', 'N041', 'N040', 'M941', 'M931', 'M922', 'M889', 'M888', 'M880', \r\n\t\t\t'M611', 'M356', 'M355', 'M354', 'M353', 'M352', 'M351', 'M350', 'M348', 'M341', 'M340', 'M332', 'M331', 'M330', 'M321', 'M317', 'M314', 'M313', 'M311', 'M310', 'M302', 'M301', 'M300', 'M083', 'M082', 'M081', 'M080', 'M061', \r\n\t\t\t'L123', 'L121', 'L120', 'L102', 'L100', 'K830', 'K754', 'K743', 'K508', 'K501', 'K500', 'K0051', 'J841', 'J840', 'J398', 'I820', 'I780', 'I731', 'I675', 'I4982', 'I472', 'I4280', 'I424', 'I423', 'I4220', 'I421', 'I420', 'I278', \r\n\t\t\t'I270', 'H518', 'H498', 'H494', 'H3559', 'H3558', 'H3552', 'H3551', 'H350', 'H312', 'H186', 'H185', 'H163', 'G950', 'G934', 'G906', 'G905', 'G731', 'G724', 'G723', 'G719', 'G713', 'G712', 'G711', 'G710', 'G702', 'G700', 'G618', \r\n\t\t\t'G610', 'G600', 'G518', 'G512', 'G474', 'G4731', 'G419', 'G418', 'G412', 'G411', 'G410', 'G404', 'G360', 'G35', 'G3188', 'G3181', 'G258', 'G248', 'G238', 'G231', 'G230', 'G129', 'G128', 'G122', 'G121', 'G120', 'G119', 'G118', \r\n\t\t\t'G114', 'G113', 'G112', 'G111', 'G110', 'G10', 'G048', 'F842', 'F803', 'F011', 'E881', 'E880', 'E854', 'E852', 'E851', 'E850', 'E841', 'E840', 'E833', 'E832', 'E831', 'E830', 'E802', 'E791', 'E771', 'E770', 'E762', 'E761', \r\n\t\t\t'E760', 'E755', 'E754', 'E752', 'E751', 'E750', 'E748', 'E744', 'E742', 'E740', 'E730', 'E728', 'E725', 'E724', 'E723', 'E722', 'E721', 'E720', 'E713', 'E711', 'E710', 'E708', 'E703', 'E702', 'E701', 'E700', 'E550', 'E348', \r\n\t\t\t'E274', 'E272', 'E271', 'E268', 'E259', 'E250', 'E243', 'E241', 'E240', 'E230', 'E220', 'E201', 'E1610', 'D891', 'D868', 'D863', 'D862', 'D861', 'D860', 'D841', 'D840', 'D832', 'D831', 'D830', 'D824', 'D823', 'D822', 'D821', \r\n\t\t\t'D820', 'D819', 'D818', 'D817', 'D816', 'D815', 'D814', 'D813', 'D812', 'D811', 'D810', 'D808', 'D806', 'D805', 'D804', 'D803', 'D802', 'D801', 'D800', 'D763', 'D761', 'D71', 'D70', 'D694', 'D693', 'D691', 'D686', 'D685', \r\n\t\t\t'D682', 'D681', 'D680', 'D67', 'D66', 'D644', 'D619', 'D613', 'D610', 'D600', 'D595', 'D593', 'D564', 'D563', 'D562', 'D561', 'D560', 'D552', 'D550', 'D126', 'A810', 'A319')\r\n\tAND dg.HSP_TP_CD = '2')\r\n\tSELECT TO_CHAR(DGNS_STR_DT, 'YYYY-MM') dt\r\n--\tTO_CHAR(DGNS_REG_DT, 'YYYY-MM') AS \"DATE\"\r\n--\t,SIDO_ADDR\r\n\t, COUNT(*) ROWCNT\r\n\t, COUNT(DISTINCT PT_NO) PCNT\r\n\t, COUNT(DISTINCT PACT_ID) VISITCNT \r\n\tFROM ADDR_GROUP\r\n\tGROUP BY ROLLUP (TO_CHAR(DGNS_STR_DT, 'YYYY-MM'))\r\n\tORDER BY 1, 4 desc\r\n\t": [
+	{
+		"DT" : "2011-01",
+		"ROWCNT" : 3844,
+		"PCNT" : 270,
+		"VISITCNT" : 3541
+	},
+	{
+		"DT" : "2011-02",
+		"ROWCNT" : 3540,
+		"PCNT" : 196,
+		"VISITCNT" : 3325
+	},
+	{
+		"DT" : "2011-03",
+		"ROWCNT" : 4374,
+		"PCNT" : 262,
+		"VISITCNT" : 4113
+	},
+	{
+		"DT" : "2011-04",
+		"ROWCNT" : 4166,
+		"PCNT" : 276,
+		"VISITCNT" : 3898
+	},
+	{
+		"DT" : "2011-05",
+		"ROWCNT" : 4719,
+		"PCNT" : 265,
+		"VISITCNT" : 4285
+	},
+	{
+		"DT" : "2011-06",
+		"ROWCNT" : 3431,
+		"PCNT" : 258,
+		"VISITCNT" : 3280
+	},
+	{
+		"DT" : "2011-07",
+		"ROWCNT" : 3864,
+		"PCNT" : 228,
+		"VISITCNT" : 3527
+	},
+	{
+		"DT" : "2011-08",
+		"ROWCNT" : 4034,
+		"PCNT" : 279,
+		"VISITCNT" : 3801
+	},
+	{
+		"DT" : "2011-09",
+		"ROWCNT" : 2857,
+		"PCNT" : 231,
+		"VISITCNT" : 2708
+	},
+	{
+		"DT" : "2011-10",
+		"ROWCNT" : 2325,
+		"PCNT" : 213,
+		"VISITCNT" : 2177
+	},
+	{
+		"DT" : "2011-11",
+		"ROWCNT" : 2982,
+		"PCNT" : 246,
+		"VISITCNT" : 2913
+	},
+	{
+		"DT" : "2011-12",
+		"ROWCNT" : 2948,
+		"PCNT" : 264,
+		"VISITCNT" : 2801
+	},
+	{
+		"DT" : "2012-01",
+		"ROWCNT" : 3358,
+		"PCNT" : 258,
+		"VISITCNT" : 3185
+	},
+	{
+		"DT" : "2012-02",
+		"ROWCNT" : 2859,
+		"PCNT" : 201,
+		"VISITCNT" : 2788
+	},
+	{
+		"DT" : "2012-03",
+		"ROWCNT" : 3144,
+		"PCNT" : 242,
+		"VISITCNT" : 2861
+	},
+	{
+		"DT" : "2012-04",
+		"ROWCNT" : 2822,
+		"PCNT" : 233,
+		"VISITCNT" : 2416
+	},
+	{
+		"DT" : "2012-05",
+		"ROWCNT" : 2089,
+		"PCNT" : 204,
+		"VISITCNT" : 2018
+	},
+	{
+		"DT" : "2012-06",
+		"ROWCNT" : 2071,
+		"PCNT" : 224,
+		"VISITCNT" : 1973
+	},
+	{
+		"DT" : "2012-07",
+		"ROWCNT" : 2138,
+		"PCNT" : 260,
+		"VISITCNT" : 2002
+	},
+	{
+		"DT" : "2012-08",
+		"ROWCNT" : 2076,
+		"PCNT" : 261,
+		"VISITCNT" : 1927
+	},
+	{
+		"DT" : "2012-09",
+		"ROWCNT" : 1260,
+		"PCNT" : 212,
+		"VISITCNT" : 1115
+	},
+	{
+		"DT" : "2012-10",
+		"ROWCNT" : 1372,
+		"PCNT" : 230,
+		"VISITCNT" : 1260
+	},
+	{
+		"DT" : "2012-11",
+		"ROWCNT" : 1460,
+		"PCNT" : 224,
+		"VISITCNT" : 1359
+	},
+	{
+		"DT" : "2012-12",
+		"ROWCNT" : 1186,
+		"PCNT" : 235,
+		"VISITCNT" : 1053
+	},
+	{
+		"DT" : "2013-01",
+		"ROWCNT" : 1049,
+		"PCNT" : 305,
+		"VISITCNT" : 984
+	},
+	{
+		"DT" : "2013-02",
+		"ROWCNT" : 572,
+		"PCNT" : 246,
+		"VISITCNT" : 522
+	},
+	{
+		"DT" : "2013-03",
+		"ROWCNT" : 152389,
+		"PCNT" : 2544,
+		"VISITCNT" : 117459
+	},
+	{
+		"DT" : "2013-04",
+		"ROWCNT" : 89881,
+		"PCNT" : 2151,
+		"VISITCNT" : 73742
+	},
+	{
+		"DT" : "2013-05",
+		"ROWCNT" : 50425,
+		"PCNT" : 1481,
+		"VISITCNT" : 41377
+	},
+	{
+		"DT" : "2013-06",
+		"ROWCNT" : 33256,
+		"PCNT" : 1076,
+		"VISITCNT" : 28267
+	},
+	{
+		"DT" : "2013-07",
+		"ROWCNT" : 38333,
+		"PCNT" : 1385,
+		"VISITCNT" : 31839
+	},
+	{
+		"DT" : "2013-08",
+		"ROWCNT" : 35543,
+		"PCNT" : 1587,
+		"VISITCNT" : 29366
+	},
+	{
+		"DT" : "2013-09",
+		"ROWCNT" : 13801,
+		"PCNT" : 593,
+		"VISITCNT" : 12071
+	},
+	{
+		"DT" : "2013-10",
+		"ROWCNT" : 11069,
+		"PCNT" : 508,
+		"VISITCNT" : 9943
+	},
+	{
+		"DT" : "2013-11",
+		"ROWCNT" : 12276,
+		"PCNT" : 463,
+		"VISITCNT" : 10351
+	},
+	{
+		"DT" : "2013-12",
+		"ROWCNT" : 11561,
+		"PCNT" : 493,
+		"VISITCNT" : 10443
+	},
+	{
+		"DT" : "2014-01",
+		"ROWCNT" : 12176,
+		"PCNT" : 643,
+		"VISITCNT" : 11195
+	},
+	{
+		"DT" : "2014-02",
+		"ROWCNT" : 10855,
+		"PCNT" : 597,
+		"VISITCNT" : 10043
+	},
+	{
+		"DT" : "2014-03",
+		"ROWCNT" : 8861,
+		"PCNT" : 380,
+		"VISITCNT" : 7928
+	},
+	{
+		"DT" : "2014-04",
+		"ROWCNT" : 8281,
+		"PCNT" : 329,
+		"VISITCNT" : 7722
+	},
+	{
+		"DT" : "2014-05",
+		"ROWCNT" : 8380,
+		"PCNT" : 325,
+		"VISITCNT" : 7488
+	},
+	{
+		"DT" : "2014-06",
+		"ROWCNT" : 9688,
+		"PCNT" : 329,
+		"VISITCNT" : 9134
+	},
+	{
+		"DT" : "2014-07",
+		"ROWCNT" : 10365,
+		"PCNT" : 426,
+		"VISITCNT" : 9079
+	},
+	{
+		"DT" : "2014-08",
+		"ROWCNT" : 9397,
+		"PCNT" : 436,
+		"VISITCNT" : 8692
+	},
+	{
+		"DT" : "2014-09",
+		"ROWCNT" : 6742,
+		"PCNT" : 308,
+		"VISITCNT" : 6306
+	},
+	{
+		"DT" : "2014-10",
+		"ROWCNT" : 7043,
+		"PCNT" : 274,
+		"VISITCNT" : 6419
+	},
+	{
+		"DT" : "2014-11",
+		"ROWCNT" : 6953,
+		"PCNT" : 304,
+		"VISITCNT" : 6135
+	},
+	{
+		"DT" : "2014-12",
+		"ROWCNT" : 7254,
+		"PCNT" : 410,
+		"VISITCNT" : 6756
+	},
+	{
+		"DT" : "2015-01",
+		"ROWCNT" : 6235,
+		"PCNT" : 361,
+		"VISITCNT" : 5926
+	},
+	{
+		"DT" : "2015-02",
+		"ROWCNT" : 5000,
+		"PCNT" : 253,
+		"VISITCNT" : 4796
+	},
+	{
+		"DT" : "2015-03",
+		"ROWCNT" : 6637,
+		"PCNT" : 279,
+		"VISITCNT" : 6198
+	},
+	{
+		"DT" : "2015-04",
+		"ROWCNT" : 7370,
+		"PCNT" : 277,
+		"VISITCNT" : 6888
+	},
+	{
+		"DT" : "2015-05",
+		"ROWCNT" : 5622,
+		"PCNT" : 219,
+		"VISITCNT" : 4980
+	},
+	{
+		"DT" : "2015-06",
+		"ROWCNT" : 4839,
+		"PCNT" : 182,
+		"VISITCNT" : 4595
+	},
+	{
+		"DT" : "2015-07",
+		"ROWCNT" : 8320,
+		"PCNT" : 321,
+		"VISITCNT" : 7750
+	},
+	{
+		"DT" : "2015-08",
+		"ROWCNT" : 6829,
+		"PCNT" : 343,
+		"VISITCNT" : 6557
+	},
+	{
+		"DT" : "2015-09",
+		"ROWCNT" : 6160,
+		"PCNT" : 271,
+		"VISITCNT" : 5714
+	},
+	{
+		"DT" : "2015-10",
+		"ROWCNT" : 5365,
+		"PCNT" : 240,
+		"VISITCNT" : 4888
+	},
+	{
+		"DT" : "2015-11",
+		"ROWCNT" : 5219,
+		"PCNT" : 270,
+		"VISITCNT" : 4911
+	},
+	{
+		"DT" : "2015-12",
+		"ROWCNT" : 5974,
+		"PCNT" : 310,
+		"VISITCNT" : 5602
+	},
+	{
+		"DT" : "2016-01",
+		"ROWCNT" : 6043,
+		"PCNT" : 292,
+		"VISITCNT" : 5502
+	},
+	{
+		"DT" : "2016-02",
+		"ROWCNT" : 5568,
+		"PCNT" : 254,
+		"VISITCNT" : 5229
+	},
+	{
+		"DT" : "2016-03",
+		"ROWCNT" : 6438,
+		"PCNT" : 305,
+		"VISITCNT" : 5843
+	},
+	{
+		"DT" : "2016-04",
+		"ROWCNT" : 3696,
+		"PCNT" : 220,
+		"VISITCNT" : 3505
+	},
+	{
+		"DT" : "2016-05",
+		"ROWCNT" : 5581,
+		"PCNT" : 266,
+		"VISITCNT" : 5068
+	},
+	{
+		"DT" : "2016-06",
+		"ROWCNT" : 4058,
+		"PCNT" : 241,
+		"VISITCNT" : 3867
+	},
+	{
+		"DT" : "2016-07",
+		"ROWCNT" : 4300,
+		"PCNT" : 272,
+		"VISITCNT" : 3995
+	},
+	{
+		"DT" : "2016-08",
+		"ROWCNT" : 4487,
+		"PCNT" : 271,
+		"VISITCNT" : 4382
+	},
+	{
+		"DT" : "2016-09",
+		"ROWCNT" : 3695,
+		"PCNT" : 228,
+		"VISITCNT" : 3605
+	},
+	{
+		"DT" : "2016-10",
+		"ROWCNT" : 3822,
+		"PCNT" : 199,
+		"VISITCNT" : 3350
+	},
+	{
+		"DT" : "2016-11",
+		"ROWCNT" : 3758,
+		"PCNT" : 198,
+		"VISITCNT" : 3607
+	},
+	{
+		"DT" : "2016-12",
+		"ROWCNT" : 4930,
+		"PCNT" : 273,
+		"VISITCNT" : 4361
+	},
+	{
+		"DT" : "2017-01",
+		"ROWCNT" : 3941,
+		"PCNT" : 241,
+		"VISITCNT" : 3669
+	},
+	{
+		"DT" : "2017-02",
+		"ROWCNT" : 4917,
+		"PCNT" : 249,
+		"VISITCNT" : 4584
+	},
+	{
+		"DT" : "2017-03",
+		"ROWCNT" : 6764,
+		"PCNT" : 277,
+		"VISITCNT" : 6102
+	},
+	{
+		"DT" : "2017-04",
+		"ROWCNT" : 4262,
+		"PCNT" : 252,
+		"VISITCNT" : 4015
+	},
+	{
+		"DT" : "2017-05",
+		"ROWCNT" : 4963,
+		"PCNT" : 232,
+		"VISITCNT" : 4661
+	},
+	{
+		"DT" : "2017-06",
+		"ROWCNT" : 5725,
+		"PCNT" : 270,
+		"VISITCNT" : 5316
+	},
+	{
+		"DT" : "2017-07",
+		"ROWCNT" : 4920,
+		"PCNT" : 312,
+		"VISITCNT" : 4470
+	},
+	{
+		"DT" : "2017-08",
+		"ROWCNT" : 6419,
+		"PCNT" : 387,
+		"VISITCNT" : 5998
+	},
+	{
+		"DT" : "2017-09",
+		"ROWCNT" : 6927,
+		"PCNT" : 387,
+		"VISITCNT" : 6381
+	},
+	{
+		"DT" : "2017-10",
+		"ROWCNT" : 5042,
+		"PCNT" : 226,
+		"VISITCNT" : 4439
+	},
+	{
+		"DT" : "2017-11",
+		"ROWCNT" : 5332,
+		"PCNT" : 296,
+		"VISITCNT" : 4961
+	},
+	{
+		"DT" : "2017-12",
+		"ROWCNT" : 5363,
+		"PCNT" : 286,
+		"VISITCNT" : 5022
+	},
+	{
+		"DT" : "2018-01",
+		"ROWCNT" : 6094,
+		"PCNT" : 344,
+		"VISITCNT" : 5593
+	},
+	{
+		"DT" : "2018-02",
+		"ROWCNT" : 5025,
+		"PCNT" : 256,
+		"VISITCNT" : 4730
+	},
+	{
+		"DT" : "2018-03",
+		"ROWCNT" : 5299,
+		"PCNT" : 322,
+		"VISITCNT" : 4736
+	},
+	{
+		"DT" : "2018-04",
+		"ROWCNT" : 4519,
+		"PCNT" : 294,
+		"VISITCNT" : 4171
+	},
+	{
+		"DT" : "2018-05",
+		"ROWCNT" : 4240,
+		"PCNT" : 295,
+		"VISITCNT" : 3811
+	},
+	{
+		"DT" : "2018-06",
+		"ROWCNT" : 3645,
+		"PCNT" : 258,
+		"VISITCNT" : 3313
+	},
+	{
+		"DT" : "2018-07",
+		"ROWCNT" : 6180,
+		"PCNT" : 310,
+		"VISITCNT" : 5080
+	},
+	{
+		"DT" : "2018-08",
+		"ROWCNT" : 6195,
+		"PCNT" : 405,
+		"VISITCNT" : 5970
+	},
+	{
+		"DT" : "2018-09",
+		"ROWCNT" : 4190,
+		"PCNT" : 294,
+		"VISITCNT" : 4034
+	},
+	{
+		"DT" : "2018-10",
+		"ROWCNT" : 4634,
+		"PCNT" : 292,
+		"VISITCNT" : 4233
+	},
+	{
+		"DT" : "2018-11",
+		"ROWCNT" : 5718,
+		"PCNT" : 326,
+		"VISITCNT" : 4780
+	},
+	{
+		"DT" : "2018-12",
+		"ROWCNT" : 7723,
+		"PCNT" : 362,
+		"VISITCNT" : 7431
+	},
+	{
+		"DT" : "2019-01",
+		"ROWCNT" : 12326,
+		"PCNT" : 625,
+		"VISITCNT" : 10639
+	},
+	{
+		"DT" : "2019-02",
+		"ROWCNT" : 5328,
+		"PCNT" : 368,
+		"VISITCNT" : 4812
+	},
+	{
+		"DT" : "2019-03",
+		"ROWCNT" : 5640,
+		"PCNT" : 435,
+		"VISITCNT" : 5225
+	},
+	{
+		"DT" : "2019-04",
+		"ROWCNT" : 6037,
+		"PCNT" : 386,
+		"VISITCNT" : 5568
+	},
+	{
+		"DT" : "2019-05",
+		"ROWCNT" : 5274,
+		"PCNT" : 379,
+		"VISITCNT" : 4622
+	},
+	{
+		"DT" : "2019-06",
+		"ROWCNT" : 3817,
+		"PCNT" : 296,
+		"VISITCNT" : 3636
+	},
+	{
+		"DT" : "2019-07",
+		"ROWCNT" : 5062,
+		"PCNT" : 412,
+		"VISITCNT" : 4767
+	},
+	{
+		"DT" : "2019-08",
+		"ROWCNT" : 3016,
+		"PCNT" : 312,
+		"VISITCNT" : 2779
+	},
+	{
+		"DT" : "2019-09",
+		"ROWCNT" : 4006,
+		"PCNT" : 306,
+		"VISITCNT" : 3809
+	},
+	{
+		"DT" : "2019-10",
+		"ROWCNT" : 3313,
+		"PCNT" : 287,
+		"VISITCNT" : 3181
+	},
+	{
+		"DT" : "2019-11",
+		"ROWCNT" : 3799,
+		"PCNT" : 343,
+		"VISITCNT" : 3442
+	},
+	{
+		"DT" : "2019-12",
+		"ROWCNT" : 3785,
+		"PCNT" : 328,
+		"VISITCNT" : 3316
+	},
+	{
+		"DT" : "2020-01",
+		"ROWCNT" : 5523,
+		"PCNT" : 409,
+		"VISITCNT" : 5100
+	},
+	{
+		"DT" : "2020-02",
+		"ROWCNT" : 3761,
+		"PCNT" : 291,
+		"VISITCNT" : 3452
+	},
+	{
+		"DT" : "2020-03",
+		"ROWCNT" : 3948,
+		"PCNT" : 277,
+		"VISITCNT" : 3718
+	},
+	{
+		"DT" : "2020-04",
+		"ROWCNT" : 2777,
+		"PCNT" : 221,
+		"VISITCNT" : 2589
+	},
+	{
+		"DT" : "2020-05",
+		"ROWCNT" : 3433,
+		"PCNT" : 303,
+		"VISITCNT" : 3092
+	},
+	{
+		"DT" : "2020-06",
+		"ROWCNT" : 3148,
+		"PCNT" : 331,
+		"VISITCNT" : 2906
+	},
+	{
+		"DT" : "2020-07",
+		"ROWCNT" : 2859,
+		"PCNT" : 307,
+		"VISITCNT" : 2684
+	},
+	{
+		"DT" : "2020-08",
+		"ROWCNT" : 1956,
+		"PCNT" : 248,
+		"VISITCNT" : 1746
+	},
+	{
+		"DT" : "2020-09",
+		"ROWCNT" : 2235,
+		"PCNT" : 241,
+		"VISITCNT" : 1971
+	},
+	{
+		"DT" : "2020-10",
+		"ROWCNT" : 2840,
+		"PCNT" : 311,
+		"VISITCNT" : 2689
+	},
+	{
+		"DT" : "2020-11",
+		"ROWCNT" : 1972,
+		"PCNT" : 290,
+		"VISITCNT" : 1836
+	},
+	{
+		"DT" : "2020-12",
+		"ROWCNT" : 2040,
+		"PCNT" : 316,
+		"VISITCNT" : 1828
+	},
+	{
+		"DT" : "2021-01",
+		"ROWCNT" : 7779,
+		"PCNT" : 703,
+		"VISITCNT" : 6345
+	},
+	{
+		"DT" : "2021-02",
+		"ROWCNT" : 2938,
+		"PCNT" : 512,
+		"VISITCNT" : 2698
+	},
+	{
+		"DT" : "2021-03",
+		"ROWCNT" : 2501,
+		"PCNT" : 492,
+		"VISITCNT" : 2255
+	},
+	{
+		"DT" : "2021-04",
+		"ROWCNT" : 1862,
+		"PCNT" : 437,
+		"VISITCNT" : 1713
+	},
+	{
+		"DT" : "2021-05",
+		"ROWCNT" : 1745,
+		"PCNT" : 396,
+		"VISITCNT" : 1601
+	},
+	{
+		"DT" : "2021-06",
+		"ROWCNT" : 1390,
+		"PCNT" : 426,
+		"VISITCNT" : 1321
+	},
+	{
+		"DT" : "2021-07",
+		"ROWCNT" : 1130,
+		"PCNT" : 384,
+		"VISITCNT" : 1051
+	},
+	{
+		"DT" : "2021-08",
+		"ROWCNT" : 930,
+		"PCNT" : 417,
+		"VISITCNT" : 837
+	},
+	{
+		"DT" : "2021-09",
+		"ROWCNT" : 469,
+		"PCNT" : 296,
+		"VISITCNT" : 431
+	},
+	{
+		"DT" : null,
+		"ROWCNT" : 1001691,
+		"PCNT" : 35849,
+		"VISITCNT" : 732190
+	}
+]}

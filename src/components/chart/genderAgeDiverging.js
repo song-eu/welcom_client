@@ -1,8 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
 import * as d3module from 'd3'
-import { GenderChartSytle } from '../style/chartStyle'
+import { GenderDivergingBarChartSytle } from '../style/chartStyle'
 import d3Tip from 'd3-tip'
 import { sampleData } from '../../sampledata/barData'
+import csvToData from '../../modules/csvDataRead'
+import jsonToData from '../../modules/jsonDataRead'
+import moment from 'moment'
+import { compose } from 'redux'
 
 const d3 = {
     ...d3module,
@@ -11,34 +15,50 @@ const d3 = {
 
 const GenderAgeDivergingChart = (props) => {
     // SET UP DIMENSIONS
-    var w = 600,
-        h = 560
+    var [w, setW] = useState(950)
+    var h = 600
+    var thisMonth = moment().subtract(2, 'month').format('YYYY-MM')
 
     // margin.middle is distance from center line to each y-axis
     var margin = {
         top: 20,
-        right: 20,
+        right: 30,
         bottom: 24,
-        left: 20,
+        left: 30,
         middle: 28,
     }
-    const [data, setData] = useState(sampleData.genDivergData.data1)
-    const { header, selectData } = props
+    //const [data, setData] = useState(sampleData.genDivergData.data1)
+    const { header, dataloc } = props
     const svgRef = useRef()
-
-    // the width of each side of the chart
-    var regionWidth = w / 2 - margin.middle
-
-    // these are the x-coordinates of the y-axes
-    var pointA = regionWidth,
-        pointB = w - regionWidth
 
     //console.log('props.header', props.header)
 
-    useEffect(() => {
-        if (selectData != null) {
-            setData(sampleData.genDivergData[selectData])
+    useEffect(async () => {
+        // if (selectData != null) {
+        //     setData(sampleData.genDivergData[selectData])
+        // }
+        if (dataloc.includes('.csv')) {
+            var data = await csvToData(dataloc)
+        } else {
+            var getData = await jsonToData(dataloc)
+
+            var data = getData[thisMonth]
+            //console.log('AGE/JSON?', data)
+            data = data.slice(0, -1)
+            data.sort((a, b) => {
+                return (
+                    parseInt(a.group.slice(0, 2)) -
+                    parseInt(b.group.slice(0, 2))
+                )
+            })
+            setW(800)
         }
+        // the width of each side of the chart
+        var regionWidth = w / 2 - margin.middle
+
+        // these are the x-coordinates of the y-axes
+        var pointA = regionWidth,
+            pointB = w - regionWidth
 
         // GET THE TOTAL POPULATION SIZE AND CREATE A FUNCTION FOR RETURNING THE PERCENTAGE
         var totalPopulation = d3.sum(data, function (d) {
@@ -123,7 +143,8 @@ const GenderAgeDivergingChart = (props) => {
             .tip()
             .attr('class', 'toolTip')
             .attr('id', 'toolTip')
-            .style('padding', '12px')
+            .style('padding-top', '17px')
+            .style('padding-left', '12px')
             //.style('background', 'rgba(0, 0, 0, 0.8)')
             .style('color', 'Black')
             //.style("display", "inline-block")
@@ -137,7 +158,8 @@ const GenderAgeDivergingChart = (props) => {
             .tip()
             .attr('class', 'toolTipF')
             .attr('id', 'toolTipF')
-            .style('padding', '12px')
+            .style('padding-top', '17px')
+            .style('padding-right', '12px')
             //.style('background', 'rgba(0, 0, 0, 0.8)')
             .style('color', 'Black')
             //.style("display", "inline-block")
@@ -225,7 +247,7 @@ const GenderAgeDivergingChart = (props) => {
                     //console.log('d??', d)
                     return (
                         "<strong>Male:</strong> <span style='color:red'>" +
-                        d.male +
+                        d.male.toLocaleString('ko-KR') +
                         '</span>'
                     )
                 }).show(i, this)
@@ -281,7 +303,7 @@ const GenderAgeDivergingChart = (props) => {
                     //console.log('d??', d)
                     return (
                         "<strong>Female:</strong> <span style='color:red'>" +
-                        d.female +
+                        d.female.toLocaleString('ko-KR') +
                         '</span>'
                     )
                 }).show(i, this)
@@ -321,12 +343,12 @@ const GenderAgeDivergingChart = (props) => {
         function translation(x, y) {
             return 'translate(' + x + ',' + y + ')'
         }
-    }, [data, selectData])
+    }, [w])
     return (
-        <GenderChartSytle>
+        <GenderDivergingBarChartSytle width={w}>
             <h1>{props.header}</h1>
             <div id="negBarChart" ref={svgRef}></div>
-        </GenderChartSytle>
+        </GenderDivergingBarChartSytle>
     )
 }
 

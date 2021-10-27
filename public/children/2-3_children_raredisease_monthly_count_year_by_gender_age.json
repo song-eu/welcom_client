@@ -1,0 +1,3123 @@
+{
+"--- 3. monthly children rare disease count by gender\/age\r\nWITH AGE_GENDER_GROUP AS (\r\nSELECT  ROUND( (MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12), 1) age,  lsp.PT_BRDY_DT \r\n, CASE WHEN  ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12) BETWEEN 0 AND 0.5 THEN '0 - 0.5'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 0.6 AND 1 THEN '0.6 - 1'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 1.1 AND 1.5 THEN '1 - 1.5'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 1.6 AND 2 THEN '1.6 - 2'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 2.1 AND 4 THEN '2 - 4'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 4 AND 6 THEN '4 - 6'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 7 AND 9 THEN '7 - 9'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 10 AND 12 THEN '10 - 12'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 13 AND 15 THEN '13 - 15'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 16 AND 18 THEN '16 - 18'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 19 AND 21 THEN '19 - 21'\r\nWHEN ROUND( MONTHS_BETWEEN(DGNS_REG_DT, PT_BRDY_DT) \/ 12, 1) BETWEEN 22 AND 24 THEN '22 - 24'\r\nELSE 'OVER 25' END AGE_GROUP, LSP.SEX_TP_CD, dg.DGNS_ID , dg.MED_DEPT_CD , dg.DGNS_REG_DT , MED_DEPT_NM, DGNS_REG_SEQ , dg.PT_NO , dg.PACT_ID , CLDG_VOC_ID , CLDG_NM , ICD10_CD , CD_ENG_NM\r\n--\tto_char(DGNS_REG_DT, 'YYYY-MM') MONTH\r\n--\t, ICD10_CD , CD_ENG_NM \r\n--\t, COUNT(*) ROWCNT\r\n--\t, COUNT(DISTINCT PT_NO) PCNT\r\n--\t, COUNT(DISTINCT PACT_ID) VISITCNT \r\n--lsh.HSP_NM , dg.*\r\nFROM XCDW.FT_STM_DGNS dg\r\n\tLEFT JOIN XCDW.LT_STM_PT lsp\r\n\tON dg.PT_NO  = lsp.PT_NO \r\n\tWHERE DGNS_REG_DT BETWEEN TO_date('2020-07-01','yyyy-mm-dd') AND TO_date('2021-09-30','yyyy-mm-dd')\r\n\tAND ICD10_CD IN ('Q998', 'Q992', 'Q982', 'Q981', 'Q980', 'Q964', 'Q963', 'Q962', 'Q961', 'Q960', 'Q935', 'Q934', 'Q933', 'Q932', 'Q928', 'Q923', 'Q922', 'Q917', 'Q916', 'Q915', 'Q914', 'Q912', 'Q911', 'Q910', 'Q909', \r\n\t\t\t'Q902', 'Q901', 'Q900', 'Q878', 'Q875', 'Q874', 'Q873', 'Q872', 'Q871', 'Q870', 'Q860', 'Q858', 'Q851', 'Q850', 'Q828', 'Q824', 'Q823', 'Q820', 'Q812', 'Q811', 'Q810', 'Q804', 'Q803', 'Q802', 'Q801', 'Q799', 'Q798', 'Q796', \r\n\t\t\t'Q795', 'Q794', 'Q793', 'Q792', 'Q791', 'Q790', 'Q789', 'Q786', 'Q785', 'Q784', 'Q783', 'Q782', 'Q781', 'Q780', 'Q779', 'Q778', 'Q777', 'Q776', 'Q775', 'Q774', 'Q773', 'Q772', 'Q771', 'Q770', 'Q761', 'Q754', 'Q751', 'Q750', \r\n\t\t\t'Q748', 'Q743', 'Q740', 'Q641', 'Q619', 'Q611', 'Q447', 'Q446', 'Q442', 'Q438', 'Q383', 'Q282', 'Q266', 'Q265', 'Q264', 'Q263', 'Q262', 'Q261', 'Q260', 'Q255', 'Q253', 'Q252', 'Q251', 'Q246', 'Q245', 'Q244', 'Q239', 'Q238', \r\n\t\t\t'Q234', 'Q233', 'Q232', 'Q231', 'Q230', 'Q226', 'Q225', 'Q224', 'Q220', 'Q218', 'Q214', 'Q213', 'Q212', 'Q205', 'Q204', 'Q203', 'Q202', 'Q201', 'Q200', 'Q172', 'Q142', 'Q141', 'Q112', 'Q070', 'Q062', 'Q059', 'Q058', 'Q057', \r\n\t\t\t'Q056', 'Q055', 'Q054', 'Q053', 'Q052', 'Q051', 'Q050', 'Q046', 'Q043', 'Q042', 'Q031', 'P354', 'P350', 'N251', 'N047', 'N046', 'N045', 'N044', 'N043', 'N042', 'N041', 'N040', 'M941', 'M931', 'M922', 'M889', 'M888', 'M880', \r\n\t\t\t'M611', 'M356', 'M355', 'M354', 'M353', 'M352', 'M351', 'M350', 'M348', 'M341', 'M340', 'M332', 'M331', 'M330', 'M321', 'M317', 'M314', 'M313', 'M311', 'M310', 'M302', 'M301', 'M300', 'M083', 'M082', 'M081', 'M080', 'M061', \r\n\t\t\t'L123', 'L121', 'L120', 'L102', 'L100', 'K830', 'K754', 'K743', 'K508', 'K501', 'K500', 'K0051', 'J841', 'J840', 'J398', 'I820', 'I780', 'I731', 'I675', 'I4982', 'I472', 'I4280', 'I424', 'I423', 'I4220', 'I421', 'I420', 'I278', \r\n\t\t\t'I270', 'H518', 'H498', 'H494', 'H3559', 'H3558', 'H3552', 'H3551', 'H350', 'H312', 'H186', 'H185', 'H163', 'G950', 'G934', 'G906', 'G905', 'G731', 'G724', 'G723', 'G719', 'G713', 'G712', 'G711', 'G710', 'G702', 'G700', 'G618', \r\n\t\t\t'G610', 'G600', 'G518', 'G512', 'G474', 'G4731', 'G419', 'G418', 'G412', 'G411', 'G410', 'G404', 'G360', 'G35', 'G3188', 'G3181', 'G258', 'G248', 'G238', 'G231', 'G230', 'G129', 'G128', 'G122', 'G121', 'G120', 'G119', 'G118', \r\n\t\t\t'G114', 'G113', 'G112', 'G111', 'G110', 'G10', 'G048', 'F842', 'F803', 'F011', 'E881', 'E880', 'E854', 'E852', 'E851', 'E850', 'E841', 'E840', 'E833', 'E832', 'E831', 'E830', 'E802', 'E791', 'E771', 'E770', 'E762', 'E761', \r\n\t\t\t'E760', 'E755', 'E754', 'E752', 'E751', 'E750', 'E748', 'E744', 'E742', 'E740', 'E730', 'E728', 'E725', 'E724', 'E723', 'E722', 'E721', 'E720', 'E713', 'E711', 'E710', 'E708', 'E703', 'E702', 'E701', 'E700', 'E550', 'E348', \r\n\t\t\t'E274', 'E272', 'E271', 'E268', 'E259', 'E250', 'E243', 'E241', 'E240', 'E230', 'E220', 'E201', 'E1610', 'D891', 'D868', 'D863', 'D862', 'D861', 'D860', 'D841', 'D840', 'D832', 'D831', 'D830', 'D824', 'D823', 'D822', 'D821', \r\n\t\t\t'D820', 'D819', 'D818', 'D817', 'D816', 'D815', 'D814', 'D813', 'D812', 'D811', 'D810', 'D808', 'D806', 'D805', 'D804', 'D803', 'D802', 'D801', 'D800', 'D763', 'D761', 'D71', 'D70', 'D694', 'D693', 'D691', 'D686', 'D685', \r\n\t\t\t'D682', 'D681', 'D680', 'D67', 'D66', 'D644', 'D619', 'D613', 'D610', 'D600', 'D595', 'D593', 'D564', 'D563', 'D562', 'D561', 'D560', 'D552', 'D550', 'D126', 'A810', 'A319')\r\n\tAND dg.HSP_TP_CD = '2')\r\n\tSELECT TO_CHAR(DGNS_REG_DT, 'YYYY-MM') AS \"DATE\"\r\n\t,age_group, sex_tp_cd\r\n\t, COUNT(*) ROWCNT\r\n\t, COUNT(DISTINCT PT_NO) PCNT\r\n\t, COUNT(DISTINCT PACT_ID) VISITCNT \r\n\tFROM AGE_GENDER_GROUP\r\n\tGROUP BY TO_CHAR(DGNS_REG_DT, 'YYYY-MM'), age_group, sex_tp_cd\r\n\tORDER BY 1, 3, 2\r\n\t": [
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 154,
+		"PCNT" : 68,
+		"VISITCNT" : 132
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 205,
+		"PCNT" : 54,
+		"VISITCNT" : 131
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 126,
+		"PCNT" : 43,
+		"VISITCNT" : 91
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 203,
+		"PCNT" : 57,
+		"VISITCNT" : 125
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 339,
+		"PCNT" : 168,
+		"VISITCNT" : 258
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 372,
+		"PCNT" : 140,
+		"VISITCNT" : 228
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 315,
+		"PCNT" : 107,
+		"VISITCNT" : 207
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 307,
+		"PCNT" : 115,
+		"VISITCNT" : 199
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 525,
+		"PCNT" : 207,
+		"VISITCNT" : 356
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 168,
+		"PCNT" : 73,
+		"VISITCNT" : 110
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 528,
+		"PCNT" : 211,
+		"VISITCNT" : 363
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 601,
+		"PCNT" : 245,
+		"VISITCNT" : 418
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1573,
+		"PCNT" : 659,
+		"VISITCNT" : 1055
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 131,
+		"PCNT" : 58,
+		"VISITCNT" : 109
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 116,
+		"PCNT" : 60,
+		"VISITCNT" : 96
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 300,
+		"PCNT" : 69,
+		"VISITCNT" : 187
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 260,
+		"PCNT" : 79,
+		"VISITCNT" : 181
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 521,
+		"PCNT" : 196,
+		"VISITCNT" : 341
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 397,
+		"PCNT" : 150,
+		"VISITCNT" : 273
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 341,
+		"PCNT" : 142,
+		"VISITCNT" : 226
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 401,
+		"PCNT" : 170,
+		"VISITCNT" : 284
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 687,
+		"PCNT" : 232,
+		"VISITCNT" : 486
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 188,
+		"PCNT" : 90,
+		"VISITCNT" : 117
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 643,
+		"PCNT" : 247,
+		"VISITCNT" : 421
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 670,
+		"PCNT" : 236,
+		"VISITCNT" : 441
+	},
+	{
+		"DATE" : "2020-07",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1798,
+		"PCNT" : 765,
+		"VISITCNT" : 1224
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 88,
+		"PCNT" : 39,
+		"VISITCNT" : 70
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 141,
+		"PCNT" : 57,
+		"VISITCNT" : 100
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 76,
+		"PCNT" : 36,
+		"VISITCNT" : 55
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 111,
+		"PCNT" : 44,
+		"VISITCNT" : 75
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 345,
+		"PCNT" : 174,
+		"VISITCNT" : 244
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 421,
+		"PCNT" : 182,
+		"VISITCNT" : 280
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 408,
+		"PCNT" : 171,
+		"VISITCNT" : 275
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 243,
+		"PCNT" : 100,
+		"VISITCNT" : 153
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 333,
+		"PCNT" : 135,
+		"VISITCNT" : 229
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 106,
+		"PCNT" : 59,
+		"VISITCNT" : 80
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 342,
+		"PCNT" : 141,
+		"VISITCNT" : 236
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 464,
+		"PCNT" : 196,
+		"VISITCNT" : 353
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1315,
+		"PCNT" : 572,
+		"VISITCNT" : 886
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 105,
+		"PCNT" : 39,
+		"VISITCNT" : 80
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 114,
+		"PCNT" : 46,
+		"VISITCNT" : 88
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 207,
+		"PCNT" : 56,
+		"VISITCNT" : 133
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 172,
+		"PCNT" : 61,
+		"VISITCNT" : 136
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 470,
+		"PCNT" : 210,
+		"VISITCNT" : 321
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 525,
+		"PCNT" : 240,
+		"VISITCNT" : 372
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 516,
+		"PCNT" : 210,
+		"VISITCNT" : 349
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 334,
+		"PCNT" : 151,
+		"VISITCNT" : 240
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 479,
+		"PCNT" : 155,
+		"VISITCNT" : 330
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 182,
+		"PCNT" : 86,
+		"VISITCNT" : 121
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 483,
+		"PCNT" : 209,
+		"VISITCNT" : 321
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 614,
+		"PCNT" : 238,
+		"VISITCNT" : 430
+	},
+	{
+		"DATE" : "2020-08",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1675,
+		"PCNT" : 697,
+		"VISITCNT" : 1143
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 140,
+		"PCNT" : 57,
+		"VISITCNT" : 105
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 182,
+		"PCNT" : 58,
+		"VISITCNT" : 132
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 98,
+		"PCNT" : 40,
+		"VISITCNT" : 66
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 131,
+		"PCNT" : 53,
+		"VISITCNT" : 98
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 335,
+		"PCNT" : 147,
+		"VISITCNT" : 235
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 288,
+		"PCNT" : 112,
+		"VISITCNT" : 179
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 298,
+		"PCNT" : 110,
+		"VISITCNT" : 199
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 142,
+		"PCNT" : 74,
+		"VISITCNT" : 97
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 508,
+		"PCNT" : 212,
+		"VISITCNT" : 353
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 102,
+		"PCNT" : 54,
+		"VISITCNT" : 71
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 489,
+		"PCNT" : 207,
+		"VISITCNT" : 323
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 503,
+		"PCNT" : 201,
+		"VISITCNT" : 357
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1215,
+		"PCNT" : 552,
+		"VISITCNT" : 802
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 139,
+		"PCNT" : 55,
+		"VISITCNT" : 104
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 117,
+		"PCNT" : 47,
+		"VISITCNT" : 95
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 222,
+		"PCNT" : 64,
+		"VISITCNT" : 163
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 126,
+		"PCNT" : 55,
+		"VISITCNT" : 102
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 422,
+		"PCNT" : 164,
+		"VISITCNT" : 287
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 340,
+		"PCNT" : 130,
+		"VISITCNT" : 236
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 358,
+		"PCNT" : 139,
+		"VISITCNT" : 242
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 302,
+		"PCNT" : 123,
+		"VISITCNT" : 207
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 660,
+		"PCNT" : 213,
+		"VISITCNT" : 445
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 142,
+		"PCNT" : 74,
+		"VISITCNT" : 100
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 682,
+		"PCNT" : 258,
+		"VISITCNT" : 429
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 561,
+		"PCNT" : 213,
+		"VISITCNT" : 385
+	},
+	{
+		"DATE" : "2020-09",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1701,
+		"PCNT" : 725,
+		"VISITCNT" : 1137
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 182,
+		"PCNT" : 62,
+		"VISITCNT" : 140
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 197,
+		"PCNT" : 62,
+		"VISITCNT" : 132
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 161,
+		"PCNT" : 55,
+		"VISITCNT" : 111
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 171,
+		"PCNT" : 52,
+		"VISITCNT" : 122
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 331,
+		"PCNT" : 166,
+		"VISITCNT" : 264
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 284,
+		"PCNT" : 126,
+		"VISITCNT" : 188
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 274,
+		"PCNT" : 87,
+		"VISITCNT" : 166
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 156,
+		"PCNT" : 66,
+		"VISITCNT" : 109
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 540,
+		"PCNT" : 210,
+		"VISITCNT" : 360
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 103,
+		"PCNT" : 55,
+		"VISITCNT" : 72
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 449,
+		"PCNT" : 190,
+		"VISITCNT" : 304
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 443,
+		"PCNT" : 184,
+		"VISITCNT" : 313
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1253,
+		"PCNT" : 529,
+		"VISITCNT" : 817
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 152,
+		"PCNT" : 53,
+		"VISITCNT" : 113
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 122,
+		"PCNT" : 55,
+		"VISITCNT" : 105
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 167,
+		"PCNT" : 58,
+		"VISITCNT" : 119
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 235,
+		"PCNT" : 79,
+		"VISITCNT" : 166
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 387,
+		"PCNT" : 171,
+		"VISITCNT" : 285
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 354,
+		"PCNT" : 138,
+		"VISITCNT" : 249
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 319,
+		"PCNT" : 114,
+		"VISITCNT" : 198
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 255,
+		"PCNT" : 112,
+		"VISITCNT" : 168
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 689,
+		"PCNT" : 234,
+		"VISITCNT" : 445
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 188,
+		"PCNT" : 69,
+		"VISITCNT" : 115
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 596,
+		"PCNT" : 258,
+		"VISITCNT" : 397
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 605,
+		"PCNT" : 234,
+		"VISITCNT" : 408
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1501,
+		"PCNT" : 644,
+		"VISITCNT" : 1005
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 173,
+		"PCNT" : 64,
+		"VISITCNT" : 123
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 171,
+		"PCNT" : 65,
+		"VISITCNT" : 127
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 163,
+		"PCNT" : 55,
+		"VISITCNT" : 114
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 180,
+		"PCNT" : 53,
+		"VISITCNT" : 122
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 277,
+		"PCNT" : 148,
+		"VISITCNT" : 223
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 378,
+		"PCNT" : 140,
+		"VISITCNT" : 245
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 312,
+		"PCNT" : 100,
+		"VISITCNT" : 181
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 147,
+		"PCNT" : 68,
+		"VISITCNT" : 110
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 566,
+		"PCNT" : 219,
+		"VISITCNT" : 388
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 151,
+		"PCNT" : 61,
+		"VISITCNT" : 95
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 502,
+		"PCNT" : 189,
+		"VISITCNT" : 317
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 481,
+		"PCNT" : 201,
+		"VISITCNT" : 337
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1344,
+		"PCNT" : 590,
+		"VISITCNT" : 888
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 144,
+		"PCNT" : 54,
+		"VISITCNT" : 117
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 144,
+		"PCNT" : 64,
+		"VISITCNT" : 111
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 169,
+		"PCNT" : 59,
+		"VISITCNT" : 116
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 219,
+		"PCNT" : 69,
+		"VISITCNT" : 158
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 406,
+		"PCNT" : 167,
+		"VISITCNT" : 285
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 418,
+		"PCNT" : 163,
+		"VISITCNT" : 285
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 285,
+		"PCNT" : 106,
+		"VISITCNT" : 180
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 277,
+		"PCNT" : 117,
+		"VISITCNT" : 172
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 750,
+		"PCNT" : 255,
+		"VISITCNT" : 492
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 175,
+		"PCNT" : 75,
+		"VISITCNT" : 122
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 657,
+		"PCNT" : 250,
+		"VISITCNT" : 439
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 562,
+		"PCNT" : 215,
+		"VISITCNT" : 379
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1598,
+		"PCNT" : 681,
+		"VISITCNT" : 1073
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 167,
+		"PCNT" : 59,
+		"VISITCNT" : 129
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 233,
+		"PCNT" : 63,
+		"VISITCNT" : 171
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 145,
+		"PCNT" : 52,
+		"VISITCNT" : 102
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 187,
+		"PCNT" : 57,
+		"VISITCNT" : 122
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 342,
+		"PCNT" : 169,
+		"VISITCNT" : 261
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 305,
+		"PCNT" : 127,
+		"VISITCNT" : 210
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 288,
+		"PCNT" : 108,
+		"VISITCNT" : 194
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 224,
+		"PCNT" : 99,
+		"VISITCNT" : 155
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 492,
+		"PCNT" : 191,
+		"VISITCNT" : 329
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 133,
+		"PCNT" : 72,
+		"VISITCNT" : 90
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 553,
+		"PCNT" : 217,
+		"VISITCNT" : 392
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 516,
+		"PCNT" : 212,
+		"VISITCNT" : 348
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1495,
+		"PCNT" : 636,
+		"VISITCNT" : 971
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 123,
+		"PCNT" : 48,
+		"VISITCNT" : 91
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 128,
+		"PCNT" : 56,
+		"VISITCNT" : 100
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 165,
+		"PCNT" : 64,
+		"VISITCNT" : 113
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 221,
+		"PCNT" : 67,
+		"VISITCNT" : 160
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 359,
+		"PCNT" : 166,
+		"VISITCNT" : 262
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 406,
+		"PCNT" : 144,
+		"VISITCNT" : 282
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 345,
+		"PCNT" : 124,
+		"VISITCNT" : 208
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 370,
+		"PCNT" : 157,
+		"VISITCNT" : 228
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 679,
+		"PCNT" : 216,
+		"VISITCNT" : 450
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 168,
+		"PCNT" : 74,
+		"VISITCNT" : 112
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 598,
+		"PCNT" : 230,
+		"VISITCNT" : 371
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 530,
+		"PCNT" : 209,
+		"VISITCNT" : 375
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1772,
+		"PCNT" : 747,
+		"VISITCNT" : 1209
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 148,
+		"PCNT" : 51,
+		"VISITCNT" : 106
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 257,
+		"PCNT" : 76,
+		"VISITCNT" : 191
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 137,
+		"PCNT" : 43,
+		"VISITCNT" : 105
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 160,
+		"PCNT" : 40,
+		"VISITCNT" : 108
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 390,
+		"PCNT" : 190,
+		"VISITCNT" : 296
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 612,
+		"PCNT" : 228,
+		"VISITCNT" : 389
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 520,
+		"PCNT" : 189,
+		"VISITCNT" : 327
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 220,
+		"PCNT" : 112,
+		"VISITCNT" : 150
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 470,
+		"PCNT" : 182,
+		"VISITCNT" : 315
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 193,
+		"PCNT" : 83,
+		"VISITCNT" : 116
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 432,
+		"PCNT" : 153,
+		"VISITCNT" : 273
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 519,
+		"PCNT" : 219,
+		"VISITCNT" : 338
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1427,
+		"PCNT" : 626,
+		"VISITCNT" : 948
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 112,
+		"PCNT" : 45,
+		"VISITCNT" : 89
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 150,
+		"PCNT" : 61,
+		"VISITCNT" : 116
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 105,
+		"PCNT" : 51,
+		"VISITCNT" : 86
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 268,
+		"PCNT" : 71,
+		"VISITCNT" : 174
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 513,
+		"PCNT" : 232,
+		"VISITCNT" : 383
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 639,
+		"PCNT" : 249,
+		"VISITCNT" : 429
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 513,
+		"PCNT" : 209,
+		"VISITCNT" : 337
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 423,
+		"PCNT" : 179,
+		"VISITCNT" : 288
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 689,
+		"PCNT" : 218,
+		"VISITCNT" : 463
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 217,
+		"PCNT" : 88,
+		"VISITCNT" : 133
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 533,
+		"PCNT" : 208,
+		"VISITCNT" : 352
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 646,
+		"PCNT" : 241,
+		"VISITCNT" : 424
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1969,
+		"PCNT" : 798,
+		"VISITCNT" : 1280
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 111,
+		"PCNT" : 48,
+		"VISITCNT" : 94
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 177,
+		"PCNT" : 56,
+		"VISITCNT" : 135
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 173,
+		"PCNT" : 57,
+		"VISITCNT" : 116
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 129,
+		"PCNT" : 35,
+		"VISITCNT" : 91
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 447,
+		"PCNT" : 213,
+		"VISITCNT" : 347
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 547,
+		"PCNT" : 207,
+		"VISITCNT" : 353
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 508,
+		"PCNT" : 175,
+		"VISITCNT" : 303
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 264,
+		"PCNT" : 125,
+		"VISITCNT" : 181
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 446,
+		"PCNT" : 178,
+		"VISITCNT" : 314
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 141,
+		"PCNT" : 68,
+		"VISITCNT" : 96
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 392,
+		"PCNT" : 155,
+		"VISITCNT" : 254
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 640,
+		"PCNT" : 227,
+		"VISITCNT" : 399
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1372,
+		"PCNT" : 641,
+		"VISITCNT" : 948
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 102,
+		"PCNT" : 42,
+		"VISITCNT" : 83
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 124,
+		"PCNT" : 56,
+		"VISITCNT" : 93
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 112,
+		"PCNT" : 45,
+		"VISITCNT" : 87
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 172,
+		"PCNT" : 54,
+		"VISITCNT" : 109
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 471,
+		"PCNT" : 213,
+		"VISITCNT" : 347
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 626,
+		"PCNT" : 248,
+		"VISITCNT" : 416
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 583,
+		"PCNT" : 212,
+		"VISITCNT" : 374
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 401,
+		"PCNT" : 173,
+		"VISITCNT" : 262
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 631,
+		"PCNT" : 181,
+		"VISITCNT" : 434
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 229,
+		"PCNT" : 97,
+		"VISITCNT" : 139
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 540,
+		"PCNT" : 186,
+		"VISITCNT" : 332
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 655,
+		"PCNT" : 227,
+		"VISITCNT" : 399
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1924,
+		"PCNT" : 776,
+		"VISITCNT" : 1253
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 121,
+		"PCNT" : 52,
+		"VISITCNT" : 97
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 241,
+		"PCNT" : 77,
+		"VISITCNT" : 178
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 216,
+		"PCNT" : 71,
+		"VISITCNT" : 143
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 146,
+		"PCNT" : 45,
+		"VISITCNT" : 109
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 362,
+		"PCNT" : 173,
+		"VISITCNT" : 272
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 459,
+		"PCNT" : 147,
+		"VISITCNT" : 278
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 316,
+		"PCNT" : 103,
+		"VISITCNT" : 188
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 194,
+		"PCNT" : 94,
+		"VISITCNT" : 127
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 656,
+		"PCNT" : 234,
+		"VISITCNT" : 462
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 146,
+		"PCNT" : 65,
+		"VISITCNT" : 99
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 562,
+		"PCNT" : 223,
+		"VISITCNT" : 386
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 613,
+		"PCNT" : 208,
+		"VISITCNT" : 389
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1398,
+		"PCNT" : 633,
+		"VISITCNT" : 945
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 194,
+		"PCNT" : 69,
+		"VISITCNT" : 163
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 144,
+		"PCNT" : 74,
+		"VISITCNT" : 122
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 152,
+		"PCNT" : 59,
+		"VISITCNT" : 119
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 234,
+		"PCNT" : 67,
+		"VISITCNT" : 151
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 488,
+		"PCNT" : 180,
+		"VISITCNT" : 330
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 484,
+		"PCNT" : 182,
+		"VISITCNT" : 327
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 405,
+		"PCNT" : 137,
+		"VISITCNT" : 261
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 364,
+		"PCNT" : 135,
+		"VISITCNT" : 222
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 843,
+		"PCNT" : 270,
+		"VISITCNT" : 562
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 205,
+		"PCNT" : 75,
+		"VISITCNT" : 124
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 667,
+		"PCNT" : 264,
+		"VISITCNT" : 450
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 620,
+		"PCNT" : 233,
+		"VISITCNT" : 400
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 2130,
+		"PCNT" : 824,
+		"VISITCNT" : 1344
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 108,
+		"PCNT" : 47,
+		"VISITCNT" : 88
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 214,
+		"PCNT" : 81,
+		"VISITCNT" : 162
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 172,
+		"PCNT" : 57,
+		"VISITCNT" : 121
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 122,
+		"PCNT" : 49,
+		"VISITCNT" : 89
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 423,
+		"PCNT" : 201,
+		"VISITCNT" : 319
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 508,
+		"PCNT" : 155,
+		"VISITCNT" : 290
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 336,
+		"PCNT" : 102,
+		"VISITCNT" : 196
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 173,
+		"PCNT" : 74,
+		"VISITCNT" : 123
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 722,
+		"PCNT" : 243,
+		"VISITCNT" : 493
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 139,
+		"PCNT" : 45,
+		"VISITCNT" : 86
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 617,
+		"PCNT" : 245,
+		"VISITCNT" : 397
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 668,
+		"PCNT" : 220,
+		"VISITCNT" : 420
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1421,
+		"PCNT" : 617,
+		"VISITCNT" : 946
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 172,
+		"PCNT" : 73,
+		"VISITCNT" : 137
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 158,
+		"PCNT" : 63,
+		"VISITCNT" : 123
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 145,
+		"PCNT" : 64,
+		"VISITCNT" : 117
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 170,
+		"PCNT" : 55,
+		"VISITCNT" : 125
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 483,
+		"PCNT" : 216,
+		"VISITCNT" : 360
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 471,
+		"PCNT" : 186,
+		"VISITCNT" : 319
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 389,
+		"PCNT" : 124,
+		"VISITCNT" : 262
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 329,
+		"PCNT" : 116,
+		"VISITCNT" : 196
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 874,
+		"PCNT" : 258,
+		"VISITCNT" : 560
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 244,
+		"PCNT" : 82,
+		"VISITCNT" : 143
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 676,
+		"PCNT" : 241,
+		"VISITCNT" : 475
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 703,
+		"PCNT" : 264,
+		"VISITCNT" : 462
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1938,
+		"PCNT" : 766,
+		"VISITCNT" : 1260
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 107,
+		"PCNT" : 46,
+		"VISITCNT" : 86
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 156,
+		"PCNT" : 55,
+		"VISITCNT" : 113
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 181,
+		"PCNT" : 61,
+		"VISITCNT" : 128
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 114,
+		"PCNT" : 48,
+		"VISITCNT" : 77
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 368,
+		"PCNT" : 170,
+		"VISITCNT" : 280
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 483,
+		"PCNT" : 159,
+		"VISITCNT" : 286
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 272,
+		"PCNT" : 102,
+		"VISITCNT" : 169
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 167,
+		"PCNT" : 79,
+		"VISITCNT" : 115
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 507,
+		"PCNT" : 195,
+		"VISITCNT" : 362
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 166,
+		"PCNT" : 73,
+		"VISITCNT" : 112
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 454,
+		"PCNT" : 206,
+		"VISITCNT" : 314
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 623,
+		"PCNT" : 211,
+		"VISITCNT" : 370
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1294,
+		"PCNT" : 574,
+		"VISITCNT" : 871
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 221,
+		"PCNT" : 78,
+		"VISITCNT" : 178
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 179,
+		"PCNT" : 62,
+		"VISITCNT" : 123
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 109,
+		"PCNT" : 51,
+		"VISITCNT" : 90
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 156,
+		"PCNT" : 59,
+		"VISITCNT" : 109
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 403,
+		"PCNT" : 188,
+		"VISITCNT" : 298
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 470,
+		"PCNT" : 175,
+		"VISITCNT" : 305
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 376,
+		"PCNT" : 120,
+		"VISITCNT" : 247
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 301,
+		"PCNT" : 106,
+		"VISITCNT" : 177
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 777,
+		"PCNT" : 242,
+		"VISITCNT" : 541
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 154,
+		"PCNT" : 62,
+		"VISITCNT" : 97
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 602,
+		"PCNT" : 250,
+		"VISITCNT" : 438
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 521,
+		"PCNT" : 198,
+		"VISITCNT" : 358
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1848,
+		"PCNT" : 733,
+		"VISITCNT" : 1178
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 106,
+		"PCNT" : 43,
+		"VISITCNT" : 79
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 198,
+		"PCNT" : 71,
+		"VISITCNT" : 141
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 220,
+		"PCNT" : 68,
+		"VISITCNT" : 153
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 131,
+		"PCNT" : 45,
+		"VISITCNT" : 97
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 401,
+		"PCNT" : 199,
+		"VISITCNT" : 310
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 398,
+		"PCNT" : 139,
+		"VISITCNT" : 231
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 346,
+		"PCNT" : 110,
+		"VISITCNT" : 208
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 232,
+		"PCNT" : 101,
+		"VISITCNT" : 151
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 567,
+		"PCNT" : 204,
+		"VISITCNT" : 404
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 129,
+		"PCNT" : 61,
+		"VISITCNT" : 85
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 527,
+		"PCNT" : 209,
+		"VISITCNT" : 348
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 572,
+		"PCNT" : 209,
+		"VISITCNT" : 360
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1443,
+		"PCNT" : 635,
+		"VISITCNT" : 957
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 196,
+		"PCNT" : 87,
+		"VISITCNT" : 166
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 217,
+		"PCNT" : 70,
+		"VISITCNT" : 165
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 148,
+		"PCNT" : 67,
+		"VISITCNT" : 119
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 162,
+		"PCNT" : 48,
+		"VISITCNT" : 106
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 536,
+		"PCNT" : 244,
+		"VISITCNT" : 402
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 415,
+		"PCNT" : 162,
+		"VISITCNT" : 279
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 306,
+		"PCNT" : 112,
+		"VISITCNT" : 200
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 307,
+		"PCNT" : 133,
+		"VISITCNT" : 200
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 950,
+		"PCNT" : 298,
+		"VISITCNT" : 600
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 223,
+		"PCNT" : 87,
+		"VISITCNT" : 140
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 647,
+		"PCNT" : 244,
+		"VISITCNT" : 429
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 547,
+		"PCNT" : 229,
+		"VISITCNT" : 365
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 2186,
+		"PCNT" : 811,
+		"VISITCNT" : 1389
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 108,
+		"PCNT" : 50,
+		"VISITCNT" : 77
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 146,
+		"PCNT" : 53,
+		"VISITCNT" : 104
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 195,
+		"PCNT" : 57,
+		"VISITCNT" : 137
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 123,
+		"PCNT" : 43,
+		"VISITCNT" : 82
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 464,
+		"PCNT" : 208,
+		"VISITCNT" : 342
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 494,
+		"PCNT" : 174,
+		"VISITCNT" : 294
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 373,
+		"PCNT" : 143,
+		"VISITCNT" : 231
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 313,
+		"PCNT" : 132,
+		"VISITCNT" : 201
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 554,
+		"PCNT" : 192,
+		"VISITCNT" : 399
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 218,
+		"PCNT" : 91,
+		"VISITCNT" : 144
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 574,
+		"PCNT" : 208,
+		"VISITCNT" : 369
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 611,
+		"PCNT" : 226,
+		"VISITCNT" : 394
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1520,
+		"PCNT" : 671,
+		"VISITCNT" : 1067
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 195,
+		"PCNT" : 68,
+		"VISITCNT" : 149
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 204,
+		"PCNT" : 59,
+		"VISITCNT" : 142
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 165,
+		"PCNT" : 64,
+		"VISITCNT" : 124
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 109,
+		"PCNT" : 47,
+		"VISITCNT" : 85
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 507,
+		"PCNT" : 235,
+		"VISITCNT" : 376
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 517,
+		"PCNT" : 208,
+		"VISITCNT" : 344
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 410,
+		"PCNT" : 174,
+		"VISITCNT" : 280
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 375,
+		"PCNT" : 164,
+		"VISITCNT" : 243
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 955,
+		"PCNT" : 283,
+		"VISITCNT" : 653
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 255,
+		"PCNT" : 99,
+		"VISITCNT" : 157
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 608,
+		"PCNT" : 227,
+		"VISITCNT" : 410
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 633,
+		"PCNT" : 242,
+		"VISITCNT" : 433
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 2025,
+		"PCNT" : 796,
+		"VISITCNT" : 1311
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 109,
+		"PCNT" : 44,
+		"VISITCNT" : 77
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 159,
+		"PCNT" : 54,
+		"VISITCNT" : 117
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 140,
+		"PCNT" : 49,
+		"VISITCNT" : 108
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 153,
+		"PCNT" : 63,
+		"VISITCNT" : 115
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 580,
+		"PCNT" : 257,
+		"VISITCNT" : 416
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 637,
+		"PCNT" : 262,
+		"VISITCNT" : 417
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 490,
+		"PCNT" : 199,
+		"VISITCNT" : 336
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 293,
+		"PCNT" : 135,
+		"VISITCNT" : 210
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 421,
+		"PCNT" : 173,
+		"VISITCNT" : 315
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 153,
+		"PCNT" : 71,
+		"VISITCNT" : 107
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 495,
+		"PCNT" : 194,
+		"VISITCNT" : 334
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 593,
+		"PCNT" : 211,
+		"VISITCNT" : 347
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1653,
+		"PCNT" : 766,
+		"VISITCNT" : 1161
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 117,
+		"PCNT" : 60,
+		"VISITCNT" : 96
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 205,
+		"PCNT" : 75,
+		"VISITCNT" : 162
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 150,
+		"PCNT" : 59,
+		"VISITCNT" : 112
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 136,
+		"PCNT" : 50,
+		"VISITCNT" : 103
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 662,
+		"PCNT" : 280,
+		"VISITCNT" : 475
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 736,
+		"PCNT" : 298,
+		"VISITCNT" : 470
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 577,
+		"PCNT" : 244,
+		"VISITCNT" : 389
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 437,
+		"PCNT" : 176,
+		"VISITCNT" : 270
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 668,
+		"PCNT" : 226,
+		"VISITCNT" : 467
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 220,
+		"PCNT" : 82,
+		"VISITCNT" : 139
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 574,
+		"PCNT" : 214,
+		"VISITCNT" : 396
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 657,
+		"PCNT" : 267,
+		"VISITCNT" : 449
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 2362,
+		"PCNT" : 915,
+		"VISITCNT" : 1524
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 105,
+		"PCNT" : 46,
+		"VISITCNT" : 86
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 157,
+		"PCNT" : 57,
+		"VISITCNT" : 120
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 160,
+		"PCNT" : 59,
+		"VISITCNT" : 121
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 140,
+		"PCNT" : 57,
+		"VISITCNT" : 93
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 397,
+		"PCNT" : 184,
+		"VISITCNT" : 271
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 452,
+		"PCNT" : 145,
+		"VISITCNT" : 238
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 328,
+		"PCNT" : 112,
+		"VISITCNT" : 199
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 217,
+		"PCNT" : 96,
+		"VISITCNT" : 142
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 544,
+		"PCNT" : 206,
+		"VISITCNT" : 372
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 145,
+		"PCNT" : 53,
+		"VISITCNT" : 90
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 531,
+		"PCNT" : 219,
+		"VISITCNT" : 361
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 526,
+		"PCNT" : 196,
+		"VISITCNT" : 326
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1482,
+		"PCNT" : 671,
+		"VISITCNT" : 1006
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "0 - 0.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 113,
+		"PCNT" : 46,
+		"VISITCNT" : 81
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "0.6 - 1",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 227,
+		"PCNT" : 76,
+		"VISITCNT" : 180
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "1 - 1.5",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 149,
+		"PCNT" : 66,
+		"VISITCNT" : 119
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "1.6 - 2",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 141,
+		"PCNT" : 53,
+		"VISITCNT" : 110
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "10 - 12",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 579,
+		"PCNT" : 222,
+		"VISITCNT" : 384
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "13 - 15",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 456,
+		"PCNT" : 176,
+		"VISITCNT" : 306
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "16 - 18",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 366,
+		"PCNT" : 119,
+		"VISITCNT" : 234
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "19 - 21",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 318,
+		"PCNT" : 124,
+		"VISITCNT" : 193
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "2 - 4",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 707,
+		"PCNT" : 260,
+		"VISITCNT" : 508
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "22 - 24",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 207,
+		"PCNT" : 78,
+		"VISITCNT" : 129
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "4 - 6",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 634,
+		"PCNT" : 233,
+		"VISITCNT" : 413
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "7 - 9",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 554,
+		"PCNT" : 224,
+		"VISITCNT" : 360
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "OVER 25",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 1963,
+		"PCNT" : 804,
+		"VISITCNT" : 1269
+	}
+]}

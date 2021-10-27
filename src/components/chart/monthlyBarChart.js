@@ -4,13 +4,15 @@ import * as d3 from 'd3'
 import { sampleData } from '../../sampledata/barData'
 import GenderAgeDivergingChart from './genderAgeDiverging'
 import { act } from 'react-dom/cjs/react-dom-test-utils.production.min'
+import csvToData from '../../modules/csvDataRead'
+import jsonToData from '../../modules/jsonDataRead'
 
 const MonthlyBarChart = (props) => {
-    const width = 1000
-    const height = 600
-    const margin = { top: 40, left: 40, bottom: 40, right: 40 }
-    const [data, setData] = useState(sampleData.monthBarData.data1)
-    const { header, selectData } = props
+    var [width, setWidth] = useState(1000)
+    var height = 600
+    const margin = { top: 40, left: 80, bottom: 40, right: 20 }
+    //const [data, setData] = useState(sampleData.monthBarData.data1)
+    const { header, dataloc } = props
     const svgRef = useRef()
 
     var sample = [
@@ -27,9 +29,16 @@ const MonthlyBarChart = (props) => {
     // 소아 암병원 어린이 본원 강남 ? 소아?
     //var data = sampleData
 
-    useEffect(() => {
-        if (selectData != null) {
-            setData(sampleData.monthBarData[selectData])
+    useEffect(async () => {
+        // if (selectData != null) {
+        //     setData(sampleData.monthBarData[selectData])
+        // }
+        //console.log('json?', dataloc, typeof dataloc)
+        if (dataloc.includes('.csv')) {
+            var data = await csvToData(dataloc)
+        } else {
+            var data = await jsonToData(dataloc)
+            setWidth(1600)
         }
 
         var x = d3
@@ -37,7 +46,7 @@ const MonthlyBarChart = (props) => {
             // .scaleBand() 그래프의 막대의 반복되는 범위를 정해줍니다.
             .domain(data.map((d) => d.NAME))
             // .domain() 각각의 막대에 순서대로 막대에 매핑합니다.
-            .range([margin.left, width - margin.right])
+            .range([margin.left, width - margin.left - margin.right])
             // 시작위치와 끝 위치로 눈금의 범위를 지정합니다.
             .padding(0.4)
         // 막대의 여백을 설정합니다.
@@ -73,7 +82,7 @@ const MonthlyBarChart = (props) => {
             .select('#barchart')
             .call((g) => g.select('svg').remove())
             .append('svg')
-            .style('width', width - margin.left)
+            .style('width', width - margin.left - margin.right)
             .style('height', height)
 
         svg.append('g').call(xAxis)
@@ -177,10 +186,10 @@ const MonthlyBarChart = (props) => {
         // .enter() Join 된 데이터에 각 자리에 대한 노드를 반환하고
         // .append() 반환된 노드 데이터를 담고 react 엘리먼트를 추가합니다.
         // ex. data = [1, 2, 3, 4] 값을 가지고 있었다면 1, 2, 3, 4 데이터와 매핑된 rect 엘리먼트가 4개 추가됩니다.
-    }, [data, selectData])
+    }, [width])
 
     return (
-        <MonthlyBarChartStyle>
+        <MonthlyBarChartStyle width={width}>
             <h1>{header}</h1>
             <div id="barchart" ref={svgRef}></div>
         </MonthlyBarChartStyle>

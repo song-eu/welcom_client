@@ -1,10 +1,8 @@
 import styled from 'styled-components'
 
 export const MonthlyBarChartStyle = styled.div`
-    position: relative;
-    float: left;
-    --border: 1px solid tomato;
-    margin-left: 30px;
+    border: 1px solid tomato;
+    width: ${(props) => props.width}px;
     & #barchart {
         backgroud: tomato;
         --border: 1px solid tomato;
@@ -16,20 +14,12 @@ export const MonthlyBarChartStyle = styled.div`
         margin-bottom: 7px;
         text-align: center;
     }
-    & #stackBarchart {
-        float: left;
-    }
-    & #legendStack {
-        float: left;
-        overflow: hidden;
-    }
 `
 
 export const HorizonBarChartSytle = styled.div`
     flex: 1;
     position: relative;
-    --border: 1px solid #1488cc;
-    float: left;
+    border: 1px solid #1488cc;
     overflow: hidden;
 
     & #hbarchart {
@@ -96,4 +86,49 @@ flex:1;
     }
 
 }
+`
+export const StackChartStyle = styled.div`
+    box-sizing: content-box;
+
+    border: 1px solid tomato;
+
+    & h1 {
+        --position: relative;
+        font-size: 24px;
+        margin-top: 7px;
+        margin-bottom: 7px;
+        text-align: center;
+    }
+    & #barchartbody {
+        display: flex;
+        flex-direction: row;
+    }
+`
+
+export const MapBubbleChartStyle = styled.div`
+    box-sizing: content-box;
+
+    border: 1px solid tomato;
+
+    & h1 {
+        --position: relative;
+        font-size: 24px;
+        margin-top: 7px;
+        margin-bottom: 7px;
+        text-align: center;
+    }
+`
+
+export const GenderDivergingBarChartSytle = styled.div`
+    overflow: hidden;
+    border: 1px solid #ff8c00;
+    width: ${(props) => props.width}px;
+    padding: 0 10px 0 10px;
+    & h1 {
+        position: relative;
+        font-size: 24px;
+        margin-top: 7px;
+        margin-bottom: 7px;
+        text-align: center;
+    }
 `

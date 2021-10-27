@@ -4,36 +4,41 @@ import * as d3module from 'd3'
 import d3Tip from 'd3-tip'
 import { sampleData } from '../../sampledata/barData'
 import csvToData from '../../modules/csvDataRead'
-import { xml } from 'd3'
+import jsonToData from '../../modules/jsonDataRead'
+import * as moment from 'moment'
 
 const d3 = {
     ...d3module,
     tip: d3Tip,
 }
 
-const DeptHorizonBarChart = (props) => {
+const RankHorizonBarChart = (props) => {
     //const [data, setData] = useState(sampleData.depHorizonData.data1)
-    const { header, selectData, data } = props
+    const { header, selectData, dataloc } = props
     const svgRef = useRef()
 
     var margin = { top: 20, right: 100, bottom: 30, left: 80 },
-        width = 800 - margin.left - margin.right,
-        height = 700 - margin.top - margin.bottom
+        width = 1000 - margin.left - margin.right,
+        height = 1200 - margin.top - margin.bottom
+    var thisMonth = moment().subtract(1, 'month').format('YYYY-MM')
 
     useEffect(async () => {
         // if (selectData != null) {
         //     setData(sampleData.depHorizonData[selectData])
         // }
-        let realdata = await csvToData(props.data)
+        let getData = await jsonToData(dataloc)
+        let realdata = getData[thisMonth]
+
         realdata.sort((a, b) => {
             return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
         })
+        // console.log('realdata', realdata)
         // console.log('realdata???', realdata)
-        realdata = realdata.slice(-15)
+        realdata = realdata.slice(-20)
         //console.log('realdata???', realdata)
 
         const xMaxValue = d3.max(realdata, (d) => d.value)
-        const color = d3.scaleLinear().domain([0, xMaxValue]).range([0.4, 0.5])
+        const color = d3.scaleLinear().domain([0, xMaxValue]).range([0.2, 0.8])
         //console.log('color', color(xMaxValue))
 
         var y = d3.scaleBand().range([height, 0]).padding(0.1)
@@ -69,7 +74,7 @@ const DeptHorizonBarChart = (props) => {
             tip.style(
                 'left',
                 `${
-                    pos['width'] < tipNodeWidth + 40
+                    pos['width'] < tipNodeWidth + 60
                         ? pos['right']
                         : pos['right'] - tipNodeWidth
                 }px`
@@ -86,7 +91,7 @@ const DeptHorizonBarChart = (props) => {
             .tip()
             //.attr('class', 'depToolTip')
             .attr('id', 'depToolTip')
-            .style('padding-top', '9px')
+            .style('padding-top', '20px')
             .style('padding-right', '12px')
             .style('padding-left', '12px')
             //.style('background', 'rgba(0, 0, 0, 0.8)')
@@ -95,7 +100,7 @@ const DeptHorizonBarChart = (props) => {
                 //console.log(d)
                 return (
                     '<strong>' +
-                    d.DepName +
+                    d.name_full +
                     " : </strong> <span style='color:red'>" +
                     d.value.toLocaleString('ko-KR') +
                     ' 명 </span>'
@@ -178,4 +183,4 @@ const DeptHorizonBarChart = (props) => {
     )
 }
 
-export default DeptHorizonBarChart
+export default RankHorizonBarChart

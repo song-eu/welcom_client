@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
-import { MonthlyBarChartStyle } from '../style/chartStyle'
+import { StackChartStyle } from '../style/chartStyle'
 import * as d3module from 'd3'
 import d3Tip from 'd3-tip'
 
 import { sampleData } from '../../sampledata/barData'
+import csvToData from '../../modules/csvDataRead'
 
 const d3 = {
     ...d3module,
@@ -11,8 +12,8 @@ const d3 = {
 }
 
 const StackedBarChart = (props) => {
-    const width = 1000
-    const height = 600
+    const width = 680
+    const height = 500
     const margin = { top: 40, left: 20, bottom: 40, right: 20 }
     const svgRef = useRef()
 
@@ -23,11 +24,11 @@ const StackedBarChart = (props) => {
 
     var metaData = [
         { name: 'NAME' },
-        { name: '소아' },
-        { name: '강남' },
-        { name: '어린이' },
-        { name: '암병원' },
+        // { name: '소아' },
         { name: '본원' },
+        { name: '암병원' },
+        { name: '어린이' },
+        { name: '강남' },
     ]
     var col = metaData
         .map((d, i) => {
@@ -35,19 +36,22 @@ const StackedBarChart = (props) => {
         })
         .slice(1)
 
-    useEffect(() => {
+    useEffect(async () => {
+        let realdata = await csvToData(props.data)
         var svg = d3
             .select('#stackBarchart')
             .append('svg')
             //.attr('width', 1000)
             .attr('width', width + margin.left)
             .attr('height', height)
+            // .attr('viewbox', [0, 0, width * 2 + margin.left, height * 2])
             .append('g')
             .attr('transform', 'translate(' + margin.left + ', 0)')
 
         var stack = d3.stack().keys(col)
 
-        const dataset = stack(data)
+        const dataset = stack(realdata)
+        //console.log('Stack dataset???', dataset)
 
         var x = d3
             .scaleBand()
@@ -75,7 +79,7 @@ const StackedBarChart = (props) => {
             '#86A8E7',
             '#6dd5ed',
             '#00B4DB',
-            '#91EAE4',
+            //    '#91EAE4',
             //'#FBD786', pastel yellow
             // '#99f2c8', light green
             //'#ffdde1', baby pink
@@ -159,7 +163,7 @@ const StackedBarChart = (props) => {
                     '<strong>' +
                     subGroupName +
                     " : </strong> <span style='color:red'>" +
-                    i.data[subGroupName] +
+                    i.data[subGroupName].toLocaleString('ko-KR') +
                     ' 명 </span>'
                 )
             }).show(i, this)
@@ -207,9 +211,9 @@ const StackedBarChart = (props) => {
             .attr('y', function (d) {
                 return height - margin.bottom
             })
-            .attr('height', function (d) {
-                return 0
-            })
+            // .attr('height', function (d) {
+            //     return 0
+            // })
             .attr('width', x.bandwidth())
             .on('mouseover', mouseover)
             .on('mouseleave', mouseleave)
@@ -261,11 +265,13 @@ const StackedBarChart = (props) => {
     }, [])
 
     return (
-        <MonthlyBarChartStyle>
+        <StackChartStyle>
             <h1>{props.header}</h1>
-            <div id="stackBarchart" ref={svgRef}></div>
-            <div id="legendStack"></div>
-        </MonthlyBarChartStyle>
+            <div id="barchartbody">
+                <div id="stackBarchart" ref={svgRef}></div>
+                <div id="legendStack"></div>
+            </div>
+        </StackChartStyle>
     )
 }
 
