@@ -9,7 +9,13 @@ import CircleCart from './chart/circleChart'
 import StackedBarChart from './chart/stackedBarChart'
 import StackedBarChartTest from './chart/stackedBarCharttest'
 import PersonMap from './chart/personMap'
-import { RowStyle, BoxStyle, CountButton, ButtonRow } from './style/backgraound'
+import {
+    RowStyle,
+    BoxStyle,
+    CountButton,
+    ButtonRow,
+    BigBox,
+} from './style/backgraound'
 import moment from 'moment'
 import * as d3 from 'd3'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
@@ -20,9 +26,9 @@ const VisitOutpatient = (props) => {
     const thisMonth = moment().subtract(1, 'month').format('MMMM')
     const outPatientVisitBarChart = 'Monthly Oupatinet Visits by Hospital'
     const outPatientHBarChart = `Outpatient Visits by Department in ${thisMonth}`
-    const outPationtTotalBarChart = 'Monthly Visit total (Outpatient & EM)'
-    const outPatientGenderChart = 'Outpatient Visit by Age & Gender'
-    const outPatientPersonMap = 'Outpatient Visit by Location'
+    const outPationtTotalBarChart = `Monthly Visit total (Outpatient & EM)`
+    const outPatientGenderChart = `Outpatient Visit by Age & Gender in ${thisMonth}`
+    const outPatientPersonMap = `Outpatient Visit by Location in ${thisMonth}`
     const outPatientPieChart = 'Outpatient Visit by Nation'
 
     const dataLocation = '/outpatientData'
@@ -48,23 +54,6 @@ const VisitOutpatient = (props) => {
             }
         })
 
-    // .on('start', function repeat() {
-    //     d3.active(this)
-    //         .tween('text', function () {
-    //             var that = d3.select(this),
-    //                 i = d3.interpolateNumber(
-    //                     that.text().replace(/,/g, ''),
-    //                     numberAll
-    //                 )
-    //             return function (t) {
-    //                 that.text(format(i(t)))
-    //             }
-    //         })
-    //         .transition()
-    //         .delay(3000)
-    //         .on('start', repeat)
-    // })
-
     const fetchData = async () => {
         try {
             const response = await axios.get(
@@ -85,60 +74,62 @@ const VisitOutpatient = (props) => {
     }, [])
 
     return (
-        <div>
-            <ButtonRow>
-                <CountButton>
-                    <div>서울대병원 전체</div>
-                    <div className="numberAll"></div>
-                </CountButton>
-                <CountButton>
-                    <div>본원 방문</div>
-                    <div className="number">2,801,323</div>
-                </CountButton>
-                <CountButton>
-                    <div>어린이병원 방문</div>
-                    <div className="number">736,803</div>
-                </CountButton>
-                <CountButton>
-                    <div>암병원 방문</div>
-                    <div className="number">502,859</div>
-                </CountButton>
-                <CountButton>
-                    <div>강남 센터 방문</div>
-                    <div className="number">172,677</div>
-                </CountButton>
-            </ButtonRow>
+        <BigBox>
+            <div>
+                <ButtonRow>
+                    <CountButton>
+                        <div>서울대병원 전체</div>
+                        <div className="numberAll"></div>
+                    </CountButton>
+                    <CountButton>
+                        <div>본원 방문</div>
+                        <div className="number">2,801,323</div>
+                    </CountButton>
+                    <CountButton>
+                        <div>어린이병원 방문</div>
+                        <div className="number">736,803</div>
+                    </CountButton>
+                    <CountButton>
+                        <div>암병원 방문</div>
+                        <div className="number">502,859</div>
+                    </CountButton>
+                    <CountButton>
+                        <div>강남 센터 방문</div>
+                        <div className="number">172,677</div>
+                    </CountButton>
+                </ButtonRow>
 
-            <RowStyle>
-                <BoxStyle>
-                    <StackedBarChart
-                        data={outBarchartData}
-                        header={outPatientVisitBarChart}
-                    />
+                <RowStyle>
+                    <BoxStyle>
+                        <StackedBarChart
+                            data={outBarchartData}
+                            header={outPatientVisitBarChart}
+                        />
 
-                    <DeptHorizonBarChart
-                        header={outPatientHBarChart}
-                        data={outDepchartData}
-                    />
-                </BoxStyle>
-                <BoxStyle>
-                    <PersonMap
-                        header={outPatientPersonMap}
-                        dataloc={outPersonMapData}
-                    />
-                </BoxStyle>
-                <BoxStyle>
-                    <GenderAgeDivergingChart
-                        header={outPatientGenderChart}
-                        dataloc={outGenderAgeData}
-                    />
-                    <MonthlyBarChart
-                        header={outPationtTotalBarChart}
-                        dataloc={outMonthlyBarData}
-                    />
-                </BoxStyle>
-            </RowStyle>
-        </div>
+                        <DeptHorizonBarChart
+                            header={outPatientHBarChart}
+                            data={outDepchartData}
+                        />
+                    </BoxStyle>
+                    <BoxStyle>
+                        <PersonMap
+                            header={outPatientPersonMap}
+                            dataloc={outPersonMapData}
+                        />
+                    </BoxStyle>
+                    <BoxStyle>
+                        <GenderAgeDivergingChart
+                            header={outPatientGenderChart}
+                            dataloc={outGenderAgeData}
+                        />
+                        <MonthlyBarChart
+                            header={outPationtTotalBarChart}
+                            dataloc={outMonthlyBarData}
+                        />
+                    </BoxStyle>
+                </RowStyle>
+            </div>
+        </BigBox>
     )
 }
 export default VisitOutpatient

@@ -7,7 +7,13 @@ import DeptHorizonBarChart from './chart/deptHorizonBarChart'
 import GenderAgeDivergingChart from './chart/genderAgeDiverging'
 import StackedBarChart from './chart/stackedBarChart'
 import PersonMap from './chart/personMap'
-import { RowStyle, BoxStyle, ButtonRow, CountButton } from './style/backgraound'
+import {
+    RowStyle,
+    BoxStyle,
+    ButtonRow,
+    CountButton,
+    BigBox,
+} from './style/backgraound'
 import moment from 'moment'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
@@ -56,59 +62,61 @@ const VisitInpatient = (props) => {
     }, [])
 
     return (
-        <div>
-            <ButtonRow>
-                <CountButton>
-                    <div>서울대병원 전체</div>
-                    <div>30,000,000명</div>
-                </CountButton>
-                <CountButton>
-                    <div>본원 방문</div>
-                    <div>30,000,000명</div>
-                </CountButton>
-                <CountButton>
-                    <div>어린이병원 방문</div>
-                    <div>30,000,000명</div>
-                </CountButton>
-                <CountButton>
-                    <div>강남병원 방문</div>
-                    <div>30,000,000명</div>
-                </CountButton>
-                <CountButton>
-                    <div>이번달 본원 방문</div>
-                    <div>30,000,000명</div>
-                </CountButton>
-            </ButtonRow>
-            <RowStyle>
-                <BoxStyle>
-                    <StackedBarChart
-                        data={inBarchartData}
-                        header={inPatientVisitBarChart}
-                    />
+        <BigBox>
+            <div>
+                <ButtonRow>
+                    <CountButton>
+                        <div>서울대병원 전체</div>
+                        <div>30,000,000명</div>
+                    </CountButton>
+                    <CountButton>
+                        <div>본원 방문</div>
+                        <div>30,000,000명</div>
+                    </CountButton>
+                    <CountButton>
+                        <div>어린이병원 방문</div>
+                        <div>30,000,000명</div>
+                    </CountButton>
+                    <CountButton>
+                        <div>강남병원 방문</div>
+                        <div>30,000,000명</div>
+                    </CountButton>
+                    <CountButton>
+                        <div>이번달 본원 방문</div>
+                        <div>30,000,000명</div>
+                    </CountButton>
+                </ButtonRow>
+                <RowStyle>
+                    <BoxStyle>
+                        <StackedBarChart
+                            data={inBarchartData}
+                            header={inPatientVisitBarChart}
+                        />
 
-                    <DeptHorizonBarChart
-                        header={inPatientHBarChart}
-                        data={inDepchartData}
-                    />
-                </BoxStyle>
-                <BoxStyle>
-                    <PersonMap
-                        header={inPatientPersonMap}
-                        dataloc={inPersonMapData}
-                    />
-                </BoxStyle>
-                <BoxStyle>
-                    <GenderAgeDivergingChart
-                        header={inPatientGenderChart}
-                        dataloc={inGenderAgeData}
-                    />
-                    <MonthlyBarChart
-                        header={inPationtTotalBarChart}
-                        dataloc={inMonthlyBarData}
-                    />
-                </BoxStyle>
-            </RowStyle>
-        </div>
+                        <DeptHorizonBarChart
+                            header={inPatientHBarChart}
+                            data={inDepchartData}
+                        />
+                    </BoxStyle>
+                    <BoxStyle>
+                        <PersonMap
+                            header={inPatientPersonMap}
+                            dataloc={inPersonMapData}
+                        />
+                    </BoxStyle>
+                    <BoxStyle>
+                        <GenderAgeDivergingChart
+                            header={inPatientGenderChart}
+                            dataloc={inGenderAgeData}
+                        />
+                        <MonthlyBarChart
+                            header={inPationtTotalBarChart}
+                            dataloc={inMonthlyBarData}
+                        />
+                    </BoxStyle>
+                </RowStyle>
+            </div>
+        </BigBox>
     )
 }
 export default VisitInpatient

@@ -117,8 +117,8 @@ const DeptHorizonBarChart = (props) => {
             }),
         ])
         svg.append('g')
-        //  .attr("transform", "translate(0," + height + ")")
-        //.call(d3.axisTop(x));
+            //  .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisTop(x))
 
         y.domain(
             realdata.map(function (d) {

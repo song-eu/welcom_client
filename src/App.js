@@ -46,9 +46,6 @@ const App = () => {
             setProcedureLoaded(true)
         }
     }
-    const style = {
-        backgroundColor: 'Black',
-    }
     console.log('currPage: ??', currPage, 'setThisPage?', setThisPage)
     return (
         <BackgroundAll>

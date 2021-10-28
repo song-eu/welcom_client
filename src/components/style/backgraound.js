@@ -233,6 +233,7 @@ export const BoxStyle = styled.div`
     overflow: hidden;
     margin: 15px 10 15px 10px;
     align-items: center;
+    border: 2px solid tomato;
 `
 
 export const RowStyle = styled.div`
@@ -268,5 +269,10 @@ export const CountButton = styled.div`
 `
 export const BackgroundAll = styled.div`
     background: rgba(25, 16, 45, 0.9);
+    border: 2px solid tomato;
     color: white;
+`
+export const BigBox = styled.div`
+    display: flex;
+    justify-content: center;
 `

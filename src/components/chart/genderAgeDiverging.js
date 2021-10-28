@@ -50,7 +50,7 @@ const GenderAgeDivergingChart = (props) => {
                     parseInt(b.group.slice(0, 2))
                 )
             })
-            var w = 800
+            var w = 900
             var h = 750
         }
         // the width of each side of the chart

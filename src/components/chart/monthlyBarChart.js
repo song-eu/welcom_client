@@ -82,7 +82,7 @@ const MonthlyBarChart = (props) => {
             .select('#barchart')
             .call((g) => g.select('svg').remove())
             .append('svg')
-            .style('width', width - margin.left - margin.right)
+            .style('width', width - margin.left)
             .style('height', height)
 
         svg.append('g').call(xAxis)
@@ -107,7 +107,7 @@ const MonthlyBarChart = (props) => {
 
         barGroups
             .append('rect')
-            .attr('fill', '#BBD2C5')
+            .attr('fill', '#73FDFF')
             .attr('class', 'bar')
             .attr('x', (d) => x(d.NAME))
             .attr('width', x.bandwidth())
@@ -151,7 +151,7 @@ const MonthlyBarChart = (props) => {
 
                         let text = ''
                         if (divergence > 0) text += '+'
-                        text += `${divergence}%`
+                        text += `${divergence / 100}%`
 
                         return idx !== i ? text : ''
                     })

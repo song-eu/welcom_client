@@ -19,7 +19,7 @@ const RankHorizonBarChart = (props) => {
 
     var margin = { top: 20, right: 100, bottom: 30, left: 80 },
         width = 1000 - margin.left - margin.right,
-        height = 1200 - margin.top - margin.bottom
+        height = 1500 - margin.top - margin.bottom
     var thisMonth = moment().subtract(1, 'month').format('YYYY-MM')
 
     useEffect(async () => {
@@ -34,7 +34,7 @@ const RankHorizonBarChart = (props) => {
         })
         // console.log('realdata', realdata)
         // console.log('realdata???', realdata)
-        realdata = realdata.slice(-20)
+        realdata = realdata.slice(-25)
         //console.log('realdata???', realdata)
 
         const xMaxValue = d3.max(realdata, (d) => d.value)
@@ -121,17 +121,29 @@ const RankHorizonBarChart = (props) => {
                 return d.value
             }),
         ])
-        svg.append('g')
-        //  .attr("transform", "translate(0," + height + ")")
-        //.call(d3.axisTop(x));
 
+        svg.append('g')
+            // .attr('transform', 'translate(' + height + ', 0)')
+            .call(d3.axisTop(x))
+        // svg.append('g')
+        //     .attr('class', 'rankgrid')
+        //     .attr('transform', `translate(0, ${height})`)
+        //     .call(
+        //         d3.axisBottom().scale(x).tickSize(-height, 0, 0).tickFormat('')
+        //     )
         y.domain(
             realdata.map(function (d) {
                 return d.name
             })
         )
         // add the y Axis
-        svg.append('g').call(d3.axisLeft(y))
+        svg.append('g').call(
+            d3
+                .axisLeft(y)
+                // .ticks(realdata.length)
+                .tickSizeInner(7)
+                .tickSizeOuter(7)
+        )
 
         var bar = svg
             .selectAll('.bar')
