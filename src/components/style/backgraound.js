@@ -10,7 +10,7 @@ export const HeaderWrap = styled.header`
     position: sticky;
     top: 0;
     left: 0;
-    background: rgba(255, 255, 255, 0.9);
+    // background: rgba(255, 255, 255, 0.9);
     z-index: 10;
     overflow: hidden;
     display: flex;
@@ -65,13 +65,13 @@ export const PageHeaderWrap = styled.header`
         float: left;
         padding: 15px;
         overflow: hidden;
-        background: #0575e6;
+        // background: #0575e6;
         color: white;
         &:hover {
-            background: ${lighten(0.1, '#0575e6')};
+            // background: ${lighten(0.1, '#0575e6')};
         }
         &:active {
-            backgrounds: ${darken(0.1, '#0575e6')};
+            // backgrounds: ${darken(0.1, '#0575e6')};
         }
     }
     & .unSelectedLink {
@@ -115,7 +115,7 @@ export const CategoryButtons = styled.div`
         margin-right: 20px;
         color: #6b6b83;
         &:hover {
-            background: #00b4db;
+            // background: #00b4db;
             color: white;
         }
     }
@@ -162,7 +162,7 @@ export const SmallBoxstyle = styled.div`
     font-family: 'Roboto', sans-serif;
 
     &:hover {
-        background: #0575e6;
+        // background: #0575e6;
         color: white;
     }
 
@@ -206,7 +206,7 @@ export const SmallBoxstyleOut = styled.div`
     font-family: 'Roboto', sans-serif;
 
     &:hover {
-      background: #0575e6;
+    //   background: #0575e6;
       color: white;
   }
     & .countText {
@@ -227,7 +227,7 @@ export const SmallBoxstyleOut = styled.div`
 `
 
 export const BoxStyle = styled.div`
-    border: 2px solid #0575e6;
+    // border: 2px solid #0575e6;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -236,7 +236,7 @@ export const BoxStyle = styled.div`
 `
 
 export const RowStyle = styled.div`
-    border: 2px solid tomato;
+    // border: 2px solid tomato;
     display: flex;
     overflow: hidden;
     flex-direction: row;
@@ -260,9 +260,13 @@ export const CountButton = styled.div`
     width: 300px;
     height: 180px;
     overflow: hidden;
-    border: 2px solid tomato;
+    // border: 2px solid tomato;
 
-    font-size: 40px;
+    font-size: 35px;
     font-weight: 500;
     font-family: 'Roboto', sans-serif;
+`
+export const BackgroundAll = styled.div`
+    background: rgba(25, 16, 45, 0.9);
+    color: white;
 `

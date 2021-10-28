@@ -13,7 +13,7 @@ import moment from 'moment'
 
 const ChildrenView = (props) => {
     //  const [outBarchartData, setoutBarchartData] = useState(null)
-    const thisMonth = moment().format('MMMM')
+    const thisMonth = moment().subtract(1, 'month').format('MMMM')
 
     const childrenHBarChart = `Chilren Hopital Visits by Rare disease in ${thisMonth}`
     const childrenBarChart = 'Monthly Children Rare disease Visits'

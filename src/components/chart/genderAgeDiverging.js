@@ -15,16 +15,16 @@ const d3 = {
 
 const GenderAgeDivergingChart = (props) => {
     // SET UP DIMENSIONS
-    var [w, setW] = useState(950)
-    var h = 600
+    // var [w, setW] = useState(950)
+
     var thisMonth = moment().subtract(2, 'month').format('YYYY-MM')
 
     // margin.middle is distance from center line to each y-axis
     var margin = {
         top: 20,
-        right: 30,
+        right: 40,
         bottom: 24,
-        left: 30,
+        left: 40,
         middle: 28,
     }
     //const [data, setData] = useState(sampleData.genDivergData.data1)
@@ -34,11 +34,10 @@ const GenderAgeDivergingChart = (props) => {
     //console.log('props.header', props.header)
 
     useEffect(async () => {
-        // if (selectData != null) {
-        //     setData(sampleData.genDivergData[selectData])
-        // }
         if (dataloc.includes('.csv')) {
             var data = await csvToData(dataloc)
+            var w = 950
+            var h = 600
         } else {
             var getData = await jsonToData(dataloc)
 
@@ -51,14 +50,35 @@ const GenderAgeDivergingChart = (props) => {
                     parseInt(b.group.slice(0, 2))
                 )
             })
-            setW(800)
+            var w = 800
+            var h = 750
         }
         // the width of each side of the chart
-        var regionWidth = w / 2 - margin.middle
+        var regionWidth =
+            (w - margin.right - margin.left - margin.middle) / 2 -
+            margin.middle -
+            margin.left
 
         // these are the x-coordinates of the y-axes
         var pointA = regionWidth,
-            pointB = w - regionWidth
+            pointB =
+                w -
+                regionWidth -
+                margin.middle -
+                margin.right -
+                margin.left -
+                margin.left * 2
+
+        console.log('pointA', pointA, 'pointB', pointB, pointB - pointA)
+
+        console.log(
+            'regeionwidth?',
+            regionWidth,
+            'pointA',
+            pointA,
+            'pointB',
+            pointB
+        )
 
         // GET THE TOTAL POPULATION SIZE AND CREATE A FUNCTION FOR RETURNING THE PERCENTAGE
         var totalPopulation = d3.sum(data, function (d) {
@@ -70,7 +90,7 @@ const GenderAgeDivergingChart = (props) => {
             .select('#negBarChart')
             .call((g) => g.select('svg').remove())
             .append('svg')
-            .attr('width', margin.left + w + margin.right)
+            .attr('width', w - margin.left - margin.right - margin.middle)
             .attr('height', margin.top + h + margin.bottom)
             // ADD A GROUP FOR THE SPACE WITHIN THE MARGINS
             .append('g')
@@ -83,7 +103,7 @@ const GenderAgeDivergingChart = (props) => {
             d3.max(data, (d) => d.female)
         )
         // SET UP SCALES
-        const color = d3.scaleLinear().domain([0, 1]).range([0.29, 0.74])
+        // const color = d3.scaleLinear().domain([0, 1]).range([0.29, 0.74])
 
         // the xScale goes from 0 to the width of a region
         //  it will be reversed for the left x-axis
@@ -92,16 +112,6 @@ const GenderAgeDivergingChart = (props) => {
             .domain([0, maxValue])
             .range([0, regionWidth])
             .nice()
-
-        var xScaleLeft = d3
-            .scaleLinear()
-            .domain([0, maxValue])
-            .range([regionWidth, 0])
-
-        var xScaleRight = d3
-            .scaleLinear()
-            .domain([0, maxValue])
-            .range([0, regionWidth])
 
         var yScale = d3
             .scaleBand()
@@ -136,9 +146,11 @@ const GenderAgeDivergingChart = (props) => {
                 // REVERSE THE X-AXIS SCALE ON THE LEFT SIDE BY REVERSING THE RANGE
                 .call(
                     d3.axisBottom(xScale.copy().range([pointA, 0]))
+                    //d3.axisBottom(xScale)
                     // .tickFormat(d3.format('%'))
                 )
 
+        //<-------- Tooltips -------->
         const tip = d3
             .tip()
             .attr('class', 'toolTip')
@@ -171,6 +183,7 @@ const GenderAgeDivergingChart = (props) => {
 
         svg.call(tip)
         svg.call(fTip)
+        //<-------- Tooltips -------->
 
         // MAKE GROUPS FOR EACH SIDE OF CHART
         // scale(-1,1) is used to reverse the left side so the bars grow left instead of right
@@ -215,7 +228,7 @@ const GenderAgeDivergingChart = (props) => {
             )
             .append('rect')
             .attr('class', 'bar left')
-            .attr('fill', d3.interpolateSpectral(color(1)))
+            .attr('fill', '#ACDDEF')
             .attr('x', 0)
             .attr('y', function (d) {
                 return yScale(d.group)
@@ -223,7 +236,7 @@ const GenderAgeDivergingChart = (props) => {
             //    .attr('width', function(d) { return xScale(d.male); })
             .attr('height', yScale.bandwidth())
             .transition()
-            .duration(800)
+            .duration(500)
             .attr('width', (d) => xScale(d.male))
             .delay(function (d, i) {
                 //console.log(i)
@@ -265,14 +278,16 @@ const GenderAgeDivergingChart = (props) => {
                 d3.select(this)
                     .transition()
                     .duration(100)
-                    .attr('fill', d3.interpolateSpectral(color(0.8)))
+                    // .attr('fill', '#ACDDEF')
+                    .attr('opacity', 0.8)
             })
             .on('mouseleave', function (actual, i) {
                 tip.hide()
                 d3.select(this)
                     .transition()
                     .duration(300)
-                    .attr('fill', d3.interpolateSpectral(color(1)))
+                    // .attr('fill', d3.interpolateSpectral(color(1)))
+                    .attr('opacity', 1)
             })
 
         rightBarGroup
@@ -285,12 +300,14 @@ const GenderAgeDivergingChart = (props) => {
             )
             .append('rect')
             .attr('class', 'bar right')
-            .attr('fill', d3.interpolateRdYlBu(color(0)))
+            .attr('fill', '#EFACDA')
             .attr('x', 0)
             .attr('y', function (d) {
                 return yScale(d.group)
             })
-            //    .attr('width', function(d) { return xScale(d.female); })
+            // .attr('width', function (d) {
+            //     return xScale(d.female)
+            // })
             .attr('height', yScale.bandwidth())
             .on('mouseover', function (d, i, n) {
                 let pos = d3.select(this).node().getBoundingClientRect()
@@ -322,17 +339,19 @@ const GenderAgeDivergingChart = (props) => {
                 d3.select(this)
                     .transition()
                     .duration(100)
-                    .attr('fill', d3.interpolateSpectral(color(0.2)))
+                    // .attr('fill', d3.interpolateSpectral(color(0.2)))
+                    .attr('opacity', 0.8)
             })
             .on('mouseleave', function (actual, i) {
                 fTip.hide()
                 d3.select(this)
                     .transition()
                     .duration(300)
-                    .attr('fill', d3.interpolateSpectral(color(0)))
+                    // .attr('fill', d3.interpolateSpectral(color(0)))
+                    .attr('opacity', 1)
             })
             .transition()
-            .duration(800)
+            .duration(500)
             .attr('width', (d) => xScale(d.female))
             .delay(function (d, i) {
                 //console.log(i) ;
@@ -343,9 +362,9 @@ const GenderAgeDivergingChart = (props) => {
         function translation(x, y) {
             return 'translate(' + x + ',' + y + ')'
         }
-    }, [w])
+    }, [])
     return (
-        <GenderDivergingBarChartSytle width={w}>
+        <GenderDivergingBarChartSytle>
             <h1>{props.header}</h1>
             <div id="negBarChart" ref={svgRef}></div>
         </GenderDivergingBarChartSytle>

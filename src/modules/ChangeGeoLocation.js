@@ -3,8 +3,9 @@ import * as moment from 'moment'
 
 const ChangeGeoLocation = async (geojson, dataloc) => {
     //console.log(mapData)
-    var lastMonth = moment().subtract(3, 'month').format('YYYY-MM') // 2021-07 or 마지막 달
+    var lastMonth = moment().subtract(1, 'month').format('YYYY-MM') // 2021-07 or 마지막 달
     var result = {}
+    console.log('dataloc?', dataloc)
 
     return d3
         .csv(process.env.PUBLIC_URL + dataloc, (map) => {

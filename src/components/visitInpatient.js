@@ -18,7 +18,7 @@ const VisitInpatient = (props) => {
     const [graphHeight, setGraphData] = useState(0)
     let incomingData = [23, 4335, 6, 45354, 23, 132, 99999]
     //  const [outBarchartData, setoutBarchartData] = useState(null)
-    const thisMonth = moment().format('MMMM')
+    const thisMonth = moment().subtract(1, 'month').format('MMMM')
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const inPatientVisitBarChart = 'Monthly Inpatinet Visits by Hospital'
@@ -28,11 +28,11 @@ const VisitInpatient = (props) => {
     const inPatientPersonMap = 'Inpatient Visit by Location'
 
     const dataLocation = '/inpatientData'
-    const inBarchartData = dataLocation + '/1year_total_by_hospital.csv'
-    const inDepchartData = dataLocation + '/july_visit_dept_rank.csv'
-    const inPersonMapData = dataLocation + '/1_year_weekly_visits_addr.csv'
-    const inGenderAgeData = dataLocation + '/july_AGE_GENDER_GROUP.csv'
-    const inMonthlyBarData = dataLocation + '/1year_monthly_total.csv'
+    const inBarchartData = dataLocation + '/1_1year_total_by_hospital_in.csv'
+    const inDepchartData = dataLocation + '/2_july_visit_dept_rank_in.csv'
+    const inPersonMapData = dataLocation + '/3_1year_weekly_visits_addr_in.csv'
+    const inGenderAgeData = dataLocation + '/4_july_AGE_GENDER_GROUP_in.csv'
+    const inMonthlyBarData = dataLocation + '/5_1year_monthly_total_in.csv'
 
     const fetchData = async () => {
         try {

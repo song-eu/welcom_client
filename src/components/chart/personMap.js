@@ -36,7 +36,13 @@ const PersonMap = (props) => {
     useEffect(async () => {
         if (dataloc.includes('.csv')) {
             var data = await ChangeGeoLocation(geojson, dataloc)
-            var circleRange = [10, 40]
+            console.log('map data?', data)
+            if (dataloc.includes('_in')) {
+                var circleRange = [10, 100]
+            } else {
+                var circleRange = [10, 40]
+            }
+
             var projection = d3
                 .geoMercator()
                 .scale(11000) //스케일
@@ -71,7 +77,8 @@ const PersonMap = (props) => {
             .append('svg')
             .attr('width', width)
             .attr('height', height)
-            .style('background-color', '#f2f2f7') //지도 배경색 변경
+            .style('background-color', 'rgb(38, 29, 57)') //지도 배경색 변경
+        //기존 회색 #f2f2f7
 
         const path = d3.geoPath().projection(projection)
         // const bounds = path.bounds(geojson)

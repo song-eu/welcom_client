@@ -75,10 +75,15 @@ const StackedBarChart = (props) => {
             .range([height - margin.bottom, margin.top])
 
         var colors = [
-            '#6b6b83',
+            '#C2E88D',
             '#86A8E7',
-            '#6dd5ed',
-            '#00B4DB',
+            '#FE88A0',
+            '#6EDAD7',
+
+            // '#6b6b83',
+            // '#86A8E7',
+            // '#6dd5ed',
+            // '#00B4DB',
             //    '#91EAE4',
             //'#FBD786', pastel yellow
             // '#99f2c8', light green
@@ -257,8 +262,9 @@ const StackedBarChart = (props) => {
             .enter()
             .append('text')
             .style('text-anchor', 'start')
+            .style('fill', '#fff')
             .attr('x', xOffset + legendItemSize + 20)
-            .attr('y', (d, i) => (legendItemSize + legendSpacing) * i + 12)
+            .attr('y', (d, i) => (legendItemSize + legendSpacing) * i + 15)
             .text(function (d, i) {
                 return col[i]
             })
