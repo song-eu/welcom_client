@@ -61,19 +61,27 @@ const DeptHorizonBarChart = (props) => {
                 .getBoundingClientRect().width
 
             tip.show(i, this)
-            //console.log('pos?', pos)
+            console.log('pos?', pos.width, tipNodeWidth, pos.right, pos)
             //console.log('depToolTip',d3.selectAll('#depToolTip').node().getBoundingClientRect() )
 
-            //tip.style('left',`${pos['x']+pos['width']  } px`)
+            // tip.style('left', `${pos['x'] + pos['width']} px`)
             //
-            tip.style(
-                'left',
-                `${
-                    pos['width'] < tipNodeWidth + 40
-                        ? pos['right']
-                        : pos['right'] - tipNodeWidth
-                }px`
-            ).style('top', `${window.pageYOffset + pos['y'] - 1}px`)
+            if (pos['width'] < 230) {
+                tip.style('left', `${pos['right']}px`).style(
+                    'top',
+                    `${window.pageYOffset + pos['y'] - 1}px`
+                )
+            } else {
+                tip.style(
+                    'left',
+                    `${
+                        // pos['width'] < 200
+                        //     ? pos['right']
+                        //     : pos['right'] - tipNodeWidth
+                        pos['right'] - 180
+                    }px`
+                ).style('top', `${window.pageYOffset + pos['y'] - 1}px`)
+            }
 
             d3.select(this)
                 .transition()
@@ -84,13 +92,13 @@ const DeptHorizonBarChart = (props) => {
 
         const tip = d3
             .tip()
-            //.attr('class', 'depToolTip')
             .attr('id', 'depToolTip')
+            .attr('class', 'depToolTip')
             .style('padding-top', '9px')
             .style('padding-right', '12px')
             .style('padding-left', '12px')
             //.style('background', 'rgba(0, 0, 0, 0.8)')
-            .style('color', 'Black')
+            .style('color', '#fff')
             .html((d) => {
                 //console.log(d)
                 return (
@@ -101,12 +109,6 @@ const DeptHorizonBarChart = (props) => {
                     ' 명 </span>'
                 )
             })
-        //.style("display", "inline-block")
-        // .style('left', d3.select(this).attr("cx") + "px")
-        // .style('top', d3.select(this).attr("cy") + "px")
-        // .style("left",(d) => xScale(d.male)  + "px")
-        // .style("top", (d) => yScale(d.group)+ "px")
-        //.offset([-10, 0])
 
         svg.call(tip)
 

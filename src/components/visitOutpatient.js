@@ -38,22 +38,6 @@ const VisitOutpatient = (props) => {
     const outGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP.csv'
     const outMonthlyBarData = dataLocation + '/5_1year_monthly_total.csv'
 
-    var format = d3.format(',d')
-
-    var numberAll = 3859411
-
-    let numAll = d3.select('.numberAll')
-    numAll
-        .datum(numberAll)
-        .transition()
-        .duration(5000)
-        .textTween((d) => {
-            const i = d3.interpolate(0, d)
-            return function (t) {
-                format(i(t))
-            }
-        })
-
     const fetchData = async () => {
         try {
             const response = await axios.get(
@@ -69,8 +53,94 @@ const VisitOutpatient = (props) => {
         setSelectData(e.target.id)
         console.log('setSelectData for props?', selectData)
     }
+    var format = d3.format(',d')
+    const number = {
+        all: 3859411,
+        HQ: 2801323,
+        children: 736803,
+        cc: 502859,
+        kn: 172677,
+    }
     useEffect(() => {
-        //        fetchData();
+        let numAll = d3
+            .select('.numberAll')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numAll
+            .datum(number.all)
+            .transition()
+            .duration(1500)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numHQ = d3
+            .select('.numberHQ')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numHQ
+            .datum(number.HQ)
+            .transition()
+            .duration(1500)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numCH = d3
+            .select('.numberCH')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numCH
+            .datum(number.children)
+            .transition()
+            .duration(1000)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numCC = d3
+            .select('.numberCC')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numCC
+            .datum(number.cc)
+            .transition()
+            .duration(1000)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numKN = d3
+            .select('.numberKN')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numKN
+            .datum(number.kn)
+            .transition()
+            .duration(1000)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
     }, [])
 
     return (
@@ -79,23 +149,23 @@ const VisitOutpatient = (props) => {
                 <ButtonRow>
                     <CountButton>
                         <div>서울대병원 전체</div>
-                        <div className="numberAll"></div>
+                        <div className="numberAll">0</div>
                     </CountButton>
                     <CountButton>
                         <div>본원 방문</div>
-                        <div className="number">2,801,323</div>
+                        <div className="numberHQ">0</div>
                     </CountButton>
                     <CountButton>
                         <div>어린이병원 방문</div>
-                        <div className="number">736,803</div>
+                        <div className="numberCH">0</div>
                     </CountButton>
                     <CountButton>
                         <div>암병원 방문</div>
-                        <div className="number">502,859</div>
+                        <div className="numberCC">0</div>
                     </CountButton>
                     <CountButton>
                         <div>강남 센터 방문</div>
-                        <div className="number">172,677</div>
+                        <div className="numberKN">0</div>
                     </CountButton>
                 </ButtonRow>
 

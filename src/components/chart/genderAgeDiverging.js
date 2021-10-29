@@ -154,11 +154,11 @@ const GenderAgeDivergingChart = (props) => {
         const tip = d3
             .tip()
             .attr('class', 'toolTip')
-            .attr('id', 'toolTip')
+            // .attr('id', 'toolTip')
             .style('padding-top', '17px')
             .style('padding-left', '12px')
             //.style('background', 'rgba(0, 0, 0, 0.8)')
-            .style('color', 'Black')
+            .style('color', '#fff')
             //.style("display", "inline-block")
             // .style('left', d3.select(this).attr("cx") + "px")
             // .style('top', d3.select(this).attr("cy") + "px")
@@ -169,11 +169,11 @@ const GenderAgeDivergingChart = (props) => {
         const fTip = d3
             .tip()
             .attr('class', 'toolTipF')
-            .attr('id', 'toolTipF')
+            // .attr('id', 'toolTipF')
             .style('padding-top', '17px')
-            .style('padding-right', '12px')
+            .style('padding-left', '12px')
             //.style('background', 'rgba(0, 0, 0, 0.8)')
-            .style('color', 'Black')
+            .style('color', '#fff')
             //.style("display", "inline-block")
             // .style('left', d3.select(this).attr("cx") + "px")
             // .style('top', d3.select(this).attr("cy") + "px")
@@ -252,7 +252,7 @@ const GenderAgeDivergingChart = (props) => {
                 // .attr('opacity', 0.6)
                 let pos = d3.select(this).node().getBoundingClientRect()
                 let tipNodeWidth = d3
-                    .selectAll('#toolTip')
+                    .selectAll('.toolTip')
                     .node()
                     .getBoundingClientRect().width
 
@@ -269,9 +269,9 @@ const GenderAgeDivergingChart = (props) => {
                 tip.style(
                     'left',
                     `${
-                        pos['width'] < tipNodeWidth + 12
-                            ? pos['left'] - tipNodeWidth
-                            : pos['left']
+                        pos['width'] < tipNodeWidth + 14
+                            ? pos['left'] - tipNodeWidth - 20
+                            : pos['left'] + 10
                     }px`
                 ).style('top', `${window.pageYOffset + pos['y'] - 5}px`)
 
@@ -312,7 +312,7 @@ const GenderAgeDivergingChart = (props) => {
             .on('mouseover', function (d, i, n) {
                 let pos = d3.select(this).node().getBoundingClientRect()
                 let tipNodeWidthF = d3
-                    .selectAll('#toolTipF')
+                    .selectAll('.toolTipF')
                     .node()
                     .getBoundingClientRect().width
 
@@ -329,9 +329,9 @@ const GenderAgeDivergingChart = (props) => {
                 fTip.style(
                     'left',
                     `${
-                        pos['width'] < tipNodeWidthF + 12
-                            ? pos['right']
-                            : pos['right'] - tipNodeWidthF
+                        pos['width'] < tipNodeWidthF + 14
+                            ? pos['right'] + 8
+                            : pos['right'] - tipNodeWidthF - 25
                     }px`
                 )
                 fTip.style('top', `${window.pageYOffset + pos['y'] - 5}px`)

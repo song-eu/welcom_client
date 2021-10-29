@@ -264,7 +264,7 @@ export const CountButton = styled.div`
     // border: 2px solid tomato;
 
     font-size: 35px;
-    font-weight: 500;
+    font-weight: 700;
     font-family: 'Roboto', sans-serif;
 `
 export const BackgroundAll = styled.div`

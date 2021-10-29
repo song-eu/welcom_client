@@ -84,12 +84,12 @@ const StackedBarChart = (props) => {
             // '#86A8E7',
             // '#6dd5ed',
             // '#00B4DB',
-            //    '#91EAE4',
-            //'#FBD786', pastel yellow
+            // '#91EAE4',
+            // '#FBD786', pastel yellow
             // '#99f2c8', light green
-            //'#ffdde1', baby pink
-            //'#D6A4A4', dark rose
-            //'#50E3C2', light green more dark
+            // '#ffdde1', baby pink
+            // '#D6A4A4', dark rose
+            // '#50E3C2', light green more dark
         ]
 
         var yAxis = (g) =>
@@ -134,7 +134,7 @@ const StackedBarChart = (props) => {
             .attr('id', 'stackToolTip')
             .style('padding', '12px')
             //.style('background', 'rgba(0, 0, 0, 0.8)')
-            .style('color', 'Black')
+            .style('color', '#fff')
             .html((d) => {
                 //console.log(d)
                 return (
@@ -174,10 +174,11 @@ const StackedBarChart = (props) => {
             }).show(i, this)
 
             //
-            tip.style('x', `${pos['right']}px`).style(
-                'top',
-                `${window.pageYOffset + pos['y'] - 4}px`
-            )
+            tip.style('x', `${pos['right']}px`)
+            // .style(
+            //     'top',
+            //     `${window.pageYOffset + pos['y'] - 4}px`
+            // )
             // Tooltip end
 
             d3.selectAll('.myRect').style('opacity', 0.2)

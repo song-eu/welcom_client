@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { Link } from 'react-router-dom'
-
+import * as d3 from 'd3'
 import axios from 'axios'
 import MonthlyBarChart from './chart/monthlyBarChart'
 import DeptHorizonBarChart from './chart/deptHorizonBarChart'
@@ -18,11 +18,6 @@ import moment from 'moment'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitInpatient = (props) => {
-    let totalThisMonth, avgThisMonth, totalOutpatient
-
-    const divRef = useRef()
-    const [graphHeight, setGraphData] = useState(0)
-    let incomingData = [23, 4335, 6, 45354, 23, 132, 99999]
     //  const [outBarchartData, setoutBarchartData] = useState(null)
     const thisMonth = moment().subtract(1, 'month').format('MMMM')
     const [loading, setLoading] = useState(false)
@@ -57,8 +52,95 @@ const VisitInpatient = (props) => {
         //   setSelectData(e.target.id)
         // console.log('setSelectData for props?', selectData)
     }
+    var format = d3.format(',d')
+    const number = {
+        all: 3859411,
+        HQ: 2801323,
+        children: 736803,
+        cc: 502859,
+        kn: 172677,
+    }
+
     useEffect(() => {
-        //        fetchData();
+        let numAll = d3
+            .select('.numberAll')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numAll
+            .datum(number.all)
+            .transition()
+            .duration(1500)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numHQ = d3
+            .select('.numberHQ')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numHQ
+            .datum(number.HQ)
+            .transition()
+            .duration(1500)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numCH = d3
+            .select('.numberCH')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numCH
+            .datum(number.children)
+            .transition()
+            .duration(1000)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numCC = d3
+            .select('.numberCC')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numCC
+            .datum(number.cc)
+            .transition()
+            .duration(1000)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numKN = d3
+            .select('.numberKN')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numKN
+            .datum(number.kn)
+            .transition()
+            .duration(1000)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
     }, [])
 
     return (
@@ -67,23 +149,23 @@ const VisitInpatient = (props) => {
                 <ButtonRow>
                     <CountButton>
                         <div>서울대병원 전체</div>
-                        <div>30,000,000명</div>
+                        <div className="numberAll">0</div>
                     </CountButton>
                     <CountButton>
                         <div>본원 방문</div>
-                        <div>30,000,000명</div>
+                        <div className="numberHQ">0</div>
                     </CountButton>
                     <CountButton>
                         <div>어린이병원 방문</div>
-                        <div>30,000,000명</div>
+                        <div className="numberCH">0</div>
                     </CountButton>
                     <CountButton>
-                        <div>강남병원 방문</div>
-                        <div>30,000,000명</div>
+                        <div>암병원 방문</div>
+                        <div className="numberCC">0</div>
                     </CountButton>
                     <CountButton>
-                        <div>이번달 본원 방문</div>
-                        <div>30,000,000명</div>
+                        <div>강남 센터 방문</div>
+                        <div className="numberKN">0</div>
                     </CountButton>
                 </ButtonRow>
                 <RowStyle>
