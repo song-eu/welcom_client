@@ -1,16 +1,16 @@
 import * as d3 from 'd3'
 import * as moment from 'moment'
 
-const ChangeGeoLocation = async (geojson, dataloc) => {
+const ChangeGeoLocation = async (geojson, dataloc, currDate) => {
     //console.log(mapData)
     var lastMonth = moment().subtract(2, 'month').format('YYYY-MM') // 2021-07 or 마지막 달
     var result = {}
-    console.log('dataloc?', dataloc)
+    // console.log('dataloc?', dataloc)
 
     return d3
         .csv(process.env.PUBLIC_URL + dataloc, (map) => {
             // 데이터 월 = 마지막 달
-            if (map.DATE.substring(0, 7) === lastMonth) {
+            if (map.DATE.substring(0, 7) === currDate) {
                 if (map.SIDO_ADDR != '') {
                     for (let i = 0; i < geojson.features.length; i++) {
                         if (

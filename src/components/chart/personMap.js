@@ -18,7 +18,7 @@ const d3 = {
 }
 
 const PersonMap = (props) => {
-    const { dataloc } = props
+    const { dataloc, dateCtrl } = props
     var width = 850,
         height = 1300
     const thisMonth = moment().subtract(1, 'month').format('YYYY-MM')
@@ -34,8 +34,9 @@ const PersonMap = (props) => {
     // 필요에 따라 변경가능
 
     useEffect(async () => {
+        console.log('dateCtrl??', dateCtrl)
         if (dataloc.includes('.csv')) {
-            var data = await ChangeGeoLocation(geojson, dataloc)
+            var data = await ChangeGeoLocation(geojson, dataloc, dateCtrl)
             console.log('map data?', data)
             if (dataloc.includes('_in')) {
                 var circleRange = [10, 100]
@@ -52,8 +53,8 @@ const PersonMap = (props) => {
                 .center([127, 37.6]) //서울 중심좌표
                 .translate([width / 3, height / 4.9])
         } else {
-            var data = await jsonToData(dataloc, thisMonth, geojson)
-            data = data[thisMonth]
+            var data = await jsonToData(dataloc, geojson)
+            data = data[dateCtrl]
             var circleRange = [10, 100]
             width = 700
             height = 800
@@ -74,6 +75,7 @@ const PersonMap = (props) => {
 
         const svg = d3
             .select('#map-canvas')
+            .call((g) => g.select('svg').remove())
             .append('svg')
             .attr('width', width)
             .attr('height', height)
@@ -214,7 +216,7 @@ const PersonMap = (props) => {
             .transition()
             .duration(500)
             .attr('r', (d) => d3.scaleSqrt().range(circleRange)(d.cnt) / 100)
-    }, [])
+    }, [dateCtrl])
 
     return (
         <MapBubbleChartStyle>

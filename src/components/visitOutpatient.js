@@ -20,13 +20,15 @@ import moment from 'moment'
 import * as d3 from 'd3'
 //slider open source
 import Box from '@mui/material/Box'
-import Slider from '@mui/material/Slider'
+import { IOSSlider } from './style/buttonStyle'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitOutpatient = (props) => {
-    const [error, setError] = useState(null)
-    const [selectData, setSelectData] = useState(null)
     const thisMonth = moment().subtract(1, 'month').format('MMMM')
+    const [error, setError] = useState(null)
+    const [selectData, setSelectData] = useState(
+        moment().subtract(1, 'month').format('YYYY-MM')
+    )
     const outPatientVisitBarChart = 'Monthly Oupatinet Visits by Hospital'
     const outPatientHBarChart = `Outpatient Visits by Department in ${thisMonth}`
     const outPationtTotalBarChart = `Monthly Visit total (Outpatient & EM)`
@@ -53,15 +55,20 @@ const VisitOutpatient = (props) => {
     sliderMark.sort((a, b) => {
         return b.value - a.value
     })
-    console.log('sliderMardk', sliderMark)
+    // console.log('sliderMardk', sliderMark)
+    const handleDatePickerChange = (event, newVal) => {
+        // console.log('handleDatePickerChange??', event, 'newVal?', newVal)
+        console.log('value??', sliderMark[newVal].label)
+        setSelectData(sliderMark[newVal].label)
+    }
 
     function valuetext(value) {
-        console.log('valuetext value?? ', value)
+        // console.log('valuetext value?? ', value)
         return `${sliderMark[value].label}`
     }
 
     function valueLabelFormat(value) {
-        console.log('valueLabelFormat value?? ', value, sliderMark[value].value)
+        // console.log('valueLabelFormat value?? ', value, sliderMark[value].value)
         return `${sliderMark[value].label}`
     }
 
@@ -75,11 +82,7 @@ const VisitOutpatient = (props) => {
             setError(true)
         }
     }
-    const onClickUpdate = (e) => {
-        console.log('e.', e.target.id)
-        setSelectData(e.target.id)
-        console.log('setSelectData for props?', selectData)
-    }
+
     var format = d3.format(',d')
     const number = {
         all: 3859411,
@@ -207,19 +210,20 @@ const VisitOutpatient = (props) => {
                         <DeptHorizonBarChart
                             header={outPatientHBarChart}
                             data={outDepchartData}
+                            dateCtrl={selectData}
                         />
                     </BoxStyle>
                     <BoxStyle>
                         <Box
                             sx={{
-                                margin: '40px 0 0 0 ',
+                                margin: '40px 40px 0 40px ',
                                 width: 800,
                                 color: '#fff',
                             }}
                         >
-                            <Slider
+                            <IOSSlider
                                 aria-label="Restricted values"
-                                defaultValue={5}
+                                defaultValue={11}
                                 valueLabelFormat={valueLabelFormat}
                                 getAriaValueText={valuetext}
                                 step={null}
@@ -227,17 +231,20 @@ const VisitOutpatient = (props) => {
                                 marks={sliderMark}
                                 min={0}
                                 max={11}
+                                onChange={handleDatePickerChange}
                             />
                         </Box>
                         <PersonMap
                             header={outPatientPersonMap}
                             dataloc={outPersonMapData}
+                            dateCtrl={selectData}
                         />
                     </BoxStyle>
                     <BoxStyle>
                         <GenderAgeDivergingChart
                             header={outPatientGenderChart}
                             dataloc={outGenderAgeData}
+                            dateCtrl={selectData}
                         />
                         <MonthlyBarChart
                             header={outPationtTotalBarChart}
