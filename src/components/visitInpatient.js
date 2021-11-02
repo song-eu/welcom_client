@@ -30,9 +30,9 @@ const VisitInpatient = (props) => {
 
     const dataLocation = '/inpatientData'
     const inBarchartData = dataLocation + '/1_1year_total_by_hospital_in.csv'
-    const inDepchartData = dataLocation + '/2_july_visit_dept_rank_in.csv'
+    const inDepchartData = dataLocation + '/2_visit_dept_rank_in.csv'
     const inPersonMapData = dataLocation + '/3_1year_weekly_visits_addr_in.csv'
-    const inGenderAgeData = dataLocation + '/4_july_AGE_GENDER_GROUP_in.csv'
+    const inGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP_in.csv'
     const inMonthlyBarData = dataLocation + '/5_1year_monthly_total_in.csv'
 
     const fetchData = async () => {

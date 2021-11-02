@@ -18,6 +18,9 @@ import {
 } from './style/backgraound'
 import moment from 'moment'
 import * as d3 from 'd3'
+//slider open source
+import Box from '@mui/material/Box'
+import Slider from '@mui/material/Slider'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitOutpatient = (props) => {
@@ -37,6 +40,30 @@ const VisitOutpatient = (props) => {
     const outPersonMapData = dataLocation + '/3_1year_weekly_visits_addr.csv'
     const outGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP.csv'
     const outMonthlyBarData = dataLocation + '/5_1year_monthly_total.csv'
+
+    var sliderMark = []
+    for (let i = 0; i < 12; i++) {
+        let obj = {}
+        obj.value = i
+        obj.label = moment()
+            .subtract(i + 1, 'month')
+            .format('YYYY-MM')
+        sliderMark.push(obj)
+    }
+    sliderMark.sort((a, b) => {
+        return b.value - a.value
+    })
+    console.log('sliderMardk', sliderMark)
+
+    function valuetext(value) {
+        console.log('valuetext value?? ', value)
+        return `${sliderMark[value].label}`
+    }
+
+    function valueLabelFormat(value) {
+        console.log('valueLabelFormat value?? ', value, sliderMark[value].value)
+        return `${sliderMark[value].label}`
+    }
 
     const fetchData = async () => {
         try {
@@ -159,6 +186,7 @@ const VisitOutpatient = (props) => {
                         <div>어린이병원 방문</div>
                         <div className="numberCH">0</div>
                     </CountButton>
+
                     <CountButton>
                         <div>암병원 방문</div>
                         <div className="numberCC">0</div>
@@ -182,6 +210,25 @@ const VisitOutpatient = (props) => {
                         />
                     </BoxStyle>
                     <BoxStyle>
+                        <Box
+                            sx={{
+                                margin: '40px 0 0 0 ',
+                                width: 800,
+                                color: '#fff',
+                            }}
+                        >
+                            <Slider
+                                aria-label="Restricted values"
+                                defaultValue={5}
+                                valueLabelFormat={valueLabelFormat}
+                                getAriaValueText={valuetext}
+                                step={null}
+                                valueLabelDisplay="auto"
+                                marks={sliderMark}
+                                min={0}
+                                max={11}
+                            />
+                        </Box>
                         <PersonMap
                             header={outPatientPersonMap}
                             dataloc={outPersonMapData}

@@ -77,8 +77,10 @@ const PersonMap = (props) => {
             .append('svg')
             .attr('width', width)
             .attr('height', height)
-            .style('background-color', 'rgb(38, 29, 57)') //지도 배경색 변경
+        //.style('background-color', '#2f1e56') //지도 배경색 변경
         //기존 회색 #f2f2f7
+        // 보라 배경
+        //
 
         const path = d3.geoPath().projection(projection)
         // const bounds = path.bounds(geojson)

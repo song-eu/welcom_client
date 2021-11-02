@@ -233,7 +233,7 @@ export const BoxStyle = styled.div`
     overflow: hidden;
     margin: 15px 10 15px 10px;
     align-items: center;
-    border: 2px solid tomato;
+    // border: 2px solid tomato;
 `
 
 export const RowStyle = styled.div`

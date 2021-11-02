@@ -107,9 +107,10 @@ export const StackChartStyle = styled.div`
 
 export const MapBubbleChartStyle = styled.div`
     box-sizing: content-box;
-
+    background: #2f1e56;
+    border-radius: 50px;
+    box-shadow: 5px 5px 5px #000;
     // border: 1px solid tomato;
-
     & h1 {
         --position: relative;
         font-size: 24px;
