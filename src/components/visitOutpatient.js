@@ -39,22 +39,21 @@ const VisitOutpatient = (props) => {
     const dataLocation = '/outpatientData'
     const outBarchartData = dataLocation + '/1_1year_total_by_hospital.csv'
     const outDepchartData = dataLocation + '/2_visit_dept_rank.csv'
-    const outPersonMapData = dataLocation + '/3_1year_weekly_visits_addr.csv'
+    const outPersonMapData = dataLocation + '/3_1year_Monthly_visits_SIDO.json'
     const outGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP.csv'
     const outMonthlyBarData = dataLocation + '/5_1year_monthly_total.csv'
 
     var sliderMark = []
-    for (let i = 0; i < 12; i++) {
+    for (let i = 11; i >= 0; i--) {
+        let set = moment().subtract(13, 'month').format('YYYY-MM')
         let obj = {}
         obj.value = i
-        obj.label = moment()
-            .subtract(i + 1, 'month')
+        obj.label = moment(set)
+            .add(i + 1, 'month')
             .format('YYYY-MM')
         sliderMark.push(obj)
     }
-    sliderMark.sort((a, b) => {
-        return b.value - a.value
-    })
+
     // console.log('sliderMardk', sliderMark)
     const handleDatePickerChange = (event, newVal) => {
         // console.log('handleDatePickerChange??', event, 'newVal?', newVal)

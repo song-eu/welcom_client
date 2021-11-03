@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import * as moment from 'moment'
 
-const jsonToData = (dataloc, date, geojson) => {
+const jsonToData = (dataloc, geojson) => {
     //console.log('dataloc', dataloc)
     // var data = require('../../public/children/2-1_children_raredisease_count_year_by_disease.json')
     //console.log('data', process.env.PUBLIC_URL + dataloc)
