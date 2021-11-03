@@ -37,9 +37,9 @@ const PersonMap = (props) => {
     // 필요에 따라 변경가능
     if (header.includes('patient')) {
         if (header.includes('Out')) {
-            var circleRange = [10, 100]
+            var circleRange = [20, 60]
         } else {
-            var circleRange = [10, 40]
+            var circleRange = [10, 100]
         }
         var width = 850,
             height = 1300
@@ -48,26 +48,28 @@ const PersonMap = (props) => {
         var width = 700,
             height = 800
     }
-    const updateData = useCallback(
-        async (group) => {
-            var dataTemp = await jsonToData(dataloc, geojson)
-            // setData(dataTemp[dateCtrl])
-        },
-        [dateCtrl]
-    )
+
+    // const updateData = useCallback(async (group) => {
+    //     var dataTemp = await jsonToData(dataloc, geojson)
+    //     setData(dataTemp[dateCtrl])
+    // }, [])
+
+    // updateData()
+
+    var projection = d3
+        .geoMercator()
+        .scale(11000) //스케일
+        //.scale(1)
+        //.translate([0, 0])
+        //.rotate([-10, 1, 0]) //지도 회전
+        .center([127, 37.6]) //서울 중심좌표
+        .translate([width / 3, height / 4.9])
+    var path = d3.geoPath().projection(projection)
 
     useEffect(async () => {
-        var data = await jsonToData(dataloc, geojson)
-        var projection = d3
-            .geoMercator()
-            .scale(11000) //스케일
-            //.scale(1)
-            //.translate([0, 0])
-            //.rotate([-10, 1, 0]) //지도 회전
-            .center([127, 37.6]) //서울 중심좌표
-            .translate([width / 3, height / 4.9])
+        console.log('useEffect 실행')
 
-        const svg = d3
+        var svg = d3
             .select(svgRef.current)
             // .call((g) => g.select('svg').remove())
             .append('svg')
@@ -78,7 +80,6 @@ const PersonMap = (props) => {
         // 보라 배경
         //
 
-        const path = d3.geoPath().projection(projection)
         // const bounds = path.bounds(geojson)
         // const widthScale = (bounds[1][0] - bounds[0][0]) / width
         // const hieghtScale = (bounds[1][1] - bounds[0][1]) / height
@@ -104,10 +105,73 @@ const PersonMap = (props) => {
             .attr('stroke', '#fff') // 지도 선 색깔 변경
         // 오렌지색 liner #de6a6c
 
-        const tip = d3
+        // map.call(tip)
+        // console.log('data???', data)
+        // var data = await jsonToData(dataloc, geojson)
+
+        // svg.selectAll('circle')
+        //     // .attr('class', 'population')
+        //     .data(data[dateCtrl].filter((d) => d.loc))
+        //     .join(
+        //         (enter) => {
+        //             // console.log('enter!', enter)
+        //             return (
+        //                 enter
+        //                     // .append('g')
+        //                     .append('circle')
+        //                     .attr('class', 'newMapCircle')
+        //             )
+        //         },
+        //         (update) => {
+        //             console.log('update!', update)
+        //             return update.attr('class', 'updateMapCircle')
+        //         },
+        //         (exit) => exit.remove()
+        //     )
+        //     .attr('fill', 'gray')
+        //     .attr('fill-opacity', 0.5)
+        //     .attr('stroke', '#fff')
+        //     .attr('stroke-width', 0.5)
+        //     .attr('transform', (d) => `translate(${d.loc})`)
+        //     // .attr('id', (d) => `${d.id}`)
+        //     .attr('cx', (d) => projection(d.loc)[0] - 125)
+        //     .attr('cy', (d) => projection(d.loc)[1] - 40)
+        //     .attr('r', (d) => d3.scaleSqrt().range(circleRange)(d.cnt) / 100)
+        //     .transition()
+        //     .duration(1500)
+
+        // // .attr('id', (d) => `${d.name}`)
+
+        // svg.selectAll('circle')
+        //     .on('mouseover', function (d, i, n) {
+        //         tip.show(i, this)
+
+        //         d3.select(this)
+        //             .attr('stroke', '#F3F9A7')
+        //             .attr('stroke-width', 5)
+        //             .attr('fill', '#fffbd5')
+        //             .attr('opacity', 1)
+        //     })
+        //     .on('mouseleave', function (actual, i) {
+        //         tip.hide()
+        //         d3.select(this)
+        //             .attr('fill', 'gray')
+        //             .attr('fill-opacity', 0.5)
+        //             .attr('stroke', '#fff')
+        //             .attr('stroke-width', 0.5)
+        //     })
+        // .ease('linear')
+    }, [])
+
+    useEffect(async () => {
+        var data = await jsonToData(dataloc, geojson)
+
+        console.log('circle effect 실행')
+
+        var tip = d3
             .tip()
             .attr('class', 'toolTipMap')
-            .attr('id', 'toolTipMap')
+            // .attr('id', 'toolTipMap')
             .style('padding', '10px')
             .style('background', '#444')
             .style('color', 'rgb(238, 148, 75)')
@@ -120,35 +184,30 @@ const PersonMap = (props) => {
                 return content
             })
 
-        map.call(tip)
+        const svg = d3.select(svgRef.current)
+        svg.selectAll('path').call(tip)
 
-        // console.log('data???', data)
-        svg.append('g')
-            .attr('fill', 'gray')
-            .attr('fill-opacity', 0.5)
-            .attr('stroke', '#fff')
-            .attr('stroke-width', 0.5)
+        svg.select('svg')
             .selectAll('circle')
+            .attr('id', (d) => `${d.id}`)
             .attr('class', 'population')
             .data(data[dateCtrl].filter((d) => d.loc))
             .join(
-                (enter) => enter.append('circle').attr('class', 'newMapCircle'),
-                (update) =>
-                    update
-                        .attr(
-                            'r',
-                            (d) =>
-                                d3.scaleSqrt().range(circleRange)(d.cnt) / 100
-                        )
-                        .attr('class', 'updateMapCircle'),
-                (exit) =>
-                    exit
-                        .transition()
-                        .attr('width', 0)
-                        .attr('height', 0)
-                        .remove()
+                (enter) => {
+                    console.log('enter!', enter)
+                    return enter
+                        .append('g')
+                        .append('circle')
+                        .attr('class', 'newMapCircle')
+                },
+                (update) => {
+                    console.log('update!', update)
+                    return update.attr('class', 'updateMapCircle')
+                },
+                (exit) => exit.remove()
             )
             .on('mouseover', function (d, i, n) {
+                // console.log('i?', i, 'this??', this)
                 tip.show(i, this)
 
                 d3.select(this)
@@ -165,14 +224,16 @@ const PersonMap = (props) => {
                     .attr('stroke', '#fff')
                     .attr('stroke-width', 0.5)
             })
+            .attr('fill', 'gray')
+            .attr('fill-opacity', 0.5)
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 0.5)
             .attr('transform', (d) => `translate(${d.loc})`)
-            .attr('id', (d) => `${d.name}`)
             .attr('cx', (d) => projection(d.loc)[0] - 125)
             .attr('cy', (d) => projection(d.loc)[1] - 40)
-            .transition()
-            .duration(500)
-            // .ease('linear')
             .attr('r', (d) => d3.scaleSqrt().range(circleRange)(d.cnt) / 100)
+            .transition()
+            .duration(1500)
     }, [dateCtrl])
 
     return (
