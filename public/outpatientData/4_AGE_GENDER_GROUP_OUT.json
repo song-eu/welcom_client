@@ -1,0 +1,2863 @@
+{
+"-- age 417813 not null\r\n-- age 96 is null\r\n-- 3. OUTPATIENT VISIT BY AGE AND GENDER\r\n-- 4_AGE_GENDER_GROUP\r\nWITH AGE_GROUP_TB AS (\r\nSELECT PACT_ID , PT_NO , SEX_TP_CD , AGE_DY_CD ,MED_DT , PT_BRDY_DT , MED_YN, TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) age\r\n, CASE WHEN  TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 0 AND 10 THEN '0 - 10'\r\nWHEN TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 11 AND 20 THEN '11 - 20'\r\nWHEN TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 21 AND 30 THEN '21 - 30'\r\nWHEN TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 31 AND 40 THEN '31 - 40'\r\nWHEN TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 41 AND 50 THEN '41 - 50'\r\nWHEN TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 51 AND 60 THEN '51 - 60'\r\nWHEN TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 61 AND 70 THEN '61 - 70'\r\nWHEN TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 71 AND 80 THEN '71 - 80'\r\nWHEN TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 81 AND 90 THEN '81 - 90'\r\nWHEN TRUNC( MONTHS_BETWEEN(MED_DT, PT_BRDY_DT) \/ 12) BETWEEN 91 AND 100 THEN '91 - 100'\r\nELSE 'OVER 100' END AGE_GROUP\r\n--\tTO_CHAR(MED_DT, 'YYYY-MM') MONTH\r\n--\t, SEX_TP_CD GENDER\r\n--\t, COUNT(*) ROWCNT\r\n--\t, COUNT(DISTINCT PT_NO) PCNT\r\n--\t, COUNT(CASE WHEN MED_YN = 'Y' THEN 1 END ) MED_Y_CNT -- 진료여부 Y 만..?\r\n--\t, COUNT(CASE WHEN MED_YN = 'N' THEN 1 END ) MED_N_CNT -- 진료여부 N 만..?\r\n--\t, ROUND(COUNT(CASE WHEN MED_YN != 'Y' THEN 1 END ) \/COUNT(*) * 100, 2) MED_N_RATE\r\nFROM FT_STM_VIST\r\nWHERE 1=1\r\n-- 방문일 설정: 2021년 7월 환자\r\nAND MED_DT BETWEEN to_Date('2020-10', 'YYYY-MM') AND TO_DATE('2021-10-31', 'YYYY-MM-DD')\r\n-- 외래, 입원, 응급\r\nAND PACT_TP_NM = '외래'\r\nAND PT_BRDY_DT IS NOT  NULL \r\n--GROUP BY TO_CHAR(MED_DT, 'YYYY-MM'), SEX_TP_CD\r\n--ORDER BY 1, 2\r\n)\r\nSELECT TO_CHAR(MED_DT, 'YYYY-MM') AS \"DATE\",age_group, sex_tp_cd\r\n\t, COUNT(*) ROWCNT\r\n\t, COUNT(DISTINCT PT_NO) PCNT\r\n\t, COUNT(CASE WHEN MED_YN = 'Y' THEN 1 END ) MED_Y_CNT -- 진료여부 Y 만..?\r\n\t, COUNT(CASE WHEN MED_YN = 'N' THEN 1 END ) MED_N_CNT -- 진료여부 N 만..?\r\n\t, ROUND(COUNT(CASE WHEN MED_YN != 'Y' THEN 1 END ) \/COUNT(*) * 100, 2) MED_N_RATE\r\nFROM AGE_GROUP_TB\r\nGROUP BY TO_CHAR(MED_DT, 'YYYY-MM'), AGE_GROUP, SEX_TP_CD \r\nORDER BY 1, 2, 3\r\n": [
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 12525,
+		"PCNT" : 5866,
+		"MED_Y_CNT" : 7468,
+		"MED_N_CNT" : 5057,
+		"MED_N_RATE" : 40.38
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 15059,
+		"PCNT" : 6897,
+		"MED_Y_CNT" : 8998,
+		"MED_N_CNT" : 6061,
+		"MED_N_RATE" : 40.25
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 6172,
+		"PCNT" : 2806,
+		"MED_Y_CNT" : 3707,
+		"MED_N_CNT" : 2465,
+		"MED_N_RATE" : 39.94
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 7421,
+		"PCNT" : 3465,
+		"MED_Y_CNT" : 4516,
+		"MED_N_CNT" : 2905,
+		"MED_N_RATE" : 39.15
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 10085,
+		"PCNT" : 5292,
+		"MED_Y_CNT" : 5939,
+		"MED_N_CNT" : 4146,
+		"MED_N_RATE" : 41.11
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8567,
+		"PCNT" : 4572,
+		"MED_Y_CNT" : 5318,
+		"MED_N_CNT" : 3249,
+		"MED_N_RATE" : 37.92
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 17532,
+		"PCNT" : 7664,
+		"MED_Y_CNT" : 9716,
+		"MED_N_CNT" : 7816,
+		"MED_N_RATE" : 44.58
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9399,
+		"PCNT" : 4831,
+		"MED_Y_CNT" : 5452,
+		"MED_N_CNT" : 3947,
+		"MED_N_RATE" : 41.99
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 29832,
+		"PCNT" : 11368,
+		"MED_Y_CNT" : 14936,
+		"MED_N_CNT" : 14896,
+		"MED_N_RATE" : 49.93
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 14676,
+		"PCNT" : 6862,
+		"MED_Y_CNT" : 8213,
+		"MED_N_CNT" : 6463,
+		"MED_N_RATE" : 44.04
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 40932,
+		"PCNT" : 16480,
+		"MED_Y_CNT" : 20954,
+		"MED_N_CNT" : 19978,
+		"MED_N_RATE" : 48.81
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 26495,
+		"PCNT" : 11172,
+		"MED_Y_CNT" : 14532,
+		"MED_N_CNT" : 11963,
+		"MED_N_RATE" : 45.15
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 43290,
+		"PCNT" : 18678,
+		"MED_Y_CNT" : 23124,
+		"MED_N_CNT" : 20166,
+		"MED_N_RATE" : 46.58
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 38466,
+		"PCNT" : 15347,
+		"MED_Y_CNT" : 20708,
+		"MED_N_CNT" : 17758,
+		"MED_N_RATE" : 46.17
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 29908,
+		"PCNT" : 13474,
+		"MED_Y_CNT" : 16625,
+		"MED_N_CNT" : 13283,
+		"MED_N_RATE" : 44.41
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 29518,
+		"PCNT" : 11905,
+		"MED_Y_CNT" : 16158,
+		"MED_N_CNT" : 13360,
+		"MED_N_RATE" : 45.26
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 7738,
+		"PCNT" : 3904,
+		"MED_Y_CNT" : 4564,
+		"MED_N_CNT" : 3174,
+		"MED_N_RATE" : 41.02
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8513,
+		"PCNT" : 3659,
+		"MED_Y_CNT" : 4810,
+		"MED_N_CNT" : 3703,
+		"MED_N_RATE" : 43.5
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 426,
+		"PCNT" : 238,
+		"MED_Y_CNT" : 248,
+		"MED_N_CNT" : 178,
+		"MED_N_RATE" : 41.78
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 489,
+		"PCNT" : 220,
+		"MED_Y_CNT" : 304,
+		"MED_N_CNT" : 185,
+		"MED_N_RATE" : 37.83
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 54,
+		"PCNT" : 52,
+		"MED_Y_CNT" : 51,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 5.56
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 13123,
+		"PCNT" : 6148,
+		"MED_Y_CNT" : 7945,
+		"MED_N_CNT" : 5178,
+		"MED_N_RATE" : 39.46
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 15730,
+		"PCNT" : 7078,
+		"MED_Y_CNT" : 9405,
+		"MED_N_CNT" : 6325,
+		"MED_N_RATE" : 40.21
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 6527,
+		"PCNT" : 2957,
+		"MED_Y_CNT" : 3919,
+		"MED_N_CNT" : 2608,
+		"MED_N_RATE" : 39.96
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8086,
+		"PCNT" : 3729,
+		"MED_Y_CNT" : 5005,
+		"MED_N_CNT" : 3081,
+		"MED_N_RATE" : 38.1
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 11017,
+		"PCNT" : 5382,
+		"MED_Y_CNT" : 6656,
+		"MED_N_CNT" : 4361,
+		"MED_N_RATE" : 39.58
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9188,
+		"PCNT" : 4764,
+		"MED_Y_CNT" : 5542,
+		"MED_N_CNT" : 3646,
+		"MED_N_RATE" : 39.68
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 19799,
+		"PCNT" : 8218,
+		"MED_Y_CNT" : 11030,
+		"MED_N_CNT" : 8769,
+		"MED_N_RATE" : 44.29
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10379,
+		"PCNT" : 5226,
+		"MED_Y_CNT" : 6083,
+		"MED_N_CNT" : 4296,
+		"MED_N_RATE" : 41.39
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 33238,
+		"PCNT" : 12412,
+		"MED_Y_CNT" : 16786,
+		"MED_N_CNT" : 16452,
+		"MED_N_RATE" : 49.5
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16228,
+		"PCNT" : 7365,
+		"MED_Y_CNT" : 9035,
+		"MED_N_CNT" : 7193,
+		"MED_N_RATE" : 44.32
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 44472,
+		"PCNT" : 17539,
+		"MED_Y_CNT" : 22735,
+		"MED_N_CNT" : 21737,
+		"MED_N_RATE" : 48.88
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 29268,
+		"PCNT" : 12148,
+		"MED_Y_CNT" : 15763,
+		"MED_N_CNT" : 13505,
+		"MED_N_RATE" : 46.14
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 48337,
+		"PCNT" : 19918,
+		"MED_Y_CNT" : 25784,
+		"MED_N_CNT" : 22553,
+		"MED_N_RATE" : 46.66
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 42665,
+		"PCNT" : 16640,
+		"MED_Y_CNT" : 23157,
+		"MED_N_CNT" : 19508,
+		"MED_N_RATE" : 45.72
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 32145,
+		"PCNT" : 14157,
+		"MED_Y_CNT" : 17867,
+		"MED_N_CNT" : 14278,
+		"MED_N_RATE" : 44.42
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 31866,
+		"PCNT" : 12593,
+		"MED_Y_CNT" : 17601,
+		"MED_N_CNT" : 14265,
+		"MED_N_RATE" : 44.77
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 8482,
+		"PCNT" : 4032,
+		"MED_Y_CNT" : 5012,
+		"MED_N_CNT" : 3470,
+		"MED_N_RATE" : 40.91
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9324,
+		"PCNT" : 3945,
+		"MED_Y_CNT" : 5288,
+		"MED_N_CNT" : 4036,
+		"MED_N_RATE" : 43.29
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 492,
+		"PCNT" : 239,
+		"MED_Y_CNT" : 325,
+		"MED_N_CNT" : 167,
+		"MED_N_RATE" : 33.94
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 602,
+		"PCNT" : 289,
+		"MED_Y_CNT" : 368,
+		"MED_N_CNT" : 234,
+		"MED_N_RATE" : 38.87
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 9,
+		"PCNT" : 9,
+		"MED_Y_CNT" : 9,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 59,
+		"PCNT" : 57,
+		"MED_Y_CNT" : 58,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 1.69
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 13470,
+		"PCNT" : 5866,
+		"MED_Y_CNT" : 8022,
+		"MED_N_CNT" : 5448,
+		"MED_N_RATE" : 40.45
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 15524,
+		"PCNT" : 6753,
+		"MED_Y_CNT" : 9224,
+		"MED_N_CNT" : 6300,
+		"MED_N_RATE" : 40.58
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 7673,
+		"PCNT" : 3283,
+		"MED_Y_CNT" : 4572,
+		"MED_N_CNT" : 3101,
+		"MED_N_RATE" : 40.41
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9162,
+		"PCNT" : 4100,
+		"MED_Y_CNT" : 5450,
+		"MED_N_CNT" : 3712,
+		"MED_N_RATE" : 40.52
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 12260,
+		"PCNT" : 5829,
+		"MED_Y_CNT" : 7553,
+		"MED_N_CNT" : 4707,
+		"MED_N_RATE" : 38.39
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10426,
+		"PCNT" : 5217,
+		"MED_Y_CNT" : 6628,
+		"MED_N_CNT" : 3798,
+		"MED_N_RATE" : 36.43
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 20812,
+		"PCNT" : 8435,
+		"MED_Y_CNT" : 11622,
+		"MED_N_CNT" : 9190,
+		"MED_N_RATE" : 44.16
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 11405,
+		"PCNT" : 5485,
+		"MED_Y_CNT" : 6803,
+		"MED_N_CNT" : 4602,
+		"MED_N_RATE" : 40.35
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 34659,
+		"PCNT" : 12292,
+		"MED_Y_CNT" : 17543,
+		"MED_N_CNT" : 17116,
+		"MED_N_RATE" : 49.38
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 17703,
+		"PCNT" : 7751,
+		"MED_Y_CNT" : 9992,
+		"MED_N_CNT" : 7711,
+		"MED_N_RATE" : 43.56
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 45448,
+		"PCNT" : 17158,
+		"MED_Y_CNT" : 23398,
+		"MED_N_CNT" : 22050,
+		"MED_N_RATE" : 48.52
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 30724,
+		"PCNT" : 12271,
+		"MED_Y_CNT" : 16976,
+		"MED_N_CNT" : 13748,
+		"MED_N_RATE" : 44.75
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 48719,
+		"PCNT" : 19546,
+		"MED_Y_CNT" : 26062,
+		"MED_N_CNT" : 22657,
+		"MED_N_RATE" : 46.51
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 43708,
+		"PCNT" : 16426,
+		"MED_Y_CNT" : 23810,
+		"MED_N_CNT" : 19898,
+		"MED_N_RATE" : 45.52
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 31541,
+		"PCNT" : 13460,
+		"MED_Y_CNT" : 17669,
+		"MED_N_CNT" : 13872,
+		"MED_N_RATE" : 43.98
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 32044,
+		"PCNT" : 12282,
+		"MED_Y_CNT" : 17545,
+		"MED_N_CNT" : 14499,
+		"MED_N_RATE" : 45.25
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 8350,
+		"PCNT" : 3904,
+		"MED_Y_CNT" : 4915,
+		"MED_N_CNT" : 3435,
+		"MED_N_RATE" : 41.14
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9058,
+		"PCNT" : 3685,
+		"MED_Y_CNT" : 5101,
+		"MED_N_CNT" : 3957,
+		"MED_N_RATE" : 43.69
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 389,
+		"PCNT" : 204,
+		"MED_Y_CNT" : 249,
+		"MED_N_CNT" : 140,
+		"MED_N_RATE" : 35.99
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 557,
+		"PCNT" : 261,
+		"MED_Y_CNT" : 342,
+		"MED_N_CNT" : 215,
+		"MED_N_RATE" : 38.6
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 58,
+		"PCNT" : 55,
+		"MED_Y_CNT" : 53,
+		"MED_N_CNT" : 5,
+		"MED_N_RATE" : 8.62
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 12121,
+		"PCNT" : 5577,
+		"MED_Y_CNT" : 7351,
+		"MED_N_CNT" : 4770,
+		"MED_N_RATE" : 39.35
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 14249,
+		"PCNT" : 6554,
+		"MED_Y_CNT" : 8593,
+		"MED_N_CNT" : 5656,
+		"MED_N_RATE" : 39.69
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 9342,
+		"PCNT" : 4167,
+		"MED_Y_CNT" : 5393,
+		"MED_N_CNT" : 3949,
+		"MED_N_RATE" : 42.27
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 11065,
+		"PCNT" : 5086,
+		"MED_Y_CNT" : 6460,
+		"MED_N_CNT" : 4605,
+		"MED_N_RATE" : 41.62
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 11348,
+		"PCNT" : 5567,
+		"MED_Y_CNT" : 6790,
+		"MED_N_CNT" : 4558,
+		"MED_N_RATE" : 40.17
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9457,
+		"PCNT" : 4978,
+		"MED_Y_CNT" : 5752,
+		"MED_N_CNT" : 3705,
+		"MED_N_RATE" : 39.18
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 19070,
+		"PCNT" : 7971,
+		"MED_Y_CNT" : 10500,
+		"MED_N_CNT" : 8570,
+		"MED_N_RATE" : 44.94
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10231,
+		"PCNT" : 5076,
+		"MED_Y_CNT" : 5904,
+		"MED_N_CNT" : 4327,
+		"MED_N_RATE" : 42.29
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 31983,
+		"PCNT" : 11619,
+		"MED_Y_CNT" : 15820,
+		"MED_N_CNT" : 16163,
+		"MED_N_RATE" : 50.54
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 15644,
+		"PCNT" : 7101,
+		"MED_Y_CNT" : 8824,
+		"MED_N_CNT" : 6820,
+		"MED_N_RATE" : 43.59
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 42308,
+		"PCNT" : 16325,
+		"MED_Y_CNT" : 21307,
+		"MED_N_CNT" : 21001,
+		"MED_N_RATE" : 49.64
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 27927,
+		"PCNT" : 11425,
+		"MED_Y_CNT" : 15043,
+		"MED_N_CNT" : 12884,
+		"MED_N_RATE" : 46.13
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 45179,
+		"PCNT" : 18393,
+		"MED_Y_CNT" : 23622,
+		"MED_N_CNT" : 21557,
+		"MED_N_RATE" : 47.71
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 40587,
+		"PCNT" : 15669,
+		"MED_Y_CNT" : 22044,
+		"MED_N_CNT" : 18543,
+		"MED_N_RATE" : 45.69
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 28839,
+		"PCNT" : 12863,
+		"MED_Y_CNT" : 15880,
+		"MED_N_CNT" : 12959,
+		"MED_N_RATE" : 44.94
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 29983,
+		"PCNT" : 11618,
+		"MED_Y_CNT" : 16404,
+		"MED_N_CNT" : 13579,
+		"MED_N_RATE" : 45.29
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 7472,
+		"PCNT" : 3594,
+		"MED_Y_CNT" : 4252,
+		"MED_N_CNT" : 3220,
+		"MED_N_RATE" : 43.09
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8424,
+		"PCNT" : 3511,
+		"MED_Y_CNT" : 4598,
+		"MED_N_CNT" : 3826,
+		"MED_N_RATE" : 45.42
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 425,
+		"PCNT" : 211,
+		"MED_Y_CNT" : 252,
+		"MED_N_CNT" : 173,
+		"MED_N_RATE" : 40.71
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 623,
+		"PCNT" : 299,
+		"MED_Y_CNT" : 382,
+		"MED_N_CNT" : 241,
+		"MED_N_RATE" : 38.68
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 53,
+		"PCNT" : 50,
+		"MED_Y_CNT" : 50,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 5.66
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 11726,
+		"PCNT" : 5580,
+		"MED_Y_CNT" : 7128,
+		"MED_N_CNT" : 4598,
+		"MED_N_RATE" : 39.21
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 13541,
+		"PCNT" : 6252,
+		"MED_Y_CNT" : 8142,
+		"MED_N_CNT" : 5399,
+		"MED_N_RATE" : 39.87
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 8700,
+		"PCNT" : 4003,
+		"MED_Y_CNT" : 5255,
+		"MED_N_CNT" : 3445,
+		"MED_N_RATE" : 39.6
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10657,
+		"PCNT" : 4879,
+		"MED_Y_CNT" : 6317,
+		"MED_N_CNT" : 4340,
+		"MED_N_RATE" : 40.72
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 10413,
+		"PCNT" : 5304,
+		"MED_Y_CNT" : 6334,
+		"MED_N_CNT" : 4079,
+		"MED_N_RATE" : 39.17
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8994,
+		"PCNT" : 4830,
+		"MED_Y_CNT" : 5705,
+		"MED_N_CNT" : 3289,
+		"MED_N_RATE" : 36.57
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 17469,
+		"PCNT" : 7660,
+		"MED_Y_CNT" : 9849,
+		"MED_N_CNT" : 7620,
+		"MED_N_RATE" : 43.62
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9276,
+		"PCNT" : 4793,
+		"MED_Y_CNT" : 5518,
+		"MED_N_CNT" : 3758,
+		"MED_N_RATE" : 40.51
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 28670,
+		"PCNT" : 11005,
+		"MED_Y_CNT" : 14625,
+		"MED_N_CNT" : 14045,
+		"MED_N_RATE" : 48.99
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 14083,
+		"PCNT" : 6585,
+		"MED_Y_CNT" : 7955,
+		"MED_N_CNT" : 6128,
+		"MED_N_RATE" : 43.51
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 38357,
+		"PCNT" : 15409,
+		"MED_Y_CNT" : 20073,
+		"MED_N_CNT" : 18284,
+		"MED_N_RATE" : 47.67
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 25490,
+		"PCNT" : 10744,
+		"MED_Y_CNT" : 13871,
+		"MED_N_CNT" : 11619,
+		"MED_N_RATE" : 45.58
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 41132,
+		"PCNT" : 17527,
+		"MED_Y_CNT" : 22210,
+		"MED_N_CNT" : 18922,
+		"MED_N_RATE" : 46
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 37969,
+		"PCNT" : 14872,
+		"MED_Y_CNT" : 20590,
+		"MED_N_CNT" : 17379,
+		"MED_N_RATE" : 45.77
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 27127,
+		"PCNT" : 12279,
+		"MED_Y_CNT" : 15398,
+		"MED_N_CNT" : 11729,
+		"MED_N_RATE" : 43.24
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 27576,
+		"PCNT" : 11041,
+		"MED_Y_CNT" : 15261,
+		"MED_N_CNT" : 12315,
+		"MED_N_RATE" : 44.66
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 7546,
+		"PCNT" : 3672,
+		"MED_Y_CNT" : 4388,
+		"MED_N_CNT" : 3158,
+		"MED_N_RATE" : 41.85
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8022,
+		"PCNT" : 3473,
+		"MED_Y_CNT" : 4539,
+		"MED_N_CNT" : 3483,
+		"MED_N_RATE" : 43.42
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 447,
+		"PCNT" : 220,
+		"MED_Y_CNT" : 263,
+		"MED_N_CNT" : 184,
+		"MED_N_RATE" : 41.16
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 550,
+		"PCNT" : 234,
+		"MED_Y_CNT" : 320,
+		"MED_N_CNT" : 230,
+		"MED_N_RATE" : 41.82
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 5,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 20
+	},
+	{
+		"DATE" : "2021-02",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 104,
+		"PCNT" : 57,
+		"MED_Y_CNT" : 101,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 2.88
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 14226,
+		"PCNT" : 6468,
+		"MED_Y_CNT" : 8551,
+		"MED_N_CNT" : 5675,
+		"MED_N_RATE" : 39.89
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16369,
+		"PCNT" : 7403,
+		"MED_Y_CNT" : 9762,
+		"MED_N_CNT" : 6607,
+		"MED_N_RATE" : 40.36
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 7203,
+		"PCNT" : 3148,
+		"MED_Y_CNT" : 4241,
+		"MED_N_CNT" : 2962,
+		"MED_N_RATE" : 41.12
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9013,
+		"PCNT" : 3954,
+		"MED_Y_CNT" : 5296,
+		"MED_N_CNT" : 3717,
+		"MED_N_RATE" : 41.24
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 12174,
+		"PCNT" : 5850,
+		"MED_Y_CNT" : 7390,
+		"MED_N_CNT" : 4784,
+		"MED_N_RATE" : 39.3
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9827,
+		"PCNT" : 4928,
+		"MED_Y_CNT" : 6095,
+		"MED_N_CNT" : 3732,
+		"MED_N_RATE" : 37.98
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 20141,
+		"PCNT" : 8378,
+		"MED_Y_CNT" : 11414,
+		"MED_N_CNT" : 8727,
+		"MED_N_RATE" : 43.33
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10994,
+		"PCNT" : 5364,
+		"MED_Y_CNT" : 6519,
+		"MED_N_CNT" : 4475,
+		"MED_N_RATE" : 40.7
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 33346,
+		"PCNT" : 11894,
+		"MED_Y_CNT" : 16854,
+		"MED_N_CNT" : 16492,
+		"MED_N_RATE" : 49.46
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16600,
+		"PCNT" : 7488,
+		"MED_Y_CNT" : 9536,
+		"MED_N_CNT" : 7064,
+		"MED_N_RATE" : 42.55
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 46066,
+		"PCNT" : 17653,
+		"MED_Y_CNT" : 23874,
+		"MED_N_CNT" : 22192,
+		"MED_N_RATE" : 48.17
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 29405,
+		"PCNT" : 11957,
+		"MED_Y_CNT" : 16345,
+		"MED_N_CNT" : 13060,
+		"MED_N_RATE" : 44.41
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 51922,
+		"PCNT" : 20682,
+		"MED_Y_CNT" : 28337,
+		"MED_N_CNT" : 23585,
+		"MED_N_RATE" : 45.42
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 45002,
+		"PCNT" : 16992,
+		"MED_Y_CNT" : 24845,
+		"MED_N_CNT" : 20157,
+		"MED_N_RATE" : 44.79
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 33724,
+		"PCNT" : 14568,
+		"MED_Y_CNT" : 19333,
+		"MED_N_CNT" : 14391,
+		"MED_N_RATE" : 42.67
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 33384,
+		"PCNT" : 12698,
+		"MED_Y_CNT" : 18647,
+		"MED_N_CNT" : 14737,
+		"MED_N_RATE" : 44.14
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 9450,
+		"PCNT" : 4328,
+		"MED_Y_CNT" : 5595,
+		"MED_N_CNT" : 3855,
+		"MED_N_RATE" : 40.79
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10201,
+		"PCNT" : 4093,
+		"MED_Y_CNT" : 5706,
+		"MED_N_CNT" : 4495,
+		"MED_N_RATE" : 44.06
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 537,
+		"PCNT" : 254,
+		"MED_Y_CNT" : 332,
+		"MED_N_CNT" : 205,
+		"MED_N_RATE" : 38.18
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 646,
+		"PCNT" : 362,
+		"MED_Y_CNT" : 425,
+		"MED_N_CNT" : 221,
+		"MED_N_RATE" : 34.21
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 54,
+		"PCNT" : 52,
+		"MED_Y_CNT" : 53,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 1.85
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 14368,
+		"PCNT" : 6622,
+		"MED_Y_CNT" : 8649,
+		"MED_N_CNT" : 5719,
+		"MED_N_RATE" : 39.8
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16329,
+		"PCNT" : 7355,
+		"MED_Y_CNT" : 9906,
+		"MED_N_CNT" : 6423,
+		"MED_N_RATE" : 39.33
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 6951,
+		"PCNT" : 3000,
+		"MED_Y_CNT" : 4152,
+		"MED_N_CNT" : 2799,
+		"MED_N_RATE" : 40.27
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8788,
+		"PCNT" : 3864,
+		"MED_Y_CNT" : 5355,
+		"MED_N_CNT" : 3433,
+		"MED_N_RATE" : 39.06
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 11791,
+		"PCNT" : 5928,
+		"MED_Y_CNT" : 6952,
+		"MED_N_CNT" : 4839,
+		"MED_N_RATE" : 41.04
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9718,
+		"PCNT" : 4916,
+		"MED_Y_CNT" : 5913,
+		"MED_N_CNT" : 3805,
+		"MED_N_RATE" : 39.15
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 20140,
+		"PCNT" : 8438,
+		"MED_Y_CNT" : 11291,
+		"MED_N_CNT" : 8849,
+		"MED_N_RATE" : 43.94
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10918,
+		"PCNT" : 5266,
+		"MED_Y_CNT" : 6406,
+		"MED_N_CNT" : 4512,
+		"MED_N_RATE" : 41.33
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 32528,
+		"PCNT" : 11912,
+		"MED_Y_CNT" : 16578,
+		"MED_N_CNT" : 15950,
+		"MED_N_RATE" : 49.03
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16266,
+		"PCNT" : 7245,
+		"MED_Y_CNT" : 9305,
+		"MED_N_CNT" : 6961,
+		"MED_N_RATE" : 42.79
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 45053,
+		"PCNT" : 17201,
+		"MED_Y_CNT" : 23439,
+		"MED_N_CNT" : 21614,
+		"MED_N_RATE" : 47.97
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 28995,
+		"PCNT" : 11642,
+		"MED_Y_CNT" : 16003,
+		"MED_N_CNT" : 12992,
+		"MED_N_RATE" : 44.81
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 50666,
+		"PCNT" : 20407,
+		"MED_Y_CNT" : 27553,
+		"MED_N_CNT" : 23113,
+		"MED_N_RATE" : 45.62
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 43969,
+		"PCNT" : 16574,
+		"MED_Y_CNT" : 24047,
+		"MED_N_CNT" : 19922,
+		"MED_N_RATE" : 45.31
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 33624,
+		"PCNT" : 14363,
+		"MED_Y_CNT" : 18997,
+		"MED_N_CNT" : 14627,
+		"MED_N_RATE" : 43.5
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 33840,
+		"PCNT" : 12699,
+		"MED_Y_CNT" : 18381,
+		"MED_N_CNT" : 15459,
+		"MED_N_RATE" : 45.68
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 9248,
+		"PCNT" : 4215,
+		"MED_Y_CNT" : 5462,
+		"MED_N_CNT" : 3786,
+		"MED_N_RATE" : 40.94
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10061,
+		"PCNT" : 3958,
+		"MED_Y_CNT" : 5676,
+		"MED_N_CNT" : 4385,
+		"MED_N_RATE" : 43.58
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 535,
+		"PCNT" : 251,
+		"MED_Y_CNT" : 308,
+		"MED_N_CNT" : 227,
+		"MED_N_RATE" : 42.43
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 615,
+		"PCNT" : 299,
+		"MED_Y_CNT" : 397,
+		"MED_N_CNT" : 218,
+		"MED_N_RATE" : 35.45
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 100
+	},
+	{
+		"DATE" : "2021-04",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 53,
+		"PCNT" : 53,
+		"MED_Y_CNT" : 52,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 1.89
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 12516,
+		"PCNT" : 5892,
+		"MED_Y_CNT" : 7369,
+		"MED_N_CNT" : 5147,
+		"MED_N_RATE" : 41.12
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 14659,
+		"PCNT" : 6749,
+		"MED_Y_CNT" : 8703,
+		"MED_N_CNT" : 5956,
+		"MED_N_RATE" : 40.63
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 6594,
+		"PCNT" : 3044,
+		"MED_Y_CNT" : 4014,
+		"MED_N_CNT" : 2580,
+		"MED_N_RATE" : 39.13
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8109,
+		"PCNT" : 3772,
+		"MED_Y_CNT" : 4925,
+		"MED_N_CNT" : 3184,
+		"MED_N_RATE" : 39.27
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 10670,
+		"PCNT" : 5375,
+		"MED_Y_CNT" : 6441,
+		"MED_N_CNT" : 4229,
+		"MED_N_RATE" : 39.63
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8759,
+		"PCNT" : 4581,
+		"MED_Y_CNT" : 5337,
+		"MED_N_CNT" : 3422,
+		"MED_N_RATE" : 39.07
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 17896,
+		"PCNT" : 7707,
+		"MED_Y_CNT" : 10085,
+		"MED_N_CNT" : 7811,
+		"MED_N_RATE" : 43.65
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10037,
+		"PCNT" : 5013,
+		"MED_Y_CNT" : 5936,
+		"MED_N_CNT" : 4101,
+		"MED_N_RATE" : 40.86
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 29520,
+		"PCNT" : 11250,
+		"MED_Y_CNT" : 14831,
+		"MED_N_CNT" : 14689,
+		"MED_N_RATE" : 49.76
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 14784,
+		"PCNT" : 6806,
+		"MED_Y_CNT" : 8265,
+		"MED_N_CNT" : 6519,
+		"MED_N_RATE" : 44.09
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 40258,
+		"PCNT" : 15894,
+		"MED_Y_CNT" : 20552,
+		"MED_N_CNT" : 19706,
+		"MED_N_RATE" : 48.95
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 26904,
+		"PCNT" : 10938,
+		"MED_Y_CNT" : 14527,
+		"MED_N_CNT" : 12377,
+		"MED_N_RATE" : 46
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 46810,
+		"PCNT" : 19397,
+		"MED_Y_CNT" : 24946,
+		"MED_N_CNT" : 21864,
+		"MED_N_RATE" : 46.71
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 40271,
+		"PCNT" : 15625,
+		"MED_Y_CNT" : 21830,
+		"MED_N_CNT" : 18441,
+		"MED_N_RATE" : 45.79
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 31030,
+		"PCNT" : 13480,
+		"MED_Y_CNT" : 17116,
+		"MED_N_CNT" : 13914,
+		"MED_N_RATE" : 44.84
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 30265,
+		"PCNT" : 11940,
+		"MED_Y_CNT" : 16464,
+		"MED_N_CNT" : 13801,
+		"MED_N_RATE" : 45.6
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 8346,
+		"PCNT" : 3995,
+		"MED_Y_CNT" : 4825,
+		"MED_N_CNT" : 3521,
+		"MED_N_RATE" : 42.19
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9135,
+		"PCNT" : 3776,
+		"MED_Y_CNT" : 5117,
+		"MED_N_CNT" : 4018,
+		"MED_N_RATE" : 43.98
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 512,
+		"PCNT" : 229,
+		"MED_Y_CNT" : 300,
+		"MED_N_CNT" : 212,
+		"MED_N_RATE" : 41.41
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 475,
+		"PCNT" : 220,
+		"MED_Y_CNT" : 262,
+		"MED_N_CNT" : 213,
+		"MED_N_RATE" : 44.84
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 100
+	},
+	{
+		"DATE" : "2021-05",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 54,
+		"PCNT" : 52,
+		"MED_Y_CNT" : 53,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 1.85
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 13594,
+		"PCNT" : 6403,
+		"MED_Y_CNT" : 8053,
+		"MED_N_CNT" : 5541,
+		"MED_N_RATE" : 40.76
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16636,
+		"PCNT" : 7486,
+		"MED_Y_CNT" : 9897,
+		"MED_N_CNT" : 6739,
+		"MED_N_RATE" : 40.51
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 7389,
+		"PCNT" : 3237,
+		"MED_Y_CNT" : 4455,
+		"MED_N_CNT" : 2934,
+		"MED_N_RATE" : 39.71
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 8549,
+		"PCNT" : 3933,
+		"MED_Y_CNT" : 5239,
+		"MED_N_CNT" : 3310,
+		"MED_N_RATE" : 38.72
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 12233,
+		"PCNT" : 6073,
+		"MED_Y_CNT" : 7455,
+		"MED_N_CNT" : 4778,
+		"MED_N_RATE" : 39.06
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9894,
+		"PCNT" : 5020,
+		"MED_Y_CNT" : 6043,
+		"MED_N_CNT" : 3851,
+		"MED_N_RATE" : 38.92
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 20413,
+		"PCNT" : 8690,
+		"MED_Y_CNT" : 11471,
+		"MED_N_CNT" : 8942,
+		"MED_N_RATE" : 43.81
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 11234,
+		"PCNT" : 5522,
+		"MED_Y_CNT" : 6552,
+		"MED_N_CNT" : 4682,
+		"MED_N_RATE" : 41.68
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 33786,
+		"PCNT" : 12456,
+		"MED_Y_CNT" : 17289,
+		"MED_N_CNT" : 16497,
+		"MED_N_RATE" : 48.83
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16688,
+		"PCNT" : 7549,
+		"MED_Y_CNT" : 9292,
+		"MED_N_CNT" : 7396,
+		"MED_N_RATE" : 44.32
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 46044,
+		"PCNT" : 17560,
+		"MED_Y_CNT" : 23761,
+		"MED_N_CNT" : 22283,
+		"MED_N_RATE" : 48.4
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 29352,
+		"PCNT" : 11861,
+		"MED_Y_CNT" : 16015,
+		"MED_N_CNT" : 13337,
+		"MED_N_RATE" : 45.44
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 52935,
+		"PCNT" : 21391,
+		"MED_Y_CNT" : 28665,
+		"MED_N_CNT" : 24270,
+		"MED_N_RATE" : 45.85
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 45653,
+		"PCNT" : 17258,
+		"MED_Y_CNT" : 24878,
+		"MED_N_CNT" : 20775,
+		"MED_N_RATE" : 45.51
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 34705,
+		"PCNT" : 14922,
+		"MED_Y_CNT" : 19501,
+		"MED_N_CNT" : 15204,
+		"MED_N_RATE" : 43.81
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 34003,
+		"PCNT" : 12944,
+		"MED_Y_CNT" : 18726,
+		"MED_N_CNT" : 15277,
+		"MED_N_RATE" : 44.93
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 9738,
+		"PCNT" : 4440,
+		"MED_Y_CNT" : 5775,
+		"MED_N_CNT" : 3963,
+		"MED_N_RATE" : 40.7
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10437,
+		"PCNT" : 4102,
+		"MED_Y_CNT" : 5829,
+		"MED_N_CNT" : 4608,
+		"MED_N_RATE" : 44.15
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 580,
+		"PCNT" : 262,
+		"MED_Y_CNT" : 340,
+		"MED_N_CNT" : 240,
+		"MED_N_RATE" : 41.38
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 648,
+		"PCNT" : 336,
+		"MED_Y_CNT" : 425,
+		"MED_N_CNT" : 223,
+		"MED_N_RATE" : 34.41
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 68,
+		"PCNT" : 56,
+		"MED_Y_CNT" : 61,
+		"MED_N_CNT" : 7,
+		"MED_N_RATE" : 10.29
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 13268,
+		"PCNT" : 6110,
+		"MED_Y_CNT" : 7879,
+		"MED_N_CNT" : 5389,
+		"MED_N_RATE" : 40.62
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 15945,
+		"PCNT" : 7135,
+		"MED_Y_CNT" : 9428,
+		"MED_N_CNT" : 6517,
+		"MED_N_RATE" : 40.87
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 9546,
+		"PCNT" : 4206,
+		"MED_Y_CNT" : 5449,
+		"MED_N_CNT" : 4097,
+		"MED_N_RATE" : 42.92
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10685,
+		"PCNT" : 4888,
+		"MED_Y_CNT" : 6219,
+		"MED_N_CNT" : 4466,
+		"MED_N_RATE" : 41.8
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 13161,
+		"PCNT" : 6431,
+		"MED_Y_CNT" : 7938,
+		"MED_N_CNT" : 5223,
+		"MED_N_RATE" : 39.69
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 11194,
+		"PCNT" : 5401,
+		"MED_Y_CNT" : 6670,
+		"MED_N_CNT" : 4524,
+		"MED_N_RATE" : 40.41
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 21030,
+		"PCNT" : 8815,
+		"MED_Y_CNT" : 11762,
+		"MED_N_CNT" : 9268,
+		"MED_N_RATE" : 44.07
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 11638,
+		"PCNT" : 5623,
+		"MED_Y_CNT" : 6754,
+		"MED_N_CNT" : 4884,
+		"MED_N_RATE" : 41.97
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 35091,
+		"PCNT" : 12779,
+		"MED_Y_CNT" : 17629,
+		"MED_N_CNT" : 17462,
+		"MED_N_RATE" : 49.76
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16935,
+		"PCNT" : 7510,
+		"MED_Y_CNT" : 9357,
+		"MED_N_CNT" : 7578,
+		"MED_N_RATE" : 44.75
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 45827,
+		"PCNT" : 17618,
+		"MED_Y_CNT" : 23392,
+		"MED_N_CNT" : 22435,
+		"MED_N_RATE" : 48.96
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 30111,
+		"PCNT" : 11900,
+		"MED_Y_CNT" : 16320,
+		"MED_N_CNT" : 13791,
+		"MED_N_RATE" : 45.8
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 50697,
+		"PCNT" : 20519,
+		"MED_Y_CNT" : 26976,
+		"MED_N_CNT" : 23721,
+		"MED_N_RATE" : 46.79
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 44741,
+		"PCNT" : 16856,
+		"MED_Y_CNT" : 24153,
+		"MED_N_CNT" : 20588,
+		"MED_N_RATE" : 46.02
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 33425,
+		"PCNT" : 14432,
+		"MED_Y_CNT" : 18586,
+		"MED_N_CNT" : 14839,
+		"MED_N_RATE" : 44.39
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 33319,
+		"PCNT" : 12738,
+		"MED_Y_CNT" : 18276,
+		"MED_N_CNT" : 15043,
+		"MED_N_RATE" : 45.15
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 9329,
+		"PCNT" : 4241,
+		"MED_Y_CNT" : 5474,
+		"MED_N_CNT" : 3855,
+		"MED_N_RATE" : 41.32
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10044,
+		"PCNT" : 4076,
+		"MED_Y_CNT" : 5668,
+		"MED_N_CNT" : 4376,
+		"MED_N_RATE" : 43.57
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 530,
+		"PCNT" : 263,
+		"MED_Y_CNT" : 329,
+		"MED_N_CNT" : 201,
+		"MED_N_RATE" : 37.92
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 673,
+		"PCNT" : 307,
+		"MED_Y_CNT" : 405,
+		"MED_N_CNT" : 268,
+		"MED_N_RATE" : 39.82
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 5,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 65,
+		"PCNT" : 59,
+		"MED_Y_CNT" : 62,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 4.62
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 13225,
+		"PCNT" : 6175,
+		"MED_Y_CNT" : 7724,
+		"MED_N_CNT" : 5501,
+		"MED_N_RATE" : 41.6
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 15860,
+		"PCNT" : 7268,
+		"MED_Y_CNT" : 9273,
+		"MED_N_CNT" : 6587,
+		"MED_N_RATE" : 41.53
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 10848,
+		"PCNT" : 4876,
+		"MED_Y_CNT" : 6417,
+		"MED_N_CNT" : 4431,
+		"MED_N_RATE" : 40.85
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 12498,
+		"PCNT" : 5863,
+		"MED_Y_CNT" : 7507,
+		"MED_N_CNT" : 4991,
+		"MED_N_RATE" : 39.93
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 13765,
+		"PCNT" : 6758,
+		"MED_Y_CNT" : 8203,
+		"MED_N_CNT" : 5562,
+		"MED_N_RATE" : 40.41
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 11320,
+		"PCNT" : 5588,
+		"MED_Y_CNT" : 6713,
+		"MED_N_CNT" : 4607,
+		"MED_N_RATE" : 40.7
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 20836,
+		"PCNT" : 8754,
+		"MED_Y_CNT" : 11549,
+		"MED_N_CNT" : 9287,
+		"MED_N_RATE" : 44.57
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 11334,
+		"PCNT" : 5570,
+		"MED_Y_CNT" : 6677,
+		"MED_N_CNT" : 4657,
+		"MED_N_RATE" : 41.09
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 34143,
+		"PCNT" : 12710,
+		"MED_Y_CNT" : 17187,
+		"MED_N_CNT" : 16956,
+		"MED_N_RATE" : 49.66
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 17126,
+		"PCNT" : 7590,
+		"MED_Y_CNT" : 9466,
+		"MED_N_CNT" : 7660,
+		"MED_N_RATE" : 44.73
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 44830,
+		"PCNT" : 17308,
+		"MED_Y_CNT" : 22999,
+		"MED_N_CNT" : 21831,
+		"MED_N_RATE" : 48.7
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 29964,
+		"PCNT" : 12010,
+		"MED_Y_CNT" : 16141,
+		"MED_N_CNT" : 13823,
+		"MED_N_RATE" : 46.13
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 49924,
+		"PCNT" : 20136,
+		"MED_Y_CNT" : 26671,
+		"MED_N_CNT" : 23253,
+		"MED_N_RATE" : 46.58
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 44358,
+		"PCNT" : 16829,
+		"MED_Y_CNT" : 24086,
+		"MED_N_CNT" : 20272,
+		"MED_N_RATE" : 45.7
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 32387,
+		"PCNT" : 13936,
+		"MED_Y_CNT" : 18081,
+		"MED_N_CNT" : 14306,
+		"MED_N_RATE" : 44.17
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 32536,
+		"PCNT" : 12274,
+		"MED_Y_CNT" : 17714,
+		"MED_N_CNT" : 14822,
+		"MED_N_RATE" : 45.56
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 9464,
+		"PCNT" : 4247,
+		"MED_Y_CNT" : 5512,
+		"MED_N_CNT" : 3952,
+		"MED_N_RATE" : 41.76
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9788,
+		"PCNT" : 4015,
+		"MED_Y_CNT" : 5508,
+		"MED_N_CNT" : 4280,
+		"MED_N_RATE" : 43.73
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 463,
+		"PCNT" : 230,
+		"MED_Y_CNT" : 308,
+		"MED_N_CNT" : 155,
+		"MED_N_RATE" : 33.48
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 705,
+		"PCNT" : 328,
+		"MED_Y_CNT" : 437,
+		"MED_N_CNT" : 268,
+		"MED_N_RATE" : 38.01
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 4,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 50
+	},
+	{
+		"DATE" : "2021-08",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 56,
+		"PCNT" : 54,
+		"MED_Y_CNT" : 53,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 5.36
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 13176,
+		"PCNT" : 6139,
+		"MED_Y_CNT" : 7769,
+		"MED_N_CNT" : 5407,
+		"MED_N_RATE" : 41.04
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 15798,
+		"PCNT" : 7087,
+		"MED_Y_CNT" : 9283,
+		"MED_N_CNT" : 6515,
+		"MED_N_RATE" : 41.24
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 7678,
+		"PCNT" : 3307,
+		"MED_Y_CNT" : 4465,
+		"MED_N_CNT" : 3213,
+		"MED_N_RATE" : 41.85
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9343,
+		"PCNT" : 3930,
+		"MED_Y_CNT" : 5407,
+		"MED_N_CNT" : 3936,
+		"MED_N_RATE" : 42.13
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 12352,
+		"PCNT" : 6129,
+		"MED_Y_CNT" : 7462,
+		"MED_N_CNT" : 4890,
+		"MED_N_RATE" : 39.59
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10503,
+		"PCNT" : 5108,
+		"MED_Y_CNT" : 6158,
+		"MED_N_CNT" : 4345,
+		"MED_N_RATE" : 41.37
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 19919,
+		"PCNT" : 8466,
+		"MED_Y_CNT" : 11451,
+		"MED_N_CNT" : 8468,
+		"MED_N_RATE" : 42.51
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10945,
+		"PCNT" : 5405,
+		"MED_Y_CNT" : 6404,
+		"MED_N_CNT" : 4541,
+		"MED_N_RATE" : 41.49
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 31231,
+		"PCNT" : 11809,
+		"MED_Y_CNT" : 16037,
+		"MED_N_CNT" : 15194,
+		"MED_N_RATE" : 48.65
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16143,
+		"PCNT" : 7431,
+		"MED_Y_CNT" : 9042,
+		"MED_N_CNT" : 7101,
+		"MED_N_RATE" : 43.99
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 42339,
+		"PCNT" : 16320,
+		"MED_Y_CNT" : 21597,
+		"MED_N_CNT" : 20742,
+		"MED_N_RATE" : 48.99
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 27855,
+		"PCNT" : 11398,
+		"MED_Y_CNT" : 15036,
+		"MED_N_CNT" : 12819,
+		"MED_N_RATE" : 46.02
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 46615,
+		"PCNT" : 19603,
+		"MED_Y_CNT" : 25179,
+		"MED_N_CNT" : 21436,
+		"MED_N_RATE" : 45.99
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 41769,
+		"PCNT" : 16204,
+		"MED_Y_CNT" : 22566,
+		"MED_N_CNT" : 19203,
+		"MED_N_RATE" : 45.97
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 30305,
+		"PCNT" : 13667,
+		"MED_Y_CNT" : 17077,
+		"MED_N_CNT" : 13228,
+		"MED_N_RATE" : 43.65
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 31111,
+		"PCNT" : 12184,
+		"MED_Y_CNT" : 17069,
+		"MED_N_CNT" : 14042,
+		"MED_N_RATE" : 45.14
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 8736,
+		"PCNT" : 4180,
+		"MED_Y_CNT" : 5145,
+		"MED_N_CNT" : 3591,
+		"MED_N_RATE" : 41.11
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9381,
+		"PCNT" : 3917,
+		"MED_Y_CNT" : 5265,
+		"MED_N_CNT" : 4116,
+		"MED_N_RATE" : 43.88
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 453,
+		"PCNT" : 222,
+		"MED_Y_CNT" : 279,
+		"MED_N_CNT" : 174,
+		"MED_N_RATE" : 38.41
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 545,
+		"PCNT" : 253,
+		"MED_Y_CNT" : 317,
+		"MED_N_CNT" : 228,
+		"MED_N_RATE" : 41.83
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 59,
+		"PCNT" : 56,
+		"MED_Y_CNT" : 59,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 13531,
+		"PCNT" : 6287,
+		"MED_Y_CNT" : 7732,
+		"MED_N_CNT" : 5799,
+		"MED_N_RATE" : 42.86
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "0 - 10",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 15757,
+		"PCNT" : 7165,
+		"MED_Y_CNT" : 9085,
+		"MED_N_CNT" : 6672,
+		"MED_N_RATE" : 42.34
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 7455,
+		"PCNT" : 3228,
+		"MED_Y_CNT" : 4248,
+		"MED_N_CNT" : 3207,
+		"MED_N_RATE" : 43.02
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "11 - 20",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9025,
+		"PCNT" : 3997,
+		"MED_Y_CNT" : 5141,
+		"MED_N_CNT" : 3884,
+		"MED_N_RATE" : 43.04
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 11981,
+		"PCNT" : 6179,
+		"MED_Y_CNT" : 7112,
+		"MED_N_CNT" : 4869,
+		"MED_N_RATE" : 40.64
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "21 - 30",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9555,
+		"PCNT" : 4956,
+		"MED_Y_CNT" : 5560,
+		"MED_N_CNT" : 3995,
+		"MED_N_RATE" : 41.81
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 19997,
+		"PCNT" : 8862,
+		"MED_Y_CNT" : 11097,
+		"MED_N_CNT" : 8900,
+		"MED_N_RATE" : 44.51
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "31 - 40",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 10790,
+		"PCNT" : 5513,
+		"MED_Y_CNT" : 6201,
+		"MED_N_CNT" : 4589,
+		"MED_N_RATE" : 42.53
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 32292,
+		"PCNT" : 12177,
+		"MED_Y_CNT" : 15777,
+		"MED_N_CNT" : 16515,
+		"MED_N_RATE" : 51.14
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "41 - 50",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 16351,
+		"PCNT" : 7478,
+		"MED_Y_CNT" : 8782,
+		"MED_N_CNT" : 7569,
+		"MED_N_RATE" : 46.29
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 44276,
+		"PCNT" : 17336,
+		"MED_Y_CNT" : 22019,
+		"MED_N_CNT" : 22257,
+		"MED_N_RATE" : 50.27
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "51 - 60",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 28459,
+		"PCNT" : 11868,
+		"MED_Y_CNT" : 15067,
+		"MED_N_CNT" : 13392,
+		"MED_N_RATE" : 47.06
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 49078,
+		"PCNT" : 20405,
+		"MED_Y_CNT" : 25372,
+		"MED_N_CNT" : 23706,
+		"MED_N_RATE" : 48.3
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "61 - 70",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 42950,
+		"PCNT" : 16683,
+		"MED_Y_CNT" : 22529,
+		"MED_N_CNT" : 20421,
+		"MED_N_RATE" : 47.55
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 31834,
+		"PCNT" : 14094,
+		"MED_Y_CNT" : 17384,
+		"MED_N_CNT" : 14450,
+		"MED_N_RATE" : 45.39
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "71 - 80",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 32380,
+		"PCNT" : 12706,
+		"MED_Y_CNT" : 17277,
+		"MED_N_CNT" : 15103,
+		"MED_N_RATE" : 46.64
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 8917,
+		"PCNT" : 4330,
+		"MED_Y_CNT" : 5135,
+		"MED_N_CNT" : 3782,
+		"MED_N_RATE" : 42.41
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "81 - 90",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 9632,
+		"PCNT" : 3990,
+		"MED_Y_CNT" : 5317,
+		"MED_N_CNT" : 4315,
+		"MED_N_RATE" : 44.8
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 536,
+		"PCNT" : 258,
+		"MED_Y_CNT" : 321,
+		"MED_N_CNT" : 215,
+		"MED_N_RATE" : 40.11
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "91 - 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 554,
+		"PCNT" : 258,
+		"MED_Y_CNT" : 331,
+		"MED_N_CNT" : 223,
+		"MED_N_RATE" : 40.25
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "F",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 33.33
+	},
+	{
+		"DATE" : "2021-10",
+		"AGE_GROUP" : "OVER 100",
+		"SEX_TP_CD" : "M",
+		"ROWCNT" : 58,
+		"PCNT" : 53,
+		"MED_Y_CNT" : 55,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 5.17
+	}
+]}

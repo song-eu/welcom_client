@@ -24,7 +24,9 @@ import { IOSSlider } from './style/buttonStyle'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitOutpatient = (props) => {
-    const thisMonth = moment().subtract(1, 'month').format('MMMM')
+    const [thisMonth, setThisMonth] = useState(
+        moment().subtract(1, 'month').format('MMMM YYYY')
+    )
     const [error, setError] = useState(null)
     const [selectData, setSelectData] = useState(
         moment().subtract(1, 'month').format('YYYY-MM')
@@ -40,7 +42,7 @@ const VisitOutpatient = (props) => {
     const outBarchartData = dataLocation + '/1_1year_total_by_hospital.csv'
     const outDepchartData = dataLocation + '/2_visit_dept_rank.csv'
     const outPersonMapData = dataLocation + '/3_1year_Monthly_visits_SIDO.json'
-    const outGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP.csv'
+    const outGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP_OUT.json'
     const outMonthlyBarData = dataLocation + '/5_1year_monthly_total.csv'
 
     var sliderMark = []
@@ -56,19 +58,17 @@ const VisitOutpatient = (props) => {
 
     // console.log('sliderMardk', sliderMark)
     const handleDatePickerChange = (event, newVal) => {
-        // console.log('handleDatePickerChange??', event, 'newVal?', newVal)
-        console.log('value??', sliderMark[newVal].label)
-        setSelectData(sliderMark[newVal].label)
+        setSelectData(sliderMark[11 - newVal].label)
+        setThisMonth(moment(sliderMark[11 - newVal].label).format('MMMM YYYY'))
     }
 
     function valuetext(value) {
-        // console.log('valuetext value?? ', value)
-        return `${sliderMark[value].label}`
+        return `${sliderMark[11 - value].label}`
     }
 
     function valueLabelFormat(value) {
-        // console.log('valueLabelFormat value?? ', value, sliderMark[value].value)
-        return `${sliderMark[value].label}`
+        // console.log('label?', sliderMark[11 - value], value, sliderMark)
+        return `${sliderMark[11 - value].label}`
     }
 
     const fetchData = async () => {
@@ -198,7 +198,28 @@ const VisitOutpatient = (props) => {
                         <div className="numberKN">0</div>
                     </CountButton>
                 </ButtonRow>
-
+                <ButtonRow>
+                    <Box
+                        sx={{
+                            margin: '40px 40px 0 40px ',
+                            width: 800,
+                            color: '#fff',
+                        }}
+                    >
+                        <IOSSlider
+                            aria-label="Time Picker"
+                            defaultValue={11}
+                            valueLabelFormat={valueLabelFormat}
+                            getAriaValueText={valuetext}
+                            step={null}
+                            valueLabelDisplay="auto"
+                            marks={sliderMark}
+                            min={0}
+                            max={11}
+                            onChange={handleDatePickerChange}
+                        />
+                    </Box>
+                </ButtonRow>
                 <RowStyle>
                     <BoxStyle>
                         <StackedBarChart
@@ -212,27 +233,8 @@ const VisitOutpatient = (props) => {
                             dateCtrl={selectData}
                         />
                     </BoxStyle>
+
                     <BoxStyle>
-                        <Box
-                            sx={{
-                                margin: '40px 40px 0 40px ',
-                                width: 800,
-                                color: '#fff',
-                            }}
-                        >
-                            <IOSSlider
-                                aria-label="Restricted values"
-                                defaultValue={11}
-                                valueLabelFormat={valueLabelFormat}
-                                getAriaValueText={valuetext}
-                                step={null}
-                                valueLabelDisplay="auto"
-                                marks={sliderMark}
-                                min={0}
-                                max={11}
-                                onChange={handleDatePickerChange}
-                            />
-                        </Box>
                         <PersonMap
                             header={outPatientPersonMap}
                             dataloc={outPersonMapData}

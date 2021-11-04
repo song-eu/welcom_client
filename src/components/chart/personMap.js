@@ -42,7 +42,7 @@ const PersonMap = (props) => {
             var circleRange = [10, 100]
         }
         var width = 850,
-            height = 1300
+            height = 1200
     } else {
         var circleRange = [10, 100]
         var width = 700,
@@ -67,7 +67,7 @@ const PersonMap = (props) => {
     var path = d3.geoPath().projection(projection)
 
     useEffect(async () => {
-        console.log('useEffect 실행')
+        // console.log('useEffect 실행')
 
         var svg = d3
             .select(svgRef.current)
@@ -166,7 +166,7 @@ const PersonMap = (props) => {
     useEffect(async () => {
         var data = await jsonToData(dataloc, geojson)
 
-        console.log('circle effect 실행')
+        // console.log('circle effect 실행')
 
         var tip = d3
             .tip()
@@ -194,14 +194,14 @@ const PersonMap = (props) => {
             .data(data[dateCtrl].filter((d) => d.loc))
             .join(
                 (enter) => {
-                    console.log('enter!', enter)
+                    // console.log('enter!', enter)
                     return enter
                         .append('g')
                         .append('circle')
                         .attr('class', 'newMapCircle')
                 },
                 (update) => {
-                    console.log('update!', update)
+                    // console.log('update!', update)
                     return update.attr('class', 'updateMapCircle')
                 },
                 (exit) => exit.remove()

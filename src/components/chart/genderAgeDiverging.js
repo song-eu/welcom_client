@@ -14,6 +14,11 @@ const d3 = {
 }
 
 const GenderAgeDivergingChart = (props) => {
+    const { header, dataloc, dateCtrl } = props
+    const svgRef = useRef()
+
+    // const [data, setData] = useState([])
+
     // SET UP DIMENSIONS
     // var [w, setW] = useState(950)
 
@@ -22,63 +27,59 @@ const GenderAgeDivergingChart = (props) => {
     // margin.middle is distance from center line to each y-axis
     var margin = {
         top: 20,
-        right: 40,
+        right: 46,
         bottom: 24,
-        left: 40,
+        left: 46,
         middle: 28,
     }
     //const [data, setData] = useState(sampleData.genDivergData.data1)
-    const { header, dataloc } = props
-    const svgRef = useRef()
 
     //console.log('props.header', props.header)
 
-    useEffect(async () => {
-        if (dataloc.includes('.csv')) {
-            var data = await csvToData(dataloc)
-            var w = 950
-            var h = 600
-        } else {
-            var getData = await jsonToData(dataloc)
+    // so sick of string concatenation for translations
+    function translation(x, y) {
+        return 'translate(' + x + ',' + y + ')'
+    }
 
-            var data = getData[thisMonth]
-            //console.log('AGE/JSON?', data)
-            data = data.slice(0, -1)
-            data.sort((a, b) => {
-                return (
-                    parseInt(a.group.slice(0, 2)) -
-                    parseInt(b.group.slice(0, 2))
-                )
-            })
-            var w = 900
-            var h = 750
-        }
-        // the width of each side of the chart
-        var regionWidth =
-            (w - margin.right - margin.left - margin.middle) / 2 -
+    if (dataloc.includes('OUT')) {
+        var w = 950
+        var h = 600
+    } else {
+        //console.log('AGE/JSON?', data)
+        var w = 900
+        var h = 750
+    }
+    // console.log('outpatient data', getData)
+    // the width of each side of the chart
+    var regionWidth =
+        (w - margin.right - margin.left - margin.middle) / 2 -
+        margin.middle -
+        margin.left
+
+    // these are the x-coordinates of the y-axes
+    var pointA = regionWidth,
+        pointB =
+            w -
+            regionWidth -
             margin.middle -
-            margin.left
+            margin.right -
+            margin.left -
+            margin.left * 2
 
-        // these are the x-coordinates of the y-axes
-        var pointA = regionWidth,
-            pointB =
-                w -
-                regionWidth -
-                margin.middle -
-                margin.right -
-                margin.left -
-                margin.left * 2
+    useEffect(async () => {
+        var getData = await jsonToData(dataloc)
 
-        console.log('pointA', pointA, 'pointB', pointB, pointB - pointA)
+        let data = getData[dateCtrl].slice(0, -1).sort((a, b) => {
+            return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
+        })
+        // data = data.slice(0, -1)
+        // data.sort((a, b) => {
+        //     return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
+        // })
 
-        console.log(
-            'regeionwidth?',
-            regionWidth,
-            'pointA',
-            pointA,
-            'pointB',
-            pointB
-        )
+        // console.log('pointA', pointA, 'pointB', pointB, pointB - pointA)
+
+        // console.log('regeionwidth?', regionWidth, 'pointA', pointA, 'pointB', pointB)
 
         // GET THE TOTAL POPULATION SIZE AND CREATE A FUNCTION FOR RETURNING THE PERCENTAGE
         var totalPopulation = d3.sum(data, function (d) {
@@ -150,6 +151,45 @@ const GenderAgeDivergingChart = (props) => {
                     // .tickFormat(d3.format('%'))
                 )
 
+        // MAKE GROUPS FOR EACH SIDE OF CHART
+        // scale(-1,1) is used to reverse the left side so the bars grow left instead of right
+
+        // DRAW AXES
+        svg.append('g')
+            .attr('class', 'axis y left')
+            .attr('transform', translation(pointA, 0))
+            .call(yAxisLeft)
+            .selectAll('text')
+            .style('text-anchor', 'middle')
+
+        svg.append('g')
+            .attr('class', 'axis y right')
+            .attr('transform', translation(pointB, 0))
+            .call(yAxisRight)
+
+        svg.append('g')
+            .attr('class', 'axis x left')
+            .attr('transform', translation(0, h))
+            .call(xAxisLeft)
+
+        svg.append('g')
+            .attr('class', 'axis x right')
+            .attr('transform', translation(pointB, h))
+            .call(xAxisRight)
+    }, [])
+
+    useEffect(async () => {
+        var getData = await jsonToData(dataloc)
+
+        let data = getData[dateCtrl].slice(0, -1).sort((a, b) => {
+            return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
+        })
+        var maxValue = Math.max(
+            d3.max(data, (d) => d.male),
+            d3.max(data, (d) => d.female)
+        )
+        var svg = d3.select(svgRef.current).select('svg').select('g')
+
         //<-------- Tooltips -------->
         const tip = d3
             .tip()
@@ -184,45 +224,37 @@ const GenderAgeDivergingChart = (props) => {
         svg.call(tip)
         svg.call(fTip)
         //<-------- Tooltips -------->
+        var xScale = d3
+            .scaleLinear()
+            .domain([0, maxValue])
+            .range([0, regionWidth])
+            .nice()
 
-        // MAKE GROUPS FOR EACH SIDE OF CHART
-        // scale(-1,1) is used to reverse the left side so the bars grow left instead of right
+        var yScale = d3
+            .scaleBand()
+            .domain(
+                data.map(function (d) {
+                    return d.group
+                })
+            )
+            .rangeRound([h, 0])
+            .padding(0.1)
+
+        // DRAW BARS
         var leftBarGroup = svg
+
             .append('g')
             .attr('transform', translation(pointA, 0) + 'scale(-1,1)')
+
         var rightBarGroup = svg
             .append('g')
             .attr('transform', translation(pointB, 0))
 
-        // DRAW AXES
-        svg.append('g')
-            .attr('class', 'axis y left')
-            .attr('transform', translation(pointA, 0))
-            .call(yAxisLeft)
-            .selectAll('text')
-            .style('text-anchor', 'middle')
-
-        svg.append('g')
-            .attr('class', 'axis y right')
-            .attr('transform', translation(pointB, 0))
-            .call(yAxisRight)
-
-        svg.append('g')
-            .attr('class', 'axis x left')
-            .attr('transform', translation(0, h))
-            .call(xAxisLeft)
-
-        svg.append('g')
-            .attr('class', 'axis x right')
-            .attr('transform', translation(pointB, h))
-            .call(xAxisRight)
-
-        // DRAW BARS
         leftBarGroup
             .selectAll('.bar.left')
             .data(data)
             .join(
-                (enter) => enter.append('g'),
+                (enter) => enter.append('g').attr('class', 'new'),
                 (update) => update.attr('class', 'update'),
                 (exit) => exit.remove()
             )
@@ -238,10 +270,10 @@ const GenderAgeDivergingChart = (props) => {
             .transition()
             .duration(500)
             .attr('width', (d) => xScale(d.male))
-            .delay(function (d, i) {
-                //console.log(i)
-                return i * 70
-            })
+        // .delay(function (d, i) {
+        //     //console.log(i)
+        //     return i * 70
+        // })
 
         leftBarGroup
             .selectAll('.bar.left')
@@ -353,19 +385,15 @@ const GenderAgeDivergingChart = (props) => {
             .transition()
             .duration(500)
             .attr('width', (d) => xScale(d.female))
-            .delay(function (d, i) {
-                //console.log(i) ;
-                return i * 70
-            })
+        // .delay(function (d, i) {
+        //     //console.log(i) ;
+        //     return i * 70
+        // })
+    }, [dateCtrl])
 
-        // so sick of string concatenation for translations
-        function translation(x, y) {
-            return 'translate(' + x + ',' + y + ')'
-        }
-    }, [])
     return (
         <GenderDivergingBarChartSytle>
-            <h1>{props.header}</h1>
+            <h1>{header}</h1>
             <div id="negBarChart" ref={svgRef}></div>
         </GenderDivergingBarChartSytle>
     )

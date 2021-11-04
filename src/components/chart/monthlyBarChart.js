@@ -8,9 +8,9 @@ import csvToData from '../../modules/csvDataRead'
 import jsonToData from '../../modules/jsonDataRead'
 
 const MonthlyBarChart = (props) => {
-    var [width, setWidth] = useState(1000)
+    var [width, setWidth] = useState(850)
     var height = 600
-    const margin = { top: 40, left: 80, bottom: 40, right: 20 }
+    const margin = { top: 40, left: 60, bottom: 40, right: 20 }
     //const [data, setData] = useState(sampleData.monthBarData.data1)
     const { header, dataloc } = props
     const svgRef = useRef()
@@ -46,7 +46,7 @@ const MonthlyBarChart = (props) => {
             // .scaleBand() 그래프의 막대의 반복되는 범위를 정해줍니다.
             .domain(data.map((d) => d.NAME))
             // .domain() 각각의 막대에 순서대로 막대에 매핑합니다.
-            .range([margin.left, width - margin.left - margin.right])
+            .range([margin.left, width - margin.right])
             // 시작위치와 끝 위치로 눈금의 범위를 지정합니다.
             .padding(0.4)
         // 막대의 여백을 설정합니다.
@@ -82,7 +82,7 @@ const MonthlyBarChart = (props) => {
             .select('#barchart')
             .call((g) => g.select('svg').remove())
             .append('svg')
-            .style('width', width - margin.left)
+            .style('width', width - margin.right)
             .style('height', height)
 
         svg.append('g').call(xAxis)
