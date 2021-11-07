@@ -237,7 +237,7 @@ const GenderAgeDivergingChart = (props) => {
             // .call((g) => g.select('g').remove())
             .select('g')
         // .call((g) => g.select('g').remove())
-        console.log('data??', data, 'svg', svg)
+        // console.log('data??', data, 'svg', svg)
         svg.call(tip)
         svg.call(fTip)
 
@@ -287,7 +287,7 @@ const GenderAgeDivergingChart = (props) => {
         //     //console.log(i)
         //     return i * 70
         // })
-        console.log('leftBarGroup??', leftBarGroup, 'svg', svg)
+        // console.log('leftBarGroup??', leftBarGroup, 'svg', svg)
 
         leftBarGroup
             .selectAll('.bar.left')

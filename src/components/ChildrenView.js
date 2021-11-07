@@ -14,13 +14,20 @@ import {
     BigBox,
 } from './style/backgraound'
 import moment from 'moment'
+import Box from '@mui/material/Box'
+import { IOSSlider } from './style/buttonStyle'
 
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const ChildrenView = (props) => {
     //  const [outBarchartData, setoutBarchartData] = useState(null)
-    const thisMonth = moment().subtract(1, 'month').format('MMMM')
-
+    const [thisMonth, setThisMonth] = useState(
+        moment().subtract(1, 'month').format('MMMM YYYY')
+    )
+    const [error, setError] = useState(null)
+    const [selectData, setSelectData] = useState(
+        moment().subtract(1, 'month').format('YYYY-MM')
+    )
     const childrenHBarChart = `Chilren Hospital Visits by Rare disease in ${thisMonth}`
     const childrenBarChart = 'Monthly Children Rare disease Visits'
     const childrenGenderChart = 'Chilren Rare disease Visits by Age & Gender'
@@ -40,14 +47,64 @@ const ChildrenView = (props) => {
     const childrenDiseasePersonData =
         dataLocation +
         '/2-4_children_raredisease_monthly_count_year_by_SIDO.json'
+
+    var sliderMark = []
+    for (let i = 11; i >= 0; i--) {
+        let set = moment().subtract(13, 'month').format('YYYY-MM')
+        let obj = {}
+        obj.value = i
+        obj.label = moment(set)
+            .add(i + 1, 'month')
+            .format('YYYY-MM')
+        sliderMark.push(obj)
+    }
+
+    // console.log('sliderMardk', sliderMark)
+    const handleDatePickerChange = (event, newVal) => {
+        setSelectData(sliderMark[11 - newVal].label)
+        setThisMonth(moment(sliderMark[11 - newVal].label).format('MMMM YYYY'))
+    }
+
+    function valuetext(value) {
+        return `${sliderMark[11 - value].label}`
+    }
+
+    function valueLabelFormat(value) {
+        // console.log('label?', sliderMark[11 - value], value, sliderMark)
+        return `${sliderMark[11 - value].label}`
+    }
+
     return (
         <BigBox>
             <div>
+                <ButtonRow>
+                    <Box
+                        sx={{
+                            margin: '40px 40px 0 40px ',
+                            width: 800,
+                            color: '#fff',
+                        }}
+                    >
+                        <IOSSlider
+                            aria-label="Time Picker"
+                            defaultValue={11}
+                            valueLabelFormat={valueLabelFormat}
+                            getAriaValueText={valuetext}
+                            step={null}
+                            valueLabelDisplay="auto"
+                            marks={sliderMark}
+                            min={0}
+                            max={11}
+                            onChange={handleDatePickerChange}
+                        />
+                    </Box>
+                </ButtonRow>
                 <RowStyle>
                     <BoxStyle>
                         <RankHorizonBarChart
                             header={childrenHBarChart}
                             dataloc={childrenDisesasehCartData}
+                            dateCtrl={selectData}
                         />
                     </BoxStyle>
                     <BoxStyle>
@@ -59,10 +116,12 @@ const ChildrenView = (props) => {
                             <GenderAgeDivergingChart
                                 header={childrenGenderChart}
                                 dataloc={childrenDisesaseGAChartData}
+                                dateCtrl={selectData}
                             />
                             <PersonMap
                                 header={childrenPersonMap}
                                 dataloc={childrenDiseasePersonData}
+                                dateCtrl={selectData}
                             />
                         </RowStyle>
                     </BoxStyle>

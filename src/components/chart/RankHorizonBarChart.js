@@ -14,7 +14,7 @@ const d3 = {
 
 const RankHorizonBarChart = (props) => {
     //const [data, setData] = useState(sampleData.depHorizonData.data1)
-    const { header, selectData, dataloc } = props
+    const { header, dateCtrl, dataloc } = props
     const svgRef = useRef()
 
     var margin = { top: 20, right: 100, bottom: 30, left: 80 },
@@ -22,12 +22,16 @@ const RankHorizonBarChart = (props) => {
         height = 1500 - margin.top - margin.bottom
     var thisMonth = moment().subtract(1, 'month').format('YYYY-MM')
 
+    var y = d3.scaleBand().range([height, 0]).padding(0.1)
+
+    var x = d3.scaleLinear().range([0, width])
+
     useEffect(async () => {
         // if (selectData != null) {
         //     setData(sampleData.depHorizonData[selectData])
         // }
         let getData = await jsonToData(dataloc)
-        let realdata = getData[thisMonth]
+        let realdata = getData[dateCtrl]
 
         realdata.sort((a, b) => {
             return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
@@ -38,16 +42,11 @@ const RankHorizonBarChart = (props) => {
         //console.log('realdata???', realdata)
 
         const xMaxValue = d3.max(realdata, (d) => d.value)
-        const color = d3.scaleLinear().domain([0, xMaxValue]).range([0.2, 0.8])
         //console.log('color', color(xMaxValue))
-
-        var y = d3.scaleBand().range([height, 0]).padding(0.1)
-
-        var x = d3.scaleLinear().range([0, width])
 
         var svg = d3
             .select('#hbarchart')
-            .call((g) => g.select('svg').remove())
+            // .call((g) => g.select('svg').remove())
             .append('svg')
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
@@ -55,6 +54,93 @@ const RankHorizonBarChart = (props) => {
             .attr(
                 'transform',
                 'translate(' + margin.left + ',' + margin.top + ')'
+            )
+
+        x.domain([
+            0,
+            d3.max(realdata, function (d) {
+                return d.value
+            }),
+        ])
+
+        // svg.append('g')
+        //     .attr('class', 'rankgrid')
+        //     .attr('transform', `translate(0, ${height})`)
+        //     .call(
+        //         d3.axisBottom().scale(x).tickSize(-height, 0, 0).tickFormat('')
+        //     )
+        y.domain(
+            realdata.map(function (d) {
+                return d.name
+            })
+        )
+        // add the y Axis
+        svg.append('g').attr('class', 'axisXRank')
+        svg.append('g').attr('class', 'axisYRank')
+        //.attr("height", function(d) { return height - y(0); }) // always equal to 0
+        //.attr("y", function(d) { return y(0); })
+    }, [])
+
+    useEffect(async () => {
+        let getData = await jsonToData(dataloc)
+        let realdata = getData[dateCtrl]
+            .sort((a, b) => {
+                return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
+            })
+            .slice(-25)
+
+        const xMaxValue = d3.max(realdata, (d) => d.value)
+        const color = d3.scaleLinear().domain([0, xMaxValue]).range([0.2, 0.8])
+
+        var svg = d3
+            .select(svgRef.current)
+            .select('svg')
+            // .call((g) => g.select('g').remove())
+            .select('g')
+
+        x.domain([
+            0,
+            d3.max(realdata, function (d) {
+                return d.value
+            }),
+        ])
+
+        // svg.append('g')
+        //     .attr('class', 'rankgrid')
+        //     .attr('transform', `translate(0, ${height})`)
+        //     .call(
+        //         d3.axisBottom().scale(x).tickSize(-height, 0, 0).tickFormat('')
+        //     )
+
+        y.domain(
+            realdata.map(function (d) {
+                return d.name
+            })
+        )
+
+        let xBar = svg
+            .selectAll('.axisXRank')
+            .join(
+                (enter) => enter.append('g').attr('class', 'newXaxis'),
+                (update) => update.attr('class', 'updateXaxis'),
+                (exit) => exit.remove()
+            )
+            .call(d3.axisTop(x))
+        // .attr('transform', 'translate(' + height + ', 0)')
+
+        let yBar = svg
+            .selectAll('.axisYRank')
+            .join(
+                (enter) => enter.append('g').attr('class', 'newYaxis'),
+                (update) => update.attr('class', 'updateYaxis'),
+                (exit) => exit.remove()
+            )
+            .call(
+                d3
+                    .axisLeft(y)
+                    // .ticks(realdata.length)
+                    .tickSizeInner(7)
+                    .tickSizeOuter(7)
             )
 
         function onMouseOver(d, i) {
@@ -115,47 +201,14 @@ const RankHorizonBarChart = (props) => {
 
         svg.call(tip)
 
-        x.domain([
-            0,
-            d3.max(realdata, function (d) {
-                return d.value
-            }),
-        ])
-
-        svg.append('g')
-            // .attr('transform', 'translate(' + height + ', 0)')
-            .call(d3.axisTop(x))
-        // svg.append('g')
-        //     .attr('class', 'rankgrid')
-        //     .attr('transform', `translate(0, ${height})`)
-        //     .call(
-        //         d3.axisBottom().scale(x).tickSize(-height, 0, 0).tickFormat('')
-        //     )
-        y.domain(
-            realdata.map(function (d) {
-                return d.name
-            })
-        )
-        // add the y Axis
-        svg.append('g').call(
-            d3
-                .axisLeft(y)
-                // .ticks(realdata.length)
-                .tickSizeInner(7)
-                .tickSizeOuter(7)
-        )
-
         var bar = svg
-            .selectAll('.bar')
+            .selectAll('rect')
             .data(realdata)
             .join(
-                (enter) => enter.append('g'),
-                (update) => update.attr('class', 'update'),
+                (enter) => enter.append('rect').attr('class', 'newRankRect'),
+                (update) => update.attr('class', 'updateRankRect'),
                 (exit) => exit.remove()
             )
-
-        bar.append('rect')
-            .attr('class', 'bar')
             //.attr("x", function(d) { return x(0); })
             //.attr("width", function(d) {return x(0) - width; } )
             //.attr('fill', (d) => d3.interpolateYlGn(color(d.value)))
@@ -179,13 +232,10 @@ const RankHorizonBarChart = (props) => {
             .duration(2000)
             .attr('width', (d) => x(d.value))
             .attr('fill', ({ value }) => d3.interpolateGnBu(color(value)))
-            .delay(function (d, i) {
-                return -i * 50
-            })
-
-        //.attr("height", function(d) { return height - y(0); }) // always equal to 0
-        //.attr("y", function(d) { return y(0); })
-    }, [])
+        // .delay(function (d, i) {
+        //     return -i * 50
+        // })
+    }, [dateCtrl])
 
     return (
         <HorizonBarChartSytle>
