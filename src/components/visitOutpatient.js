@@ -8,6 +8,7 @@ import GenderAgeDivergingChart from './chart/genderAgeDiverging'
 import CircleCart from './chart/circleChart'
 import StackedBarChart from './chart/stackedBarChart'
 import StackedBarChartTest from './chart/stackedBarCharttest'
+import MonthlyBarLineChart from './chart/monthlyBarLineChart'
 import PersonMap from './chart/personMap'
 import {
     RowStyle,
@@ -21,6 +22,11 @@ import * as d3 from 'd3'
 //slider open source
 import Box from '@mui/material/Box'
 import { IOSSlider } from './style/buttonStyle'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitOutpatient = (props) => {
@@ -177,25 +183,124 @@ const VisitOutpatient = (props) => {
             <div>
                 <ButtonRow>
                     <CountButton>
-                        <div>서울대병원 전체</div>
-                        <div className="numberAll">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    서울대병원 전체
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberAll"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
                     <CountButton>
-                        <div>본원 방문</div>
-                        <div className="numberHQ">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    본원 방문 누적
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberHQ"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
                     <CountButton>
-                        <div>어린이병원 방문</div>
-                        <div className="numberCH">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    어린이병원 누적
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberCH"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
-
                     <CountButton>
-                        <div>암병원 방문</div>
-                        <div className="numberCC">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    암병원 누적
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberCC"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
                     <CountButton>
-                        <div>강남 센터 방문</div>
-                        <div className="numberKN">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    강남센터 누적
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberKN"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
                 </ButtonRow>
                 <ButtonRow>
@@ -247,7 +352,7 @@ const VisitOutpatient = (props) => {
                             dataloc={outGenderAgeData}
                             dateCtrl={selectData}
                         />
-                        <MonthlyBarChart
+                        <MonthlyBarLineChart
                             header={outPationtTotalBarChart}
                             dataloc={outMonthlyBarData}
                         />
