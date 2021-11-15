@@ -31,6 +31,8 @@ const PersonMap = (props) => {
         koreaGeoData.objects.skorea_provinces_2018_geo
     )
     const center = d3.geoCentroid(geojson)
+
+    
     //console.log('geojson???', geojson)
     // slide bar 의 최소 / 최대 날짜 및 현재 날짜 설정 가능
     // data 기준이 현재날짜 - 12 month 이므로 해당날짜로 설정되어 있으나,
@@ -43,10 +45,28 @@ const PersonMap = (props) => {
         }
         var width = 850,
             height = 1200
+
+        var projection = d3
+        .geoMercator()
+        .scale(10000) //스케일
+        //.scale(1)
+        //.translate([0, 0])
+        //.rotate([-10, 1, 0]) //지도 회전
+        .center([127, 37.6]) //서울 중심좌표
+        .translate([width / 3, height / 4.9])
     } else {
         var circleRange = [10, 100]
-        var width = 700,
+        var width = 650,
             height = 800
+
+        var projection = d3
+        .geoMercator()
+        .scale(6500) //스케일
+        //.scale(1)
+        //.translate([0, 0])
+        //.rotate([-10, 1, 0]) //지도 회전
+        .center([127, 37.6]) //서울 중심좌표
+        .translate([width / 2.8, height / 4.9])
     }
 
     // const updateData = useCallback(async (group) => {
@@ -56,14 +76,7 @@ const PersonMap = (props) => {
 
     // updateData()
 
-    var projection = d3
-        .geoMercator()
-        .scale(11000) //스케일
-        //.scale(1)
-        //.translate([0, 0])
-        //.rotate([-10, 1, 0]) //지도 회전
-        .center([127, 37.6]) //서울 중심좌표
-        .translate([width / 3, height / 4.9])
+  
     var path = d3.geoPath().projection(projection)
 
     useEffect(async () => {
