@@ -197,16 +197,24 @@ const MonthlyBarLineChart = (props) => {
             })
             .curve(d3.curveNatural)
 
-        barGroups
+        const path = barGroups
             .append('path')
             .attr('class', 'line') // Assign a class for styling
             .attr('d', line(data)) // 11. Calls the line generator
             .attr('fill', 'none')
-            .attr('stroke', '#f05053')
-            .attr('stroke-width', 1)
+            .attr('stroke', '#EFACDA')
+            .attr('stroke-width', 2)
             .attr('stroke-linejoin', 'round')
             .attr('stroke-linecap', 'round')
 
+        const pathLength = path.node().getTotalLength()
+
+        const transitionPath = d3.transition().ease(d3.easeSin).duration(2500)
+
+        path.attr('stroke-dashoffset', pathLength)
+            .attr('stroke-dasharray', pathLength)
+            .transition(transitionPath)
+            .attr('stroke-dashoffset', 0)
         barGroups
             .append('circle') // Uses the enter().append() method
             .attr('class', 'dot') // Assign a class for styling
@@ -216,9 +224,12 @@ const MonthlyBarLineChart = (props) => {
             .attr('cy', function (d) {
                 return y(d.VALUE)
             })
-            .attr('r', 5)
-            .attr('stroke', '#f05053')
-            .attr('fill', '#f05053')
+            .attr('r', 8)
+            .attr('stroke', '#EFACDA')
+            .attr('fill', '#EFACDA')
+            .transition()
+            .ease(d3.easeSin)
+            .duration(2500)
     }, [width])
 
     return (
