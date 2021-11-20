@@ -15,13 +15,27 @@ import {
     BigBox,
 } from './style/backgraound'
 import moment from 'moment'
+
+import Box from '@mui/material/Box'
+import { IOSSlider } from './style/buttonStyle'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitInpatient = (props) => {
-    //  const [outBarchartData, setoutBarchartData] = useState(null)
-    const thisMonth = moment().subtract(1, 'month').format('MMMM')
-    const [loading, setLoading] = useState(false)
+    const [thisMonth, setThisMonth] = useState(
+        moment().subtract(1, 'month').format('MMMM YYYY')
+    )
     const [error, setError] = useState(null)
+    const [selectData, setSelectData] = useState(
+        moment().subtract(1, 'month').format('YYYY-MM')
+    )
+    //  const [outBarchartData, setoutBarchartData] = useState(null)
+    const [loading, setLoading] = useState(false)
+
     const inPatientVisitBarChart = 'Monthly Inpatinet Visits by Hospital'
     const inPatientHBarChart = `Inpatient Visits by Department in ${thisMonth}`
     const inPationtTotalBarChart = 'Monthly Visit total (Inpatient)'
@@ -30,10 +44,37 @@ const VisitInpatient = (props) => {
 
     const dataLocation = '/inpatientData'
     const inBarchartData = dataLocation + '/1_1year_total_by_hospital_in.csv'
-    const inDepchartData = dataLocation + '/2_visit_dept_rank_in.csv'
-    const inPersonMapData = dataLocation + '/3_1year_weekly_visits_addr_in.csv'
-    const inGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP_in.csv'
+    const inDepchartData = dataLocation + '/2_visit_dept_rank_in.json'
+    const inPersonMapData =
+        dataLocation + '/3_1year_Monthly_visits_SIDO_IN.json'
+    const inGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP_IN.json'
     const inMonthlyBarData = dataLocation + '/5_1year_monthly_total_in.csv'
+
+    var sliderMark = []
+    for (let i = 11; i >= 0; i--) {
+        let set = moment().subtract(13, 'month').format('YYYY-MM')
+        let obj = {}
+        obj.value = i
+        obj.label = moment(set)
+            .add(i + 1, 'month')
+            .format('YYYY-MM')
+        sliderMark.push(obj)
+    }
+
+    // console.log('sliderMardk', sliderMark)
+    const handleDatePickerChange = (event, newVal) => {
+        setSelectData(sliderMark[11 - newVal].label)
+        setThisMonth(moment(sliderMark[11 - newVal].label).format('MMMM YYYY'))
+    }
+
+    function valuetext(value) {
+        return `${sliderMark[11 - value].label}`
+    }
+
+    function valueLabelFormat(value) {
+        // console.log('label?', sliderMark[11 - value], value, sliderMark)
+        return `${sliderMark[11 - value].label}`
+    }
 
     const fetchData = async () => {
         try {
@@ -148,25 +189,147 @@ const VisitInpatient = (props) => {
             <div>
                 <ButtonRow>
                     <CountButton>
-                        <div>서울대병원 전체</div>
-                        <div className="numberAll">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    서울대병원 전체
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberAll"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
                     <CountButton>
-                        <div>본원 방문</div>
-                        <div className="numberHQ">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    본원 방문 누적
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberHQ"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
                     <CountButton>
-                        <div>어린이병원 방문</div>
-                        <div className="numberCH">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    어린이병원 누적
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberCH"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
                     <CountButton>
-                        <div>암병원 방문</div>
-                        <div className="numberCC">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    암병원 누적
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberCC"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
                     <CountButton>
-                        <div>강남 센터 방문</div>
-                        <div className="numberKN">0</div>
+                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="text.secondary"
+                                >
+                                    강남센터 누적
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberKN"
+                                    align="right"
+                                    fontWeight="700"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </CountButton>
+                </ButtonRow>
+                <ButtonRow>
+                    <Box
+                        sx={{
+                            margin: '40px 40px 0 40px ',
+                            width: 800,
+                            color: '#fff',
+                        }}
+                    >
+                        <IOSSlider
+                            aria-label="Time Picker"
+                            defaultValue={11}
+                            valueLabelFormat={valueLabelFormat}
+                            getAriaValueText={valuetext}
+                            step={null}
+                            valueLabelDisplay="auto"
+                            marks={sliderMark}
+                            min={0}
+                            max={11}
+                            onChange={handleDatePickerChange}
+                        />
+                    </Box>
                 </ButtonRow>
                 <RowStyle>
                     <BoxStyle>
@@ -177,23 +340,27 @@ const VisitInpatient = (props) => {
 
                         <DeptHorizonBarChart
                             header={inPatientHBarChart}
-                            data={inDepchartData}
+                            dataloc={inDepchartData}
+                            dateCtrl={selectData}
                         />
                     </BoxStyle>
                     <BoxStyle>
                         <PersonMap
                             header={inPatientPersonMap}
                             dataloc={inPersonMapData}
+                            dateCtrl={selectData}
                         />
                     </BoxStyle>
                     <BoxStyle>
                         <GenderAgeDivergingChart
                             header={inPatientGenderChart}
                             dataloc={inGenderAgeData}
+                            dateCtrl={selectData}
                         />
                         <MonthlyBarChart
                             header={inPationtTotalBarChart}
                             dataloc={inMonthlyBarData}
+                            dateCtrl={selectData}
                         />
                     </BoxStyle>
                 </RowStyle>

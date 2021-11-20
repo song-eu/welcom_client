@@ -12,7 +12,7 @@ const MonthlyBarLineChart = (props) => {
     var height = 600
     const margin = { top: 40, left: 60, bottom: 40, right: 20 }
     //const [data, setData] = useState(sampleData.monthBarData.data1)
-    const { header, dataloc } = props
+    const { header, dataloc, dataloc2 } = props
     const svgRef = useRef()
 
     var sample = [
@@ -40,6 +40,9 @@ const MonthlyBarLineChart = (props) => {
             var data = await jsonToData(dataloc)
             setWidth(1600)
         }
+        var dataBar = await jsonToData(dataloc2)
+
+        console.log('data??', data, 'data2?', dataBar)
 
         var x = d3
             .scaleBand()
@@ -200,9 +203,9 @@ const MonthlyBarLineChart = (props) => {
         const path = barGroups
             .append('path')
             .attr('class', 'line') // Assign a class for styling
-            .attr('d', line(data)) // 11. Calls the line generator
+            .attr('d', line(dataBar)) // 11. Calls the line generator
             .attr('fill', 'none')
-            .attr('stroke', '#EFACDA')
+            .attr('stroke', 'tomato')
             .attr('stroke-width', 2)
             .attr('stroke-linejoin', 'round')
             .attr('stroke-linecap', 'round')
@@ -215,6 +218,7 @@ const MonthlyBarLineChart = (props) => {
             .attr('stroke-dasharray', pathLength)
             .transition(transitionPath)
             .attr('stroke-dashoffset', 0)
+
         barGroups
             .append('circle') // Uses the enter().append() method
             .attr('class', 'dot') // Assign a class for styling
@@ -225,8 +229,8 @@ const MonthlyBarLineChart = (props) => {
                 return y(d.VALUE)
             })
             .attr('r', 8)
-            .attr('stroke', '#EFACDA')
-            .attr('fill', '#EFACDA')
+            .attr('stroke', 'tomato')
+            .attr('fill', 'tomato')
             .transition()
             .ease(d3.easeSin)
             .duration(2500)

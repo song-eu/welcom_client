@@ -38,7 +38,7 @@ const RankHorizonBarChart = (props) => {
         })
         // console.log('realdata', realdata)
         // console.log('realdata???', realdata)
-        realdata = realdata.slice(-25)
+        realdata = realdata.slice(-45)
         //console.log('realdata???', realdata)
 
         const xMaxValue = d3.max(realdata, (d) => d.value)

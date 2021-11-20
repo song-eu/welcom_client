@@ -4,7 +4,7 @@ import * as moment from 'moment'
 const jsonToData = (dataloc, geojson) => {
     //console.log('dataloc', dataloc)
     // var data = require('../../public/children/2-1_children_raredisease_count_year_by_disease.json')
-    //console.log('data', process.env.PUBLIC_URL + dataloc)
+    console.log('data', process.env.PUBLIC_URL + dataloc)
     var lastMonth = moment().subtract(3, 'month').format('YYYY-MM') // 2021-07 or 마지막 달
 
     var resultArr = []
@@ -36,8 +36,23 @@ const jsonToData = (dataloc, geojson) => {
                         value: parseInt(d.PCNT),
                     })
                 }
+            } else if (d.MED_DEPT_CD) {
+                if (result[d.MONTH]) {
+                    result[d.MONTH].push({
+                        name: d.MED_DEPT_CD,
+                        name_full: d.MED_DEPT_NM,
+                        value: parseInt(d.PCNT),
+                    })
+                } else {
+                    result[d.MONTH] = []
+                    result[d.MONTH].push({
+                        name: d.MED_DEPT_CD,
+                        name_full: d.MED_DEPT_NM,
+                        value: parseInt(d.PCNT),
+                    })
+                }
             } else if (d.AGE_GROUP) {
-                //console.log('d???', d)
+                // console.log('d???', d)
                 // { group: '0-9', male: 240, female: 154 }
                 let tempFlag = false
 

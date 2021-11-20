@@ -39,17 +39,19 @@ const VisitOutpatient = (props) => {
     )
     const outPatientVisitBarChart = 'Monthly Oupatinet Visits by Hospital'
     const outPatientHBarChart = `Outpatient Visits by Department in ${thisMonth}`
-    const outPationtTotalBarChart = `Monthly Visit total (Outpatient & EM)`
+    const outPationtTotalBarChart = `Monthly Visit total (Outpatient & ER)`
     const outPatientGenderChart = `Outpatient Visit by Age & Gender in ${thisMonth}`
     const outPatientPersonMap = `Outpatient Visit by Location in ${thisMonth}`
     const outPatientPieChart = 'Outpatient Visit by Nation'
 
     const dataLocation = '/outpatientData'
     const outBarchartData = dataLocation + '/1_1year_total_by_hospital.csv'
-    const outDepchartData = dataLocation + '/2_visit_dept_rank.csv'
+    const outDepchartData = dataLocation + '/2_visit_dept_rank.json'
     const outPersonMapData = dataLocation + '/3_1year_Monthly_visits_SIDO.json'
     const outGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP_OUT.json'
-    const outMonthlyBarData = dataLocation + '/5_1year_monthly_total.csv'
+    const outMonthlyBarData = dataLocation + '/5_1year_monthly_total_OUT.csv'
+    const outMonthlyBarLineData =
+        dataLocation + '/5-2_1year_monthly_total_ER_OUT.json'
 
     var sliderMark = []
     for (let i = 11; i >= 0; i--) {
@@ -334,7 +336,7 @@ const VisitOutpatient = (props) => {
 
                         <DeptHorizonBarChart
                             header={outPatientHBarChart}
-                            data={outDepchartData}
+                            dataloc={outDepchartData}
                             dateCtrl={selectData}
                         />
                     </BoxStyle>
@@ -355,6 +357,7 @@ const VisitOutpatient = (props) => {
                         <MonthlyBarLineChart
                             header={outPationtTotalBarChart}
                             dataloc={outMonthlyBarData}
+                            dataloc2={outMonthlyBarLineData}
                         />
                     </BoxStyle>
                 </RowStyle>

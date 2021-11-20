@@ -1,0 +1,4359 @@
+{
+"-- 6. 1 year weekly OUTPATIENT VISIT BY addr\r\n-- 3_1year_Monthly_visits_SIDO_IN.json\r\nWITH city_data AS (\r\nSELECT PACT_ID , fsv.PT_NO , fsv.SEX_TP_CD , AGE_DY_CD ,MED_DT , fsv.PT_BRDY_DT , MED_YN, lsp.SIDO_ADDR , lsp.SIGUNGU_ADDR , lsp.POST_NO \r\nFROM FT_STM_VIST fsv\r\nLEFT JOIN LT_STM_PT lsp \r\nON fsv.PT_NO = lsp.PT_NO \r\nWHERE 1=1\r\n-- 방문일 설정: 2021년 7월 환자\r\nAND MED_DT BETWEEN to_Date('2020-10', 'YYYY-MM') AND TO_DATE('2021-10-31', 'YYYY-MM-DD')\r\n-- 외래, 입원, 응급\r\nAND PACT_TP_NM = '입원'\r\nAND fsv.PT_BRDY_DT IS NOT  NULL\r\n)\r\nSELECT TO_CHAR(MED_DT, 'YYYY-MM') \"DATE\"\r\n\t, SIDO_ADDR\r\n\t, COUNT(*) ROWCNT\r\n\t, COUNT(DISTINCT PT_NO) PCNT\r\n\t, COUNT(CASE WHEN MED_YN = 'Y' THEN 1 END ) MED_Y_CNT -- 진료여부 Y 만..?\r\n\t, COUNT(CASE WHEN MED_YN = 'N' THEN 1 END ) MED_N_CNT -- 진료여부 N 만..?\r\n\t, ROUND(COUNT(CASE WHEN MED_YN != 'Y' THEN 1 END ) \/COUNT(*) * 100, 2) MED_N_RATE\r\nFROM city_data\r\nGROUP BY TO_CHAR(MED_DT, 'YYYY-MM'), SIDO_ADDR\r\nORDER BY 1 , 4 DESC \r\n": [
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3587,
+		"PCNT" : 3298,
+		"MED_Y_CNT" : 3587,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1578,
+		"PCNT" : 1462,
+		"MED_Y_CNT" : 1578,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 296,
+		"PCNT" : 264,
+		"MED_Y_CNT" : 296,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 233,
+		"PCNT" : 217,
+		"MED_Y_CNT" : 233,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 217,
+		"PCNT" : 206,
+		"MED_Y_CNT" : 217,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 203,
+		"PCNT" : 186,
+		"MED_Y_CNT" : 203,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 191,
+		"PCNT" : 180,
+		"MED_Y_CNT" : 191,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 175,
+		"PCNT" : 160,
+		"MED_Y_CNT" : 175,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 161,
+		"PCNT" : 152,
+		"MED_Y_CNT" : 161,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 157,
+		"PCNT" : 146,
+		"MED_Y_CNT" : 157,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 162,
+		"PCNT" : 144,
+		"MED_Y_CNT" : 162,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 131,
+		"PCNT" : 117,
+		"MED_Y_CNT" : 131,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 111,
+		"PCNT" : 103,
+		"MED_Y_CNT" : 111,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 104,
+		"PCNT" : 87,
+		"MED_Y_CNT" : 104,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 89,
+		"PCNT" : 82,
+		"MED_Y_CNT" : 89,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 69,
+		"PCNT" : 62,
+		"MED_Y_CNT" : 69,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 42,
+		"PCNT" : 41,
+		"MED_Y_CNT" : 42,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 40,
+		"PCNT" : 36,
+		"MED_Y_CNT" : 40,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 9,
+		"PCNT" : 9,
+		"MED_Y_CNT" : 9,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 5,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "대구광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "울산광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : null,
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-10",
+		"SIDO_ADDR" : "대구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3797,
+		"PCNT" : 3520,
+		"MED_Y_CNT" : 3797,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1808,
+		"PCNT" : 1675,
+		"MED_Y_CNT" : 1808,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 353,
+		"PCNT" : 318,
+		"MED_Y_CNT" : 353,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 241,
+		"PCNT" : 225,
+		"MED_Y_CNT" : 241,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 223,
+		"PCNT" : 207,
+		"MED_Y_CNT" : 223,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 210,
+		"PCNT" : 190,
+		"MED_Y_CNT" : 210,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 211,
+		"PCNT" : 189,
+		"MED_Y_CNT" : 211,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 189,
+		"PCNT" : 172,
+		"MED_Y_CNT" : 189,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 174,
+		"PCNT" : 155,
+		"MED_Y_CNT" : 174,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 168,
+		"PCNT" : 153,
+		"MED_Y_CNT" : 168,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 157,
+		"PCNT" : 150,
+		"MED_Y_CNT" : 157,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 131,
+		"PCNT" : 120,
+		"MED_Y_CNT" : 131,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 116,
+		"PCNT" : 107,
+		"MED_Y_CNT" : 116,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 116,
+		"PCNT" : 106,
+		"MED_Y_CNT" : 116,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 89,
+		"PCNT" : 83,
+		"MED_Y_CNT" : 89,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 47,
+		"PCNT" : 46,
+		"MED_Y_CNT" : 47,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 48,
+		"PCNT" : 43,
+		"MED_Y_CNT" : 48,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 42,
+		"PCNT" : 39,
+		"MED_Y_CNT" : 42,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 13,
+		"PCNT" : 13,
+		"MED_Y_CNT" : 13,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "부산광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "서울강북구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "대구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "★★★★★★★★",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "대전광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-11",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3774,
+		"PCNT" : 3481,
+		"MED_Y_CNT" : 3774,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1734,
+		"PCNT" : 1569,
+		"MED_Y_CNT" : 1734,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 326,
+		"PCNT" : 285,
+		"MED_Y_CNT" : 326,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 259,
+		"PCNT" : 240,
+		"MED_Y_CNT" : 259,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 238,
+		"PCNT" : 219,
+		"MED_Y_CNT" : 238,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 240,
+		"PCNT" : 218,
+		"MED_Y_CNT" : 240,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 193,
+		"PCNT" : 173,
+		"MED_Y_CNT" : 193,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 170,
+		"PCNT" : 159,
+		"MED_Y_CNT" : 170,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 163,
+		"PCNT" : 153,
+		"MED_Y_CNT" : 163,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 171,
+		"PCNT" : 147,
+		"MED_Y_CNT" : 171,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 161,
+		"PCNT" : 141,
+		"MED_Y_CNT" : 161,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 143,
+		"PCNT" : 131,
+		"MED_Y_CNT" : 143,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 97,
+		"PCNT" : 93,
+		"MED_Y_CNT" : 97,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 101,
+		"PCNT" : 91,
+		"MED_Y_CNT" : 101,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 100,
+		"PCNT" : 91,
+		"MED_Y_CNT" : 100,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 60,
+		"PCNT" : 51,
+		"MED_Y_CNT" : 60,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 51,
+		"PCNT" : 46,
+		"MED_Y_CNT" : 51,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 45,
+		"PCNT" : 43,
+		"MED_Y_CNT" : 45,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 25,
+		"PCNT" : 24,
+		"MED_Y_CNT" : 25,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 5,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 5,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "★★★★★★★★",
+		"ROWCNT" : 5,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "부산광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "광주광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "대전광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "제주도",
+		"ROWCNT" : 2,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "대구광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "울산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "강북구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2020-12",
+		"SIDO_ADDR" : "대구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3937,
+		"PCNT" : 3619,
+		"MED_Y_CNT" : 3937,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1744,
+		"PCNT" : 1599,
+		"MED_Y_CNT" : 1744,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 334,
+		"PCNT" : 302,
+		"MED_Y_CNT" : 334,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 242,
+		"PCNT" : 222,
+		"MED_Y_CNT" : 242,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 232,
+		"PCNT" : 218,
+		"MED_Y_CNT" : 232,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 236,
+		"PCNT" : 217,
+		"MED_Y_CNT" : 236,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 234,
+		"PCNT" : 201,
+		"MED_Y_CNT" : 234,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 180,
+		"PCNT" : 158,
+		"MED_Y_CNT" : 180,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 155,
+		"PCNT" : 145,
+		"MED_Y_CNT" : 155,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 161,
+		"PCNT" : 145,
+		"MED_Y_CNT" : 161,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 157,
+		"PCNT" : 142,
+		"MED_Y_CNT" : 157,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 131,
+		"PCNT" : 115,
+		"MED_Y_CNT" : 131,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 124,
+		"PCNT" : 114,
+		"MED_Y_CNT" : 124,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 92,
+		"PCNT" : 83,
+		"MED_Y_CNT" : 92,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 90,
+		"PCNT" : 83,
+		"MED_Y_CNT" : 90,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 59,
+		"PCNT" : 56,
+		"MED_Y_CNT" : 59,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 56,
+		"PCNT" : 53,
+		"MED_Y_CNT" : 56,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 62,
+		"PCNT" : 53,
+		"MED_Y_CNT" : 62,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 28,
+		"PCNT" : 24,
+		"MED_Y_CNT" : 28,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 6,
+		"PCNT" : 6,
+		"MED_Y_CNT" : 6,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 7,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 7,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "대전광역",
+		"ROWCNT" : 4,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "제주",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "울산광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "울",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "대구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-01",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3283,
+		"PCNT" : 3057,
+		"MED_Y_CNT" : 3283,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1565,
+		"PCNT" : 1458,
+		"MED_Y_CNT" : 1565,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 301,
+		"PCNT" : 277,
+		"MED_Y_CNT" : 301,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 226,
+		"PCNT" : 201,
+		"MED_Y_CNT" : 226,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 196,
+		"PCNT" : 180,
+		"MED_Y_CNT" : 196,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 188,
+		"PCNT" : 175,
+		"MED_Y_CNT" : 188,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 160,
+		"PCNT" : 146,
+		"MED_Y_CNT" : 160,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 156,
+		"PCNT" : 143,
+		"MED_Y_CNT" : 156,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 145,
+		"PCNT" : 135,
+		"MED_Y_CNT" : 145,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 139,
+		"PCNT" : 129,
+		"MED_Y_CNT" : 139,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 133,
+		"PCNT" : 119,
+		"MED_Y_CNT" : 133,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 110,
+		"PCNT" : 105,
+		"MED_Y_CNT" : 110,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 111,
+		"PCNT" : 103,
+		"MED_Y_CNT" : 111,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 86,
+		"PCNT" : 80,
+		"MED_Y_CNT" : 86,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 80,
+		"PCNT" : 78,
+		"MED_Y_CNT" : 80,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 53,
+		"PCNT" : 49,
+		"MED_Y_CNT" : 53,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 39,
+		"PCNT" : 38,
+		"MED_Y_CNT" : 39,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 38,
+		"PCNT" : 33,
+		"MED_Y_CNT" : 38,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 16,
+		"PCNT" : 15,
+		"MED_Y_CNT" : 16,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 6,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 6,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 3,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "부산광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "서울강북구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "★★★★★★★★",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "광주광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-02",
+		"SIDO_ADDR" : "기",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3938,
+		"PCNT" : 3677,
+		"MED_Y_CNT" : 3938,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1865,
+		"PCNT" : 1723,
+		"MED_Y_CNT" : 1865,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 341,
+		"PCNT" : 307,
+		"MED_Y_CNT" : 341,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 265,
+		"PCNT" : 249,
+		"MED_Y_CNT" : 265,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 251,
+		"PCNT" : 219,
+		"MED_Y_CNT" : 251,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 232,
+		"PCNT" : 213,
+		"MED_Y_CNT" : 232,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 204,
+		"PCNT" : 186,
+		"MED_Y_CNT" : 204,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 175,
+		"PCNT" : 160,
+		"MED_Y_CNT" : 175,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 179,
+		"PCNT" : 159,
+		"MED_Y_CNT" : 179,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 160,
+		"PCNT" : 146,
+		"MED_Y_CNT" : 160,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 157,
+		"PCNT" : 145,
+		"MED_Y_CNT" : 157,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 135,
+		"PCNT" : 122,
+		"MED_Y_CNT" : 135,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 123,
+		"PCNT" : 113,
+		"MED_Y_CNT" : 123,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 117,
+		"PCNT" : 112,
+		"MED_Y_CNT" : 117,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 89,
+		"PCNT" : 84,
+		"MED_Y_CNT" : 89,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 85,
+		"PCNT" : 73,
+		"MED_Y_CNT" : 85,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 49,
+		"PCNT" : 44,
+		"MED_Y_CNT" : 49,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 45,
+		"PCNT" : 42,
+		"MED_Y_CNT" : 45,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 32,
+		"PCNT" : 32,
+		"MED_Y_CNT" : 32,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 10,
+		"PCNT" : 9,
+		"MED_Y_CNT" : 10,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "대구광역",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "부산광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "천",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "제주",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "울",
+		"ROWCNT" : 2,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : "대전광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-03",
+		"SIDO_ADDR" : null,
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3753,
+		"PCNT" : 3451,
+		"MED_Y_CNT" : 3753,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1734,
+		"PCNT" : 1596,
+		"MED_Y_CNT" : 1734,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 299,
+		"PCNT" : 278,
+		"MED_Y_CNT" : 299,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 240,
+		"PCNT" : 225,
+		"MED_Y_CNT" : 240,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 239,
+		"PCNT" : 221,
+		"MED_Y_CNT" : 239,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 219,
+		"PCNT" : 208,
+		"MED_Y_CNT" : 219,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 210,
+		"PCNT" : 195,
+		"MED_Y_CNT" : 210,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 179,
+		"PCNT" : 162,
+		"MED_Y_CNT" : 179,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 171,
+		"PCNT" : 159,
+		"MED_Y_CNT" : 171,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 161,
+		"PCNT" : 137,
+		"MED_Y_CNT" : 161,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 147,
+		"PCNT" : 136,
+		"MED_Y_CNT" : 147,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 122,
+		"PCNT" : 114,
+		"MED_Y_CNT" : 122,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 123,
+		"PCNT" : 114,
+		"MED_Y_CNT" : 123,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 90,
+		"PCNT" : 86,
+		"MED_Y_CNT" : 90,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 80,
+		"PCNT" : 75,
+		"MED_Y_CNT" : 80,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 80,
+		"PCNT" : 71,
+		"MED_Y_CNT" : 80,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 53,
+		"PCNT" : 51,
+		"MED_Y_CNT" : 53,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 51,
+		"PCNT" : 44,
+		"MED_Y_CNT" : 51,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 22,
+		"PCNT" : 20,
+		"MED_Y_CNT" : 22,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 7,
+		"PCNT" : 7,
+		"MED_Y_CNT" : 7,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 5,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 5,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "기",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "★★★★★★★★",
+		"ROWCNT" : 4,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "울산",
+		"ROWCNT" : 3,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : null,
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "광주광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-04",
+		"SIDO_ADDR" : "제주도",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3719,
+		"PCNT" : 3440,
+		"MED_Y_CNT" : 3719,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1635,
+		"PCNT" : 1494,
+		"MED_Y_CNT" : 1635,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 328,
+		"PCNT" : 298,
+		"MED_Y_CNT" : 328,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 231,
+		"PCNT" : 207,
+		"MED_Y_CNT" : 231,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 206,
+		"PCNT" : 186,
+		"MED_Y_CNT" : 206,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 192,
+		"PCNT" : 173,
+		"MED_Y_CNT" : 192,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 191,
+		"PCNT" : 168,
+		"MED_Y_CNT" : 191,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 183,
+		"PCNT" : 166,
+		"MED_Y_CNT" : 183,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 168,
+		"PCNT" : 154,
+		"MED_Y_CNT" : 168,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 171,
+		"PCNT" : 149,
+		"MED_Y_CNT" : 171,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 146,
+		"PCNT" : 135,
+		"MED_Y_CNT" : 146,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 141,
+		"PCNT" : 121,
+		"MED_Y_CNT" : 141,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 123,
+		"PCNT" : 118,
+		"MED_Y_CNT" : 123,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 106,
+		"PCNT" : 96,
+		"MED_Y_CNT" : 106,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 91,
+		"PCNT" : 82,
+		"MED_Y_CNT" : 91,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 75,
+		"PCNT" : 68,
+		"MED_Y_CNT" : 75,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 51,
+		"PCNT" : 48,
+		"MED_Y_CNT" : 51,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 36,
+		"PCNT" : 31,
+		"MED_Y_CNT" : 36,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 17,
+		"PCNT" : 15,
+		"MED_Y_CNT" : 17,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 7,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 7,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : null,
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "제주도",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "광주광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "울산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "울",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "서울시",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "대전광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "기",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-05",
+		"SIDO_ADDR" : "대구광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3813,
+		"PCNT" : 3531,
+		"MED_Y_CNT" : 3813,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1774,
+		"PCNT" : 1634,
+		"MED_Y_CNT" : 1774,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 303,
+		"PCNT" : 279,
+		"MED_Y_CNT" : 303,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 262,
+		"PCNT" : 247,
+		"MED_Y_CNT" : 262,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 242,
+		"PCNT" : 225,
+		"MED_Y_CNT" : 242,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 209,
+		"PCNT" : 190,
+		"MED_Y_CNT" : 209,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 210,
+		"PCNT" : 188,
+		"MED_Y_CNT" : 210,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 195,
+		"PCNT" : 180,
+		"MED_Y_CNT" : 195,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 176,
+		"PCNT" : 160,
+		"MED_Y_CNT" : 176,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 167,
+		"PCNT" : 145,
+		"MED_Y_CNT" : 167,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 147,
+		"PCNT" : 138,
+		"MED_Y_CNT" : 147,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 144,
+		"PCNT" : 127,
+		"MED_Y_CNT" : 144,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 131,
+		"PCNT" : 122,
+		"MED_Y_CNT" : 131,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 97,
+		"PCNT" : 87,
+		"MED_Y_CNT" : 97,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 93,
+		"PCNT" : 85,
+		"MED_Y_CNT" : 93,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 70,
+		"PCNT" : 64,
+		"MED_Y_CNT" : 70,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 68,
+		"PCNT" : 62,
+		"MED_Y_CNT" : 68,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 40,
+		"PCNT" : 35,
+		"MED_Y_CNT" : 40,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 25,
+		"PCNT" : 24,
+		"MED_Y_CNT" : 25,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 4,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "제주도",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "울산",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "제주",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "부산광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "대구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "★★★★★★★★",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "대구광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : null,
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-06",
+		"SIDO_ADDR" : "광주광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3783,
+		"PCNT" : 3502,
+		"MED_Y_CNT" : 3783,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1750,
+		"PCNT" : 1612,
+		"MED_Y_CNT" : 1750,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 330,
+		"PCNT" : 306,
+		"MED_Y_CNT" : 330,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 269,
+		"PCNT" : 238,
+		"MED_Y_CNT" : 269,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 225,
+		"PCNT" : 204,
+		"MED_Y_CNT" : 225,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 213,
+		"PCNT" : 196,
+		"MED_Y_CNT" : 213,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 195,
+		"PCNT" : 176,
+		"MED_Y_CNT" : 195,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 188,
+		"PCNT" : 173,
+		"MED_Y_CNT" : 188,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 181,
+		"PCNT" : 167,
+		"MED_Y_CNT" : 181,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 168,
+		"PCNT" : 150,
+		"MED_Y_CNT" : 168,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 170,
+		"PCNT" : 150,
+		"MED_Y_CNT" : 170,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 150,
+		"PCNT" : 133,
+		"MED_Y_CNT" : 150,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 126,
+		"PCNT" : 119,
+		"MED_Y_CNT" : 126,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 118,
+		"PCNT" : 114,
+		"MED_Y_CNT" : 118,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 101,
+		"PCNT" : 92,
+		"MED_Y_CNT" : 101,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 62,
+		"PCNT" : 56,
+		"MED_Y_CNT" : 62,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 57,
+		"PCNT" : 54,
+		"MED_Y_CNT" : 57,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 57,
+		"PCNT" : 49,
+		"MED_Y_CNT" : 57,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 18,
+		"PCNT" : 16,
+		"MED_Y_CNT" : 18,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 5,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "광주광역",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : null,
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "★★★★★★★★",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "부산광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "대구광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "대전광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "울산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-07",
+		"SIDO_ADDR" : "서울강북구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3917,
+		"PCNT" : 3632,
+		"MED_Y_CNT" : 3917,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1783,
+		"PCNT" : 1634,
+		"MED_Y_CNT" : 1783,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 340,
+		"PCNT" : 320,
+		"MED_Y_CNT" : 340,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 290,
+		"PCNT" : 267,
+		"MED_Y_CNT" : 290,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 252,
+		"PCNT" : 232,
+		"MED_Y_CNT" : 252,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 235,
+		"PCNT" : 223,
+		"MED_Y_CNT" : 235,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 230,
+		"PCNT" : 207,
+		"MED_Y_CNT" : 230,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 204,
+		"PCNT" : 190,
+		"MED_Y_CNT" : 204,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 192,
+		"PCNT" : 174,
+		"MED_Y_CNT" : 192,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 180,
+		"PCNT" : 162,
+		"MED_Y_CNT" : 180,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 170,
+		"PCNT" : 156,
+		"MED_Y_CNT" : 170,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 162,
+		"PCNT" : 146,
+		"MED_Y_CNT" : 162,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 117,
+		"PCNT" : 109,
+		"MED_Y_CNT" : 117,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 121,
+		"PCNT" : 108,
+		"MED_Y_CNT" : 121,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 88,
+		"PCNT" : 80,
+		"MED_Y_CNT" : 88,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 77,
+		"PCNT" : 75,
+		"MED_Y_CNT" : 77,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 83,
+		"PCNT" : 69,
+		"MED_Y_CNT" : 83,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 46,
+		"PCNT" : 42,
+		"MED_Y_CNT" : 46,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 30,
+		"PCNT" : 28,
+		"MED_Y_CNT" : 30,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 7,
+		"PCNT" : 6,
+		"MED_Y_CNT" : 7,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 4,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "제주도",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "대구광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "대구",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "제주",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : null,
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "★★★★★★★★",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "서울강북구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "광주광역",
+		"ROWCNT" : 2,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "서울시",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "대전광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "부산광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-08",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3659,
+		"PCNT" : 3401,
+		"MED_Y_CNT" : 3659,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1558,
+		"PCNT" : 1421,
+		"MED_Y_CNT" : 1558,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 333,
+		"PCNT" : 309,
+		"MED_Y_CNT" : 333,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 268,
+		"PCNT" : 245,
+		"MED_Y_CNT" : 268,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 226,
+		"PCNT" : 208,
+		"MED_Y_CNT" : 226,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 188,
+		"PCNT" : 173,
+		"MED_Y_CNT" : 188,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 185,
+		"PCNT" : 171,
+		"MED_Y_CNT" : 185,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 177,
+		"PCNT" : 163,
+		"MED_Y_CNT" : 177,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 159,
+		"PCNT" : 146,
+		"MED_Y_CNT" : 159,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 155,
+		"PCNT" : 143,
+		"MED_Y_CNT" : 155,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 157,
+		"PCNT" : 140,
+		"MED_Y_CNT" : 157,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 129,
+		"PCNT" : 115,
+		"MED_Y_CNT" : 129,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 96,
+		"PCNT" : 88,
+		"MED_Y_CNT" : 96,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 82,
+		"PCNT" : 79,
+		"MED_Y_CNT" : 82,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 80,
+		"PCNT" : 75,
+		"MED_Y_CNT" : 80,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 69,
+		"PCNT" : 60,
+		"MED_Y_CNT" : 69,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 46,
+		"PCNT" : 43,
+		"MED_Y_CNT" : 46,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 36,
+		"PCNT" : 32,
+		"MED_Y_CNT" : 36,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 23,
+		"PCNT" : 23,
+		"MED_Y_CNT" : 23,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "대전광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "대구광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "대구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "울",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "부산광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : null,
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "제주도",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "경북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-09",
+		"SIDO_ADDR" : "제주",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "서울특별시",
+		"ROWCNT" : 3585,
+		"PCNT" : 3328,
+		"MED_Y_CNT" : 3585,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "경기도",
+		"ROWCNT" : 1589,
+		"PCNT" : 1448,
+		"MED_Y_CNT" : 1589,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "인천광역시",
+		"ROWCNT" : 282,
+		"PCNT" : 266,
+		"MED_Y_CNT" : 282,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "충청남도",
+		"ROWCNT" : 231,
+		"PCNT" : 212,
+		"MED_Y_CNT" : 231,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "경상북도",
+		"ROWCNT" : 213,
+		"PCNT" : 194,
+		"MED_Y_CNT" : 213,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "부산광역시",
+		"ROWCNT" : 185,
+		"PCNT" : 166,
+		"MED_Y_CNT" : 185,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "강원도",
+		"ROWCNT" : 178,
+		"PCNT" : 162,
+		"MED_Y_CNT" : 178,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "경상남도",
+		"ROWCNT" : 178,
+		"PCNT" : 159,
+		"MED_Y_CNT" : 178,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "충청북도",
+		"ROWCNT" : 163,
+		"PCNT" : 154,
+		"MED_Y_CNT" : 163,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "전라남도",
+		"ROWCNT" : 163,
+		"PCNT" : 152,
+		"MED_Y_CNT" : 163,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "전라북도",
+		"ROWCNT" : 156,
+		"PCNT" : 138,
+		"MED_Y_CNT" : 156,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "대구광역시",
+		"ROWCNT" : 109,
+		"PCNT" : 98,
+		"MED_Y_CNT" : 109,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "대전광역시",
+		"ROWCNT" : 112,
+		"PCNT" : 98,
+		"MED_Y_CNT" : 112,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "광주광역시",
+		"ROWCNT" : 108,
+		"PCNT" : 95,
+		"MED_Y_CNT" : 108,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "울산광역시",
+		"ROWCNT" : 87,
+		"PCNT" : 80,
+		"MED_Y_CNT" : 87,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "서울",
+		"ROWCNT" : 73,
+		"PCNT" : 72,
+		"MED_Y_CNT" : 73,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "제주특별자치도",
+		"ROWCNT" : 68,
+		"PCNT" : 64,
+		"MED_Y_CNT" : 68,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "세종특별자치시",
+		"ROWCNT" : 28,
+		"PCNT" : 26,
+		"MED_Y_CNT" : 28,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "경기",
+		"ROWCNT" : 17,
+		"PCNT" : 17,
+		"MED_Y_CNT" : 17,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "인천",
+		"ROWCNT" : 9,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 9,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "충남",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "충북",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "인천광역",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "★★★★★★★★",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "광주",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "전남",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "강원",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "전북",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "원",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : null,
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "경남",
+		"ROWCNT" : 2,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "대전",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "대구",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "울",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "제주도",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "부산",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"DATE" : "2021-10",
+		"SIDO_ADDR" : "부산광역",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	}
+]}

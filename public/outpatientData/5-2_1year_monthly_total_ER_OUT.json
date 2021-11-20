@@ -1,0 +1,123 @@
+{
+"-- MONTHLY OUTPATIENT VISIT \r\n-- 2. monthly total \r\n-- 5_1year_monthly_total\r\nSELECT TO_CHAR(MED_DT, 'YYYY-MM') MONTH\r\n\t, COUNT(*) ROWCNT\r\n\t, COUNT(DISTINCT PT_NO) PCNT\r\n\t, COUNT(CASE WHEN MED_YN = 'Y' THEN 1 END ) MED_Y_CNT -- 진료여부 Y 만..?\r\n\t, COUNT(CASE WHEN MED_YN = 'N' THEN 1 END ) MED_N_CNT -- 진료여부 N 만..?\r\n\t, ROUND(COUNT(CASE WHEN MED_YN != 'Y' THEN 1 END ) \/COUNT(*) * 100, 2) MED_N_RATE\r\n\t, COUNT(CASE WHEN PACT_TP_NM = '응급' THEN 1 END) ER_COUNT \r\n\t, COUNT(DISTINCT (CASE WHEN PACT_TP_NM = '외래' THEN PT_NO END)) OUT_COUNT \r\nFROM FT_STM_VIST\r\nWHERE 1=1\r\n-- 방문일 설정: 2021년 7월 환자\r\nAND MED_DT BETWEEN to_Date('2020-11', 'YYYY-MM') AND TO_DATE('2021-10-31', 'YYYY-MM-DD')\r\n-- 외래, 입원, 응급\r\nAND PACT_TP_NM IN ('외래', '응급')\r\nGROUP BY TO_CHAR(MED_DT, 'YYYY-MM')\r\nORDER BY 1, 2\r\n": [
+	{
+		"MONTH" : "2020-11",
+		"ROWCNT" : 395356,
+		"PCNT" : 164733,
+		"MED_Y_CNT" : 219726,
+		"MED_N_CNT" : 175621,
+		"MED_N_RATE" : 44.42,
+		"ER_COUNT" : 4353,
+		"OUT_COUNT" : 164633
+	},
+	{
+		"MONTH" : "2020-12",
+		"ROWCNT" : 407115,
+		"PCNT" : 164091,
+		"MED_Y_CNT" : 226953,
+		"MED_N_CNT" : 180149,
+		"MED_N_RATE" : 44.25,
+		"ER_COUNT" : 3421,
+		"OUT_COUNT" : 164021
+	},
+	{
+		"MONTH" : "2021-01",
+		"ROWCNT" : 379737,
+		"PCNT" : 157537,
+		"MED_Y_CNT" : 208623,
+		"MED_N_CNT" : 171098,
+		"MED_N_RATE" : 45.06,
+		"ER_COUNT" : 3399,
+		"OUT_COUNT" : 157433
+	},
+	{
+		"MONTH" : "2021-02",
+		"ROWCNT" : 351527,
+		"PCNT" : 150301,
+		"MED_Y_CNT" : 197492,
+		"MED_N_CNT" : 154004,
+		"MED_N_RATE" : 43.81,
+		"ER_COUNT" : 3646,
+		"OUT_COUNT" : 150209
+	},
+	{
+		"MONTH" : "2021-03",
+		"ROWCNT" : 413486,
+		"PCNT" : 168347,
+		"MED_Y_CNT" : 232363,
+		"MED_N_CNT" : 181113,
+		"MED_N_RATE" : 43.8,
+		"ER_COUNT" : 3213,
+		"OUT_COUNT" : 168276
+	},
+	{
+		"MONTH" : "2021-04",
+		"ROWCNT" : 408346,
+		"PCNT" : 166078,
+		"MED_Y_CNT" : 228744,
+		"MED_N_CNT" : 179594,
+		"MED_N_RATE" : 43.98,
+		"ER_COUNT" : 3922,
+		"OUT_COUNT" : 165994
+	},
+	{
+		"MONTH" : "2021-05",
+		"ROWCNT" : 371754,
+		"PCNT" : 155604,
+		"MED_Y_CNT" : 206080,
+		"MED_N_CNT" : 165668,
+		"MED_N_RATE" : 44.56,
+		"ER_COUNT" : 4182,
+		"OUT_COUNT" : 155512
+	},
+	{
+		"MONTH" : "2021-06",
+		"ROWCNT" : 419151,
+		"PCNT" : 171338,
+		"MED_Y_CNT" : 234328,
+		"MED_N_CNT" : 184812,
+		"MED_N_RATE" : 44.09,
+		"ER_COUNT" : 4606,
+		"OUT_COUNT" : 171273
+	},
+	{
+		"MONTH" : "2021-07",
+		"ROWCNT" : 421533,
+		"PCNT" : 171703,
+		"MED_Y_CNT" : 233069,
+		"MED_N_CNT" : 188452,
+		"MED_N_RATE" : 44.71,
+		"ER_COUNT" : 4338,
+		"OUT_COUNT" : 171622
+	},
+	{
+		"MONTH" : "2021-08",
+		"ROWCNT" : 419935,
+		"PCNT" : 172340,
+		"MED_Y_CNT" : 232793,
+		"MED_N_CNT" : 187137,
+		"MED_N_RATE" : 44.56,
+		"ER_COUNT" : 4563,
+		"OUT_COUNT" : 172249
+	},
+	{
+		"MONTH" : "2021-09",
+		"ROWCNT" : 391433,
+		"PCNT" : 162938,
+		"MED_Y_CNT" : 217987,
+		"MED_N_CNT" : 173115,
+		"MED_N_RATE" : 44.23,
+		"ER_COUNT" : 4918,
+		"OUT_COUNT" : 162829
+	},
+	{
+		"MONTH" : "2021-10",
+		"ROWCNT" : 400022,
+		"PCNT" : 167671,
+		"MED_Y_CNT" : 216312,
+		"MED_N_CNT" : 183591,
+		"MED_N_RATE" : 45.9,
+		"ER_COUNT" : 4769,
+		"OUT_COUNT" : 167563
+	}
+]}

@@ -41,9 +41,9 @@ const GenderAgeDivergingChart = (props) => {
         return 'translate(' + x + ',' + y + ')'
     }
 
-    if (dataloc.includes('OUT')) {
+    if (dataloc.includes('OUT') | dataloc.includes('IN')) {
         var w = 950
-        var h = 600
+        var h = 500
     } else {
         //console.log('AGE/JSON?', data)
         var w = 900
@@ -226,6 +226,7 @@ const GenderAgeDivergingChart = (props) => {
         let data = getDatas[dateCtrl].slice(0, -1).sort((a, b) => {
             return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
         })
+        console.log('getData??', getDatas, 'data', data)
 
         var maxValue = Math.max(
             d3.max(data, (d) => d.male),
