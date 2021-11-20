@@ -89,11 +89,12 @@ export const sampleData = {
     },
     circleCharData: {
         data1: [
-            { nation: 'Korean', value: 2540 },
-            { nation: 'Chinese', value: 360 },
-            { nation: 'Japanese', value: 250 },
-            { nation: 'American', value: 230 },
-            { nation: 'Others', value: 610 },
+            { nation: 'Origin', value: 0, parent: '', Origin: '' },
+            { nation: 'Korean', value: 2540, parent: 'Origin', Origin: '' },
+            { nation: 'Chinese', value: 360, parent: 'Origin', Origin: '' },
+            { nation: 'Japanese', value: 250, parent: 'Origin', Origin: '' },
+            { nation: 'American', value: 230, parent: 'Origin', Origin: '' },
+            { nation: 'Others', value: 610, parent: 'Origin', Origin: '' },
         ],
         data2: [
             { nation: 'Korean', value: 7340 },

@@ -16,6 +16,7 @@ import {
 import moment from 'moment'
 import Box from '@mui/material/Box'
 import { IOSSlider } from './style/buttonStyle'
+import Treemap from './chart/Treemap'
 
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
@@ -106,6 +107,7 @@ const ChildrenView = (props) => {
                             dataloc={childrenDisesasehCartData}
                             dateCtrl={selectData}
                         />
+                        <Treemap />
                     </BoxStyle>
                     <BoxStyle>
                         <MonthlyBarChart
