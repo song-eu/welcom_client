@@ -181,7 +181,7 @@ const RankHorizonBarChart = (props) => {
             .style('padding-right', '12px')
             .style('padding-left', '12px')
             //.style('background', 'rgba(0, 0, 0, 0.8)')
-            .style('color', 'Black')
+            .style('color', '#fff')
             .html((d) => {
                 //console.log(d)
                 return (

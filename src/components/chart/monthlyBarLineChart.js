@@ -239,6 +239,7 @@ const MonthlyBarLineChart = (props) => {
     return (
         <MonthlyBarChartStyle width={width}>
             <h1>{header}</h1>
+            <div id="barMiddleLine"></div>
             <div id="barchart" ref={svgRef}></div>
         </MonthlyBarChartStyle>
     )

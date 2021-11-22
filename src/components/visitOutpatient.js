@@ -202,6 +202,7 @@ const VisitOutpatient = (props) => {
                                     className="numberAll"
                                     align="right"
                                     fontWeight="700"
+                                    color="rgba(25, 16, 45, 0.9)"
                                 >
                                     0
                                 </Typography>
@@ -226,6 +227,7 @@ const VisitOutpatient = (props) => {
                                     className="numberHQ"
                                     align="right"
                                     fontWeight="700"
+                                    color="rgba(25, 16, 45, 0.9)"
                                 >
                                     0
                                 </Typography>
@@ -250,6 +252,7 @@ const VisitOutpatient = (props) => {
                                     className="numberCH"
                                     align="right"
                                     fontWeight="700"
+                                    color="rgba(25, 16, 45, 0.9)"
                                 >
                                     0
                                 </Typography>
@@ -274,6 +277,7 @@ const VisitOutpatient = (props) => {
                                     className="numberCC"
                                     align="right"
                                     fontWeight="700"
+                                    color="rgba(25, 16, 45, 0.9)"
                                 >
                                     0
                                 </Typography>
@@ -298,6 +302,7 @@ const VisitOutpatient = (props) => {
                                     className="numberKN"
                                     align="right"
                                     fontWeight="700"
+                                    color="rgba(25, 16, 45, 0.9)"
                                 >
                                     0
                                 </Typography>

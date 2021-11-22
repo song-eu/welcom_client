@@ -408,6 +408,7 @@ const GenderAgeDivergingChart = (props) => {
     return (
         <GenderDivergingBarChartSytle>
             <h1>{header}</h1>
+            <div id="gendermiddleline"></div>
             <div id="negBarChart" ref={svgRef}></div>
         </GenderDivergingBarChartSytle>
     )

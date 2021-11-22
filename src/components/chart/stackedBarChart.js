@@ -255,7 +255,7 @@ const StackedBarChart = (props) => {
             })
             .attr('transform', (d, i) => {
                 var x = legendItemSize + xOffset
-                var y = (legendItemSize + legendSpacing) * i
+                var y = (legendItemSize + legendSpacing) * i + 20
                 return `translate(${x}, ${y})`
             })
 
@@ -265,7 +265,7 @@ const StackedBarChart = (props) => {
             .style('text-anchor', 'start')
             .style('fill', '#fff')
             .attr('x', xOffset + legendItemSize + 20)
-            .attr('y', (d, i) => (legendItemSize + legendSpacing) * i + 15)
+            .attr('y', (d, i) => (legendItemSize + legendSpacing) * i + 15 + 17)
             .text(function (d, i) {
                 return col[i]
             })
@@ -274,6 +274,7 @@ const StackedBarChart = (props) => {
     return (
         <StackChartStyle>
             <h1>{props.header}</h1>
+            <div id="stackBarMonth"></div>
             <div id="barchartbody">
                 <div id="stackBarchart" ref={svgRef}></div>
                 <div id="legendStack"></div>

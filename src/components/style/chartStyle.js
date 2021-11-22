@@ -14,6 +14,15 @@ export const MonthlyBarChartStyle = styled.div`
         margin-bottom: 7px;
         text-align: center;
     }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & #barMiddleLine {
+        margin-top: 5px;
+        margin-left: 25px;
+        width: 95%;
+        border-top: 1px solid grey;
+    }
 `
 
 export const HorizonBarChartSytle = styled.div`
@@ -32,6 +41,15 @@ export const HorizonBarChartSytle = styled.div`
         margin-top: 7px;
         margin-bottom: 7px;
         text-align: center;
+    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & #hbarchartLine {
+        margin-top: 5px;
+        width: 95%;
+        border-top: 1px solid grey;
     }
 `
 
@@ -103,20 +121,36 @@ export const StackChartStyle = styled.div`
         display: flex;
         flex-direction: row;
     }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & #stackBarMonth {
+        margin-top: 5px;
+        width: 95%;
+        border-top: 1px solid grey;
+    }
 `
 
 export const MapBubbleChartStyle = styled.div`
+    display: flex;
+    flex-direction: column;
     box-sizing: content-box;
     background: #2f1e56;
     border-radius: 50px;
     box-shadow: 5px 5px 5px #000;
     // border: 1px solid tomato;
+    align-items: center;
     & h1 {
         --position: relative;
         font-size: 24px;
         margin-top: 7px;
         margin-bottom: 7px;
         text-align: center;
+    }
+    & #mapLine {
+        margin-top: 5px;
+        width: 95%;
+        border-top: 1px solid grey;
     }
 `
 
@@ -131,5 +165,15 @@ export const GenderDivergingBarChartSytle = styled.div`
         margin-top: 7px;
         margin-bottom: 7px;
         text-align: center;
+    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & #gendermiddleline {
+        margin-top: 5px;
+        margin-let: 25px;
+        width: 96%;
+        border-top: 1px solid grey;
     }
 `

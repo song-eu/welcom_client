@@ -17,7 +17,7 @@ const DeptHorizonBarChart = (props) => {
     const { header, dateCtrl, dataloc, dataloc2 } = props
     const svgRef = useRef()
 
-    var margin = { top: 20, right: 100, bottom: 30, left: 80 },
+    var margin = { top: 25, right: 100, bottom: 30, left: 80 },
         width = 800 - margin.left - margin.right,
         height = 700 - margin.top - margin.bottom
 
@@ -215,7 +215,7 @@ const DeptHorizonBarChart = (props) => {
             .tip()
             .attr('id', 'depToolTip')
             .attr('class', 'depToolTip')
-            .style('padding-top', '9px')
+            .style('padding-top', '0px')
             .style('padding-right', '12px')
             .style('padding-left', '12px')
             //.style('background', 'rgba(0, 0, 0, 0.8)')
@@ -269,6 +269,7 @@ const DeptHorizonBarChart = (props) => {
     return (
         <HorizonBarChartSytle>
             <h1>{header}</h1>
+            <div id="hbarchartLine"></div>
             <div id="hbarchart" ref={svgRef}></div>
         </HorizonBarChartSytle>
     )
