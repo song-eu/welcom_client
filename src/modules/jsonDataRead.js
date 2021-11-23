@@ -94,21 +94,34 @@ const jsonToData = (dataloc, geojson) => {
                 // console.log('d???', d)
                 // { group: '0-9', male: 240, female: 154 }
                 let tempFlag = false
-
-                if (result[d.DATE]) {
-                    for (let i = 0; i < result[d.DATE].length; i++) {
-                        // console.log('d???', result[d.DATE][i], d)
-                        if (result[d.DATE][i].group === d.AGE_GROUP) {
-                            // console.log('d???', d)
-                            tempFlag = true
-                            if (d.SEX_TP_CD === 'F') {
-                                result[d.DATE][i]['female'] = parseInt(d.PCNT)
-                            } else {
-                                result[d.DATE][i]['male'] = parseInt(d.PCNT)
+                if (d.AGE_GROUP !== 'OVER 100') {
+                    if (result[d.DATE]) {
+                        for (let i = 0; i < result[d.DATE].length; i++) {
+                            // console.log('d???', result[d.DATE][i], d)
+                            if (result[d.DATE][i].group === d.AGE_GROUP) {
+                                // console.log('d???', d)
+                                tempFlag = true
+                                if (d.SEX_TP_CD === 'F') {
+                                    result[d.DATE][i]['female'] = parseInt(
+                                        d.PCNT
+                                    )
+                                } else {
+                                    result[d.DATE][i]['male'] = parseInt(d.PCNT)
+                                }
                             }
                         }
-                    }
-                    if (!tempFlag) {
+                        if (!tempFlag) {
+                            let obj = {}
+                            obj['group'] = d.AGE_GROUP
+                            if (d.SEX_TP_CD === 'F') {
+                                obj['female'] = parseInt(d.PCNT)
+                            } else {
+                                obj['male'] = parseInt(d.PCNT)
+                            }
+                            result[d.DATE].push(obj)
+                        }
+                    } else {
+                        result[d.DATE] = []
                         let obj = {}
                         obj['group'] = d.AGE_GROUP
                         if (d.SEX_TP_CD === 'F') {
@@ -116,19 +129,9 @@ const jsonToData = (dataloc, geojson) => {
                         } else {
                             obj['male'] = parseInt(d.PCNT)
                         }
+
                         result[d.DATE].push(obj)
                     }
-                } else {
-                    result[d.DATE] = []
-                    let obj = {}
-                    obj['group'] = d.AGE_GROUP
-                    if (d.SEX_TP_CD === 'F') {
-                        obj['female'] = parseInt(d.PCNT)
-                    } else {
-                        obj['male'] = parseInt(d.PCNT)
-                    }
-
-                    result[d.DATE].push(obj)
                 }
             } else if (d.SIDO_ADDR) {
                 // console.log('sidodata?', d)

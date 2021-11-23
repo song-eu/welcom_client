@@ -17,6 +17,9 @@ import moment from 'moment'
 import Box from '@mui/material/Box'
 import { IOSSlider } from './style/buttonStyle'
 import Treemap from './chart/Treemap'
+import Card from '@mui/material/Card'
+import { CardContent } from '@mui/material'
+import Typography from '@mui/material/Typography'
 
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
@@ -79,6 +82,135 @@ const ChildrenView = (props) => {
     return (
         <BigBox>
             <div>
+                <ButtonRow>
+                    <CountButton>
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="#fff"
+                                >
+                                    어린이병원 전체
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberAll"
+                                    align="right"
+                                    fontWeight="700"
+                                    color="#fff"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </CountButton>
+                    <CountButton>
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="#fff"
+                                >
+                                    이번달 어린이병원 방문
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberAll"
+                                    align="right"
+                                    fontWeight="700"
+                                    color="#fff"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </CountButton>
+                    <CountButton>
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                maxHeight: 135,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="#fff"
+                                >
+                                    어린이병원 전체 <br />
+                                    희귀질환 환자 수
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberAll"
+                                    align="right"
+                                    fontWeight="700"
+                                    color="#fff"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </CountButton>
+                    <CountButton>
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
+                            <CardContent>
+                                <Typography
+                                    variant="h5"
+                                    component="div"
+                                    color="#fff"
+                                >
+                                    이번달 희귀질환 환자 방문
+                                </Typography>
+                                <Typography variant="body1">
+                                    <br />
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    className="numberAll"
+                                    align="right"
+                                    fontWeight="700"
+                                    color="#fff"
+                                >
+                                    0
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </CountButton>
+                </ButtonRow>
                 <ButtonRow>
                     <Box
                         sx={{

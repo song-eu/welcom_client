@@ -48,14 +48,14 @@ const Treemap = (props) => {
     const dataloc = dataLocation + '/monthly_dgns_order_by_hsp_pcnt.json'
 
     const margin = { top: 10, right: 10, bottom: 10, left: 10 },
-        width = 1200 - margin.left - margin.right,
+        width = 1300 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom
 
     useEffect(async () => {
         // const dataset = sampleData.circleCharData.data1
 
         const getdata = await jsonToData(dataloc)
-        const dataset = getdata[dateCtrl][pageInfo].slice(0, 15)
+        const dataset = getdata[dateCtrl][pageInfo]
         console.log('treemap get data', dataset)
         var colors = []
         let colorBar = [
@@ -159,7 +159,7 @@ const Treemap = (props) => {
             .attr('x', (d) => d.x0 + 10)
             .attr('y', (d) => d.y0 + 20)
             .text((d) => d.data.name)
-            .attr('font-size', '15px')
+            .attr('font-size', '25px')
             .attr('fill', 'black')
     }, [dateCtrl])
 

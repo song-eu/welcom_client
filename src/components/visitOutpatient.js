@@ -44,7 +44,7 @@ const VisitOutpatient = (props) => {
     const outPatientGenderChart = `Outpatient Visit by Age & Gender in ${thisMonth}`
     const outPatientPersonMap = `Outpatient Visit by Location in ${thisMonth}`
     const outPatientPieChart = 'Outpatient Visit by Nation'
-    const outPatientTreemapHeader = `Outpatient Top 25 Dignose in ${thisMonth}`
+    const outPatientTreemapHeader = `Outpatient Top 30 Dignosis in ${thisMonth}`
 
     const dataLocation = '/outpatientData'
     const outBarchartData = dataLocation + '/1_1year_total_by_hospital.csv'
