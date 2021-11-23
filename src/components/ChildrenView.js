@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { Link } from 'react-router-dom'
-
+import * as d3 from 'd3'
 import axios from 'axios'
 import RankHorizonBarChart from './chart/RankHorizonBarChart'
 import MonthlyBarChart from './chart/monthlyBarChart'
@@ -79,6 +79,79 @@ const ChildrenView = (props) => {
         return `${sliderMark[11 - value].label}`
     }
 
+    var format = d3.format(',d')
+    const number = {
+        all: 736803,
+        allTM: 502859,
+        rdAll: 172677,
+        rdTM: 24267,
+    }
+    useEffect(() => {
+        let numAll = d3
+            .select('.numberAll')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numAll
+            .datum(number.all)
+            .transition()
+            .duration(1500)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numTM = d3
+            .select('.numberThisMonth')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numTM
+            .datum(number.allTM)
+            .transition()
+            .duration(1500)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numRDAll = d3
+            .select('.numberRDAll')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numRDAll
+            .datum(number.rdAll)
+            .transition()
+            .duration(1500)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+
+        let numRD = d3
+            .select('.numberRDThismonth')
+            .attr('text-anchor', 'middle')
+            .attr('dy', '.3em')
+        numRD
+            .datum(number.rdTM)
+            .transition()
+            .duration(1500)
+            .textTween((d) => {
+                const i = d3.interpolate(0, d)
+                return function (t) {
+                    return format(i(t))
+                }
+            })
+            .delay(500)
+    })
+
     return (
         <BigBox>
             <div>
@@ -88,7 +161,7 @@ const ChildrenView = (props) => {
                             sx={{
                                 minWidth: 275,
                                 background:
-                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
                             }}
                             variant="outlined"
                         >
@@ -120,7 +193,7 @@ const ChildrenView = (props) => {
                             sx={{
                                 minWidth: 275,
                                 background:
-                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
                             }}
                             variant="outlined"
                         >
@@ -137,7 +210,7 @@ const ChildrenView = (props) => {
                                 </Typography>
                                 <Typography
                                     variant="h4"
-                                    className="numberAll"
+                                    className="numberThisMonth"
                                     align="right"
                                     fontWeight="700"
                                     color="#fff"
@@ -153,7 +226,7 @@ const ChildrenView = (props) => {
                                 minWidth: 275,
                                 maxHeight: 135,
                                 background:
-                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
                             }}
                             variant="outlined"
                         >
@@ -168,7 +241,7 @@ const ChildrenView = (props) => {
                                 </Typography>
                                 <Typography
                                     variant="h4"
-                                    className="numberAll"
+                                    className="numberRDAll"
                                     align="right"
                                     fontWeight="700"
                                     color="#fff"
@@ -183,7 +256,7 @@ const ChildrenView = (props) => {
                             sx={{
                                 minWidth: 275,
                                 background:
-                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
                             }}
                             variant="outlined"
                         >
@@ -200,7 +273,7 @@ const ChildrenView = (props) => {
                                 </Typography>
                                 <Typography
                                     variant="h4"
-                                    className="numberAll"
+                                    className="numberRDThismonth"
                                     align="right"
                                     fontWeight="700"
                                     color="#fff"
