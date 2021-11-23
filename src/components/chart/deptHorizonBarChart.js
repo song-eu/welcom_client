@@ -17,9 +17,9 @@ const DeptHorizonBarChart = (props) => {
     const { header, dateCtrl, dataloc, dataloc2 } = props
     const svgRef = useRef()
 
-    var margin = { top: 25, right: 100, bottom: 30, left: 80 },
-        width = 800 - margin.left - margin.right,
-        height = 700 - margin.top - margin.bottom
+    var margin = { top: 25, right: 100, bottom: 5, left: 80 },
+        width = 850 - margin.left - margin.right,
+        height = 640 - margin.top - margin.bottom
 
     var y = d3.scaleBand().range([height, 0]).padding(0.1)
 

@@ -269,7 +269,7 @@ export const CountButton = styled.div`
 `
 export const BackgroundAll = styled.div`
     background: rgba(25, 16, 45, 0.9);
-    border: 2px solid tomato;
+    // border: 2px solid tomato;
     color: white;
 `
 export const BigBox = styled.div`

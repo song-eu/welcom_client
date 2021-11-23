@@ -19,7 +19,7 @@ const RankHorizonBarChart = (props) => {
 
     var margin = { top: 20, right: 100, bottom: 30, left: 80 },
         width = 1000 - margin.left - margin.right,
-        height = 1500 - margin.top - margin.bottom
+        height = 1450 - margin.top - margin.bottom
     var thisMonth = moment().subtract(1, 'month').format('YYYY-MM')
 
     var y = d3.scaleBand().range([height, 0]).padding(0.1)

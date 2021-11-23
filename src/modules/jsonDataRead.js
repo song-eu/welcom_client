@@ -21,7 +21,46 @@ const jsonToData = (dataloc, geojson) => {
 
         // { name: '신경외과', value: 336 },
         base.forEach((d, i) => {
-            if (d.ICD10_CD) {
+            if (d.RN && d.CLDG_NM) {
+                // console.log('data treemap?', d)
+                if (result[d.MONTH]) {
+                    if (!result[d.MONTH][d.HSP_TP_CD]) {
+                        result[d.MONTH][d.HSP_TP_CD] = []
+                        result[d.MONTH][d.HSP_TP_CD].push({
+                            name: 'Origin',
+                            name_full: '',
+                            value: 0,
+                            parent: '',
+                            Origin: '',
+                        })
+                    }
+                    result[d.MONTH][d.HSP_TP_CD].push({
+                        name: d.ICD10_CD,
+                        name_full: d.CLDG_NM,
+                        value: parseInt(d.PCNT),
+                        parent: 'Origin',
+                        Origin: '',
+                    })
+                } else {
+                    result[d.MONTH] = {}
+                    result[d.MONTH][d.HSP_TP_CD] = []
+                    result[d.MONTH][d.HSP_TP_CD].push({
+                        name: 'Origin',
+                        name_full: '',
+                        value: 0,
+                        parent: '',
+                        Origin: '',
+                    })
+                    result[d.MONTH][d.HSP_TP_CD].push({
+                        name: d.ICD10_CD,
+                        name_full: d.CLDG_NM,
+                        value: parseInt(d.PCNT),
+                        parent: 'Origin',
+                        Origin: '',
+                    })
+                    // console.log('data process', result)
+                }
+            } else if (d.ICD10_CD) {
                 if (result[d.MONTH]) {
                     result[d.MONTH].push({
                         name: d.ICD10_CD,

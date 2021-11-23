@@ -10,6 +10,7 @@ import StackedBarChart from './chart/stackedBarChart'
 import StackedBarChartTest from './chart/stackedBarCharttest'
 import MonthlyBarLineChart from './chart/monthlyBarLineChart'
 import PersonMap from './chart/personMap'
+import Treemap from './chart/Treemap'
 import {
     RowStyle,
     BoxStyle,
@@ -43,6 +44,7 @@ const VisitOutpatient = (props) => {
     const outPatientGenderChart = `Outpatient Visit by Age & Gender in ${thisMonth}`
     const outPatientPersonMap = `Outpatient Visit by Location in ${thisMonth}`
     const outPatientPieChart = 'Outpatient Visit by Nation'
+    const outPatientTreemapHeader = `Outpatient Top 25 Dignose in ${thisMonth}`
 
     const dataLocation = '/outpatientData'
     const outBarchartData = dataLocation + '/1_1year_total_by_hospital.csv'
@@ -185,12 +187,19 @@ const VisitOutpatient = (props) => {
             <div>
                 <ButtonRow>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     서울대병원 전체
                                 </Typography>
@@ -202,7 +211,7 @@ const VisitOutpatient = (props) => {
                                     className="numberAll"
                                     align="right"
                                     fontWeight="700"
-                                    color="rgba(25, 16, 45, 0.9)"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -210,12 +219,19 @@ const VisitOutpatient = (props) => {
                         </Card>
                     </CountButton>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     본원 방문 누적
                                 </Typography>
@@ -227,7 +243,7 @@ const VisitOutpatient = (props) => {
                                     className="numberHQ"
                                     align="right"
                                     fontWeight="700"
-                                    color="rgba(25, 16, 45, 0.9)"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -235,12 +251,19 @@ const VisitOutpatient = (props) => {
                         </Card>
                     </CountButton>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     어린이병원 누적
                                 </Typography>
@@ -252,7 +275,7 @@ const VisitOutpatient = (props) => {
                                     className="numberCH"
                                     align="right"
                                     fontWeight="700"
-                                    color="rgba(25, 16, 45, 0.9)"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -260,12 +283,19 @@ const VisitOutpatient = (props) => {
                         </Card>
                     </CountButton>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     암병원 누적
                                 </Typography>
@@ -277,7 +307,7 @@ const VisitOutpatient = (props) => {
                                     className="numberCC"
                                     align="right"
                                     fontWeight="700"
-                                    color="rgba(25, 16, 45, 0.9)"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -285,12 +315,19 @@ const VisitOutpatient = (props) => {
                         </Card>
                     </CountButton>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     강남센터 누적
                                 </Typography>
@@ -302,7 +339,7 @@ const VisitOutpatient = (props) => {
                                     className="numberKN"
                                     align="right"
                                     fontWeight="700"
-                                    color="rgba(25, 16, 45, 0.9)"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -313,8 +350,8 @@ const VisitOutpatient = (props) => {
                 <ButtonRow>
                     <Box
                         sx={{
-                            margin: '40px 40px 0 40px ',
-                            width: 800,
+                            margin: '5px 40px 10px 40px ',
+                            width: 1500,
                             color: '#fff',
                         }}
                     >
@@ -363,6 +400,15 @@ const VisitOutpatient = (props) => {
                             header={outPationtTotalBarChart}
                             dataloc={outMonthlyBarData}
                             dataloc2={outMonthlyBarLineData}
+                        />
+                    </BoxStyle>
+                </RowStyle>
+                <RowStyle>
+                    <BoxStyle>
+                        <Treemap
+                            header={outPatientTreemapHeader}
+                            dateCtrl={selectData}
+                            pageInfo={1}
                         />
                     </BoxStyle>
                 </RowStyle>

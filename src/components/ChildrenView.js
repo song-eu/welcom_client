@@ -33,6 +33,7 @@ const ChildrenView = (props) => {
     const childrenBarChart = 'Monthly Children Rare disease Visits'
     const childrenGenderChart = 'Chilren Rare disease Visits by Age & Gender'
     const childrenPersonMap = 'Children Rare disease Visits by Location'
+    const childrenTreemapHeader = `Children Hospital Top Dignose in ${thisMonth}`
     const dataLocation = '/children'
     const childrenDisesasehCartData =
         dataLocation + '/2-1_children_raredisease_count_year_by_disease.json'
@@ -81,8 +82,8 @@ const ChildrenView = (props) => {
                 <ButtonRow>
                     <Box
                         sx={{
-                            margin: '40px 40px 0 40px ',
-                            width: 800,
+                            margin: '30px 40px 10px 40px ',
+                            width: 1500,
                             color: '#fff',
                         }}
                     >
@@ -107,7 +108,6 @@ const ChildrenView = (props) => {
                             dataloc={childrenDisesasehCartData}
                             dateCtrl={selectData}
                         />
-                        <Treemap />
                     </BoxStyle>
                     <BoxStyle>
                         <MonthlyBarChart
@@ -126,6 +126,15 @@ const ChildrenView = (props) => {
                                 dateCtrl={selectData}
                             />
                         </RowStyle>
+                    </BoxStyle>
+                </RowStyle>
+                <RowStyle>
+                    <BoxStyle>
+                        <Treemap
+                            header={childrenTreemapHeader}
+                            dateCtrl={selectData}
+                            pageInfo={2}
+                        />
                     </BoxStyle>
                 </RowStyle>
             </div>

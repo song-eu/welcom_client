@@ -22,7 +22,7 @@ export const IOSSlider = styled(Slider)(({ theme }) => ({
         },
     },
     '& .MuiSlider-valueLabel': {
-        fontSize: 12,
+        fontSize: 20,
         fontWeight: 'normal',
         top: -6,
         backgroundColor: 'unset',
@@ -64,5 +64,6 @@ export const IOSSlider = styled(Slider)(({ theme }) => ({
     },
     '& .MuiSlider-markLabel': {
         color: '#fff',
+        fontSize: 18,
     },
 }))

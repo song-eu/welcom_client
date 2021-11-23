@@ -3,6 +3,10 @@ import styled from 'styled-components'
 export const MonthlyBarChartStyle = styled.div`
     // border: 1px solid tomato;
     width: ${(props) => props.width}px;
+    background: #2b2b4b;
+    border-radius: 5px;
+    margin-left: 20px;
+
     & #barchart {
         backgroud: tomato;
         // --border: 1px solid tomato;
@@ -23,16 +27,16 @@ export const MonthlyBarChartStyle = styled.div`
         width: 95%;
         border-top: 1px solid grey;
     }
+    margin-bottom: 10px;
 `
 
 export const HorizonBarChartSytle = styled.div`
-    flex: 1;
-    position: relative;
+    // flex: 1;
+    // position: relative;
     // border: 1px solid #1488cc;
-    overflow: hidden;
-
+    // overflow: hidden;
     & #hbarchart {
-        backgroud: #1488cc;
+        // backgroud: #1488cc;
         // --border: 1px solid #1488cc;
     }
     & h1 {
@@ -51,6 +55,9 @@ export const HorizonBarChartSytle = styled.div`
         width: 95%;
         border-top: 1px solid grey;
     }
+    background: #2b2b4b;
+    border-radius: 5px;
+    margin-left: 20px;
 `
 
 export const GenderChartSytle = styled.div`
@@ -129,15 +136,18 @@ export const StackChartStyle = styled.div`
         width: 95%;
         border-top: 1px solid grey;
     }
+
+    background: #2b2b4b;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-bottom: 10px;
 `
 
 export const MapBubbleChartStyle = styled.div`
     display: flex;
     flex-direction: column;
     box-sizing: content-box;
-    background: #2f1e56;
-    border-radius: 50px;
-    box-shadow: 5px 5px 5px #000;
+
     // border: 1px solid tomato;
     align-items: center;
     & h1 {
@@ -152,6 +162,9 @@ export const MapBubbleChartStyle = styled.div`
         width: 95%;
         border-top: 1px solid grey;
     }
+    background: #2b2b4b;
+    border-radius: 5px;
+    margin-left: 20px;
 `
 
 export const GenderDivergingBarChartSytle = styled.div`
@@ -176,4 +189,35 @@ export const GenderDivergingBarChartSytle = styled.div`
         width: 96%;
         border-top: 1px solid grey;
     }
+    background: #2b2b4b;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+`
+export const TreemapStyle = styled.div`
+    overflow: hidden;
+    // border: 1px solid #ff8c00;
+    // width: ${(props) => props.width}px;
+    padding: 0 10px 0 10px;
+    & h1 {
+        position: relative;
+        font-size: 24px;
+        margin-top: 7px;
+        margin-bottom: 7px;
+        text-align: center;
+    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & #gendermiddleline {
+        margin-top: 5px;
+        margin-let: 25px;
+        width: 96%;
+        border-top: 1px solid grey;
+    }
+    background: #2b2b4b;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-bottom: 10px;
 `

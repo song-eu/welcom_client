@@ -189,12 +189,19 @@ const VisitInpatient = (props) => {
             <div>
                 <ButtonRow>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     서울대병원 전체
                                 </Typography>
@@ -206,6 +213,7 @@ const VisitInpatient = (props) => {
                                     className="numberAll"
                                     align="right"
                                     fontWeight="700"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -213,12 +221,19 @@ const VisitInpatient = (props) => {
                         </Card>
                     </CountButton>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     본원 방문 누적
                                 </Typography>
@@ -230,6 +245,7 @@ const VisitInpatient = (props) => {
                                     className="numberHQ"
                                     align="right"
                                     fontWeight="700"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -237,12 +253,19 @@ const VisitInpatient = (props) => {
                         </Card>
                     </CountButton>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     어린이병원 누적
                                 </Typography>
@@ -254,6 +277,7 @@ const VisitInpatient = (props) => {
                                     className="numberCH"
                                     align="right"
                                     fontWeight="700"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -261,12 +285,19 @@ const VisitInpatient = (props) => {
                         </Card>
                     </CountButton>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     암병원 누적
                                 </Typography>
@@ -278,6 +309,7 @@ const VisitInpatient = (props) => {
                                     className="numberCC"
                                     align="right"
                                     fontWeight="700"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -285,12 +317,19 @@ const VisitInpatient = (props) => {
                         </Card>
                     </CountButton>
                     <CountButton>
-                        <Card sx={{ minWidth: 275 }} variant="outlined">
+                        <Card
+                            sx={{
+                                minWidth: 275,
+                                background:
+                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                            }}
+                            variant="outlined"
+                        >
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-                                    color="text.secondary"
+                                    color="#fff"
                                 >
                                     강남센터 누적
                                 </Typography>
@@ -302,6 +341,7 @@ const VisitInpatient = (props) => {
                                     className="numberKN"
                                     align="right"
                                     fontWeight="700"
+                                    color="#fff"
                                 >
                                     0
                                 </Typography>
@@ -312,8 +352,8 @@ const VisitInpatient = (props) => {
                 <ButtonRow>
                     <Box
                         sx={{
-                            margin: '40px 40px 0 40px ',
-                            width: 800,
+                            margin: '5px 40px 10px 40px ',
+                            width: 1500,
                             color: '#fff',
                         }}
                     >
