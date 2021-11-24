@@ -36,7 +36,7 @@ const ChildrenView = (props) => {
     const childrenBarChart = 'Monthly Children Rare disease Visits'
     const childrenGenderChart = 'Chilren Rare disease Visits by Age & Gender'
     const childrenPersonMap = 'Children Rare disease Visits by Location'
-    const childrenTreemapHeader = `Children Hospital Top Dignose in ${thisMonth}`
+    const childrenTreemapHeader = `Children Hospital Top Dignosis in ${thisMonth}`
     const dataLocation = '/children'
     const childrenDisesasehCartData =
         dataLocation + '/2-1_children_raredisease_count_year_by_disease.json'
@@ -81,11 +81,12 @@ const ChildrenView = (props) => {
 
     var format = d3.format(',d')
     const number = {
-        all: 736803,
-        allTM: 502859,
-        rdAll: 172677,
-        rdTM: 24267,
+        all: 891105,
+        allTM: 20210,
+        rdAll: 51973,
+        rdTM: 4567,
     }
+
     useEffect(() => {
         let numAll = d3
             .select('.numberAll')
@@ -150,7 +151,7 @@ const ChildrenView = (props) => {
                 }
             })
             .delay(500)
-    })
+    }, [])
 
     return (
         <BigBox>
@@ -162,6 +163,7 @@ const ChildrenView = (props) => {
                                 minWidth: 275,
                                 background:
                                     'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+                                maxHeight: 135,
                             }}
                             variant="outlined"
                         >
@@ -173,7 +175,7 @@ const ChildrenView = (props) => {
                                 >
                                     어린이병원 전체
                                 </Typography>
-                                <Typography variant="body1">
+                                <Typography variant="h5">
                                     <br />
                                 </Typography>
                                 <Typography
@@ -194,6 +196,7 @@ const ChildrenView = (props) => {
                                 minWidth: 275,
                                 background:
                                     'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+                                maxHeight: 135,
                             }}
                             variant="outlined"
                         >
@@ -203,9 +206,9 @@ const ChildrenView = (props) => {
                                     component="div"
                                     color="#fff"
                                 >
-                                    이번달 어린이병원 방문
+                                    지난달 어린이병원 방문
                                 </Typography>
-                                <Typography variant="body1">
+                                <Typography variant="h5">
                                     <br />
                                 </Typography>
                                 <Typography
@@ -255,6 +258,7 @@ const ChildrenView = (props) => {
                         <Card
                             sx={{
                                 minWidth: 275,
+                                maxHeight: 135,
                                 background:
                                     'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
                             }}
@@ -266,10 +270,8 @@ const ChildrenView = (props) => {
                                     component="div"
                                     color="#fff"
                                 >
-                                    이번달 희귀질환 환자 방문
-                                </Typography>
-                                <Typography variant="body1">
-                                    <br />
+                                    이번달 희귀질환
+                                    <br /> 환자 방문
                                 </Typography>
                                 <Typography
                                     variant="h4"
