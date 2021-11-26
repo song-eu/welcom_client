@@ -382,7 +382,6 @@ const VisitOutpatient = (props) => {
                             dateCtrl={selectData}
                         />
                     </BoxStyle>
-
                     <BoxStyle>
                         <PersonMap
                             header={outPatientPersonMap}
@@ -402,8 +401,6 @@ const VisitOutpatient = (props) => {
                             dataloc2={outMonthlyBarLineData}
                         />
                     </BoxStyle>
-                </RowStyle>
-                <RowStyle>
                     <BoxStyle>
                         <Treemap
                             header={outPatientTreemapHeader}

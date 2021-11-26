@@ -271,6 +271,7 @@ export const BackgroundAll = styled.div`
     background: rgba(25, 16, 45, 0.9);
     // border: 2px solid tomato;
     color: white;
+    width: 6000px;
 `
 export const BigBox = styled.div`
     display: flex;
