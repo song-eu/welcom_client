@@ -17,10 +17,14 @@ const DeptHorizonBarChart = (props) => {
     const { header, dateCtrl, dataloc, dataloc2 } = props
     const svgRef = useRef()
 
-    var margin = { top: 25, right: 100, bottom: 5, left: 80 },
-        width = 850 - margin.left - margin.right,
-        height = 640 - margin.top - margin.bottom
-
+    var margin = { top: 25, right: 80, bottom: 5, left: 55 }
+    if (dataloc.includes('OUT')) {
+        var width = 630 - margin.left,
+            height = 1215 - margin.top - margin.bottom
+    } else if (dataloc.includes('in')) {
+        var width = 850 - margin.left - margin.right,
+            height = 640 - margin.top - margin.bottom
+    }
     var y = d3.scaleBand().range([height, 0]).padding(0.1)
 
     var x = d3.scaleLinear().range([0, width])
@@ -47,7 +51,7 @@ const DeptHorizonBarChart = (props) => {
             .select('#hbarchart')
             .call((g) => g.select('svg').remove())
             .append('svg')
-            .attr('width', width + margin.left + margin.right)
+            .attr('width', width + margin.right)
             .attr('height', height + margin.top + margin.bottom)
             .append('g')
             .attr(
@@ -182,7 +186,8 @@ const DeptHorizonBarChart = (props) => {
                 .getBoundingClientRect().width
 
             tip.show(i, this)
-            console.log('pos?', pos.width, tipNodeWidth, pos.right, pos)
+            // console.log('pos?', pos.width, tipNodeWidth, pos.right, pos)
+            console.log('this???', this)
             //console.log('depToolTip',d3.selectAll('#depToolTip').node().getBoundingClientRect() )
 
             // tip.style('left', `${pos['x'] + pos['width']} px`)

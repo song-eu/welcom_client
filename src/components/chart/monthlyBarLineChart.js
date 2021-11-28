@@ -8,8 +8,8 @@ import csvToData from '../../modules/csvDataRead'
 import jsonToData from '../../modules/jsonDataRead'
 
 const MonthlyBarLineChart = (props) => {
-    var [width, setWidth] = useState(850)
-    var height = 600
+    var [width, setWidth] = useState(830)
+
     const margin = { top: 40, left: 60, bottom: 40, right: 20 }
     //const [data, setData] = useState(sampleData.monthBarData.data1)
     const { header, dataloc, dataloc2 } = props
@@ -34,11 +34,14 @@ const MonthlyBarLineChart = (props) => {
         //     setData(sampleData.monthBarData[selectData])
         // }
         //console.log('json?', dataloc, typeof dataloc)
-        if (dataloc.includes('.csv')) {
+        if (dataloc.includes('OUT')) {
             var data = await csvToData(dataloc)
+            setWidth(950)
+            var height = 550
         } else {
             var data = await jsonToData(dataloc)
             setWidth(1600)
+            var height = 600
         }
         var dataBar = await jsonToData(dataloc2)
 

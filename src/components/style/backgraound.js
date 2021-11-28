@@ -230,8 +230,8 @@ export const BoxStyle = styled.div`
     // border: 2px solid #0575e6;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    margin: 15px 10 15px 10px;
+    // overflow: hidden;
+    margin: 5px 5px 5px 5px;
     align-items: center;
     // border: 2px solid tomato;
 `
@@ -267,13 +267,32 @@ export const CountButton = styled.div`
     font-weight: 700;
     font-family: 'Roboto', sans-serif;
 `
+
 export const BackgroundAll = styled.div`
     background: rgba(25, 16, 45, 0.9);
     // border: 2px solid tomato;
     color: white;
-    width: 6000px;
+    width: 5060px;
 `
+
 export const BigBox = styled.div`
     display: flex;
     justify-content: center;
+`
+
+export const RightBack = styled.div`
+    border: 2px solid tomato;
+    width: 2530px;
+`
+
+export const LeftBack = styled.div`
+    border: 2px solid blue;
+    width: 2530px;
+`
+
+export const BackRowStyle = styled.div`
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: stretch;
 `

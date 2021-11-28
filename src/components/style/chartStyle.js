@@ -5,7 +5,7 @@ export const MonthlyBarChartStyle = styled.div`
     width: ${(props) => props.width}px;
     background: #2b2b4b;
     border-radius: 5px;
-    margin-left: 20px;
+    margin-left: 5px;
 
     & #barchart {
         backgroud: tomato;
@@ -57,7 +57,7 @@ export const HorizonBarChartSytle = styled.div`
     }
     background: #2b2b4b;
     border-radius: 5px;
-    margin-left: 20px;
+    margin-left: 5px;
 `
 
 export const GenderChartSytle = styled.div`
@@ -139,7 +139,7 @@ export const StackChartStyle = styled.div`
 
     background: #2b2b4b;
     border-radius: 5px;
-    margin-left: 20px;
+    margin-left: 5px;
     margin-bottom: 10px;
 `
 
@@ -198,7 +198,7 @@ export const TreemapStyle = styled.div`
     overflow: hidden;
     // border: 1px solid #ff8c00;
     // width: ${(props) => props.width}px;
-    padding: 0 10px 0 10px;
+
     & h1 {
         position: relative;
         font-size: 24px;
@@ -218,6 +218,6 @@ export const TreemapStyle = styled.div`
     }
     background: #2b2b4b;
     border-radius: 5px;
-    margin-left: 20px;
+    margin-left: 5px;
     margin-bottom: 10px;
 `

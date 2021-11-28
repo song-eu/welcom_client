@@ -17,6 +17,9 @@ import {
     CountButton,
     ButtonRow,
     BigBox,
+    RightBack,
+    LeftBack,
+    BackRowStyle,
 } from './style/backgraound'
 import moment from 'moment'
 import * as d3 from 'd3'
@@ -47,8 +50,8 @@ const VisitOutpatient = (props) => {
     const outPatientTreemapHeader = `Outpatient Top 30 Dignosis in ${thisMonth}`
 
     const dataLocation = '/outpatientData'
-    const outBarchartData = dataLocation + '/1_1year_total_by_hospital.csv'
-    const outDepchartData = dataLocation + '/2_visit_dept_rank.json'
+    const outBarchartData = dataLocation + '/1_1year_total_by_hospital_OUT.csv'
+    const outDepchartData = dataLocation + '/2_visit_dept_rank_OUT.json'
     const outPersonMapData = dataLocation + '/3_1year_Monthly_visits_SIDO.json'
     const outGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP_OUT.json'
     const outMonthlyBarData = dataLocation + '/5_1year_monthly_total_OUT.csv'
@@ -79,6 +82,11 @@ const VisitOutpatient = (props) => {
     function valueLabelFormat(value) {
         // console.log('label?', sliderMark[11 - value], value, sliderMark)
         return `${sliderMark[11 - value].label}`
+    }
+
+    const onClickEvent = (id) => {
+        console.log('main event called')
+        console.log('id??', id)
     }
 
     const fetchData = async () => {
@@ -185,230 +193,265 @@ const VisitOutpatient = (props) => {
     return (
         <BigBox>
             <div>
-                <ButtonRow>
-                    <CountButton>
-                        <Card
-                            sx={{
-                                minWidth: 275,
-                                background:
-                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                            }}
-                            variant="outlined"
-                        >
-                            <CardContent>
-                                <Typography
-                                    variant="h5"
-                                    component="div"
-                                    color="#fff"
+                <BackRowStyle>
+                    <RightBack>
+                        <ButtonRow>
+                            <CountButton>
+                                <Card
+                                    sx={{
+                                        minWidth: 275,
+                                        background:
+                                            'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    }}
+                                    variant="outlined"
                                 >
-                                    서울대병원 전체
-                                </Typography>
-                                <Typography variant="body1">
-                                    <br />
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    className="numberAll"
-                                    align="right"
-                                    fontWeight="700"
-                                    color="#fff"
+                                    <CardContent>
+                                        <Typography
+                                            variant="h5"
+                                            component="div"
+                                            color="#fff"
+                                        >
+                                            서울대병원 전체
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            <br />
+                                        </Typography>
+                                        <Typography
+                                            variant="h4"
+                                            className="numberAll"
+                                            align="right"
+                                            fontWeight="700"
+                                            color="#fff"
+                                        >
+                                            0
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </CountButton>
+                            <CountButton>
+                                <Card
+                                    sx={{
+                                        minWidth: 275,
+                                        background:
+                                            'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    }}
+                                    variant="outlined"
                                 >
-                                    0
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </CountButton>
-                    <CountButton>
-                        <Card
-                            sx={{
-                                minWidth: 275,
-                                background:
-                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                            }}
-                            variant="outlined"
-                        >
-                            <CardContent>
-                                <Typography
-                                    variant="h5"
-                                    component="div"
-                                    color="#fff"
+                                    <CardContent>
+                                        <Typography
+                                            variant="h5"
+                                            component="div"
+                                            color="#fff"
+                                        >
+                                            본원 방문 누적
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            <br />
+                                        </Typography>
+                                        <Typography
+                                            variant="h4"
+                                            className="numberHQ"
+                                            align="right"
+                                            fontWeight="700"
+                                            color="#fff"
+                                        >
+                                            0
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </CountButton>
+                            <CountButton>
+                                <Card
+                                    sx={{
+                                        minWidth: 275,
+                                        background:
+                                            'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    }}
+                                    variant="outlined"
                                 >
-                                    본원 방문 누적
-                                </Typography>
-                                <Typography variant="body1">
-                                    <br />
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    className="numberHQ"
-                                    align="right"
-                                    fontWeight="700"
-                                    color="#fff"
+                                    <CardContent>
+                                        <Typography
+                                            variant="h5"
+                                            component="div"
+                                            color="#fff"
+                                        >
+                                            어린이병원 누적
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            <br />
+                                        </Typography>
+                                        <Typography
+                                            variant="h4"
+                                            className="numberCH"
+                                            align="right"
+                                            fontWeight="700"
+                                            color="#fff"
+                                        >
+                                            0
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </CountButton>
+                            <CountButton>
+                                <Card
+                                    sx={{
+                                        minWidth: 275,
+                                        background:
+                                            'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    }}
+                                    variant="outlined"
                                 >
-                                    0
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </CountButton>
-                    <CountButton>
-                        <Card
-                            sx={{
-                                minWidth: 275,
-                                background:
-                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                            }}
-                            variant="outlined"
-                        >
-                            <CardContent>
-                                <Typography
-                                    variant="h5"
-                                    component="div"
-                                    color="#fff"
+                                    <CardContent>
+                                        <Typography
+                                            variant="h5"
+                                            component="div"
+                                            color="#fff"
+                                        >
+                                            암병원 누적
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            <br />
+                                        </Typography>
+                                        <Typography
+                                            variant="h4"
+                                            className="numberCC"
+                                            align="right"
+                                            fontWeight="700"
+                                            color="#fff"
+                                        >
+                                            0
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </CountButton>
+                            <CountButton>
+                                <Card
+                                    sx={{
+                                        minWidth: 275,
+                                        background:
+                                            'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                                    }}
+                                    variant="outlined"
                                 >
-                                    어린이병원 누적
-                                </Typography>
-                                <Typography variant="body1">
-                                    <br />
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    className="numberCH"
-                                    align="right"
-                                    fontWeight="700"
-                                    color="#fff"
-                                >
-                                    0
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </CountButton>
-                    <CountButton>
-                        <Card
-                            sx={{
-                                minWidth: 275,
-                                background:
-                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                            }}
-                            variant="outlined"
-                        >
-                            <CardContent>
-                                <Typography
-                                    variant="h5"
-                                    component="div"
-                                    color="#fff"
-                                >
-                                    암병원 누적
-                                </Typography>
-                                <Typography variant="body1">
-                                    <br />
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    className="numberCC"
-                                    align="right"
-                                    fontWeight="700"
-                                    color="#fff"
-                                >
-                                    0
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </CountButton>
-                    <CountButton>
-                        <Card
-                            sx={{
-                                minWidth: 275,
-                                background:
-                                    'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-                            }}
-                            variant="outlined"
-                        >
-                            <CardContent>
-                                <Typography
-                                    variant="h5"
-                                    component="div"
-                                    color="#fff"
-                                >
-                                    강남센터 누적
-                                </Typography>
-                                <Typography variant="body1">
-                                    <br />
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    className="numberKN"
-                                    align="right"
-                                    fontWeight="700"
-                                    color="#fff"
-                                >
-                                    0
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </CountButton>
-                </ButtonRow>
-                <ButtonRow>
-                    <Box
-                        sx={{
-                            margin: '5px 40px 10px 40px ',
-                            width: 1500,
-                            color: '#fff',
-                        }}
-                    >
-                        <IOSSlider
-                            aria-label="Time Picker"
-                            defaultValue={11}
-                            valueLabelFormat={valueLabelFormat}
-                            getAriaValueText={valuetext}
-                            step={null}
-                            valueLabelDisplay="auto"
-                            marks={sliderMark}
-                            min={0}
-                            max={11}
-                            onChange={handleDatePickerChange}
-                        />
-                    </Box>
-                </ButtonRow>
-                <RowStyle>
-                    <BoxStyle>
-                        <StackedBarChart
-                            data={outBarchartData}
-                            header={outPatientVisitBarChart}
-                        />
+                                    <CardContent>
+                                        <Typography
+                                            variant="h5"
+                                            component="div"
+                                            color="#fff"
+                                        >
+                                            강남센터 누적
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            <br />
+                                        </Typography>
+                                        <Typography
+                                            variant="h4"
+                                            className="numberKN"
+                                            align="right"
+                                            fontWeight="700"
+                                            color="#fff"
+                                        >
+                                            0
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </CountButton>
+                        </ButtonRow>
+                        <RowStyle>
+                            <BoxStyle>
+                                <StackedBarChart
+                                    data={outBarchartData}
+                                    header={outPatientVisitBarChart}
+                                />
 
-                        <DeptHorizonBarChart
-                            header={outPatientHBarChart}
-                            dataloc={outDepchartData}
-                            dateCtrl={selectData}
-                        />
-                    </BoxStyle>
-                    <BoxStyle>
-                        <PersonMap
-                            header={outPatientPersonMap}
-                            dataloc={outPersonMapData}
-                            dateCtrl={selectData}
-                        />
-                    </BoxStyle>
-                    <BoxStyle>
-                        <GenderAgeDivergingChart
-                            header={outPatientGenderChart}
-                            dataloc={outGenderAgeData}
-                            dateCtrl={selectData}
-                        />
-                        <MonthlyBarLineChart
-                            header={outPationtTotalBarChart}
-                            dataloc={outMonthlyBarData}
-                            dataloc2={outMonthlyBarLineData}
-                        />
-                    </BoxStyle>
-                    <BoxStyle>
-                        <Treemap
-                            header={outPatientTreemapHeader}
-                            dateCtrl={selectData}
-                            pageInfo={1}
-                        />
-                    </BoxStyle>
-                </RowStyle>
+                                <MonthlyBarLineChart
+                                    header={outPationtTotalBarChart}
+                                    dataloc={outMonthlyBarData}
+                                    dataloc2={outMonthlyBarLineData}
+                                />
+                            </BoxStyle>
+                            <BoxStyle>
+                                <DeptHorizonBarChart
+                                    header={outPatientHBarChart}
+                                    dataloc={outDepchartData}
+                                    dateCtrl={selectData}
+                                />
+                            </BoxStyle>
+                            <BoxStyle>
+                                <Treemap
+                                    header={outPatientTreemapHeader}
+                                    dateCtrl={selectData}
+                                    pageInfo={1}
+                                    onClickEvent={onClickEvent}
+                                />
+                                {/* <Treemap
+                                    header={outPatientTreemapHeader}
+                                    dateCtrl={selectData}
+                                    pageInfo={1}
+                                /> */}
+                            </BoxStyle>
+                        </RowStyle>
+                    </RightBack>
+                    <LeftBack>
+                        <ButtonRow>
+                            <Box
+                                sx={{
+                                    margin: '0px 40px 0px 40px ',
+                                    padding: '100px 0px 0px 0px',
+                                    width: 1500,
+                                    height: 110,
+                                    color: '#fff',
+                                }}
+                            >
+                                <IOSSlider
+                                    aria-label="Time Picker"
+                                    defaultValue={11}
+                                    valueLabelFormat={valueLabelFormat}
+                                    getAriaValueText={valuetext}
+                                    step={null}
+                                    valueLabelDisplay="auto"
+                                    marks={sliderMark}
+                                    min={0}
+                                    max={11}
+                                    onChange={handleDatePickerChange}
+                                />
+                            </Box>
+                        </ButtonRow>
+                        <RowStyle>
+                            <BoxStyle>
+                                <GenderAgeDivergingChart
+                                    header={outPatientGenderChart}
+                                    dataloc={outGenderAgeData}
+                                    dateCtrl={selectData}
+                                />
+                                {/* <Treemap
+                                    header={outPatientTreemapHeader}
+                                    dateCtrl={selectData}
+                                    pageInfo={1}
+                                /> */}
+                            </BoxStyle>
+                            <BoxStyle>
+                                <PersonMap
+                                    header={outPatientPersonMap}
+                                    dataloc={outPersonMapData}
+                                    dateCtrl={selectData}
+                                />
+                            </BoxStyle>
+                            <BoxStyle>
+                                <DeptHorizonBarChart
+                                    header={outPatientHBarChart}
+                                    dataloc={outDepchartData}
+                                    dateCtrl={selectData}
+                                />
+                                {/* <Treemap
+                                    header={outPatientTreemapHeader}
+                                    dateCtrl={selectData}
+                                    pageInfo={1}
+                                /> */}
+                            </BoxStyle>
+                        </RowStyle>
+                    </LeftBack>
+                </BackRowStyle>
             </div>
         </BigBox>
     )

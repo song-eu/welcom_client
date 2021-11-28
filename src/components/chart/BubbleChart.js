@@ -22,15 +22,12 @@ import {
     green,
     cyan,
 } from '@mui/material/colors'
+import { colors } from '@mui/material'
 
 const d3 = {
     ...d3module,
     tip: d3Tip,
 }
-
-// Data example
-// { nation: 'Origin', value: 0, parent: '', Origin: '' },
-// { nation: 'Korean', value: 2540, parent: 'Origin', Origin: '' },
 
 // JSON Data
 // 		{"MONTH" : "2020-10",
@@ -40,7 +37,7 @@ const d3 = {
 // 		"ROWCNT" : 1193,
 // 		"VISITCNT" : 1193,
 // 		"PCNT" : 936 }
-const Treemap = (props) => {
+const BubbleCircleChart = (props) => {
     // const { header, dateCtrl, dataloc } = props
     const { header, dateCtrl, pageInfo } = props
     const svgRef = useRef()
@@ -152,83 +149,18 @@ const Treemap = (props) => {
             return +d.value
         })
 
-        d3.treemap().size([width, height]).padding(4)(root)
-
-        svg.selectAll('rect')
-            .data(root.leaves())
-            .join(
-                (enter) => enter.append('rect').attr('class', 'newTreemap'),
-                (update) => update.attr('class', 'updateTreemap'),
-                (exit) => exit.remove()
-            )
-            .on('mouseover', (d, i) => {
-                treetooltip
-                    .style('max-width', 220 + 'px')
-                    // .style('max-width', 150 + 'px')
-                    .style('min-width', 80 + 'px')
-                    .style('border-radius', '5px')
-                    .style('padding', '8px')
-                    .style('opacity', 0.9)
-                    .style('position', 'absolute')
-                    .style('left', d.pageX + 'px')
-                    .style('top', d.pageY + 'px')
-                    .style('word-break', 'break-all')
-
-                d3.select('.treemapTooltip')
-                    .style('font-size', '25px')
-                    .html(
-                        '<strong>' +
-                            i.data.name_full +
-                            " : </strong><br/> <span style='color:red'>" +
-                            i.data.value +
-                            ' 명 </span>'
-                    )
-
-                d3.select(d.target)
-                    .transition()
-                    .duration(100)
-                    .attr('fill', '#ffc500')
-            })
-            .on('mouseleave', (d, i) => {
-                treetooltip.style('opacity', 0)
-
-                d3.select(d.target)
-                    .transition()
-                    .duration(100)
-                    .attr('fill', colorScale(i.data.name))
-            })
-            .on('click', (e, d) => {
-                props.onClickEvent(d.id)
-            })
-            .attr('x', (d) => d.x0)
-            .attr('y', (d) => d.y0)
-            // .on('mouseover', mouseOver)
-            .transition()
-            .duration(800)
-            .attr('width', (d) => d.x1 - d.x0)
-            .attr('height', (d) => d.y1 - d.y0)
-            .attr('fill', (d) => {
-                // console.log('color', colorScale(d.data.nation), d.data)
-                return colorScale(d.data.name)
-            })
-
-        svg.selectAll('text')
-            .data(root.leaves())
-            .join('text')
-            .attr('x', (d) => (d.x1 - d.x0) / 2 + d.x0 - 30)
-            .attr('y', (d) => d.y1 - (d.y1 - d.y0) / 2)
-            .text((d) => d.data.name)
-            .attr('font-size', '25px')
-            .attr('fill', 'black')
-            .style('word-break', 'break-all')
+        const circle = svg
+            .append('circle')
+            .attr('r', (d) => d.r)
+            .style('fill', (d) => colors[d.data.category])
     }, [dateCtrl])
 
     return (
         <TreemapStyle>
             <h1>{header}</h1>
-            <div id="treeMapChar" ref={svgRef}></div>
+            <div id="bubblechart" ref={svgRef}></div>
         </TreemapStyle>
     )
 }
 
-export default Treemap
+export default BubbleCircleChart

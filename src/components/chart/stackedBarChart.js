@@ -12,8 +12,8 @@ const d3 = {
 }
 
 const StackedBarChart = (props) => {
-    const width = 680
-    const height = 500
+    // const width = 680
+
     const margin = { top: 40, left: 20, bottom: 40, right: 20 }
     const svgRef = useRef()
 
@@ -37,6 +37,13 @@ const StackedBarChart = (props) => {
         .slice(1)
 
     useEffect(async () => {
+        if (props.data.includes('OUT')) {
+            var width = 780
+            var height = 600
+        } else if (props.data.includes('in')) {
+            var width = 680
+            var height = 550
+        }
         let realdata = await csvToData(props.data)
         var svg = d3
             .select('#stackBarchart')
