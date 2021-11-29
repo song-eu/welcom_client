@@ -1,0 +1,320 @@
+"YEAR","HSP_TP_CD","ICD9CM_CD","ICD9CM_NM","MED_DEPT_CD","ROWCNT","VISITCNT","PCNT","(SELECTDEPT_NMFROMLT_STM_DEPTLDWHERELD.DEPT_CD=A.MED_DEPT_CD)"
+"2021","1","13.71",Insertion of intraocular lens prosthesis at time of cataract,OT,2085,2083,1506,안과
+"2021","1","85.21",Local excision of lesion of breast,BEN,821,821,821,유방내분비외과
+"2021","1","14.74",Other mechanical vitrectomy,OT,771,769,697,안과
+"2021","1","68.9",Other and unspecified hysterectomy,OG,686,686,686,산부인과
+"2021","1","57.49",Other transurethral excision or destruction of lesion or tissue of bla,UR,893,887,673,비뇨의학과
+"2021","1","60.5",Radical prostatectomy,UR,495,495,495,비뇨의학과
+"2021","1","48.63",Other anterior resection of rectum,CRS,485,484,483,대장항문외과
+"2021","1","81.54",Total knee replacement,OS,599,459,453,정형외과
+"2021","1","32.4",Lobectomy of lung,TS,449,449,448,흉부외과
+"2021","1","39.72",Endovascular repair or occlusion of head and neck vessels,NS,444,442,438,신경외과
+"2021","1","74.99",Other cesarean section of unspecified type,OG,424,424,424,산부인과
+"2021","1","68.12",Hysteroscopy,OG,404,404,398,산부인과
+"2021","1","55.5",Complete nephrectomy,UR,395,395,393,비뇨의학과
+"2021","1","06.2",Unilateral thyroid lobectomy,BEN,374,374,374,유방내분비외과
+"2021","1","32.29",Other local excision or destruction of lesion or tissue of lung,TS,359,359,354,흉부외과
+"2021","1","39.27",Arteriovenostomy for renal dialysis,TVS,368,366,347,이식혈관외과
+"2021","1","85.4",Mastectomy,BEN,339,339,339,유방내분비외과
+"2021","1","43.6",Partial gastrectomy with anastomosis to duodenum,GIS,334,334,334,위장관외과
+"2021","1","65.2",Local excision or destruction of ovarion lesion or tissue,OG,330,330,330,산부인과
+"2021","1","22.9",Other operations on nasal sinuses,OL,320,320,319,이비인후과
+"2021","1","51.23",Laparoscopic cholecystectomy,HBPS,315,315,315,간담췌외과
+"2021","1","52.7",Radical pancreaticoduodenectomy,HBPS,280,280,280,간담췌외과
+"2021","1","50.22",Partial hepatectomy,HBPS,275,275,274,간담췌외과
+"2021","1","65.4",Unilateral salpingo.oophorectomy,OG,261,261,261,산부인과
+"2021","1","83.39",Excision of lesion of other soft tissue,PS,270,270,260,성형외과
+"2021","1","01.59",Other excision or destruction of lesion or tissue of brain,NS,259,257,254,신경외과
+"2021","1","03.09",Other exploration and decompression of spinal canal,NS,243,240,240,신경외과
+"2021","1","21.88",Other septoplasty,OL,238,238,238,이비인후과
+"2021","1","81.51",Total hip replacement,OS,250,241,238,정형외과
+"2021","1","68.29",Other excision or destruction of lesion of uterus,OG,230,230,230,산부인과
+"2021","1","97.89",Removal of other therapeutic device,TVS,212,212,208,이식혈관외과
+"2021","1","45.73",Right hemicolectomy,CRS,208,208,208,대장항문외과
+"2021","1","55.51",Nephroureterectomy,UR,203,203,202,비뇨의학과
+"2021","1","35.2",Replacement of heart valve,TS,194,194,194,흉부외과
+"2021","1","06.4",Complete thyroidectomy,BEN,190,190,190,유방내분비외과
+"2021","1","60.61",Local excision of lesion of prostate,UR,186,186,186,비뇨의학과
+"2021","1","85.95",Insertion of breast tissue expander,PS,181,181,180,성형외과
+"2021","1","55.69",Other kidney transplantation,TVS,178,178,178,이식혈관외과
+"2021","1","54.11",Exploratory laparotomy,CRS,179,177,175,대장항문외과
+"2021","1","07.8",Thymectomy,TS,166,166,166,흉부외과
+"2021","1","07.79",Other operations on hypophysis; other,NS,168,165,161,신경외과
+"2021","1","03.4",Excision or destruction of lesion of spinal cord or spinal meninges,NS,160,158,158,신경외과
+"2021","1","83.63",Rotator cuff repair,OS,159,159,158,정형외과
+"2021","1","39.51",Clipping of aneurysm,NS,160,158,158,신경외과
+"2021","1","53.00",Unilateral repair of inguinal hernia [NOS],CRS,155,155,154,대장항문외과
+"2021","1","43.89",Other partial gastrectomy; other,GIS,151,151,151,위장관외과
+"2021","1","52.52",Distal pancreatectomy,HBPS,149,149,149,간담췌외과
+"2021","1","19.4",Myringoplasty,OL,150,150,148,이비인후과
+"2021","1","32.3",Segmental resection of lung,TS,143,143,142,흉부외과
+"2021","1","77.69",Local excision of lesion or tissue of bone other,OS,142,141,141,정형외과
+"2021","1","54.11",Exploratory laparotomy,OG,137,137,137,산부인과
+"2021","1","51.22",Total cholecystectomy,HBPS,136,136,136,간담췌외과
+"2021","1","31.98",Other operations on larynx,OL,139,139,136,이비인후과
+"2021","1","20.49",Other mastoidectomy,OL,139,138,135,이비인후과
+"2021","1","16.99",Other operations on eyeball,OT,141,139,133,안과
+"2021","1","01.24",Other craniotomy,NS,134,134,131,신경외과
+"2021","1","79.32",Open reduction of fracture with internal fixation radius and ulna,OS,130,130,129,정형외과
+"2021","1","50.59",Other transplant of liver,HBPS,127,127,127,간담췌외과
+"2021","1","83.39",Excision of lesion of other soft tissue,OS,129,129,127,정형외과
+"2021","1","50.3",Lobectomy of liver,HBPS,124,124,124,간담췌외과
+"2021","1","99.99",Other miscellaneous procedures; other,BCCGS,125,125,124,유방센터외과
+"2021","1","06.2",Unilateral thyroid lobectomy,OL,124,124,124,이비인후과
+"2021","1","86.28",Nonexcisional debridement of wound infection or burn,PS,162,138,122,성형외과
+"2021","1","85.53",Unilateral breast implant,PS,121,121,120,성형외과
+"2021","1","97.89",Removal of other therapeutic device,OS,117,117,117,정형외과
+"2021","1","38.5",Ligation and stripping of varicose veins,TVS,117,117,116,이식혈관외과
+"2021","1","85.5",Augmentation mammoplasty,PS,111,111,111,성형외과
+"2021","1","86.3",Other local excision or destruction of lesion or tissue of skin and,PS,115,115,111,성형외과
+"2021","1","36.12",Aortocoronary bypass of two coronary arteries,TS,110,109,109,흉부외과
+"2021","1","86.4",Radical excision of skin lesion,BEN,110,110,109,유방내분비외과
+"2021","1","03.90",Insertion of catheter into spinal canal for infusion of therapeutic or,AN,103,103,103,마취통증의학과
+"2021","1","81.07",Lumbar and lumbosacral fusion lateral transverse process technique,OS,103,103,103,정형외과
+"2021","1","39.42",Revision of arteriovenous shunt for renal dialysis,TVS,121,119,102,이식혈관외과
+"2021","1","43.99",Other total gastrectomy,GIS,101,101,101,위장관외과
+"2020","1","13.71",Insertion of intraocular lens prosthesis at time of cataract,OT,2335,2334,1743,안과
+"2020","1","85.21",Local excision of lesion of breast,BEN,843,843,842,유방내분비외과
+"2020","1","14.74",Other mechanical vitrectomy,OT,831,831,772,안과
+"2020","1","03.91",Injection of anesthetic into spinal canal for analgesia,AN,1112,1110,701,마취통증의학과
+"2020","1","68.9",Other and unspecified hysterectomy,OG,687,687,686,산부인과
+"2020","1","57.49",Other transurethral excision or destruction of lesion or tissue of bla,UR,852,847,657,비뇨의학과
+"2020","1","60.5",Radical prostatectomy,UR,489,489,489,비뇨의학과
+"2020","1","51.23",Laparoscopic cholecystectomy,HBPS,486,486,486,간담췌외과
+"2020","1","48.63",Other anterior resection of rectum,CRS,485,485,485,대장항문외과
+"2020","1","74.99",Other cesarean section of unspecified type,OG,485,484,484,산부인과
+"2020","1","32.4",Lobectomy of lung,TS,473,473,472,흉부외과
+"2020","1","81.54",Total knee replacement,OS,607,443,433,정형외과
+"2020","1","04.81",Injection of anesthetic into peripheral nerve for analgesia,AN,652,650,412,마취통증의학과
+"2020","1","68.12",Hysteroscopy,OG,412,412,405,산부인과
+"2020","1","65.2",Local excision or destruction of ovarion lesion or tissue,OG,406,406,404,산부인과
+"2020","1","55.5",Complete nephrectomy,UR,368,368,365,비뇨의학과
+"2020","1","06.2",Unilateral thyroid lobectomy,BEN,363,363,363,유방내분비외과
+"2020","1","85.4",Mastectomy,BEN,361,361,361,유방내분비외과
+"2020","1","39.27",Arteriovenostomy for renal dialysis,TVS,356,356,346,이식혈관외과
+"2020","1","32.29",Other local excision or destruction of lesion or tissue of lung,TS,338,338,332,흉부외과
+"2020","1","22.9",Other operations on nasal sinuses,OL,314,314,314,이비인후과
+"2020","1","39.72",Endovascular repair or occlusion of head and neck vessels,NS,314,313,304,신경외과
+"2020","1","43.6",Partial gastrectomy with anastomosis to duodenum,GIS,294,294,294,위장관외과
+"2020","1","21.88",Other septoplasty,OL,284,284,284,이비인후과
+"2020","1","65.4",Unilateral salpingo.oophorectomy,OG,275,274,274,산부인과
+"2020","1","01.59",Other excision or destruction of lesion or tissue of brain,NS,277,274,272,신경외과
+"2020","1","81.51",Total hip replacement,OS,275,269,258,정형외과
+"2020","1","68.29",Other excision or destruction of lesion of uterus,OG,251,251,251,산부인과
+"2020","1","52.7",Radical pancreaticoduodenectomy,HBPS,247,247,247,간담췌외과
+"2020","1","54.11",Exploratory laparotomy,CRS,255,248,237,대장항문외과
+"2020","1","83.39",Excision of lesion of other soft tissue,PS,242,242,231,성형외과
+"2020","1","50.22",Partial hepatectomy,HBPS,230,230,230,간담췌외과
+"2020","1","55.51",Nephroureterectomy,UR,229,229,229,비뇨의학과
+"2020","1","35.2",Replacement of heart valve,TS,221,220,219,흉부외과
+"2020","1","55.69",Other kidney transplantation,TVS,209,209,209,이식혈관외과
+"2020","1","97.89",Removal of other therapeutic device,TVS,204,204,202,이식혈관외과
+"2020","1","06.4",Complete thyroidectomy,BEN,196,196,196,유방내분비외과
+"2020","1","45.73",Right hemicolectomy,CRS,195,195,195,대장항문외과
+"2020","1","03.09",Other exploration and decompression of spinal canal,NS,189,184,183,신경외과
+"2020","1","83.63",Rotator cuff repair,OS,184,184,183,정형외과
+"2020","1","51.22",Total cholecystectomy,HBPS,178,178,178,간담췌외과
+"2020","1","86.3",Other local excision or destruction of lesion or tissue of skin and,PS,186,185,178,성형외과
+"2020","1","16.99",Other operations on eyeball,OT,194,192,176,안과
+"2020","1","85.95",Insertion of breast tissue expander,PS,172,172,172,성형외과
+"2020","1","38.5",Ligation and stripping of varicose veins,TVS,171,171,171,이식혈관외과
+"2020","1","60.61",Local excision of lesion of prostate,UR,173,173,169,비뇨의학과
+"2020","1","19.4",Myringoplasty,OL,164,164,164,이비인후과
+"2020","1","85.53",Unilateral breast implant,PS,163,163,161,성형외과
+"2020","1","36.12",Aortocoronary bypass of two coronary arteries,TS,161,161,161,흉부외과
+"2020","1","07.79",Other operations on hypophysis; other,NS,159,159,158,신경외과
+"2020","1","07.8",Thymectomy,TS,157,157,157,흉부외과
+"2020","1","43.89",Other partial gastrectomy; other,GIS,153,153,153,위장관외과
+"2020","1","20.49",Other mastoidectomy,OL,152,152,149,이비인후과
+"2020","1","97.89",Removal of other therapeutic device,OS,143,143,143,정형외과
+"2020","1","79.32",Open reduction of fracture with internal fixation radius and ulna,OS,141,140,140,정형외과
+"2020","1","39.51",Clipping of aneurysm,NS,139,139,139,신경외과
+"2020","1","32.3",Segmental resection of lung,TS,139,139,139,흉부외과
+"2020","1","03.4",Excision or destruction of lesion of spinal cord or spinal meninges,NS,141,141,137,신경외과
+"2020","1","01.24",Other craniotomy,NS,155,151,137,신경외과
+"2020","1","06.2",Unilateral thyroid lobectomy,OL,135,135,135,이비인후과
+"2020","1","54.11",Exploratory laparotomy,OG,136,135,133,산부인과
+"2020","1","43.99",Other total gastrectomy,GIS,131,131,131,위장관외과
+"2020","1","53.00",Unilateral repair of inguinal hernia [NOS],CRS,132,132,130,대장항문외과
+"2020","1","52.52",Distal pancreatectomy,HBPS,130,130,130,간담췌외과
+"2020","1","03.4",Excision or destruction of lesion of spinal cord or spinal meninges,AN,144,144,128,마취통증의학과
+"2020","1","83.39",Excision of lesion of other soft tissue,OS,133,130,127,정형외과
+"2020","1","50.3",Lobectomy of liver,HBPS,124,124,124,간담췌외과
+"2020","1","74.1",Low cervical cesarean section,OG,122,122,122,산부인과
+"2020","1","31.98",Other operations on larynx,OL,123,123,120,이비인후과
+"2020","1","50.59",Other transplant of liver,HBPS,118,116,116,간담췌외과
+"2020","1","39.42",Revision of arteriovenous shunt for renal dialysis,TVS,131,127,110,이식혈관외과
+"2020","1","03.90",Insertion of catheter into spinal canal for infusion of therapeutic or,AN,111,111,109,마취통증의학과
+"2020","1","06.4",Complete thyroidectomy,OL,108,108,108,이비인후과
+"2020","1","81.07",Lumbar and lumbosacral fusion lateral transverse process technique,OS,108,108,107,정형외과
+"2020","1","31.1",Temporary tracheostomy,OL,107,107,106,이비인후과
+"2020","1","39.28",Extracranial.intracranial (EC.IC) vascular bypass,NS,128,128,106,신경외과
+"2020","1","86.28",Nonexcisional debridement of wound infection or burn,PS,152,121,104,성형외과
+"2020","1","46.41",Revision of stoma of small intestine,CRS,102,102,102,대장항문외과
+"2019","1","13.71",Insertion of intraocular lens prosthesis at time of cataract,OT,2356,2355,1782,안과
+"2019","1","03.91",Injection of anesthetic into spinal canal for analgesia,AN,3523,3519,1716,마취통증의학과
+"2019","1","14.74",Other mechanical vitrectomy,OT,954,954,896,안과
+"2019","1","85.21",Local excision of lesion of breast,GS,803,803,802,외과
+"2019","1","04.81",Injection of anesthetic into peripheral nerve for analgesia,AN,1369,1368,770,마취통증의학과
+"2019","1","68.9",Other and unspecified hysterectomy,OG,698,698,698,산부인과
+"2019","1","57.49",Other transurethral excision or destruction of lesion or tissue of bla,UR,870,868,674,비뇨의학과
+"2019","1","32.4",Lobectomy of lung,TS,549,549,549,흉부외과
+"2019","1","81.54",Total knee replacement,OS,750,531,526,정형외과
+"2019","1","51.23",Laparoscopic cholecystectomy,GS,482,482,482,외과
+"2019","1","68.12",Hysteroscopy,OG,486,486,471,산부인과
+"2019","1","48.63",Other anterior resection of rectum,GS,459,459,459,외과
+"2019","1","32.29",Other local excision or destruction of lesion or tissue of lung,TS,414,414,408,흉부외과
+"2019","1","65.2",Local excision or destruction of ovarion lesion or tissue,OG,391,391,391,산부인과
+"2019","1","74.99",Other cesarean section of unspecified type,OG,383,382,381,산부인과
+"2019","1","43.6",Partial gastrectomy with anastomosis to duodenum,GS,378,378,378,외과
+"2019","1","06.2",Unilateral thyroid lobectomy,GS,373,373,373,외과
+"2019","1","03.4",Excision or destruction of lesion of spinal cord or spinal meninges,AN,419,419,370,마취통증의학과
+"2019","1","39.27",Arteriovenostomy for renal dialysis,GS,364,363,350,외과
+"2019","1","85.4",Mastectomy,GS,341,341,339,외과
+"2019","1","55.5",Complete nephrectomy,UR,343,343,338,비뇨의학과
+"2019","1","22.9",Other operations on nasal sinuses,OL,340,339,338,이비인후과
+"2019","1","21.88",Other septoplasty,OL,338,338,337,이비인후과
+"2019","1","60.5",Radical prostatectomy,UR,335,335,335,비뇨의학과
+"2019","1","39.72",Endovascular repair or occlusion of head and neck vessels,NS,341,339,334,신경외과
+"2019","1","54.11",Exploratory laparotomy,GS,339,326,325,외과
+"2019","1","01.59",Other excision or destruction of lesion or tissue of brain,NS,301,300,293,신경외과
+"2019","1","65.4",Unilateral salpingo.oophorectomy,OG,290,290,290,산부인과
+"2019","1","74.1",Low cervical cesarean section,OG,258,258,258,산부인과
+"2019","1","52.7",Radical pancreaticoduodenectomy,GS,256,256,256,외과
+"2019","1","68.29",Other excision or destruction of lesion of uterus,OG,255,255,255,산부인과
+"2019","1","35.2",Replacement of heart valve,TS,241,240,240,흉부외과
+"2019","1","50.22",Partial hepatectomy,GS,229,229,228,외과
+"2019","1","81.92",Injection of therapeutic substance into joint or ligament,AN,330,330,227,마취통증의학과
+"2019","1","83.39",Excision of lesion of other soft tissue,OS,237,236,226,정형외과
+"2019","1","55.51",Nephroureterectomy,UR,217,217,217,비뇨의학과
+"2019","1","45.73",Right hemicolectomy,GS,216,216,216,외과
+"2019","1","05.31",Injection of anesthetic into sympathetic nerve for analgesia,AN,264,263,214,마취통증의학과
+"2019","1","81.51",Total hip replacement,OS,226,221,214,정형외과
+"2019","1","16.99",Other operations on eyeball,OT,237,236,213,안과
+"2019","1","06.4",Complete thyroidectomy,GS,212,212,212,외과
+"2019","1","60.61",Local excision of lesion of prostate,UR,212,212,209,비뇨의학과
+"2019","1","86.3",Other local excision or destruction of lesion or tissue of skin and,PS,209,209,202,성형외과
+"2019","1","55.01",Nephrotomy,UR,216,213,202,비뇨의학과
+"2019","1","83.39",Excision of lesion of other soft tissue,PS,205,205,199,성형외과
+"2019","1","85.95",Insertion of breast tissue expander,PS,198,198,197,성형외과
+"2019","1","55.69",Other kidney transplantation,GS,197,197,197,외과
+"2019","1","54.11",Exploratory laparotomy,OG,196,195,193,산부인과
+"2019","1","01.24",Other craniotomy,NS,202,199,193,신경외과
+"2019","1","43.89",Other partial gastrectomy; other,GS,176,176,176,외과
+"2019","1","53.00",Unilateral repair of inguinal hernia [NOS],GS,175,175,174,외과
+"2019","1","03.6",Lysis of adhesions of spinal cord and nerve roots,AN,196,196,173,마취통증의학과
+"2019","1","51.22",Total cholecystectomy,GS,174,174,172,외과
+"2019","1","39.51",Clipping of aneurysm,NS,167,167,166,신경외과
+"2019","1","20.49",Other mastoidectomy,OL,168,167,164,이비인후과
+"2019","1","83.63",Rotator cuff repair,OS,163,162,161,정형외과
+"2019","1","03.09",Other exploration and decompression of spinal canal,NS,160,155,153,신경외과
+"2019","1","36.12",Aortocoronary bypass of two coronary arteries,TS,152,151,151,흉부외과
+"2019","1","39.42",Revision of arteriovenous shunt for renal dialysis,GS,175,171,150,외과
+"2019","1","07.8",Thymectomy,TS,147,147,147,흉부외과
+"2019","1","06.2",Unilateral thyroid lobectomy,OL,143,143,143,이비인후과
+"2019","1","31.98",Other operations on larynx,OL,141,141,140,이비인후과
+"2019","1","81.07",Lumbar and lumbosacral fusion lateral transverse process technique,OS,139,139,139,정형외과
+"2019","1","43.99",Other total gastrectomy,GS,140,140,139,외과
+"2019","1","97.89",Removal of other therapeutic device,GS,136,136,134,외과
+"2019","1","03.90",Insertion of catheter into spinal canal for infusion of therapeutic or,AN,135,134,133,마취통증의학과
+"2019","1","85.53",Unilateral breast implant,PS,132,132,132,성형외과
+"2019","1","97.89",Removal of other therapeutic device,OS,133,133,132,정형외과
+"2019","1","19.4",Myringoplasty,OL,131,131,128,이비인후과
+"2019","1","50.59",Other transplant of liver,GS,130,128,128,외과
+"2019","1","06.4",Complete thyroidectomy,OL,125,125,125,이비인후과
+"2019","1","32.3",Segmental resection of lung,TS,121,121,120,흉부외과
+"2019","1","38.5",Ligation and stripping of varicose veins,GS,120,120,120,외과
+"2019","1","86.28",Nonexcisional debridement of wound infection or burn,PS,132,127,118,성형외과
+"2019","1","50.3",Lobectomy of liver,GS,114,114,114,외과
+"2019","1","79.32",Open reduction of fracture with internal fixation radius and ulna,OS,114,113,113,정형외과
+"2019","1","52.52",Distal pancreatectomy,GS,113,113,113,외과
+"2019","1","46.41",Revision of stoma of small intestine,GS,112,112,112,외과
+"2019","1","86.4",Radical excision of skin lesion,GS,110,110,110,외과
+"2019","1","57.71",Radical cystectomy,UR,109,109,109,비뇨의학과
+"2019","1","83.92",Insertion or replacement of skeletal muscle stimulator,AN,158,158,109,마취통증의학과
+"2019","1","03.4",Excision or destruction of lesion of spinal cord or spinal meninges,NS,113,111,108,신경외과
+"2019","1","12.79",Other glaucoma procedures,OT,122,119,106,안과
+"2019","1","85.87",Other repair or reconstruction of nipple,PS,105,105,102,성형외과
+"2018","1","13.71",Insertion of intraocular lens prosthesis at time of cataract,OT,2356,2351,1747,안과
+"2018","1","04.81",Injection of anesthetic into peripheral nerve for analgesia,AN,3809,3805,1414,마취통증의학과
+"2018","1","03.91",Injection of anesthetic into spinal canal for analgesia,AN,2435,2434,1398,마취통증의학과
+"2018","1","85.21",Local excision of lesion of breast,GS,790,790,789,외과
+"2018","1","14.74",Other mechanical vitrectomy,OT,803,802,753,안과
+"2018","1","68.9",Other and unspecified hysterectomy,OG,612,612,612,산부인과
+"2018","1","51.23",Laparoscopic cholecystectomy,GS,611,611,611,외과
+"2018","1","57.49",Other transurethral excision or destruction of lesion or tissue of bla,UR,779,778,596,비뇨의학과
+"2018","1","68.12",Hysteroscopy,OG,555,554,521,산부인과
+"2018","1","48.63",Other anterior resection of rectum,GS,513,513,512,외과
+"2018","1","32.29",Other local excision or destruction of lesion or tissue of lung,TS,434,434,427,흉부외과
+"2018","1","81.54",Total knee replacement,OS,597,431,420,정형외과
+"2018","1","22.9",Other operations on nasal sinuses,OL,400,399,399,이비인후과
+"2018","1","39.27",Arteriovenostomy for renal dialysis,GS,426,422,394,외과
+"2018","1","65.2",Local excision or destruction of ovarion lesion or tissue,OG,393,392,392,산부인과
+"2018","1","32.4",Lobectomy of lung,TS,381,381,381,흉부외과
+"2018","1","60.5",Radical prostatectomy,UR,349,349,349,비뇨의학과
+"2018","1","21.88",Other septoplasty,OL,348,348,346,이비인후과
+"2018","1","55.5",Complete nephrectomy,UR,335,334,331,비뇨의학과
+"2018","1","01.59",Other excision or destruction of lesion or tissue of brain,NS,316,314,310,신경외과
+"2018","1","74.99",Other cesarean section of unspecified type,OG,294,294,294,산부인과
+"2018","1","43.6",Partial gastrectomy with anastomosis to duodenum,GS,293,293,293,외과
+"2018","1","54.11",Exploratory laparotomy,GS,304,290,284,외과
+"2018","1","74.1",Low cervical cesarean section,OG,283,283,283,산부인과
+"2018","1","85.4",Mastectomy,GS,283,283,282,외과
+"2018","1","39.72",Endovascular repair or occlusion of head and neck vessels,NS,290,286,280,신경외과
+"2018","1","52.7",Radical pancreaticoduodenectomy,GS,278,278,278,외과
+"2018","1","03.4",Excision or destruction of lesion of spinal cord or spinal meninges,AN,314,314,272,마취통증의학과
+"2018","1","06.2",Unilateral thyroid lobectomy,GS,272,272,272,외과
+"2018","1","65.4",Unilateral salpingo.oophorectomy,OG,271,271,271,산부인과
+"2018","1","81.51",Total hip replacement,OS,271,258,249,정형외과
+"2018","1","85.95",Insertion of breast tissue expander,PS,235,235,234,성형외과
+"2018","1","03.09",Other exploration and decompression of spinal canal,NS,232,229,227,신경외과
+"2018","1","83.39",Excision of lesion of other soft tissue,OS,227,227,218,정형외과
+"2018","1","50.22",Partial hepatectomy,GS,218,218,218,외과
+"2018","1","81.92",Injection of therapeutic substance into joint or ligament,AN,283,283,217,마취통증의학과
+"2018","1","68.29",Other excision or destruction of lesion of uterus,OG,213,213,213,산부인과
+"2018","1","39.72",Endovascular repair or occlusion of head and neck vessels,DR,214,214,211,영상의학과
+"2018","1","60.61",Local excision of lesion of prostate,UR,207,206,205,비뇨의학과
+"2018","1","01.24",Other craniotomy,NS,222,217,203,신경외과
+"2018","1","35.2",Replacement of heart valve,TS,204,203,203,흉부외과
+"2018","1","07.79",Other operations on hypophysis; other,NS,206,202,201,신경외과
+"2018","1","06.4",Complete thyroidectomy,GS,198,198,198,외과
+"2018","1","16.99",Other operations on eyeball,OT,218,218,195,안과
+"2018","1","83.39",Excision of lesion of other soft tissue,PS,200,200,194,성형외과
+"2018","1","45.73",Right hemicolectomy,GS,192,192,192,외과
+"2018","1","36.12",Aortocoronary bypass of two coronary arteries,TS,185,182,182,흉부외과
+"2018","1","20.49",Other mastoidectomy,OL,185,185,180,이비인후과
+"2018","1","19.4",Myringoplasty,OL,182,182,180,이비인후과
+"2018","1","55.51",Nephroureterectomy,UR,179,178,178,비뇨의학과
+"2018","1","83.63",Rotator cuff repair,OS,170,169,169,정형외과
+"2018","1","53.00",Unilateral repair of inguinal hernia [NOS],GS,163,163,161,외과
+"2018","1","98.20",Removal of foreign body  [NOS],OS,159,159,159,정형외과
+"2018","1","43.99",Other total gastrectomy,GS,155,155,155,외과
+"2018","1","54.11",Exploratory laparotomy,OG,156,156,155,산부인과
+"2018","1","43.89",Other partial gastrectomy; other,GS,154,154,154,외과
+"2018","1","39.51",Clipping of aneurysm,NS,151,151,150,신경외과
+"2018","1","79.32",Open reduction of fracture with internal fixation radius and ulna,OS,150,149,149,정형외과
+"2018","1","12.79",Other glaucoma procedures,OT,160,159,146,안과
+"2018","1","50.3",Lobectomy of liver,GS,146,146,146,외과
+"2018","1","55.69",Other kidney transplantation,GS,143,143,143,외과
+"2018","1","31.98",Other operations on larynx,OL,143,143,139,이비인후과
+"2018","1","85.5",Augmentation mammoplasty,PS,139,139,137,성형외과
+"2018","1","50.59",Other transplant of liver,GS,135,134,134,외과
+"2018","1","05.31",Injection of anesthetic into sympathetic nerve for analgesia,AN,172,171,133,마취통증의학과
+"2018","1","83.92",Insertion or replacement of skeletal muscle stimulator,AN,158,158,129,마취통증의학과
+"2018","1","99.9",Other miscellaneous procedures,PS,133,133,128,성형외과
+"2018","1","81.08",Lumbar and lumbosacral fusion posterior technique,OS,127,127,126,정형외과
+"2018","1","86.3",Other local excision or destruction of lesion or tissue of skin and,PS,132,132,126,성형외과
+"2018","1","86.28",Nonexcisional debridement of wound infection or burn,PS,172,130,123,성형외과
+"2018","1","97.89",Removal of other therapeutic device,GS,124,124,120,외과
+"2018","1","46.41",Revision of stoma of small intestine,GS,122,122,120,외과
+"2018","1","03.4",Excision or destruction of lesion of spinal cord or spinal meninges,NS,121,121,118,신경외과
+"2018","1","86.4",Radical excision of skin lesion,GS,117,117,113,외과
+"2018","1","85.89",Other mammoplasty,PS,113,113,112,성형외과
+"2018","1","38.93",Venous catheterization not elsewhere classified,GS,110,108,108,외과
+"2018","1","55.01",Nephrotomy,UR,114,113,108,비뇨의학과
+"2018","1","52.52",Distal pancreatectomy,GS,107,107,107,외과
+"2018","1","03.6",Lysis of adhesions of spinal cord and nerve roots,AN,115,115,107,마취통증의학과
+"2018","1","04.43",Release of carpal tunnel,OS,106,106,105,정형외과
+"2018","1","92.30","Stereotactic radiosurgery, not otherwise specified",NS,105,105,104,신경외과
+"2018","1","31.1",Temporary tracheostomy,OL,103,103,103,이비인후과
+"2018","1","79.36",Open reduction of fracture with internal fixation tibia and fibula,OS,108,103,101,정형외과

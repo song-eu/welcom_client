@@ -45,7 +45,7 @@ const MonthlyBarLineChart = (props) => {
         }
         var dataBar = await jsonToData(dataloc2)
 
-        console.log('data??', data, 'data2?', dataBar)
+        // console.log('data??', data, 'data2?', dataBar)
 
         var x = d3
             .scaleBand()
@@ -208,7 +208,7 @@ const MonthlyBarLineChart = (props) => {
             .attr('class', 'line') // Assign a class for styling
             .attr('d', line(dataBar)) // 11. Calls the line generator
             .attr('fill', 'none')
-            .attr('stroke', 'tomato')
+            .attr('stroke', '#FFAFBD')
             .attr('stroke-width', 2)
             .attr('stroke-linejoin', 'round')
             .attr('stroke-linecap', 'round')
@@ -231,9 +231,9 @@ const MonthlyBarLineChart = (props) => {
             .attr('cy', function (d) {
                 return y(d.VALUE)
             })
-            .attr('r', 8)
-            .attr('stroke', 'tomato')
-            .attr('fill', 'tomato')
+            .attr('r', 5)
+            .attr('stroke', '#ffc3a0')
+            .attr('fill', '#ffc3a0')
             .transition()
             .ease(d3.easeSin)
             .duration(2500)

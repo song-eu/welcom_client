@@ -23,10 +23,10 @@ const jsonToData = (dataloc, geojson) => {
         base.forEach((d, i) => {
             if (d.RN && d.CLDG_NM) {
                 // console.log('data treemap?', d)
-                if (result[d.MONTH]) {
-                    if (!result[d.MONTH][d.HSP_TP_CD]) {
-                        result[d.MONTH][d.HSP_TP_CD] = []
-                        result[d.MONTH][d.HSP_TP_CD].push({
+                if (result[d.YEAR]) {
+                    if (!result[d.YEAR][d.HSP_TP_CD]) {
+                        result[d.YEAR][d.HSP_TP_CD] = []
+                        result[d.YEAR][d.HSP_TP_CD].push({
                             name: 'Origin',
                             name_full: '',
                             value: 0,
@@ -34,7 +34,7 @@ const jsonToData = (dataloc, geojson) => {
                             Origin: '',
                         })
                     }
-                    result[d.MONTH][d.HSP_TP_CD].push({
+                    result[d.YEAR][d.HSP_TP_CD].push({
                         name: d.ICD10_CD,
                         name_full: d.CLDG_NM,
                         value: parseInt(d.PCNT),
@@ -42,18 +42,57 @@ const jsonToData = (dataloc, geojson) => {
                         Origin: '',
                     })
                 } else {
-                    result[d.MONTH] = {}
-                    result[d.MONTH][d.HSP_TP_CD] = []
-                    result[d.MONTH][d.HSP_TP_CD].push({
+                    result[d.YEAR] = {}
+                    result[d.YEAR][d.HSP_TP_CD] = []
+                    result[d.YEAR][d.HSP_TP_CD].push({
                         name: 'Origin',
                         name_full: '',
                         value: 0,
                         parent: '',
                         Origin: '',
                     })
-                    result[d.MONTH][d.HSP_TP_CD].push({
+                    result[d.YEAR][d.HSP_TP_CD].push({
                         name: d.ICD10_CD,
                         name_full: d.CLDG_NM,
+                        value: parseInt(d.PCNT),
+                        parent: 'Origin',
+                        Origin: '',
+                    })
+                    // console.log('data process', result)
+                }
+            } else if (d.OP_VOC_NM && d.ICD9CM_CD) {
+                // console.log('data treemap?', d)
+                if (result[d.YEAR]) {
+                    if (!result[d.YEAR][d.HSP_TP_CD]) {
+                        result[d.YEAR][d.HSP_TP_CD] = []
+                        result[d.YEAR][d.HSP_TP_CD].push({
+                            name: 'Origin',
+                            name_full: '',
+                            value: 0,
+                            parent: '',
+                            Origin: '',
+                        })
+                    }
+                    result[d.YEAR][d.HSP_TP_CD].push({
+                        name: d.ICD9CM_CD,
+                        name_full: d.OP_VOC_NM,
+                        value: parseInt(d.PCNT),
+                        parent: 'Origin',
+                        Origin: '',
+                    })
+                } else {
+                    result[d.YEAR] = {}
+                    result[d.YEAR][d.HSP_TP_CD] = []
+                    result[d.YEAR][d.HSP_TP_CD].push({
+                        name: 'Origin',
+                        name_full: '',
+                        value: 0,
+                        parent: '',
+                        Origin: '',
+                    })
+                    result[d.YEAR][d.HSP_TP_CD].push({
+                        name: d.ICD9CM_CD,
+                        name_full: d.OP_VOC_NM,
                         value: parseInt(d.PCNT),
                         parent: 'Origin',
                         Origin: '',

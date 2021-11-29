@@ -33,14 +33,22 @@ const DeptHorizonBarChart = (props) => {
         // if (selectData != null) {
         //     setData(sampleData.depHorizonData[selectData])
         // }
+        // console.log('dataloc?', dataloc)
+        // console.log('dateCtrl?', dateCtrl)
+
         let getData = await jsonToData(dataloc)
         let realdata = getData[dateCtrl]
+            .sort((a, b) => {
+                return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
+            })
+            .slice(-40)
+        // console.log('dataloc?', getData, realdata)
+
         // realdata.sort((a, b) => {
         //     return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
         // })
         // console.log('getdatA?', getData, 'realdata', realdata)
         // console.log('realdata???', realdata)
-        realdata = realdata.slice(-15)
         //console.log('realdata???', realdata)
 
         const xMaxValue = d3.max(realdata, (d) => d.value)
@@ -129,7 +137,7 @@ const DeptHorizonBarChart = (props) => {
             .sort((a, b) => {
                 return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
             })
-            .slice(-25)
+            .slice(-40)
         // console.log('data??', getData, 'real', realdata)
 
         const xMaxValue = d3.max(realdata, (d) => d.value)
@@ -187,7 +195,7 @@ const DeptHorizonBarChart = (props) => {
 
             tip.show(i, this)
             // console.log('pos?', pos.width, tipNodeWidth, pos.right, pos)
-            console.log('this???', this)
+            // console.log('this???', this)
             //console.log('depToolTip',d3.selectAll('#depToolTip').node().getBoundingClientRect() )
 
             // tip.style('left', `${pos['x'] + pos['width']} px`)

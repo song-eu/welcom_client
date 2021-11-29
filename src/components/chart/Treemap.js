@@ -55,8 +55,8 @@ const Treemap = (props) => {
         // const dataset = sampleData.circleCharData.data1
 
         const getdata = await jsonToData(dataloc)
-        const dataset = getdata[dateCtrl][pageInfo]
-        // console.log('treemap get data', dataset)
+        const dataset = getdata[dateCtrl.substring(0, 4)][pageInfo]
+        // console.log('treemap get data', getdata, dateCtrl)
         var colors = []
         let colorBar = [
             lightGreen,
@@ -115,13 +115,6 @@ const Treemap = (props) => {
                 .range(colors) // the way the data should be shown
         // .range(['#f44336', '#ffebee'])
 
-        const onMouseOver = (d, i) => {
-            console.log('treemap mouseover d??', d, 'i', i, 'this', this)
-            // tip.show(i, this)
-            // var tips = d3.select(.tooltipTree)
-            d3.select(this).transition().duration(100).attr('fill', '#ffc500')
-        }
-
         const container = d3.select(svgRef.current) //make sure there's a svg element in your html file
         // .call((g) => g.select('svg').remove())
 
@@ -175,7 +168,7 @@ const Treemap = (props) => {
                     .style('word-break', 'break-all')
 
                 d3.select('.treemapTooltip')
-                    .style('font-size', '25px')
+                    .style('font-size', '18px')
                     .html(
                         '<strong>' +
                             i.data.name_full +
@@ -189,6 +182,11 @@ const Treemap = (props) => {
                     .duration(100)
                     .attr('fill', '#ffc500')
             })
+            .on('mousemove', (e) =>
+                treetooltip
+                    .style('top', `${e.pageY}px`)
+                    .style('left', `${e.pageX + 10}px`)
+            )
             .on('mouseleave', (d, i) => {
                 treetooltip.style('opacity', 0)
 
@@ -221,7 +219,8 @@ const Treemap = (props) => {
             .attr('font-size', '25px')
             .attr('fill', 'black')
             .style('word-break', 'break-all')
-    }, [dateCtrl])
+        // }, [dateCtrl])
+    }, [])
 
     return (
         <TreemapStyle>

@@ -31,23 +31,29 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import BubbleCircleChart from './chart/BubbleChart'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
 const VisitOutpatient = (props) => {
     const [thisMonth, setThisMonth] = useState(
         moment().subtract(1, 'month').format('MMMM YYYY')
     )
+    const [thisYear, setThisYear] = useState(
+        moment().subtract(1, 'month').format('YYYY')
+    )
     const [error, setError] = useState(null)
     const [selectData, setSelectData] = useState(
         moment().subtract(1, 'month').format('YYYY-MM')
     )
+    // console.log('selectData?', selectData)
     const outPatientVisitBarChart = 'Monthly Oupatinet Visits by Hospital'
     const outPatientHBarChart = `Outpatient Visits by Department in ${thisMonth}`
     const outPationtTotalBarChart = `Monthly Visit total (Outpatient & ER)`
     const outPatientGenderChart = `Outpatient Visit by Age & Gender in ${thisMonth}`
     const outPatientPersonMap = `Outpatient Visit by Location in ${thisMonth}`
     const outPatientPieChart = 'Outpatient Visit by Nation'
-    const outPatientTreemapHeader = `Outpatient Top 30 Dignosis in ${thisMonth}`
+    const outPatientTreemapHeader = `SNUH Top Dignosis in ${thisYear}`
+    const outPatientBubbleHeader = `SNUH Top Procedure in ${thisYear}`
 
     const dataLocation = '/outpatientData'
     const outBarchartData = dataLocation + '/1_1year_total_by_hospital_OUT.csv'
@@ -57,6 +63,8 @@ const VisitOutpatient = (props) => {
     const outMonthlyBarData = dataLocation + '/5_1year_monthly_total_OUT.csv'
     const outMonthlyBarLineData =
         dataLocation + '/5-2_1year_monthly_total_ER_OUT.json'
+    const outYearlyProcedureData =
+        dataLocation + '/yearly_procedure_order_by_hsp_pcnt_OUT.json'
 
     var sliderMark = []
     for (let i = 11; i >= 0; i--) {
@@ -381,14 +389,16 @@ const VisitOutpatient = (props) => {
                                 <Treemap
                                     header={outPatientTreemapHeader}
                                     dateCtrl={selectData}
+                                    pageInfo={'G'}
+                                    onClickEvent={onClickEvent}
+                                />
+                                <BubbleCircleChart
+                                    header={outPatientBubbleHeader}
+                                    dataloc={outYearlyProcedureData}
+                                    dateCtrl={selectData}
                                     pageInfo={1}
                                     onClickEvent={onClickEvent}
                                 />
-                                {/* <Treemap
-                                    header={outPatientTreemapHeader}
-                                    dateCtrl={selectData}
-                                    pageInfo={1}
-                                /> */}
                             </BoxStyle>
                         </RowStyle>
                     </RightBack>

@@ -1,0 +1,3423 @@
+{
+"WITH a AS (\r\nSELECT to_char(SRGR_STR_DTM , 'YYYY') \"YEAR\" ,HSP_TP_CD, ICD9CM_CD, OP_VOC_NM, MED_DEPT_CD, count(*) ROWCNT, count(DISTINCT PACT_ID) VISITCNT, count(DISTINCT PT_NO) PCNT \r\nFROM FT_STM_SRGR fsd\r\n--LEFT JOIN FT_STM_VIST fsv \r\n--ON fsd.PACT_ID = fsv.PACT_ID \r\nWHERE 1=1\r\n--AND fsv.HSP_TP_CD ='2'\r\nAND to_char(SRGR_STR_DTM , 'YYYY-MM') BETWEEN '2018-01' AND '2021-11'\r\nAND MED_DEPT_CD NOT IN ('ANO2', 'RHMSK', 'AN', 'TVS')\r\nAND ICD9CM_CD NOT IN ('68.12', '99.99', '13.71', '54.11')\r\nAND HSP_TP_CD = '1'\r\nAND round((SRGR_END_DTM - SRGR_STR_DTM )*24, 2)  > 3\r\n--AND PACT_TP_NM = '입원'\r\nGROUP BY to_char(SRGR_STR_DTM , 'YYYY') ,HSP_TP_CD, ICD9CM_CD, OP_VOC_NM , MED_DEPT_CD\r\nORDER BY 1, 2, 8 DESC)\r\nSELECT a.*\r\n--, (SELECT dept_nm  \r\n--FROM LT_STM_DEPT ld WHERE ld.DEPT_CD = a.med_dept_cd)\r\nFROM a a\r\nWHERE pcnt > 10\r\nORDER BY 1 DESC, 2, 8 desc\r\n": [
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.7",
+		"OP_VOC_NM" : "Pylorus preserving pancreaticoduodenectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 199,
+		"VISITCNT" : 199,
+		"PCNT" : 199
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.59",
+		"OP_VOC_NM" : "Craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 170,
+		"VISITCNT" : 170,
+		"PCNT" : 170
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.2",
+		"OP_VOC_NM" : "Replacement of heart valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 162,
+		"VISITCNT" : 162,
+		"PCNT" : 162
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.22",
+		"OP_VOC_NM" : "Living donor hepatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 113,
+		"VISITCNT" : 113,
+		"PCNT" : 112
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.59",
+		"OP_VOC_NM" : "Living donor liver transplantation (adult)",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 112,
+		"VISITCNT" : 112,
+		"PCNT" : 112
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "36.12",
+		"OP_VOC_NM" : "Aortocoronary bypass of two or more coronary artery",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 107,
+		"VISITCNT" : 107,
+		"PCNT" : 107
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "TLDG (Totally laparoscopic distal gastrectomy)",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 90,
+		"VISITCNT" : 90,
+		"PCNT" : 90
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "57.71",
+		"OP_VOC_NM" : "Radical cystectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 85,
+		"VISITCNT" : 85,
+		"PCNT" : 85
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.89",
+		"OP_VOC_NM" : "Breast reconstruction, free TRAM MC (transverse rectus abdominis muscle myocutaneous) flap",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 82,
+		"VISITCNT" : 82,
+		"PCNT" : 82
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "Robot-assisted distal gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 80,
+		"VISITCNT" : 80,
+		"PCNT" : 80
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.28",
+		"OP_VOC_NM" : "Combined bypass surgery of STA-MCA (superficial temporal artery to middle cerebral artery) and EDAGS (Encephaloduroarteriogaleosynangiosis)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 94,
+		"VISITCNT" : 94,
+		"PCNT" : 78
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "48.63",
+		"OP_VOC_NM" : "Low anterior resection",
+		"MED_DEPT_CD" : "CRS",
+		"ROWCNT" : 77,
+		"VISITCNT" : 77,
+		"PCNT" : 76
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.51",
+		"OP_VOC_NM" : "Craniotomy and cerebral aneurysm clipping",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 74,
+		"VISITCNT" : 74,
+		"PCNT" : 74
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.9",
+		"OP_VOC_NM" : "Total hysterectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 73,
+		"VISITCNT" : 73,
+		"PCNT" : 73
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.4",
+		"OP_VOC_NM" : "Lobectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 68,
+		"VISITCNT" : 68,
+		"PCNT" : 68
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.07",
+		"OP_VOC_NM" : "OLIF (oblique lumbar interbody fusion)",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 67,
+		"VISITCNT" : 67,
+		"PCNT" : 67
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.22",
+		"OP_VOC_NM" : "Segmentectomy of liver",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 65,
+		"VISITCNT" : 65,
+		"PCNT" : 65
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.7",
+		"OP_VOC_NM" : "Whipple's operation",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 63,
+		"VISITCNT" : 63,
+		"PCNT" : 63
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "38.44",
+		"OP_VOC_NM" : "Replacement of aorta",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 59,
+		"VISITCNT" : 59,
+		"PCNT" : 59
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "Laparoscopy-assisted distal gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 56,
+		"VISITCNT" : 56,
+		"PCNT" : 56
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "45.73",
+		"OP_VOC_NM" : "Right hemicolectomy",
+		"MED_DEPT_CD" : "CRS",
+		"ROWCNT" : 45,
+		"VISITCNT" : 45,
+		"PCNT" : 45
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.4",
+		"OP_VOC_NM" : "Laminectomy and removal of IDEM (intradural extramedullary) tumor",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 45,
+		"VISITCNT" : 44,
+		"PCNT" : 44
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "20.49",
+		"OP_VOC_NM" : "Canal wall down mastoidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 44,
+		"VISITCNT" : 44,
+		"PCNT" : 44
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "54.21",
+		"OP_VOC_NM" : "Diagnostic laparoscopy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 43,
+		"VISITCNT" : 43,
+		"PCNT" : 43
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.89",
+		"OP_VOC_NM" : "Laparoscopy-assisted pylorus preserving gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 43,
+		"VISITCNT" : 43,
+		"PCNT" : 43
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.4",
+		"OP_VOC_NM" : "Total thyroidectomy",
+		"MED_DEPT_CD" : "BEN",
+		"ROWCNT" : 38,
+		"VISITCNT" : 38,
+		"PCNT" : 38
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "48.63",
+		"OP_VOC_NM" : "Anterior resection",
+		"MED_DEPT_CD" : "CRS",
+		"ROWCNT" : 38,
+		"VISITCNT" : 38,
+		"PCNT" : 38
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "42.40",
+		"OP_VOC_NM" : "Resection of esophagus with reconstruction",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 37,
+		"VISITCNT" : 37,
+		"PCNT" : 37
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Right hemihepatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 37,
+		"VISITCNT" : 37,
+		"PCNT" : 37
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "04.49",
+		"OP_VOC_NM" : "Microvascular decompression",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 34,
+		"VISITCNT" : 34,
+		"PCNT" : 33
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.07",
+		"OP_VOC_NM" : "OLIF (oblique lumbar interbody fusion)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 34,
+		"VISITCNT" : 33,
+		"PCNT" : 33
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.29",
+		"OP_VOC_NM" : "Myomectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 32,
+		"VISITCNT" : 32,
+		"PCNT" : 32
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "37.99",
+		"OP_VOC_NM" : "Cardiac redo operation",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 33,
+		"VISITCNT" : 32,
+		"PCNT" : 32
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Totally laparoscopic total gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 31,
+		"VISITCNT" : 31,
+		"PCNT" : 31
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.2",
+		"OP_VOC_NM" : "Thyroid lobectomy",
+		"MED_DEPT_CD" : "BEN",
+		"ROWCNT" : 31,
+		"VISITCNT" : 31,
+		"PCNT" : 31
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.4",
+		"OP_VOC_NM" : "Total thyroidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 28,
+		"VISITCNT" : 28,
+		"PCNT" : 28
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "65.6",
+		"OP_VOC_NM" : "Debulking surgery (postchemotherapy)",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 27,
+		"VISITCNT" : 27,
+		"PCNT" : 27
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.4",
+		"OP_VOC_NM" : "Laminectomy and removal of intramedullary tumor",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 27,
+		"VISITCNT" : 27,
+		"PCNT" : 27
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "86.4",
+		"OP_VOC_NM" : "Wide excision of other site",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 26,
+		"VISITCNT" : 26,
+		"PCNT" : 26
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.5",
+		"OP_VOC_NM" : "Laparoscopy-assisted proximal gastrectomy (Double tract anastomosis)",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 26,
+		"VISITCNT" : 26,
+		"PCNT" : 26
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "42.40",
+		"OP_VOC_NM" : "Ivor Lewis operation",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 26,
+		"VISITCNT" : 26,
+		"PCNT" : 26
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "07.8",
+		"OP_VOC_NM" : "Thymectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 25,
+		"VISITCNT" : 25,
+		"PCNT" : 25
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Retromastoid suboccipital craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 23,
+		"VISITCNT" : 23,
+		"PCNT" : 23
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.5",
+		"OP_VOC_NM" : "Nephrectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.52",
+		"OP_VOC_NM" : "Distal pancreatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.5",
+		"OP_VOC_NM" : "Breast implant insertion",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "40.9",
+		"OP_VOC_NM" : "Lymphovenous anastomosis for correction of lymphedema of limb",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Totally laparoscopic pylorus preserving gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.10",
+		"OP_VOC_NM" : "Repair of heart valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.95",
+		"OP_VOC_NM" : "Breast tissue expander insertion",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 19,
+		"VISITCNT" : 19,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.7",
+		"OP_VOC_NM" : "TLDG (Totally laparoscopic distal gastrectomy) with Billroth II",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 18,
+		"VISITCNT" : 18,
+		"PCNT" : 18
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "86.70",
+		"OP_VOC_NM" : "Free flap transfer",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 18,
+		"VISITCNT" : 18,
+		"PCNT" : 18
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "07.79",
+		"OP_VOC_NM" : "Endoscopic extended skullbase trassphenoidal approach and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 17,
+		"VISITCNT" : 17,
+		"PCNT" : 17
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Left hemihepatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "58.49",
+		"OP_VOC_NM" : "Urethroplasty for stricture, perineal",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.00",
+		"OP_VOC_NM" : "Posterior fixation of spine",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 17,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Extended right hemihepatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.2",
+		"OP_VOC_NM" : "Replacement of redo-valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.08",
+		"OP_VOC_NM" : "TLIF (transforaminal lumbar interbody fusion)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "45.73",
+		"OP_VOC_NM" : "Extended right hemicolectomy",
+		"MED_DEPT_CD" : "CRS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.71",
+		"OP_VOC_NM" : "Repair of atrial septal defect",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "60.5",
+		"OP_VOC_NM" : "Prostatectomy, radical",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "51.22",
+		"OP_VOC_NM" : "Radical cholecystectomy of gallbladder cancer",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.55",
+		"OP_VOC_NM" : "Revision of TKRA (total knee replacement arthroplasty)",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "33.50",
+		"OP_VOC_NM" : "Transplantation of lung",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Laparoscopy-assisted total gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.9",
+		"OP_VOC_NM" : "Cervical cancer radical hysterectomy (laparotomy)",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.6",
+		"OP_VOC_NM" : "Radical hysterectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Midline suboccipital craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.22",
+		"OP_VOC_NM" : "Laparoscopic segmentectomy of liver",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.3",
+		"OP_VOC_NM" : "Segmentectomy of lung",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.3",
+		"OP_VOC_NM" : "Sleeve lobectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "92.30",
+		"OP_VOC_NM" : "Stereotactic stimulation, subthalamus",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.29",
+		"OP_VOC_NM" : "Right posterior sectionectomy of liver",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.6",
+		"OP_VOC_NM" : "Total pancreatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Extended left hemihepatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.5",
+		"OP_VOC_NM" : "Pneumonectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.59",
+		"OP_VOC_NM" : "Deceased donor liver transplantation",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.29",
+		"OP_VOC_NM" : "Right anterior sectionectomy of liver",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.28",
+		"OP_VOC_NM" : "Combined bypass surgery of STA-MCA (superficial temporal artery to middle cerebral artery) and EDAMS (Encephaloduroarteriomyosynangiosisis)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "38.45",
+		"OP_VOC_NM" : "Composite graft interposition for annuloaortic ectasia (Bentall operation)",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.29",
+		"OP_VOC_NM" : "Wedge resection of lung",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2021",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.25",
+		"OP_VOC_NM" : "Decompressive craniectomy and duroplasty",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.7",
+		"OP_VOC_NM" : "Pylorus preserving pancreaticoduodenectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 192,
+		"VISITCNT" : 192,
+		"PCNT" : 192
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.59",
+		"OP_VOC_NM" : "Craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 188,
+		"VISITCNT" : 186,
+		"PCNT" : 186
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.2",
+		"OP_VOC_NM" : "Replacement of heart valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 163,
+		"VISITCNT" : 163,
+		"PCNT" : 163
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "36.12",
+		"OP_VOC_NM" : "Aortocoronary bypass of two or more coronary artery",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 159,
+		"VISITCNT" : 159,
+		"PCNT" : 159
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.28",
+		"OP_VOC_NM" : "Combined bypass surgery of STA-MCA (superficial temporal artery to middle cerebral artery) and EDAGS (Encephaloduroarteriogaleosynangiosis)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 126,
+		"VISITCNT" : 126,
+		"PCNT" : 104
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.9",
+		"OP_VOC_NM" : "Total hysterectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 100,
+		"VISITCNT" : 100,
+		"PCNT" : 100
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.22",
+		"OP_VOC_NM" : "Living donor hepatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 96,
+		"VISITCNT" : 96,
+		"PCNT" : 96
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.59",
+		"OP_VOC_NM" : "Living donor liver transplantation (adult)",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 95,
+		"VISITCNT" : 94,
+		"PCNT" : 94
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.89",
+		"OP_VOC_NM" : "Breast reconstruction, free TRAM MC (transverse rectus abdominis muscle myocutaneous) flap",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 90,
+		"VISITCNT" : 90,
+		"PCNT" : 90
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "TLDG (Totally laparoscopic distal gastrectomy)",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 88,
+		"VISITCNT" : 88,
+		"PCNT" : 88
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.07",
+		"OP_VOC_NM" : "OLIF (oblique lumbar interbody fusion)",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 82,
+		"VISITCNT" : 82,
+		"PCNT" : 82
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "57.71",
+		"OP_VOC_NM" : "Radical cystectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 81,
+		"VISITCNT" : 81,
+		"PCNT" : 81
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.4",
+		"OP_VOC_NM" : "Lobectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 76,
+		"VISITCNT" : 76,
+		"PCNT" : 76
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "Laparoscopy-assisted distal gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 76,
+		"VISITCNT" : 76,
+		"PCNT" : 76
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.51",
+		"OP_VOC_NM" : "Craniotomy and cerebral aneurysm clipping",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 66,
+		"VISITCNT" : 66,
+		"PCNT" : 66
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "20.49",
+		"OP_VOC_NM" : "Canal wall down mastoidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 66,
+		"VISITCNT" : 66,
+		"PCNT" : 65
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.22",
+		"OP_VOC_NM" : "Segmentectomy of liver",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 47,
+		"VISITCNT" : 47,
+		"PCNT" : 47
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "48.63",
+		"OP_VOC_NM" : "Low anterior resection",
+		"MED_DEPT_CD" : "CRS",
+		"ROWCNT" : 46,
+		"VISITCNT" : 46,
+		"PCNT" : 46
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "37.99",
+		"OP_VOC_NM" : "Cardiac redo operation",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 45,
+		"VISITCNT" : 45,
+		"PCNT" : 45
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "Robot-assisted distal gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 43,
+		"VISITCNT" : 43,
+		"PCNT" : 43
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "38.44",
+		"OP_VOC_NM" : "Replacement of aorta",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 44,
+		"VISITCNT" : 44,
+		"PCNT" : 43
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.89",
+		"OP_VOC_NM" : "Laparoscopy-assisted pylorus preserving gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 42,
+		"VISITCNT" : 42,
+		"PCNT" : 42
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "60.5",
+		"OP_VOC_NM" : "Prostatectomy, radical",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 41,
+		"VISITCNT" : 41,
+		"PCNT" : 41
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Right hemihepatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 40,
+		"VISITCNT" : 40,
+		"PCNT" : 40
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "04.49",
+		"OP_VOC_NM" : "Microvascular decompression",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 38,
+		"VISITCNT" : 38,
+		"PCNT" : 38
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "40.9",
+		"OP_VOC_NM" : "Lymphovenous anastomosis for correction of lymphedema of limb",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 37,
+		"VISITCNT" : 37,
+		"PCNT" : 37
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "65.6",
+		"OP_VOC_NM" : "Debulking surgery (postchemotherapy)",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 36,
+		"VISITCNT" : 36,
+		"PCNT" : 36
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.4",
+		"OP_VOC_NM" : "Laminectomy and removal of IDEM (intradural extramedullary) tumor",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 35,
+		"VISITCNT" : 35,
+		"PCNT" : 35
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "54.21",
+		"OP_VOC_NM" : "Diagnostic laparoscopy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 35,
+		"VISITCNT" : 35,
+		"PCNT" : 35
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "42.40",
+		"OP_VOC_NM" : "Resection of esophagus with reconstruction",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 32,
+		"VISITCNT" : 32,
+		"PCNT" : 32
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.5",
+		"OP_VOC_NM" : "Nephrectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 31,
+		"VISITCNT" : 31,
+		"PCNT" : 31
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Totally laparoscopic total gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 31,
+		"VISITCNT" : 31,
+		"PCNT" : 31
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.7",
+		"OP_VOC_NM" : "Whipple's operation",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 30,
+		"VISITCNT" : 30,
+		"PCNT" : 30
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Left hemihepatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 29,
+		"VISITCNT" : 29,
+		"PCNT" : 29
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.2",
+		"OP_VOC_NM" : "Replacement of redo-valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 29,
+		"VISITCNT" : 29,
+		"PCNT" : 29
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "07.8",
+		"OP_VOC_NM" : "Thymectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 29,
+		"VISITCNT" : 29,
+		"PCNT" : 29
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.07",
+		"OP_VOC_NM" : "OLIF (oblique lumbar interbody fusion)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 29,
+		"VISITCNT" : 29,
+		"PCNT" : 29
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "48.63",
+		"OP_VOC_NM" : "Anterior resection",
+		"MED_DEPT_CD" : "CRS",
+		"ROWCNT" : 29,
+		"VISITCNT" : 29,
+		"PCNT" : 29
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Total gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 26,
+		"VISITCNT" : 26,
+		"PCNT" : 26
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.08",
+		"OP_VOC_NM" : "Interbody fusion, lumbar and lumbosacral spine",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 26,
+		"VISITCNT" : 26,
+		"PCNT" : 26
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.08",
+		"OP_VOC_NM" : "TLIF (transforaminal lumbar interbody fusion)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 26,
+		"VISITCNT" : 26,
+		"PCNT" : 26
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Totally laparoscopic pylorus preserving gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 25,
+		"VISITCNT" : 25,
+		"PCNT" : 25
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.7",
+		"OP_VOC_NM" : "TLDG (Totally laparoscopic distal gastrectomy) with Billroth II",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 25,
+		"VISITCNT" : 25,
+		"PCNT" : 25
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.51",
+		"OP_VOC_NM" : "Nephrectomy, living donor",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 24,
+		"VISITCNT" : 24,
+		"PCNT" : 24
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.4",
+		"OP_VOC_NM" : "Total thyroidectomy",
+		"MED_DEPT_CD" : "BEN",
+		"ROWCNT" : 23,
+		"VISITCNT" : 23,
+		"PCNT" : 23
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.4",
+		"OP_VOC_NM" : "Total thyroidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "65.6",
+		"OP_VOC_NM" : "Debulking surgery of adnexal tumor",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.6",
+		"OP_VOC_NM" : "Radical hysterectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.29",
+		"OP_VOC_NM" : "Myomectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Extended right hemihepatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "45.73",
+		"OP_VOC_NM" : "Right hemicolectomy",
+		"MED_DEPT_CD" : "CRS",
+		"ROWCNT" : 20,
+		"VISITCNT" : 20,
+		"PCNT" : 20
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.4",
+		"OP_VOC_NM" : "Laminectomy and removal of intramedullary tumor",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 20,
+		"VISITCNT" : 20,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "86.4",
+		"OP_VOC_NM" : "Wide excision of other site",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.59",
+		"OP_VOC_NM" : "Deceased donor liver transplantation",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 19,
+		"VISITCNT" : 19,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.7",
+		"OP_VOC_NM" : "Laparoscopy-assisted distal gastrectomy (Billroth II)",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 19,
+		"VISITCNT" : 19,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.5",
+		"OP_VOC_NM" : "Laparoscopy-assisted proximal gastrectomy (Double tract anastomosis)",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 18,
+		"VISITCNT" : 18,
+		"PCNT" : 18
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.95",
+		"OP_VOC_NM" : "Breast tissue expander insertion",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 18,
+		"VISITCNT" : 18,
+		"PCNT" : 18
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "86.70",
+		"OP_VOC_NM" : "Flap operation",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 18,
+		"VISITCNT" : 18,
+		"PCNT" : 17
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "83.39",
+		"OP_VOC_NM" : "Wide excision of malignant soft tissue tumor",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 17,
+		"VISITCNT" : 17,
+		"PCNT" : 17
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.10",
+		"OP_VOC_NM" : "Repair of heart valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 17,
+		"VISITCNT" : 17,
+		"PCNT" : 17
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "92.30",
+		"OP_VOC_NM" : "Stereotactic stimulation, subthalamus",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 17,
+		"VISITCNT" : 17,
+		"PCNT" : 17
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "45.73",
+		"OP_VOC_NM" : "Extended right hemicolectomy",
+		"MED_DEPT_CD" : "CRS",
+		"ROWCNT" : 17,
+		"VISITCNT" : 17,
+		"PCNT" : 17
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "79.31",
+		"OP_VOC_NM" : "Open reduction and internal fixation, humerus",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 17,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "30.3",
+		"OP_VOC_NM" : "Total laryngectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.6",
+		"OP_VOC_NM" : "Total pancreatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "58.49",
+		"OP_VOC_NM" : "Urethroplasty for stricture, perineal",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 17,
+		"VISITCNT" : 17,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Laparoscopy-assisted total gastrectomy",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.52",
+		"OP_VOC_NM" : "Distal pancreatectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "33.50",
+		"OP_VOC_NM" : "Transplantation of lung",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.29",
+		"OP_VOC_NM" : "Tumorectomy of liver",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.71",
+		"OP_VOC_NM" : "Repair of atrial septal defect",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "07.79",
+		"OP_VOC_NM" : "Endoscopic extended skullbase trassphenoidal approach and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.29",
+		"OP_VOC_NM" : "Right posterior sectionectomy of liver",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.00",
+		"OP_VOC_NM" : "Posterior fixation of spine",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.51",
+		"OP_VOC_NM" : "Nephroureterectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Craniotomy and arteriovenous malformation removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.3",
+		"OP_VOC_NM" : "Segmentectomy of lung",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "51.22",
+		"OP_VOC_NM" : "Extended cholecystectomy",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "86.70",
+		"OP_VOC_NM" : "Free flap transfer",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "79.32",
+		"OP_VOC_NM" : "Open reduction and internal fixation, radius",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "80.51",
+		"OP_VOC_NM" : "ACDF (anterior cervical discectomy and fusion)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Retromastoid suboccipital craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.25",
+		"OP_VOC_NM" : "Decompressive craniectomy and duroplasty",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.7",
+		"OP_VOC_NM" : "Subtotal gastrectomy (Billroth II)",
+		"MED_DEPT_CD" : "GIS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "19.4",
+		"OP_VOC_NM" : "Tympanoplasty",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "79.30",
+		"OP_VOC_NM" : "Open reduction and internal fixation of fracture",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2020",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.29",
+		"OP_VOC_NM" : "Left lateral sectionectomy of liver",
+		"MED_DEPT_CD" : "HBPS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.2",
+		"OP_VOC_NM" : "Replacement of heart valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 207,
+		"VISITCNT" : 207,
+		"PCNT" : 207
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.7",
+		"OP_VOC_NM" : "Pylorus preserving pancreaticoduodenectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 204,
+		"VISITCNT" : 204,
+		"PCNT" : 204
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.59",
+		"OP_VOC_NM" : "Craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 194,
+		"VISITCNT" : 194,
+		"PCNT" : 191
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.69",
+		"OP_VOC_NM" : "Renal transplantation",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 147,
+		"VISITCNT" : 147,
+		"PCNT" : 147
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "36.12",
+		"OP_VOC_NM" : "Aortocoronary bypass of two or more coronary artery",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 146,
+		"VISITCNT" : 146,
+		"PCNT" : 146
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.59",
+		"OP_VOC_NM" : "Living donor liver transplantation (adult)",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 103,
+		"VISITCNT" : 103,
+		"PCNT" : 103
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "57.71",
+		"OP_VOC_NM" : "Radical cystectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 96,
+		"VISITCNT" : 96,
+		"PCNT" : 96
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "Laparoscopy-assisted distal gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 93,
+		"VISITCNT" : 93,
+		"PCNT" : 93
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.22",
+		"OP_VOC_NM" : "Living donor hepatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 90,
+		"VISITCNT" : 90,
+		"PCNT" : 90
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.28",
+		"OP_VOC_NM" : "Combined bypass surgery of STA-MCA (superficial temporal artery to middle cerebral artery) and EDAGS (Encephaloduroarteriogaleosynangiosis)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 110,
+		"VISITCNT" : 110,
+		"PCNT" : 89
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.07",
+		"OP_VOC_NM" : "OLIF (oblique lumbar interbody fusion)",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 88,
+		"VISITCNT" : 88,
+		"PCNT" : 88
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "20.49",
+		"OP_VOC_NM" : "Canal wall down mastoidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 87,
+		"VISITCNT" : 87,
+		"PCNT" : 87
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "TLDG (Totally laparoscopic distal gastrectomy)",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 77,
+		"VISITCNT" : 77,
+		"PCNT" : 77
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.4",
+		"OP_VOC_NM" : "Lobectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 72,
+		"VISITCNT" : 72,
+		"PCNT" : 72
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.9",
+		"OP_VOC_NM" : "Total hysterectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 68,
+		"VISITCNT" : 68,
+		"PCNT" : 68
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.89",
+		"OP_VOC_NM" : "Breast reconstruction, free TRAM MC (transverse rectus abdominis muscle myocutaneous) flap",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 67,
+		"VISITCNT" : 67,
+		"PCNT" : 67
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.51",
+		"OP_VOC_NM" : "Craniotomy and cerebral aneurysm clipping",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 67,
+		"VISITCNT" : 67,
+		"PCNT" : 67
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.00",
+		"OP_VOC_NM" : "Spinal fusion",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 60,
+		"VISITCNT" : 60,
+		"PCNT" : 60
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "Robot-assisted distal gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 58,
+		"VISITCNT" : 58,
+		"PCNT" : 58
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.89",
+		"OP_VOC_NM" : "Laparoscopy-assisted pylorus preserving gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 54,
+		"VISITCNT" : 54,
+		"PCNT" : 54
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "42.40",
+		"OP_VOC_NM" : "Resection of esophagus with reconstruction",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 49,
+		"VISITCNT" : 49,
+		"PCNT" : 49
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.4",
+		"OP_VOC_NM" : "Laminectomy and removal of IDEM (intradural extramedullary) tumor",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 48,
+		"VISITCNT" : 48,
+		"PCNT" : 48
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "37.99",
+		"OP_VOC_NM" : "Cardiac redo operation",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 40,
+		"VISITCNT" : 40,
+		"PCNT" : 40
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "38.44",
+		"OP_VOC_NM" : "Replacement of aorta",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 40,
+		"VISITCNT" : 40,
+		"PCNT" : 40
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Right hemihepatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 39,
+		"VISITCNT" : 39,
+		"PCNT" : 39
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "48.63",
+		"OP_VOC_NM" : "Low anterior resection",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 39,
+		"VISITCNT" : 39,
+		"PCNT" : 39
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.22",
+		"OP_VOC_NM" : "Segmentectomy of liver",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 36,
+		"VISITCNT" : 36,
+		"PCNT" : 36
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.51",
+		"OP_VOC_NM" : "Nephrectomy, living donor",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 35,
+		"VISITCNT" : 35,
+		"PCNT" : 35
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "07.8",
+		"OP_VOC_NM" : "Thymectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 35,
+		"VISITCNT" : 35,
+		"PCNT" : 35
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.29",
+		"OP_VOC_NM" : "Myomectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 34,
+		"VISITCNT" : 34,
+		"PCNT" : 34
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Left hemihepatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 31,
+		"VISITCNT" : 31,
+		"PCNT" : 31
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Retromastoid suboccipital craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 29,
+		"VISITCNT" : 29,
+		"PCNT" : 29
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.4",
+		"OP_VOC_NM" : "Total thyroidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 29,
+		"VISITCNT" : 29,
+		"PCNT" : 29
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.5",
+		"OP_VOC_NM" : "Nephrectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 29,
+		"VISITCNT" : 29,
+		"PCNT" : 29
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.29",
+		"OP_VOC_NM" : "Wedge resection of lung",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 28,
+		"VISITCNT" : 28,
+		"PCNT" : 28
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "48.63",
+		"OP_VOC_NM" : "Anterior resection",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 28,
+		"VISITCNT" : 28,
+		"PCNT" : 28
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "92.30",
+		"OP_VOC_NM" : "Stereotactic stimulation, subthalamus",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 28,
+		"VISITCNT" : 28,
+		"PCNT" : 28
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "60.5",
+		"OP_VOC_NM" : "Prostatectomy, radical",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 25,
+		"VISITCNT" : 25,
+		"PCNT" : 25
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "04.49",
+		"OP_VOC_NM" : "Microvascular decompression",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 25,
+		"VISITCNT" : 25,
+		"PCNT" : 25
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.59",
+		"OP_VOC_NM" : "Deceased donor liver transplantation",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 24,
+		"VISITCNT" : 24,
+		"PCNT" : 24
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "40.9",
+		"OP_VOC_NM" : "Lymphovenous anastomosis for correction of lymphedema of limb",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 25,
+		"VISITCNT" : 25,
+		"PCNT" : 24
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "65.6",
+		"OP_VOC_NM" : "Debulking surgery of adnexal tumor",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 24,
+		"VISITCNT" : 24,
+		"PCNT" : 24
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.7",
+		"OP_VOC_NM" : "Whipple's operation",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 24,
+		"VISITCNT" : 24,
+		"PCNT" : 24
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.08",
+		"OP_VOC_NM" : "TLIF (transforaminal lumbar interbody fusion)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 23,
+		"VISITCNT" : 23,
+		"PCNT" : 23
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Total gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Totally laparoscopic total gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "45.73",
+		"OP_VOC_NM" : "Right hemicolectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.6",
+		"OP_VOC_NM" : "Radical hysterectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.7",
+		"OP_VOC_NM" : "TLDG (Totally laparoscopic distal gastrectomy) with Billroth II",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 20,
+		"VISITCNT" : 20,
+		"PCNT" : 20
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Craniotomy and arteriovenous malformation removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 20,
+		"VISITCNT" : 20,
+		"PCNT" : 20
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "79.31",
+		"OP_VOC_NM" : "Open reduction and internal fixation, humerus",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 20,
+		"VISITCNT" : 19,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "51.22",
+		"OP_VOC_NM" : "Extended cholecystectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 19,
+		"VISITCNT" : 19,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.2",
+		"OP_VOC_NM" : "Replacement of redo-valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 19,
+		"VISITCNT" : 19,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.4",
+		"OP_VOC_NM" : "Laminectomy and removal of intramedullary tumor",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 18,
+		"VISITCNT" : 18,
+		"PCNT" : 18
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.51",
+		"OP_VOC_NM" : "Nephroureterectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 18,
+		"VISITCNT" : 18,
+		"PCNT" : 18
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "54.21",
+		"OP_VOC_NM" : "Diagnostic laparoscopy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 18,
+		"VISITCNT" : 18,
+		"PCNT" : 18
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "86.74",
+		"OP_VOC_NM" : "Reconstruction with free flap",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 19,
+		"VISITCNT" : 18,
+		"PCNT" : 18
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "20.49",
+		"OP_VOC_NM" : "Intact canal wall mastoidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.52",
+		"OP_VOC_NM" : "Distal pancreatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Laparoscopy-assisted total gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "79.32",
+		"OP_VOC_NM" : "Open reduction and internal fixation, radius",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 15,
+		"VISITCNT" : 15,
+		"PCNT" : 15
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "80.51",
+		"OP_VOC_NM" : "ACDF (anterior cervical discectomy and fusion)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.52",
+		"OP_VOC_NM" : "Repair of aneurysm",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "37.5",
+		"OP_VOC_NM" : "Transplantation of heart",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "83.39",
+		"OP_VOC_NM" : "Wide excision of malignant soft tissue tumor",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "07.79",
+		"OP_VOC_NM" : "Endoscopic transsphenoidal approach and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.95",
+		"OP_VOC_NM" : "Breast tissue expander insertion",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.5",
+		"OP_VOC_NM" : "Laparoscopy-assisted proximal gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.5",
+		"OP_VOC_NM" : "Laparoscopy-assisted proximal gastrectomy (Double tract anastomosis)",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.7",
+		"OP_VOC_NM" : "Subtotal gastrectomy (Billroth II)",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.4",
+		"OP_VOC_NM" : "bilobectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.07",
+		"OP_VOC_NM" : "OLIF (oblique lumbar interbody fusion)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.2",
+		"OP_VOC_NM" : "Thyroid lobectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.4",
+		"OP_VOC_NM" : "Total thyroidectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.09",
+		"OP_VOC_NM" : "Laminoplasty, cervical spine",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.25",
+		"OP_VOC_NM" : "Craniectomy and intracerebral hematoma evacuation",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.25",
+		"OP_VOC_NM" : "Decompressive craniectomy and duroplasty",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.4",
+		"OP_VOC_NM" : "Total mastectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "38.6",
+		"OP_VOC_NM" : "Excision of vessel",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "25.2",
+		"OP_VOC_NM" : "Partial glossectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "33.50",
+		"OP_VOC_NM" : "Transplantation of lung",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "30.3",
+		"OP_VOC_NM" : "Total laryngectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.3",
+		"OP_VOC_NM" : "Sleeve lobectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2019",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.89",
+		"OP_VOC_NM" : "Robot-assisted pylorus preserving gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.59",
+		"OP_VOC_NM" : "Craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 227,
+		"VISITCNT" : 227,
+		"PCNT" : 226
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.7",
+		"OP_VOC_NM" : "Pylorus preserving pancreaticoduodenectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 219,
+		"VISITCNT" : 219,
+		"PCNT" : 219
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "36.12",
+		"OP_VOC_NM" : "Aortocoronary bypass of two or more coronary artery",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 178,
+		"VISITCNT" : 178,
+		"PCNT" : 178
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.2",
+		"OP_VOC_NM" : "Replacement of heart valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 178,
+		"VISITCNT" : 177,
+		"PCNT" : 177
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "Laparoscopy-assisted distal gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 138,
+		"VISITCNT" : 138,
+		"PCNT" : 138
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.69",
+		"OP_VOC_NM" : "Renal transplantation",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 131,
+		"VISITCNT" : 131,
+		"PCNT" : 131
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.59",
+		"OP_VOC_NM" : "Living donor liver transplantation (adult)",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 117,
+		"VISITCNT" : 116,
+		"PCNT" : 116
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.22",
+		"OP_VOC_NM" : "Living donor hepatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 102,
+		"VISITCNT" : 102,
+		"PCNT" : 102
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.89",
+		"OP_VOC_NM" : "Breast reconstruction, free TRAM MC (transverse rectus abdominis muscle myocutaneous) flap",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 81,
+		"VISITCNT" : 81,
+		"PCNT" : 81
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.4",
+		"OP_VOC_NM" : "Lobectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 74,
+		"VISITCNT" : 74,
+		"PCNT" : 74
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "20.49",
+		"OP_VOC_NM" : "Canal wall down mastoidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 73,
+		"VISITCNT" : 73,
+		"PCNT" : 71
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "57.71",
+		"OP_VOC_NM" : "Radical cystectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 71,
+		"VISITCNT" : 71,
+		"PCNT" : 71
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.28",
+		"OP_VOC_NM" : "Combined bypass surgery of STA-MCA (superficial temporal artery to middle cerebral artery) and EDAGS (Encephaloduroarteriogaleosynangiosis)",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 86,
+		"VISITCNT" : 86,
+		"PCNT" : 69
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.89",
+		"OP_VOC_NM" : "Laparoscopy-assisted pylorus preserving gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 68,
+		"VISITCNT" : 68,
+		"PCNT" : 68
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.51",
+		"OP_VOC_NM" : "Craniotomy and cerebral aneurysm clipping",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 67,
+		"VISITCNT" : 67,
+		"PCNT" : 66
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "48.63",
+		"OP_VOC_NM" : "Low anterior resection",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 59,
+		"VISITCNT" : 59,
+		"PCNT" : 59
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.9",
+		"OP_VOC_NM" : "Total hysterectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 55,
+		"VISITCNT" : 55,
+		"PCNT" : 55
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.08",
+		"OP_VOC_NM" : "Interbody fusion, lumbar and lumbosacral spine",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 55,
+		"VISITCNT" : 55,
+		"PCNT" : 54
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Right hemihepatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 52,
+		"VISITCNT" : 52,
+		"PCNT" : 52
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "42.40",
+		"OP_VOC_NM" : "Resection of esophagus with reconstruction",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 51,
+		"VISITCNT" : 51,
+		"PCNT" : 51
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.00",
+		"OP_VOC_NM" : "Spinal fusion",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 47,
+		"VISITCNT" : 46,
+		"PCNT" : 46
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Total gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 43,
+		"VISITCNT" : 43,
+		"PCNT" : 43
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "TLDG (Totally laparoscopic distal gastrectomy)",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 42,
+		"VISITCNT" : 42,
+		"PCNT" : 42
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "38.44",
+		"OP_VOC_NM" : "Replacement of aorta",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 42,
+		"VISITCNT" : 42,
+		"PCNT" : 42
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.7",
+		"OP_VOC_NM" : "Whipple's operation",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 39,
+		"VISITCNT" : 39,
+		"PCNT" : 39
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "Robot-assisted distal gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 35,
+		"VISITCNT" : 35,
+		"PCNT" : 35
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Retromastoid suboccipital craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 34,
+		"VISITCNT" : 34,
+		"PCNT" : 34
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.4",
+		"OP_VOC_NM" : "Laminectomy and removal of IDEM (intradural extramedullary) tumor",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 34,
+		"VISITCNT" : 34,
+		"PCNT" : 34
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "60.5",
+		"OP_VOC_NM" : "Prostatectomy, radical",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 33,
+		"VISITCNT" : 33,
+		"PCNT" : 33
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.29",
+		"OP_VOC_NM" : "Wedge resection of lung",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 31,
+		"VISITCNT" : 31,
+		"PCNT" : 31
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Laparoscopy-assisted total gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 31,
+		"VISITCNT" : 31,
+		"PCNT" : 31
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "48.63",
+		"OP_VOC_NM" : "Anterior resection",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 31,
+		"VISITCNT" : 31,
+		"PCNT" : 31
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.4",
+		"OP_VOC_NM" : "Laminectomy and removal of intramedullary tumor",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 30,
+		"VISITCNT" : 30,
+		"PCNT" : 30
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.29",
+		"OP_VOC_NM" : "Myomectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 30,
+		"VISITCNT" : 30,
+		"PCNT" : 30
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.22",
+		"OP_VOC_NM" : "Segmentectomy of liver",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 30,
+		"VISITCNT" : 30,
+		"PCNT" : 30
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "85.95",
+		"OP_VOC_NM" : "Breast tissue expander insertion",
+		"MED_DEPT_CD" : "PS",
+		"ROWCNT" : 27,
+		"VISITCNT" : 27,
+		"PCNT" : 27
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Totally laparoscopic total gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 26,
+		"VISITCNT" : 26,
+		"PCNT" : 26
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "45.73",
+		"OP_VOC_NM" : "Right hemicolectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 24,
+		"VISITCNT" : 24,
+		"PCNT" : 24
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "68.6",
+		"OP_VOC_NM" : "Radical hysterectomy",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 24,
+		"VISITCNT" : 24,
+		"PCNT" : 24
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "92.30",
+		"OP_VOC_NM" : "Stereotactic stimulation, subthalamus",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 24,
+		"VISITCNT" : 24,
+		"PCNT" : 24
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.51",
+		"OP_VOC_NM" : "Nephrectomy, living donor",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 23,
+		"VISITCNT" : 23,
+		"PCNT" : 23
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "51.22",
+		"OP_VOC_NM" : "Extended cholecystectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 22,
+		"VISITCNT" : 22,
+		"PCNT" : 22
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Midline suboccipital craniotomy and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.4",
+		"OP_VOC_NM" : "Total thyroidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "07.8",
+		"OP_VOC_NM" : "Thymectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Left hemihepatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "06.4",
+		"OP_VOC_NM" : "Total thyroidectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.10",
+		"OP_VOC_NM" : "Repair of heart valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 21,
+		"VISITCNT" : 21,
+		"PCNT" : 21
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.51",
+		"OP_VOC_NM" : "Nephroureterectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 19,
+		"VISITCNT" : 19,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "55.5",
+		"OP_VOC_NM" : "Nephrectomy",
+		"MED_DEPT_CD" : "UR",
+		"ROWCNT" : 19,
+		"VISITCNT" : 19,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.7",
+		"OP_VOC_NM" : "Subtotal gastrectomy (Billroth II)",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 19,
+		"VISITCNT" : 19,
+		"PCNT" : 19
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.2",
+		"OP_VOC_NM" : "Replacement of redo-valve",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 18,
+		"VISITCNT" : 18,
+		"PCNT" : 18
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "21.84",
+		"OP_VOC_NM" : "Septorhinoplasty",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 17,
+		"VISITCNT" : 17,
+		"PCNT" : 17
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.52",
+		"OP_VOC_NM" : "Distal pancreatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 17,
+		"VISITCNT" : 17,
+		"PCNT" : 17
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "79.31",
+		"OP_VOC_NM" : "Open reduction and internal fixation, humerus",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 17,
+		"VISITCNT" : 17,
+		"PCNT" : 17
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.00",
+		"OP_VOC_NM" : "Interbody fusion, posterior",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.59",
+		"OP_VOC_NM" : "Deceased donor liver transplantation",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Totally laparoscopic pylorus preserving gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "39.52",
+		"OP_VOC_NM" : "Repair of aneurysm",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "65.6",
+		"OP_VOC_NM" : "Debulking surgery (postchemotherapy)",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "65.6",
+		"OP_VOC_NM" : "Debulking surgery of adnexal tumor",
+		"MED_DEPT_CD" : "OG",
+		"ROWCNT" : 16,
+		"VISITCNT" : 16,
+		"PCNT" : 16
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "03.4",
+		"OP_VOC_NM" : "Laminectomy and removal of extradural tumor",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "14.74",
+		"OP_VOC_NM" : "Vitrectomy, pars planar",
+		"MED_DEPT_CD" : "OT",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.6",
+		"OP_VOC_NM" : "Subtotal gastrectomy (Billroth I)",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "36.11",
+		"OP_VOC_NM" : "Aortocoronary bypass of one coronary artery",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 14,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.55",
+		"OP_VOC_NM" : "Revision of TKRA (total knee replacement arthroplasty)",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 16,
+		"VISITCNT" : 14,
+		"PCNT" : 14
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "50.3",
+		"OP_VOC_NM" : "Extended right hemihepatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "35.71",
+		"OP_VOC_NM" : "Repair of atrial septal defect",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "04.49",
+		"OP_VOC_NM" : "Microvascular decompression",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.07",
+		"OP_VOC_NM" : "OLIF (oblique lumbar interbody fusion)",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.5",
+		"OP_VOC_NM" : "Laparoscopy-assisted proximal gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "20.49",
+		"OP_VOC_NM" : "Intact canal wall mastoidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.00",
+		"OP_VOC_NM" : "Posterior fixation of spine",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 13,
+		"VISITCNT" : 13,
+		"PCNT" : 13
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Craniotomy and lesionectomy status post invasive monitoring",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "07.79",
+		"OP_VOC_NM" : "Endoscopic transsphenoidal approach and tumor removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "20.49",
+		"OP_VOC_NM" : "Mastoidectomy",
+		"MED_DEPT_CD" : "OL",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "43.99",
+		"OP_VOC_NM" : "Remnant total gastrectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "54.21",
+		"OP_VOC_NM" : "Diagnostic laparoscopy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "52.6",
+		"OP_VOC_NM" : "Total pancreatectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "42.40",
+		"OP_VOC_NM" : "Ivor Lewis operation",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 12,
+		"PCNT" : 12
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.25",
+		"OP_VOC_NM" : "Decompressive craniectomy and duroplasty",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "45.75",
+		"OP_VOC_NM" : "Left hemicolectomy",
+		"MED_DEPT_CD" : "GS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.3",
+		"OP_VOC_NM" : "Segmentectomy of lung",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.24",
+		"OP_VOC_NM" : "Craniotomy and arteriovenous malformation removal",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "01.25",
+		"OP_VOC_NM" : "Craniectomy and intracerebral hematoma evacuation",
+		"MED_DEPT_CD" : "NS",
+		"ROWCNT" : 12,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "32.5",
+		"OP_VOC_NM" : "Pneumonectomy",
+		"MED_DEPT_CD" : "TS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "81.08",
+		"OP_VOC_NM" : "Posterior instrumentation, lumbar and lumbosacral spine",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	},
+	{
+		"YEAR" : "2018",
+		"HSP_TP_CD" : "1",
+		"ICD9CM_CD" : "79.32",
+		"OP_VOC_NM" : "Open reduction and internal fixation, radius",
+		"MED_DEPT_CD" : "OS",
+		"ROWCNT" : 11,
+		"VISITCNT" : 11,
+		"PCNT" : 11
+	}
+]}

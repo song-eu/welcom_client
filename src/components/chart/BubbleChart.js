@@ -38,11 +38,11 @@ const d3 = {
 // 		"VISITCNT" : 1193,
 // 		"PCNT" : 936 }
 const BubbleCircleChart = (props) => {
-    // const { header, dateCtrl, dataloc } = props
-    const { header, dateCtrl, pageInfo } = props
+    const { header, dateCtrl, dataloc, pageInfo } = props
+    // const { header, dateCtrl, pageInfo } = props
     const svgRef = useRef()
-    const dataLocation = '/outpatientData'
-    const dataloc = dataLocation + '/monthly_dgns_order_by_hsp_pcnt.json'
+    // const dataLocation = '/outpatientData'
+    // const dataloc = dataLocation + '/monthly_dgns_order_by_hsp_pcnt.json'
 
     const margin = { top: 10, right: 10, bottom: 10, left: 10 },
         width = 880 - margin.left - margin.right,
@@ -52,36 +52,28 @@ const BubbleCircleChart = (props) => {
         // const dataset = sampleData.circleCharData.data1
 
         const getdata = await jsonToData(dataloc)
-        const dataset = getdata[dateCtrl][pageInfo]
-        // console.log('treemap get data', dataset)
-        var colors = []
-        let colorBar = [
-            lightGreen,
-            red,
-            cyan,
-            green,
-            teal,
-            deepPurple,
-            pink,
-            purple,
-        ]
-        var numcolor = Object.keys(colorBar[0])
-            // .map((a, b, c) => {
-            //     console.log('a', a, 'b', b, 'c', c)
-            //     if (b % 2 === 0) {
-            //         return a
-            //     }
-            // })
-            .sort((a, b) => {
-                return b - a
-            })
-            .slice(8, 10)
-        numcolor.forEach((d, i, p) => {
-            // console.log('colorbar?', colorBar)
-            colorBar.forEach((col) => {
-                colors.push(col[d])
-            })
+        const dataset = getdata[dateCtrl.substring(0, 4)][pageInfo]
+        console.log('bubble data?', getdata)
+
+        const sum = d3
+            .stratify()
+            .id((d) => d.name)
+            .parentId((d) => d.parent)(dataset)
+
+        sum.sum(function (d) {
+            return +d.value
         })
+
+        const bubble = (dt) =>
+            d3
+                .pack()
+                .size([
+                    width + margin.left + margin.right + 20,
+                    height + margin.top + margin.bottom + 20,
+                ])
+                .padding(6)(sum)
+
+        const root = bubble(dataset)
 
         const categories = dataset.map((d) => d.name),
             colorsDig = [
@@ -109,15 +101,8 @@ const BubbleCircleChart = (props) => {
             colorScale = d3
                 .scaleOrdinal() // the scale function
                 .domain(categories) // the data
-                .range(colors) // the way the data should be shown
+                .range(colorsDig) // the way the data should be shown
         // .range(['#f44336', '#ffebee'])
-
-        const onMouseOver = (d, i) => {
-            console.log('treemap mouseover d??', d, 'i', i, 'this', this)
-            // tip.show(i, this)
-            // var tips = d3.select(.tooltipTree)
-            d3.select(this).transition().duration(100).attr('fill', '#ffc500')
-        }
 
         const container = d3.select(svgRef.current) //make sure there's a svg element in your html file
         // .call((g) => g.select('svg').remove())
@@ -125,34 +110,95 @@ const BubbleCircleChart = (props) => {
         container.selectAll('svg').remove()
         container.selectAll('div').remove()
 
-        const treetooltip = container
-            .append('div')
-            .attr('class', 'treemapTooltip')
-            .attr('id', 'treemapTooltip')
-            .style('opacity', 0)
-            .style('font-size', '20px')
-            .style('background', '#6b6b83')
-
         const svg = container
             .append('svg')
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
+
+        const bubbleTooltip = container
+            .append('div')
+            .attr('class', 'bubbleTooltip')
+            .attr('id', 'bubbleTooltip')
+        // .style('opacity', 0)
+        // .style('font-size', '20px')
+        // .style('background', '#6b6b83')
+
+        // console.log('root?', root.leaves())
+
+        const node = svg
+            .selectAll()
+            .data(root.children)
+            .enter()
             .append('g')
-            .attr('transform', `translate ( ${margin.left}, ${margin.right})`)
+            .attr('transform', `translate ( ${width / 2}, ${height / 2})`)
 
-        const root = d3
-            .stratify()
-            .id((d) => d.name)
-            .parentId((d) => d.parent)(dataset)
+        node.transition()
+            .ease(d3.easeExpInOut)
+            .duration(800)
+            .attr('r', (d) => d.r)
+            .attr('transform', (d) => `translate(${d.x}, ${d.y})`)
 
-        root.sum(function (d) {
-            return +d.value
-        })
-
-        const circle = svg
+        const circle = node
             .append('circle')
             .attr('r', (d) => d.r)
-            .style('fill', (d) => colors[d.data.category])
+            .style('fill', (d) => {
+                return colorScale(d.data.name)
+            })
+            .on('mouseover', function (e, d) {
+                // bubbleTooltip.select('img').attr('src', d.data.img)
+                // bubbleTooltip.select('a').attr('href', d.data.link).text(d.data.name)
+
+                bubbleTooltip
+                    .style('font-size', '18px')
+                    .style('max-width', 220 + 'px')
+                    .style('min-width', 80 + 'px')
+                    .style('border-radius', '5px')
+                    .style('padding', '8px')
+                    .style('position', 'absolute')
+                    .style('left', e.pageX + 'px')
+                    .style('top', e.pageY + 'px')
+                    .style('word-break', 'break-all')
+                    .style('visibility', 'visible')
+                    .style('background', '#6b6b83')
+                    .html(
+                        '<strong>' +
+                            d.data.name_full +
+                            " : </strong><br/> <span style='color:red'>" +
+                            d.data.value +
+                            ' 명 </span>'
+                    )
+
+                d3.select(e.target)
+                    .style('stroke', '#F3F9A7')
+                    .attr('stroke-width', 2)
+                    .style('opacity', 0.8)
+            })
+            .on('mousemove', (e) =>
+                bubbleTooltip
+                    .style('top', `${e.pageY}px`)
+                    .style('left', `${e.pageX + 10}px`)
+            )
+            .on('mouseleave', (e, i) => {
+                bubbleTooltip.style('visibility', 'hidden')
+
+                d3.select(e.target)
+                    // .style('stroke', '#F3F9A7')
+                    .attr('stroke-width', 0)
+                    .style('opacity', 1)
+            })
+            .on('click', (e, d) => {
+                props.onClickEvent(d.id)
+            })
+
+        const label = node
+            .append('text')
+            .attr('dx', -18)
+            .attr('dy', 2)
+            .text((d) => d.data.name.substring(0, d.r / 3))
+
+        label.transition().delay(700).ease(d3.easeExpInOut)
+
+        // console.log('treemap get data', dataset)
     }, [dateCtrl])
 
     return (
