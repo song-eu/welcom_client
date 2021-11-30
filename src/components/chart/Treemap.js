@@ -55,7 +55,11 @@ const Treemap = (props) => {
         // const dataset = sampleData.circleCharData.data1
 
         const getdata = await jsonToData(dataloc)
-        const dataset = getdata[dateCtrl.substring(0, 4)][pageInfo]
+        const dataset = getdata[dateCtrl.substring(0, 4)][pageInfo].sort(
+            (a, b) => {
+                return b.value - a.value
+            }
+        )
         // console.log('treemap get data', getdata, dateCtrl)
         var colors = []
         let colorBar = [
