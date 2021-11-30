@@ -173,7 +173,7 @@ const Treemap = (props) => {
                         '<strong>' +
                             i.data.name_full +
                             " : </strong><br/> <span style='color:red'>" +
-                            i.data.value +
+                            i.data.value.toLocaleString('ko-KR') +
                             ' 명 </span>'
                     )
 
@@ -214,7 +214,7 @@ const Treemap = (props) => {
             .data(root.leaves())
             .join('text')
             .attr('x', (d) => (d.x1 - d.x0) / 2 + d.x0 - 30)
-            .attr('y', (d) => d.y1 - (d.y1 - d.y0) / 2)
+            .attr('y', (d) => d.y1 - (d.y1 - d.y0) / 2 + 10)
             .text((d) => d.data.name)
             .attr('font-size', '25px')
             .attr('fill', 'black')

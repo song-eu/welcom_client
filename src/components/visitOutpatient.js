@@ -55,7 +55,7 @@ const VisitOutpatient = (props) => {
     const outPatientTreemapHeader = `SNUH Top Dignosis in ${thisYear}`
     const outPatientBubbleHeader = `SNUH Top Procedure in ${thisYear}`
 
-    const dataLocation = '/outpatientData'
+    const [dataLocation, setDataLocation] = useState('/outpatientData')
     const outBarchartData = dataLocation + '/1_1year_total_by_hospital_OUT.csv'
     const outDepchartData = dataLocation + '/2_visit_dept_rank_OUT.json'
     const outPersonMapData = dataLocation + '/3_1year_Monthly_visits_SIDO.json'

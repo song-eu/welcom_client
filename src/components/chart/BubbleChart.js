@@ -164,7 +164,7 @@ const BubbleCircleChart = (props) => {
                         '<strong>' +
                             d.data.name_full +
                             " : </strong><br/> <span style='color:red'>" +
-                            d.data.value +
+                            d.data.value.toLocaleString('ko-KR') +
                             ' 명 </span>'
                     )
 
