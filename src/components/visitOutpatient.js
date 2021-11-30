@@ -92,9 +92,9 @@ const VisitOutpatient = (props) => {
         return `${sliderMark[11 - value].label}`
     }
 
-    const onClickEvent = (id) => {
+    const onClickEvent = (icd, voc_id) => {
         console.log('main event called')
-        console.log('id??', id)
+        console.log('id??', icd, voc_id)
     }
 
     const fetchData = async () => {

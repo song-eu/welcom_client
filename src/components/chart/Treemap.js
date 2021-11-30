@@ -200,7 +200,8 @@ const Treemap = (props) => {
                     .attr('fill', colorScale(i.data.name))
             })
             .on('click', (e, d) => {
-                props.onClickEvent(d.id)
+                // console.log('d??', d)
+                props.onClickEvent(d.id, d.data.voc_id)
             })
             .attr('x', (d) => d.x0)
             .attr('y', (d) => d.y0)

@@ -32,6 +32,7 @@ const jsonToData = (dataloc, geojson) => {
                             value: 0,
                             parent: '',
                             Origin: '',
+                            voc_id: d.CLDG_VOC_ID,
                         })
                     }
                     result[d.YEAR][d.HSP_TP_CD].push({
@@ -40,6 +41,7 @@ const jsonToData = (dataloc, geojson) => {
                         value: parseInt(d.PCNT),
                         parent: 'Origin',
                         Origin: '',
+                        voc_id: d.CLDG_VOC_ID,
                     })
                 } else {
                     result[d.YEAR] = {}
@@ -50,6 +52,7 @@ const jsonToData = (dataloc, geojson) => {
                         value: 0,
                         parent: '',
                         Origin: '',
+                        voc_id: d.CLDG_VOC_ID,
                     })
                     result[d.YEAR][d.HSP_TP_CD].push({
                         name: d.ICD10_CD,
@@ -57,6 +60,7 @@ const jsonToData = (dataloc, geojson) => {
                         value: parseInt(d.PCNT),
                         parent: 'Origin',
                         Origin: '',
+                        voc_id: d.CLDG_VOC_ID,
                     })
                     // console.log('data process', result)
                 }
@@ -71,6 +75,7 @@ const jsonToData = (dataloc, geojson) => {
                             value: 0,
                             parent: '',
                             Origin: '',
+                            voc_id: d.CLDG_VOC_ID,
                         })
                     }
                     result[d.YEAR][d.HSP_TP_CD].push({
@@ -79,6 +84,7 @@ const jsonToData = (dataloc, geojson) => {
                         value: parseInt(d.PCNT),
                         parent: 'Origin',
                         Origin: '',
+                        voc_id: d.CLDG_VOC_ID,
                     })
                 } else {
                     result[d.YEAR] = {}
@@ -89,6 +95,7 @@ const jsonToData = (dataloc, geojson) => {
                         value: 0,
                         parent: '',
                         Origin: '',
+                        voc_id: d.CLDG_VOC_ID,
                     })
                     result[d.YEAR][d.HSP_TP_CD].push({
                         name: d.ICD9CM_CD,
@@ -96,6 +103,7 @@ const jsonToData = (dataloc, geojson) => {
                         value: parseInt(d.PCNT),
                         parent: 'Origin',
                         Origin: '',
+                        voc_id: d.CLDG_VOC_ID,
                     })
                     // console.log('data process', result)
                 }
