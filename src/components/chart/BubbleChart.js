@@ -187,7 +187,8 @@ const BubbleCircleChart = (props) => {
                     .style('opacity', 1)
             })
             .on('click', (e, d) => {
-                props.onClickEvent(d.id)
+                console.log('ddddd??', d)
+                props.onClickEvent('OP', d.data.voc_id)
             })
 
         const label = node
@@ -195,11 +196,28 @@ const BubbleCircleChart = (props) => {
             .attr('dx', -18)
             .attr('dy', 2)
             .text((d) => d.data.name.substring(0, d.r / 3))
+            .on('mousemove', (e) =>
+                bubbleTooltip
+                    .style('top', `${e.pageY}px`)
+                    .style('left', `${e.pageX + 10}px`)
+            )
+            .on('mouseleave', (e, i) => {
+                bubbleTooltip.style('visibility', 'hidden')
+
+                d3.select(e.target)
+                    // .style('stroke', '#F3F9A7')
+                    .attr('stroke-width', 0)
+                    .style('opacity', 1)
+            })
+            .on('click', (e, d) => {
+                console.log('ddddd??', d)
+                props.onClickEvent('OP', d.data.voc_id)
+            })
 
         label.transition().delay(700).ease(d3.easeExpInOut)
 
         // console.log('treemap get data', dataset)
-    }, [dateCtrl])
+    }, [])
 
     return (
         <TreemapStyle>

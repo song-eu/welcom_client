@@ -75,7 +75,7 @@ const jsonToData = (dataloc, geojson) => {
                             value: 0,
                             parent: '',
                             Origin: '',
-                            voc_id: d.CLDG_VOC_ID,
+                            voc_id: d.OP_VOC_ID,
                         })
                     }
                     result[d.YEAR][d.HSP_TP_CD].push({
@@ -84,7 +84,7 @@ const jsonToData = (dataloc, geojson) => {
                         value: parseInt(d.PCNT),
                         parent: 'Origin',
                         Origin: '',
-                        voc_id: d.CLDG_VOC_ID,
+                        voc_id: d.OP_VOC_ID,
                     })
                 } else {
                     result[d.YEAR] = {}
@@ -95,7 +95,7 @@ const jsonToData = (dataloc, geojson) => {
                         value: 0,
                         parent: '',
                         Origin: '',
-                        voc_id: d.CLDG_VOC_ID,
+                        voc_id: d.OP_VOC_ID,
                     })
                     result[d.YEAR][d.HSP_TP_CD].push({
                         name: d.ICD9CM_CD,
@@ -103,7 +103,7 @@ const jsonToData = (dataloc, geojson) => {
                         value: parseInt(d.PCNT),
                         parent: 'Origin',
                         Origin: '',
-                        voc_id: d.CLDG_VOC_ID,
+                        voc_id: d.OP_VOC_ID,
                     })
                     // console.log('data process', result)
                 }
@@ -136,6 +136,71 @@ const jsonToData = (dataloc, geojson) => {
                         name_full: d.MED_DEPT_NM,
                         value: parseInt(d.PCNT),
                     })
+                }
+            } else if (d.AGE_GROUP && d.VOC_ID) {
+                // console.log('d???', d)
+                // { group: '0-9', male: 240, female: 154 }
+                let tempFlag = false
+                if (d.AGE_GROUP !== 'OVER 100') {
+                    if (result[d.VOC_ID]) {
+                        if (result[d.VOC_ID][d.DATE]) {
+                            for (
+                                let i = 0;
+                                i < result[d.VOC_ID][d.DATE].length;
+                                i++
+                            ) {
+                                // console.log('d???', result[d.DATE][i], d)
+                                if (
+                                    result[d.VOC_ID][d.DATE][i].group ===
+                                    d.AGE_GROUP
+                                ) {
+                                    // console.log('d???', d)
+                                    tempFlag = true
+                                    if (d.SEX_TP_CD === 'F') {
+                                        result[d.VOC_ID][d.DATE][i]['female'] =
+                                            parseInt(d.PCNT)
+                                    } else {
+                                        result[d.VOC_ID][d.DATE][i]['male'] =
+                                            parseInt(d.PCNT)
+                                    }
+                                }
+                            }
+                            if (!tempFlag) {
+                                let obj = {}
+                                obj['group'] = d.AGE_GROUP
+                                if (d.SEX_TP_CD === 'F') {
+                                    obj['female'] = parseInt(d.PCNT)
+                                } else {
+                                    obj['male'] = parseInt(d.PCNT)
+                                }
+                                result[d.VOC_ID][d.DATE].push(obj)
+                            }
+                        } else {
+                            result[d.VOC_ID][d.DATE] = []
+                            let obj = {}
+                            obj['group'] = d.AGE_GROUP
+                            if (d.SEX_TP_CD === 'F') {
+                                obj['female'] = parseInt(d.PCNT)
+                            } else {
+                                obj['male'] = parseInt(d.PCNT)
+                            }
+
+                            result[d.VOC_ID][d.DATE].push(obj)
+                        }
+                    } else {
+                        result[d.VOC_ID] = {}
+                        result[d.VOC_ID][d.DATE] = []
+                        let obj = {}
+                        obj['group'] = d.AGE_GROUP
+                        if (d.SEX_TP_CD === 'F') {
+                            obj['female'] = parseInt(d.PCNT)
+                        } else {
+                            obj['male'] = parseInt(d.PCNT)
+                        }
+
+                        result[d.VOC_ID][d.DATE].push(obj)
+                        // console.log('result???', result)
+                    }
                 }
             } else if (d.AGE_GROUP) {
                 // console.log('d???', d)
@@ -179,6 +244,92 @@ const jsonToData = (dataloc, geojson) => {
 
                         result[d.DATE].push(obj)
                     }
+                }
+            } else if (d.SIDO_ADDR && d.VOC_ID) {
+                // console.log('sidodata?', d)
+                if (result[d.VOC_ID]) {
+                    if (result[d.VOC_ID][d.DATE]) {
+                        if (d.SIDO_ADDR !== '') {
+                            let obj = {}
+                            let temFlag_map = false
+                            for (let i = 0; i < geojson.features.length; i++) {
+                                // console.log('d.SIDO_ADDR', d.SIDO_ADDR)
+                                if (
+                                    d.SIDO_ADDR.substring(0, 2) ===
+                                    geojson.features[
+                                        i
+                                    ].properties.name.substring(0, 2)
+                                ) {
+                                    for (
+                                        let n = 0;
+                                        n < result[d.VOC_ID][d.DATE].length;
+                                        n++
+                                    ) {
+                                        // console.log('dd?', d, 'obj?', obj, result)
+                                        if (
+                                            result[d.VOC_ID][d.DATE][
+                                                n
+                                            ].name.substring(0, 2) ===
+                                            d.SIDO_ADDR.substring(0, 2)
+                                        ) {
+                                            result[d.VOC_ID][d.DATE][n].cnt +=
+                                                parseInt(d.PCNT)
+                                            temFlag_map = true
+                                        }
+                                    }
+                                    if (!temFlag_map) {
+                                        obj.cnt = parseInt(d.PCNT)
+                                        obj.id =
+                                            geojson.features[i].properties.code
+                                        obj.name =
+                                            geojson.features[i].properties.name
+                                        obj.loc = d3.geoCentroid(
+                                            geojson.features[i].geometry
+                                        )
+                                        result[d.VOC_ID][d.DATE].push(obj)
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        result[d.VOC_ID][d.DATE] = []
+                        let obj = {}
+                        for (let i = 0; i < geojson.features.length; i++) {
+                            if (
+                                d.SIDO_ADDR.substring(0, 2) ===
+                                geojson.features[i].properties.name.substring(
+                                    0,
+                                    2
+                                )
+                            ) {
+                                obj.cnt = parseInt(d.PCNT)
+                                obj.id = geojson.features[i].properties.code
+                                obj.name = geojson.features[i].properties.name
+                                obj.loc = d3.geoCentroid(
+                                    geojson.features[i].geometry
+                                )
+                            }
+                        }
+                        result[d.VOC_ID][d.DATE].push(obj)
+                    }
+                } else {
+                    result[d.VOC_ID] = {}
+                    result[d.VOC_ID][d.DATE] = []
+                    let obj = {}
+                    for (let i = 0; i < geojson.features.length; i++) {
+                        if (
+                            d.SIDO_ADDR.substring(0, 2) ===
+                            geojson.features[i].properties.name.substring(0, 2)
+                        ) {
+                            obj.cnt = parseInt(d.PCNT)
+                            obj.id = geojson.features[i].properties.code
+                            obj.name = geojson.features[i].properties.name
+                            obj.loc = d3.geoCentroid(
+                                geojson.features[i].geometry
+                            )
+                        }
+                    }
+                    result[d.VOC_ID][d.DATE].push(obj)
                 }
             } else if (d.SIDO_ADDR) {
                 // console.log('sidodata?', d)

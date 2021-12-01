@@ -14,7 +14,7 @@ const d3 = {
 }
 
 const GenderAgeDivergingChart = (props) => {
-    const { header, dataloc, dateCtrl } = props
+    const { header, dataloc, dateCtrl, vocId, dataloc2 } = props
     const svgRef = useRef()
 
     // const [data, setData] = useState([])
@@ -98,18 +98,31 @@ const GenderAgeDivergingChart = (props) => {
         .offset([-10, 0])
 
     useEffect(async () => {
-        var getDatas = await jsonToData(dataloc)
-
-        let data = getDatas[dateCtrl].slice(0, -1).sort((a, b) => {
-            return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
-        })
+        // console.log('gender voc_id???', vocId, !vocId)
+        if (!vocId) {
+            var getDatas = await jsonToData(dataloc)
+            var data = getDatas[dateCtrl].slice(0, -1).sort((a, b) => {
+                return (
+                    parseInt(a.group.slice(0, 2)) -
+                    parseInt(b.group.slice(0, 2))
+                )
+            })
+        } else {
+            var getDatas = await jsonToData(dataloc2)
+            var data = getDatas[vocId][dateCtrl].slice(0, -1).sort((a, b) => {
+                return (
+                    parseInt(a.group.slice(0, 2)) -
+                    parseInt(b.group.slice(0, 2))
+                )
+            })
+        }
 
         // data = data.slice(0, -1)
         // data.sort((a, b) => {
         //     return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
         // })
 
-        console.log('pointA', pointA, 'pointB', pointB, pointB - pointA)
+        // console.log('pointA', pointA, 'pointB', pointB, pointB - pointA)
 
         // console.log('regeionwidth?', regionWidth, 'pointA', pointA, 'pointB', pointB)
 
@@ -120,14 +133,18 @@ const GenderAgeDivergingChart = (props) => {
 
         // CREATE SVG
         var svg = d3
-            .select('#negBarChart')
-            // .call((g) => g.select('svg').remove())
+            .selectAll('#negBarChart')
+            .call((g) => g.select('svg').remove())
             .append('svg')
             .attr('width', w - margin.left - margin.right - margin.middle)
             .attr('height', margin.top + h + margin.bottom)
             // ADD A GROUP FOR THE SPACE WITHIN THE MARGINS
+            // .call((g) => g.select('svg').remove())
             .append('g')
             .attr('transform', translation(margin.left, margin.top))
+
+        // svg.selectAll('svg').remove()
+        // svg.selectAll('g').remove()
 
         // find the maximum data value on either side
         //  since this will be shared by both of the x-axes
@@ -169,19 +186,23 @@ const GenderAgeDivergingChart = (props) => {
             g.call(d3.axisLeft(yScale).tickSize(4, 0).tickFormat(''))
 
         var xAxisRight = (g) =>
-            g.call(
-                d3.axisBottom(xScale)
-                //   .tickFormat(d3.format('%'))
-            )
+            g
+                .call(
+                    d3.axisBottom(xScale).tickFormat(d3.format('~s'))
+                    //   .tickFormat(d3.format('%'))
+                )
+                .style('font-size', '15px')
 
         var xAxisLeft = (g) =>
             g
                 // REVERSE THE X-AXIS SCALE ON THE LEFT SIDE BY REVERSING THE RANGE
                 .call(
-                    d3.axisBottom(xScale.copy().range([pointA, 0]))
-                    //d3.axisBottom(xScale)
-                    // .tickFormat(d3.format('%'))
+                    d3
+                        .axisBottom(xScale.copy().range([pointA, 0]))
+                        //d3.axisBottom(xScale)
+                        .tickFormat(d3.format('~s'))
                 )
+                .style('font-size', '15px')
 
         // MAKE GROUPS FOR EACH SIDE OF CHART
         // scale(-1,1) is used to reverse the left side so the bars grow left instead of right
@@ -193,6 +214,7 @@ const GenderAgeDivergingChart = (props) => {
             .call(yAxisLeft)
             .selectAll('text')
             .style('text-anchor', 'middle')
+            .style('font-size', '15px')
 
         svg.append('g')
             .attr('class', 'axis y right')
@@ -218,15 +240,53 @@ const GenderAgeDivergingChart = (props) => {
             .append('g')
             .attr('class', 'leftBarGroup')
             .attr('transform', translation(pointA, 0) + 'scale(-1,1)')
-    }, [])
+
+        // var xScale = d3
+        //     .scaleLinear()
+        //     .domain([0, maxValue])
+        //     .range([0, regionWidth])
+        //     .nice()
+
+        // var yScale = d3
+        //     .scaleBand()
+        //     .domain(
+        //         data.map(function (d) {
+        //             return d.group
+        //         })
+        //     )
+        //     .rangeRound([h, 0])
+        //     .padding(0.1)
+    }, [vocId])
 
     useEffect(async () => {
-        var getDatas = await jsonToData(dataloc)
-
-        let data = getDatas[dateCtrl].slice(0, -1).sort((a, b) => {
-            return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
-        })
-        console.log('getData??', getDatas, 'data', data)
+        if (!vocId) {
+            var getDatas = await jsonToData(dataloc)
+            var data = getDatas[dateCtrl].slice(0, -1).sort((a, b) => {
+                return (
+                    parseInt(a.group.slice(0, 2)) -
+                    parseInt(b.group.slice(0, 2))
+                )
+            })
+        } else {
+            var getDatas = await jsonToData(dataloc2)
+            var data = getDatas[vocId][dateCtrl].slice(0, -1).sort((a, b) => {
+                return (
+                    parseInt(a.group.slice(0, 2)) -
+                    parseInt(b.group.slice(0, 2))
+                )
+            })
+            for (let i = 0; i < data.length; i++) {
+                if (!data[i].female) {
+                    // console.log('data? female no', data[i])
+                    data[i].female = 0
+                } else if (!data[i].male) {
+                    // console.log('data? male no', data[i])
+                    data[i].male = 0
+                }
+            }
+            // console.log('data age?', data)
+        }
+        // console.log('age_update', vocId, data, dataloc, dataloc2)
 
         var maxValue = Math.max(
             d3.max(data, (d) => d.male),
@@ -239,6 +299,7 @@ const GenderAgeDivergingChart = (props) => {
             .select('g')
         // .call((g) => g.select('g').remove())
         // console.log('data??', data, 'svg', svg)
+
         svg.call(tip)
         svg.call(fTip)
 
@@ -279,19 +340,6 @@ const GenderAgeDivergingChart = (props) => {
                 // console.log('yScale d.group', d, yScale(d.group))
                 return yScale(d.group)
             })
-            //    .attr('width', function(d) { return xScale(d.male); })
-            .attr('height', yScale.bandwidth())
-            .transition()
-            .duration(500)
-            .attr('width', (d) => xScale(d.male))
-        // .delay(function (d, i) {
-        //     //console.log(i)
-        //     return i * 70
-        // })
-        // console.log('leftBarGroup??', leftBarGroup, 'svg', svg)
-
-        leftBarGroup
-            .selectAll('.bar.left')
             .on('mouseover', function (d, i, n) {
                 //console.log(d, n, i)
                 //tip.show(i, this);
@@ -336,7 +384,18 @@ const GenderAgeDivergingChart = (props) => {
                     // .attr('fill', d3.interpolateSpectral(color(1)))
                     .attr('opacity', 1)
             })
-        console.log('leftBarGroup2222??', leftBarGroup, 'svg222', svg)
+            //    .attr('width', function(d) { return xScale(d.male); })
+            .attr('height', yScale.bandwidth())
+            .transition()
+            .duration(500)
+            .attr('width', (d) => xScale(d.male))
+        // .delay(function (d, i) {
+        //     //console.log(i)
+        //     return i * 70
+        // })
+        // console.log('leftBarGroup??', leftBarGroup, 'svg', svg)
+
+        // console.log('leftBarGroup2222??', leftBarGroup, 'svg222', svg)
 
         svg.select('.rightBarGroup')
             .selectAll('rect')
@@ -403,7 +462,7 @@ const GenderAgeDivergingChart = (props) => {
         //     //console.log(i) ;
         //     return i * 70
         // })
-    }, [dateCtrl])
+    }, [dateCtrl, vocId])
 
     return (
         <GenderDivergingBarChartSytle>

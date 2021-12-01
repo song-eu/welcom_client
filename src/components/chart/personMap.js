@@ -13,6 +13,7 @@ import { range, timeFormat } from 'd3'
 import { useState } from 'react'
 import { useRef } from 'react'
 import { useCallback } from 'react'
+import fetchToData from '../../modules/convertPersonMap'
 
 const d3 = {
     ...d3module,
@@ -21,7 +22,7 @@ const d3 = {
 
 const PersonMap = (props) => {
     const svgRef = useRef()
-    const { dataloc, dateCtrl, header } = props
+    const { dataloc, dateCtrl, header, vocId, data2 } = props
     // var [data, setData] = useState([])
 
     const thisMonth = moment().subtract(1, 'month').format('YYYY-MM')
@@ -36,37 +37,37 @@ const PersonMap = (props) => {
     // slide bar 의 최소 / 최대 날짜 및 현재 날짜 설정 가능
     // data 기준이 현재날짜 - 12 month 이므로 해당날짜로 설정되어 있으나,
     // 필요에 따라 변경가능
-    if (header.includes('patient')) {
-        if (header.includes('Out')) {
-            var circleRange = [20, 60]
-        } else {
-            var circleRange = [10, 100]
-        }
-        var width = 850,
-            height = 1200
-
-        var projection = d3
-            .geoMercator()
-            .scale(10000) //스케일
-            //.scale(1)
-            //.translate([0, 0])
-            //.rotate([-10, 1, 0]) //지도 회전
-            .center([127, 37.6]) //서울 중심좌표
-            .translate([width / 3, height / 4.9])
+    if (!data2) {
+        var circleRange = [20, 60]
     } else {
-        var circleRange = [10, 100]
-        var width = 650,
-            height = 800
-
-        var projection = d3
-            .geoMercator()
-            .scale(6500) //스케일
-            //.scale(1)
-            //.translate([0, 0])
-            //.rotate([-10, 1, 0]) //지도 회전
-            .center([127, 37.6]) //서울 중심좌표
-            .translate([width / 2.8, height / 4.9])
+        var circleRange = [50, 300]
     }
+
+    var width = 850,
+        height = 1200
+
+    var projection = d3
+        .geoMercator()
+        .scale(10000) //스케일
+        //.scale(1)
+        //.translate([0, 0])
+        //.rotate([-10, 1, 0]) //지도 회전
+        .center([127, 37.6]) //서울 중심좌표
+        .translate([width / 3, height / 4.9])
+    // } else {
+    //     var circleRange = [10, 100]
+    //     var width = 650,
+    //         height = 800
+
+    //     var projection = d3
+    //         .geoMercator()
+    //         .scale(6500) //스케일
+    //         //.scale(1)
+    //         //.translate([0, 0])
+    //         //.rotate([-10, 1, 0]) //지도 회전
+    //         .center([127, 37.6]) //서울 중심좌표
+    //         .translate([width / 2.8, height / 4.9])
+    // }
 
     // const updateData = useCallback(async (group) => {
     //     var dataTemp = await jsonToData(dataloc, geojson)
@@ -175,7 +176,13 @@ const PersonMap = (props) => {
     }, [])
 
     useEffect(async () => {
-        var data = await jsonToData(dataloc, geojson)
+        if (!vocId) {
+            var data = await jsonToData(dataloc, geojson)
+        } else {
+            var getDatas = await fetchToData(data2, geojson)
+            var data = getDatas[vocId]
+            console.log('person map data?', getDatas, 'voc?', vocId)
+        }
 
         // console.log('circle effect 실행')
 
@@ -183,6 +190,7 @@ const PersonMap = (props) => {
             .tip()
             .attr('class', 'toolTipMap')
             // .attr('id', 'toolTipMap')
+            .style('width', 80 + 'px')
             .style('padding', '10px')
             .style('background', '#444')
             .style('color', 'rgb(238, 148, 75)')
@@ -245,7 +253,7 @@ const PersonMap = (props) => {
             .attr('r', (d) => d3.scaleSqrt().range(circleRange)(d.cnt) / 100)
             .transition()
             .duration(1500)
-    }, [dateCtrl])
+    }, [dateCtrl, vocId])
 
     return (
         <MapBubbleChartStyle>

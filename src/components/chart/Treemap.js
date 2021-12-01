@@ -221,6 +221,41 @@ const Treemap = (props) => {
             .attr('x', (d) => (d.x1 - d.x0) / 2 + d.x0 - 30)
             .attr('y', (d) => d.y1 - (d.y1 - d.y0) / 2 + 10)
             .text((d) => d.data.name)
+            .on('mouseover', (d, i) => {
+                treetooltip
+                    .style('max-width', 220 + 'px')
+                    // .style('max-width', 150 + 'px')
+                    .style('min-width', 80 + 'px')
+                    .style('border-radius', '5px')
+                    .style('padding', '8px')
+                    .style('opacity', 0.9)
+                    .style('position', 'absolute')
+                    .style('left', d.pageX + 'px')
+                    .style('top', d.pageY + 'px')
+                    .style('word-break', 'break-all')
+
+                d3.select('.treemapTooltip')
+                    .style('font-size', '18px')
+                    .html(
+                        '<strong>' +
+                            i.data.name_full +
+                            " : </strong><br/> <span style='color:red'>" +
+                            i.data.value.toLocaleString('ko-KR') +
+                            ' 명 </span>'
+                    )
+            })
+            .on('mousemove', (e) =>
+                treetooltip
+                    .style('top', `${e.pageY}px`)
+                    .style('left', `${e.pageX + 10}px`)
+            )
+            .on('mouseleave', (d, i) => {
+                treetooltip.style('opacity', 0)
+            })
+            .on('click', (e, d) => {
+                // console.log('d??', d)
+                props.onClickEvent('DG', d.data.voc_id)
+            })
             .attr('font-size', '25px')
             .attr('fill', 'black')
             .style('word-break', 'break-all')

@@ -11,6 +11,7 @@ import StackedBarChartTest from './chart/stackedBarCharttest'
 import MonthlyBarLineChart from './chart/monthlyBarLineChart'
 import PersonMap from './chart/personMap'
 import Treemap from './chart/Treemap'
+
 import {
     RowStyle,
     BoxStyle,
@@ -34,6 +35,9 @@ import Typography from '@mui/material/Typography'
 import BubbleCircleChart from './chart/BubbleChart'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
+axios.defaults.baseURL = 'http://172.29.113.6:30003/api/visitOut/'
+// axios.defaults.withCredentials = true
+
 const VisitOutpatient = (props) => {
     const [thisMonth, setThisMonth] = useState(
         moment().subtract(1, 'month').format('MMMM YYYY')
@@ -45,8 +49,10 @@ const VisitOutpatient = (props) => {
     const [selectData, setSelectData] = useState(
         moment().subtract(1, 'month').format('YYYY-MM')
     )
+    const [vocId, setVocId] = useState(null)
+
     // console.log('selectData?', selectData)
-    const outPatientVisitBarChart = 'Monthly Oupatinet Visits by Hospital'
+    const outPatientVisitBarChart = 'Monthly Visits by Hospital'
     const outPatientHBarChart = `Outpatient Visits by Department in ${thisMonth}`
     const outPationtTotalBarChart = `Monthly Visit total (Outpatient & ER)`
     const outPatientGenderChart = `Outpatient Visit by Age & Gender in ${thisMonth}`
@@ -60,6 +66,10 @@ const VisitOutpatient = (props) => {
     const outDepchartData = dataLocation + '/2_visit_dept_rank_OUT.json'
     const outPersonMapData = dataLocation + '/3_1year_Monthly_visits_SIDO.json'
     const outGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP_OUT.json'
+    // dataLocation + '/monthly_age_sec_group_order_by_dgns.json'
+    const [outGenderAgeData2, setOutGenderAgeData2] = useState(null)
+    const [outPersonMapData2, setOutPersonMapData2] = useState(null)
+
     const outMonthlyBarData = dataLocation + '/5_1year_monthly_total_OUT.csv'
     const outMonthlyBarLineData =
         dataLocation + '/5-2_1year_monthly_total_ER_OUT.json'
@@ -92,18 +102,40 @@ const VisitOutpatient = (props) => {
         return `${sliderMark[11 - value].label}`
     }
 
-    const onClickEvent = (icd, voc_id) => {
-        console.log('main event called')
-        console.log('id??', icd, voc_id)
+    const onClickEvent = async (id, voc_id) => {
+        console.log('vodid?', voc_id)
+        if (id === 'OP') {
+            setOutGenderAgeData2(
+                dataLocation + '/monthly_age_sec_group_order_by_srgr.json'
+            )
+        } else {
+            setOutGenderAgeData2(
+                dataLocation + '/monthly_age_sec_group_order_by_dgns.json'
+            )
+        }
+        let getData = await axios.get('personMap', {
+            params: {
+                voc_id: voc_id,
+                id: id,
+                month: selectData,
+            },
+            headers: { 'Contents-type': 'application/json' },
+        })
+        console.log('getData??', getData.data)
+        setOutPersonMapData2(getData.data)
+        setVocId(voc_id)
     }
 
-    const fetchData = async () => {
+    const fetchData = async (api) => {
         try {
-            const response = await axios.get(
-                'http://localhost:30000/api/visitOut/'
-            )
+            const response = await axios
+                .get('http://172.29.113.6:30003/api/visitOut')
+                .then((res) => {
+                    console.log('respons?', res)
+                })
+            console.log(response)
         } catch (e) {
-            console.log(e)
+            console.log('error', e)
             setError(true)
         }
     }
@@ -396,7 +428,7 @@ const VisitOutpatient = (props) => {
                                     header={outPatientBubbleHeader}
                                     dataloc={outYearlyProcedureData}
                                     dateCtrl={selectData}
-                                    pageInfo={1}
+                                    pageInfo={'1'}
                                     onClickEvent={onClickEvent}
                                 />
                             </BoxStyle>
@@ -432,7 +464,9 @@ const VisitOutpatient = (props) => {
                                 <GenderAgeDivergingChart
                                     header={outPatientGenderChart}
                                     dataloc={outGenderAgeData}
+                                    dataloc2={outGenderAgeData2}
                                     dateCtrl={selectData}
+                                    vocId={vocId}
                                 />
                                 {/* <Treemap
                                     header={outPatientTreemapHeader}
@@ -445,6 +479,8 @@ const VisitOutpatient = (props) => {
                                     header={outPatientPersonMap}
                                     dataloc={outPersonMapData}
                                     dateCtrl={selectData}
+                                    data2={outPersonMapData2}
+                                    vocId={vocId}
                                 />
                             </BoxStyle>
                             <BoxStyle>
