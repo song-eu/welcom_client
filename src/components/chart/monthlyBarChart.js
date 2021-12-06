@@ -6,13 +6,14 @@ import GenderAgeDivergingChart from './genderAgeDiverging'
 import { act } from 'react-dom/cjs/react-dom-test-utils.production.min'
 import csvToData from '../../modules/csvDataRead'
 import jsonToData from '../../modules/jsonDataRead'
+import fetchToData from '../../modules/convertPersonMap'
 
 const MonthlyBarChart = (props) => {
-    var [width, setWidth] = useState(850)
-    var height = 600
+    var [width, setWidth] = useState(900)
+    // var height = 600
     const margin = { top: 40, left: 60, bottom: 40, right: 20 }
     //const [data, setData] = useState(sampleData.monthBarData.data1)
-    const { header, dataloc } = props
+    const { header, dataloc, data2, vocId, dateCtrl } = props
     const svgRef = useRef()
 
     var sample = [
@@ -34,11 +35,16 @@ const MonthlyBarChart = (props) => {
         //     setData(sampleData.monthBarData[selectData])
         // }
         //console.log('json?', dataloc, typeof dataloc)
-        if (dataloc.includes('.csv')) {
+        if (!vocId) {
             var data = await csvToData(dataloc)
+            setWidth(950)
+
+            // console.log('barchart data?', data)
+            var height = 550
         } else {
-            var data = await jsonToData(dataloc)
-            setWidth(1600)
+            var data = fetchToData(data2)
+            var height = 577.5
+            // console.log('data2 bar chart', data, vocId, dateCtrl)
         }
 
         var x = d3
@@ -79,13 +85,13 @@ const MonthlyBarChart = (props) => {
 
         // line chart와 동일
         const svg = d3
-            .select('#barchart')
+            .select(svgRef.current)
             .call((g) => g.select('svg').remove())
             .append('svg')
             .style('width', width - margin.right)
             .style('height', height)
 
-        svg.append('g').call(xAxis)
+        svg.append('g').call(xAxis).style('font-size', '15px')
         svg.append('g')
             .call(yAxis)
             //grid line color 추가
@@ -95,6 +101,7 @@ const MonthlyBarChart = (props) => {
                     .attr('class', 'axis_y_tick')
                     .attr('stroke', '#bdc3c7')
             )
+            .style('font-size', '15px')
 
         const barGroups = svg
             .selectAll()
@@ -107,7 +114,13 @@ const MonthlyBarChart = (props) => {
 
         barGroups
             .append('rect')
-            .attr('fill', '#73FDFF')
+            .attr('fill', (d) => {
+                if (!vocId) {
+                    return '#73FDFF'
+                } else {
+                    return '#FE6B8B'
+                }
+            })
             .attr('class', 'bar')
             .attr('x', (d) => x(d.NAME))
             .attr('width', x.bandwidth())
@@ -144,16 +157,18 @@ const MonthlyBarChart = (props) => {
                     .attr('class', 'divergence')
                     .attr('x', (a) => x(a.NAME) + x.bandwidth() / 2)
                     .attr('y', (a) => y(a.VALUE) + 30)
-                    .attr('fill', '#616161')
+                    .attr('fill', '#fff')
                     .attr('text-anchor', 'middle')
+                    .attr('font-size', '20px')
+                    .style('font-weight', 'bold')
                     .text((a, idx) => {
-                        const divergence = (a.VALUE - i.VALUE).toFixed(1)
+                        // const divergence = (a.VALUE - i.VALUE).toFixed(1)
 
-                        let text = ''
-                        if (divergence > 0) text += '+'
-                        text += `${divergence / 100}%`
+                        // let text = ''
+                        // if (divergence > 0) text += '+'
+                        // text += `${divergence / 100}%`
 
-                        return idx !== i ? text : ''
+                        return a.VALUE.toLocaleString('ko-KR') + '명'
                     })
             })
             .on('mouseleave', function (actual, i) {
@@ -186,13 +201,13 @@ const MonthlyBarChart = (props) => {
         // .enter() Join 된 데이터에 각 자리에 대한 노드를 반환하고
         // .append() 반환된 노드 데이터를 담고 react 엘리먼트를 추가합니다.
         // ex. data = [1, 2, 3, 4] 값을 가지고 있었다면 1, 2, 3, 4 데이터와 매핑된 rect 엘리먼트가 4개 추가됩니다.
-    }, [width])
+    }, [width, vocId])
 
     return (
         <MonthlyBarChartStyle width={width}>
             <h1>{header}</h1>
             <div id="barMiddleLine"></div>
-            <div id="barchart" ref={svgRef}></div>
+            <div ref={svgRef}></div>
         </MonthlyBarChartStyle>
     )
 }

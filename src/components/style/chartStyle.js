@@ -35,6 +35,7 @@ export const HorizonBarChartSytle = styled.div`
     // position: relative;
     // border: 1px solid #1488cc;
     // overflow: hidden;
+
     & #hbarchart {
         // backgroud: #1488cc;
         // --border: 1px solid #1488cc;
@@ -58,15 +59,16 @@ export const HorizonBarChartSytle = styled.div`
     background: #2b2b4b;
     border-radius: 5px;
     margin-left: 5px;
+    margin-bottom: 10px;
 `
 
 export const GenderChartSytle = styled.div`
     flex: 1;
     position: relative;
     float: left;
-    overflow: hidden;
+    // overflow: hidden;
     // --border: 1px solid #ff8c00;
-    margin-left: 10px;
+    margin-left: 5px;
     & h1 {
         position: relative;
         font-size: 24px;
@@ -75,7 +77,7 @@ export const GenderChartSytle = styled.div`
         text-align: center;
     }
     & div {
-        backgroud: #ff8c00;
+        // backgroud: #ff8c00;
         // --border: 1px solid #1488cc;
     }
 `
@@ -169,9 +171,9 @@ export const MapBubbleChartStyle = styled.div`
 
 export const GenderDivergingBarChartSytle = styled.div`
     overflow: hidden;
-    // border: 1px solid #ff8c00;
+
     // width: ${(props) => props.width}px;
-    padding: 0 10px 0 10px;
+    // padding: 0 10px 0 10px;
     & h1 {
         position: relative;
         font-size: 24px;
@@ -184,14 +186,14 @@ export const GenderDivergingBarChartSytle = styled.div`
     align-items: center;
 
     & #gendermiddleline {
-        margin-top: 5px;
-        margin-let: 25px;
+        // margin-top: 5px;
+        // margin-let: 25px;
         width: 96%;
         border-top: 1px solid grey;
     }
     background: #2b2b4b;
     border-radius: 5px;
-    margin-left: 20px;
+    margin-left: 5px;
     margin-bottom: 10px;
 `
 export const TreemapStyle = styled.div`

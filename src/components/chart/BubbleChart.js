@@ -46,14 +46,14 @@ const BubbleCircleChart = (props) => {
 
     const margin = { top: 10, right: 10, bottom: 10, left: 10 },
         width = 880 - margin.left - margin.right,
-        height = 578 - margin.top - margin.bottom
+        height = 560 - margin.top - margin.bottom
 
     useEffect(async () => {
         // const dataset = sampleData.circleCharData.data1
 
         const getdata = await jsonToData(dataloc)
         const dataset = getdata[dateCtrl.substring(0, 4)][pageInfo]
-        console.log('bubble data?', getdata)
+        // console.log('bubble data?', getdata)
 
         const sum = d3
             .stratify()
@@ -187,8 +187,8 @@ const BubbleCircleChart = (props) => {
                     .style('opacity', 1)
             })
             .on('click', (e, d) => {
-                console.log('ddddd??', d)
-                props.onClickEvent('OP', d.data.voc_id)
+                // console.log('ddddd??', d)
+                props.onClickEvent('OP', d.data.voc_id, d.data.name)
             })
 
         const label = node
@@ -196,6 +196,32 @@ const BubbleCircleChart = (props) => {
             .attr('dx', -18)
             .attr('dy', 2)
             .text((d) => d.data.name.substring(0, d.r / 3))
+            .on('mouseover', (e, d) => {
+                bubbleTooltip
+                    .style('font-size', '18px')
+                    .style('max-width', 220 + 'px')
+                    .style('min-width', 80 + 'px')
+                    .style('border-radius', '5px')
+                    .style('padding', '8px')
+                    .style('position', 'absolute')
+                    .style('left', e.pageX + 'px')
+                    .style('top', e.pageY + 'px')
+                    .style('word-break', 'break-all')
+                    .style('visibility', 'visible')
+                    .style('background', '#6b6b83')
+                    .html(
+                        '<strong>' +
+                            d.data.name_full +
+                            " : </strong><br/> <span style='color:red'>" +
+                            d.data.value.toLocaleString('ko-KR') +
+                            ' 명 </span>'
+                    )
+                // console.log('e??', e)
+                d3.select(e.path[1])
+                    .style('stroke', '#F3F9A7')
+                    .attr('stroke-width', 1)
+                    .style('opacity', 0.8)
+            })
             .on('mousemove', (e) =>
                 bubbleTooltip
                     .style('top', `${e.pageY}px`)
@@ -204,14 +230,14 @@ const BubbleCircleChart = (props) => {
             .on('mouseleave', (e, i) => {
                 bubbleTooltip.style('visibility', 'hidden')
 
-                d3.select(e.target)
+                d3.select(e.path[1])
                     // .style('stroke', '#F3F9A7')
                     .attr('stroke-width', 0)
                     .style('opacity', 1)
             })
             .on('click', (e, d) => {
-                console.log('ddddd??', d)
-                props.onClickEvent('OP', d.data.voc_id)
+                // console.log('ddddd??', d)
+                props.onClickEvent('OP', d.data.voc_id, d.data.name)
             })
 
         label.transition().delay(700).ease(d3.easeExpInOut)
@@ -222,6 +248,7 @@ const BubbleCircleChart = (props) => {
     return (
         <TreemapStyle>
             <h1>{header}</h1>
+            <span> ICD9CM </span>
             <div id="bubblechart" ref={svgRef}></div>
         </TreemapStyle>
     )

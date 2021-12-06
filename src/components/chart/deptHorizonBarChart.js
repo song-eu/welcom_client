@@ -6,6 +6,7 @@ import { sampleData } from '../../sampledata/barData'
 import csvToData from '../../modules/csvDataRead'
 import jsonToData from '../../modules/jsonDataRead'
 import { xml } from 'd3'
+import fetchToData from '../../modules/convertPersonMap'
 
 const d3 = {
     ...d3module,
@@ -14,16 +15,16 @@ const d3 = {
 
 const DeptHorizonBarChart = (props) => {
     //const [data, setData] = useState(sampleData.depHorizonData.data1)
-    const { header, dateCtrl, dataloc, dataloc2 } = props
+    const { header, dateCtrl, dataloc, data2, vocId, left } = props
     const svgRef = useRef()
 
     var margin = { top: 25, right: 80, bottom: 5, left: 55 }
-    if (dataloc.includes('OUT')) {
+    if (left) {
         var width = 630 - margin.left,
             height = 1215 - margin.top - margin.bottom
-    } else if (dataloc.includes('in')) {
-        var width = 850 - margin.left - margin.right,
-            height = 640 - margin.top - margin.bottom
+    } else {
+        var width = 935 - margin.left - margin.right,
+            height = 588 - margin.top - margin.bottom
     }
     var y = d3.scaleBand().range([height, 0]).padding(0.1)
 
@@ -35,14 +36,35 @@ const DeptHorizonBarChart = (props) => {
         // }
         // console.log('dataloc?', dataloc)
         // console.log('dateCtrl?', dateCtrl)
+        // console.log('data2', header, dateCtrl, dataloc, data2, vocId)
+        // if (bisectLeft) {
+        //     var getData = await jsonToData(dataloc)
+        //     var realdata = getData[dateCtrl]
+        //         .sort((a, b) => {
+        //             return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
+        //         })
+        //         .slice(-40)
+        // } else {
+        //     var data = data2
+        // }
+        if (!vocId) {
+            var getData = await jsonToData(dataloc)
+            // console.log('get data?', getData)
+            var realdata = getData[dateCtrl.substring(0, 4)]
+                .sort((a, b) => {
+                    return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
+                })
+                .slice(-46, -1)
+        } else {
+            var realdata = fetchToData(data2)
+                [dateCtrl.substring(0, 4)].sort((a, b) => {
+                    return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
+                })
+                .slice(-20)
+            // console.log('fetch real data?', realdata, data2)
+        }
 
-        let getData = await jsonToData(dataloc)
-        let realdata = getData[dateCtrl]
-            .sort((a, b) => {
-                return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
-            })
-            .slice(-40)
-        // console.log('dataloc?', getData, realdata)
+        // console.log('dataloc?', data2, vocId, left)
 
         // realdata.sort((a, b) => {
         //     return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
@@ -56,7 +78,7 @@ const DeptHorizonBarChart = (props) => {
         //console.log('color', color(xMaxValue))
 
         var svg = d3
-            .select('#hbarchart')
+            .select(svgRef.current)
             .call((g) => g.select('svg').remove())
             .append('svg')
             .attr('width', width + margin.right)
@@ -128,23 +150,47 @@ const DeptHorizonBarChart = (props) => {
 
         //.attr("height", function(d) { return height - y(0); }) // always equal to 0
         //.attr("y", function(d) { return y(0); })
-    }, [])
+    }, [vocId])
 
     useEffect(async () => {
-        let getData = await jsonToData(dataloc)
+        if (!vocId) {
+            var getData = await jsonToData(dataloc)
 
-        let realdata = getData[dateCtrl]
-            .sort((a, b) => {
-                return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
-            })
-            .slice(-40)
+            var realdata = getData[dateCtrl.substring(0, 4)]
+                .sort((a, b) => {
+                    return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
+                })
+                .slice(-46, -1)
+        } else {
+            var realdata = fetchToData(data2)
+                [dateCtrl.substring(0, 4)].sort((a, b) => {
+                    return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
+                })
+                .slice(-20)
+            // console.log('fetch real data?', realdata, dateCtrl.substring(0, 4))
+        }
+
+        // console.log('dataloc?', data2, vocId, left)
         // console.log('data??', getData, 'real', realdata)
+        // console.log('real', realdata)
 
         const xMaxValue = d3.max(realdata, (d) => d.value)
         const color = d3.scaleLinear().domain([0, xMaxValue]).range([0.2, 0.8])
 
-        var svg = d3
-            .select(svgRef.current)
+        var container = d3.select(svgRef.current)
+        container.selectAll('div').remove()
+        const tip = container
+            .append('div')
+            // .attr('id', 'depToolTip')
+            .attr('class', 'depToolTip')
+            // .style('opacity', 0)
+            .style('padding-top', '0px')
+            .style('padding-right', '12px')
+            .style('padding-left', '12px')
+            //.style('background', 'rgba(0, 0, 0, 0.8)')
+            .style('color', '#fff')
+
+        var svg = container
             .select('svg')
             // .call((g) => g.select('g').remove())
             .select('g')
@@ -168,7 +214,8 @@ const DeptHorizonBarChart = (props) => {
                 (update) => update.attr('class', 'updateXaxis'),
                 (exit) => exit.remove()
             )
-            .call(d3.axisTop(x))
+            .call(d3.axisTop(x).tickFormat(d3.format('~s')))
+            .style('font-size', '15px')
 
         let yBar = svg
             .selectAll('.axisYRank')
@@ -184,37 +231,109 @@ const DeptHorizonBarChart = (props) => {
                     .tickSizeInner(7)
                     .tickSizeOuter(7)
             )
+            .style('font-size', '13px')
 
         function onMouseOver(d, i) {
             //console.log(d)
             let pos = d3.select(this).node().getBoundingClientRect()
             let tipNodeWidth = d3
-                .selectAll('#depToolTip')
+                .selectAll('.depToolTip')
                 .node()
                 .getBoundingClientRect().width
 
-            tip.show(i, this)
-            // console.log('pos?', pos.width, tipNodeWidth, pos.right, pos)
+            let tipNodeheight = d3
+                .selectAll('.depToolTip')
+                .node()
+                .getBoundingClientRect().height
+
+            tip.style('visibility', 'visible')
+                .style('position', 'absolute')
+                .html((d) => {
+                    let count = d3.format('0.2s')(i.value)
+                    // console.log(count)
+                    return (
+                        '<strong>' +
+                        i.name_full +
+                        " : </strong> <span style='color:red'>" +
+                        // d.value.toLocaleString('ko-KR') +
+                        count +
+                        ' 명 </span>'
+                    )
+                })
+            console.log(
+                'pos?',
+                pos.width,
+                tipNodeWidth,
+                tipNodeheight,
+                pos.right,
+                pos
+            )
             // console.log('this???', this)
             //console.log('depToolTip',d3.selectAll('#depToolTip').node().getBoundingClientRect() )
 
             // tip.style('left', `${pos['x'] + pos['width']} px`)
             //
-            if (pos['width'] < 230) {
-                tip.style('left', `${pos['right']}px`).style(
-                    'top',
-                    `${window.pageYOffset + pos['y'] - 1}px`
-                )
+            if (left) {
+                if (pos['width'] < 270) {
+                    tip.style('left', `${pos['right']}px`).style(
+                        'top',
+                        `${window.pageYOffset + pos['y'] - 1}px`
+                    )
+                } else {
+                    tip.style(
+                        'left',
+                        `${
+                            // pos['width'] < 200
+                            //     ? pos['right']
+                            //     : pos['right'] - tipNodeWidth
+                            pos['right'] - 180
+                        }px`
+                    ).style('top', `${window.pageYOffset + pos['y'] - 1}px`)
+                }
             } else {
-                tip.style(
-                    'left',
-                    `${
-                        // pos['width'] < 200
-                        //     ? pos['right']
-                        //     : pos['right'] - tipNodeWidth
-                        pos['right'] - 180
-                    }px`
-                ).style('top', `${window.pageYOffset + pos['y'] - 1}px`)
+                if (pos['width'] < 200) {
+                    tip.style('left', `${pos['right']}px`)
+                    if (pos['height'] < 30) {
+                        tip.style(
+                            'top',
+                            `${window.pageYOffset + pos['y'] - 1}px`
+                        )
+                    } else {
+                        tip.style(
+                            'top',
+                            `${
+                                window.pageYOffset +
+                                pos['y'] +
+                                pos['height'] / 2
+                            }px`
+                        ).style('font-size', '25px')
+                    }
+                } else {
+                    tip.style(
+                        'left',
+                        `${
+                            // pos['width'] < 200
+                            //     ? pos['right']
+                            //     : pos['right'] - tipNodeWidth
+                            pos['right'] - 180
+                        }px`
+                    )
+                    if (pos['height'] < 30) {
+                        tip.style(
+                            'top',
+                            `${window.pageYOffset + pos['y'] - 1}px`
+                        )
+                    } else {
+                        tip.style(
+                            'top',
+                            `${
+                                window.pageYOffset +
+                                pos['y'] +
+                                pos['height'] / 2
+                            }px`
+                        ).style('font-size', '25px')
+                    }
+                }
             }
 
             d3.select(this)
@@ -224,27 +343,7 @@ const DeptHorizonBarChart = (props) => {
                 .attr('fill', '#ffc500')
         }
 
-        const tip = d3
-            .tip()
-            .attr('id', 'depToolTip')
-            .attr('class', 'depToolTip')
-            .style('padding-top', '0px')
-            .style('padding-right', '12px')
-            .style('padding-left', '12px')
-            //.style('background', 'rgba(0, 0, 0, 0.8)')
-            .style('color', '#fff')
-            .html((d) => {
-                //console.log(d)
-                return (
-                    '<strong>' +
-                    d.name_full +
-                    " : </strong> <span style='color:red'>" +
-                    d.value.toLocaleString('ko-KR') +
-                    ' 명 </span>'
-                )
-            })
-
-        svg.call(tip)
+        // svg.call(tip)
 
         var bar = svg
             .selectAll('rect')
@@ -260,7 +359,10 @@ const DeptHorizonBarChart = (props) => {
             //.attr('fill', '#69b3a2')
             .on('mouseover', onMouseOver)
             .on('mouseleave', function (actual, i) {
-                tip.hide()
+                tip.style('visibility', 'hidden')
+
+                // tip.hide()
+
                 d3.select(this)
                     .transition()
                     .duration(300)
@@ -277,13 +379,13 @@ const DeptHorizonBarChart = (props) => {
             .duration(1000)
             .attr('width', (d) => x(d.value))
             .attr('fill', ({ value }) => d3.interpolateGnBu(color(value)))
-    }, [dateCtrl])
+    }, [dateCtrl, vocId])
 
     return (
         <HorizonBarChartSytle>
             <h1>{header}</h1>
-            <div id="hbarchartLine"></div>
-            <div id="hbarchart" ref={svgRef}></div>
+            <div className="hbarchartLine"></div>
+            <div ref={svgRef}></div>
         </HorizonBarChartSytle>
     )
 }

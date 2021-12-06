@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const MapContainer = styled.div`
     float: left;
-    margin: 15px 35px;
+    // margin: 15px 35px;
     overflow: hidden;
     & h1 {
         position: relative;

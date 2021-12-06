@@ -80,7 +80,7 @@ const ChildrenView = (props) => {
     }
 
     var format = d3.format(',d')
-    const number = {
+    const numberRight = {
         all: 891105,
         allTM: 20210,
         rdAll: 51973,
@@ -88,12 +88,12 @@ const ChildrenView = (props) => {
     }
 
     useEffect(() => {
-        let numAll = d3
+        let numAllRight = d3
             .select('.numberAll')
             .attr('text-anchor', 'middle')
             .attr('dy', '.3em')
-        numAll
-            .datum(number.all)
+        numAllRight
+            .datum(numberRight.all)
             .transition()
             .duration(1500)
             .textTween((d) => {
@@ -109,7 +109,7 @@ const ChildrenView = (props) => {
             .attr('text-anchor', 'middle')
             .attr('dy', '.3em')
         numTM
-            .datum(number.allTM)
+            .datum(numberRight.allTM)
             .transition()
             .duration(1500)
             .textTween((d) => {
@@ -125,7 +125,7 @@ const ChildrenView = (props) => {
             .attr('text-anchor', 'middle')
             .attr('dy', '.3em')
         numRDAll
-            .datum(number.rdAll)
+            .datum(numberRight.rdAll)
             .transition()
             .duration(1500)
             .textTween((d) => {
@@ -141,7 +141,7 @@ const ChildrenView = (props) => {
             .attr('text-anchor', 'middle')
             .attr('dy', '.3em')
         numRD
-            .datum(number.rdTM)
+            .datum(numberRight.rdTM)
             .transition()
             .duration(1500)
             .textTween((d) => {

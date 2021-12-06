@@ -10,12 +10,14 @@ import * as d3 from 'd3'
 import VisitOutpatient from './components/visitOutpatient'
 import VisitInpatient from './components/visitInpatient'
 import ChildrenView from './components/ChildrenView'
+import VisitOutpatientCOPY from './components/visitOutpatient copy'
 import {
     HeaderWrap,
     HeaderButton,
     BackgroundAll,
 } from './components/style/backgraound'
 import { backgrounds } from 'polished'
+import './App.css'
 
 const App = () => {
     const [currPage, setCurrPage] = useState('Visits')
@@ -46,15 +48,18 @@ const App = () => {
             setProcedureLoaded(true)
         }
     }
-    console.log('currPage: ??', currPage, 'setThisPage?', setThisPage)
+    // console.log('currPage: ??', currPage, 'setThisPage?', setThisPage)
     return (
         <BackgroundAll>
             <div className="App">
                 <Router>
                     <HeaderWrap>
-                        <h1>SNUH DATA HIVE</h1>
-                        <div className="pageButtons">
-                            <Link to="/visitOut">
+                        <Link to="/visitOut" style={{ textDecoration: 'none' }}>
+                            <h1>SNUH DATA HIVE</h1>
+                        </Link>
+
+                        {/* <div className="pageButtons">
+                         
                                 <HeaderButton
                                     onClick={onClickPage}
                                     currColor={(e) =>
@@ -72,7 +77,7 @@ const App = () => {
                                         Out-Visits
                                     </div>
                                 </HeaderButton>
-                            </Link>
+                         
                             <Link to="/visitIn">
                                 <HeaderButton
                                     onClick={onClickPage}
@@ -112,12 +117,16 @@ const App = () => {
                                     </div>
                                 </HeaderButton>
                             </Link>
-                        </div>
+                        </div> */}
                     </HeaderWrap>
 
                     <Route exact path="/" component={VisitOutpatient} />
                     <Route exact path="/visitOut" component={VisitOutpatient} />
-                    <Route exact path="/visitIn" component={VisitInpatient} />
+                    <Route
+                        exact
+                        path="/visitIn"
+                        component={VisitOutpatientCOPY}
+                    />
                     <Route
                         exact
                         path="/childrenView"

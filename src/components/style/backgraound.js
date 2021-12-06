@@ -1,16 +1,18 @@
 import styled from 'styled-components'
 import { darken, lighten } from 'polished'
+import { format } from 'd3-format'
+import GlobalFonts from './font/font.js'
 
 export const HeaderWrap = styled.header`
     height: 80px;
     border-bottom: 1px solid #dcdcdc;
 
-    color: tomato;
+    color: #fff;
     font-size: 16px;
     position: sticky;
     top: 0;
     left: 0;
-    // background: rgba(255, 255, 255, 0.9);
+    background: rgba(25, 16, 45, 0.9);
     z-index: 10;
     overflow: hidden;
     display: flex;
@@ -20,6 +22,9 @@ export const HeaderWrap = styled.header`
         position: relative;
         letter-spacing: 10px;
         left: 8%;
+        font-size: 50px;
+        font-family: 'bitro';
+        color: #fff;
     }
     & .pageButtons {
         overflow: hidden;
@@ -242,6 +247,8 @@ export const RowStyle = styled.div`
     overflow: hidden;
     flex-direction: row;
     align-items: stretch;
+
+    justify-content: center;
 `
 export const ButtonRow = styled.div`
     display: flex;
@@ -272,7 +279,10 @@ export const BackgroundAll = styled.div`
     background: rgba(25, 16, 45, 0.9);
     // border: 2px solid tomato;
     color: white;
-    width: 5060px;
+    width: 5740px;
+    height: 1599px;
+    // margin-left: 1%;
+    // overflow: auto;
 `
 
 export const BigBox = styled.div`
@@ -281,18 +291,18 @@ export const BigBox = styled.div`
 `
 
 export const RightBack = styled.div`
-    border: 2px solid tomato;
-    width: 2530px;
+    // border: 2px solid tomato;
+    width: 2870px;
 `
 
 export const LeftBack = styled.div`
-    border: 2px solid blue;
-    width: 2530px;
+    // border: 2px solid blue;
+    width: 2870px;
 `
 
 export const BackRowStyle = styled.div`
     display: flex;
-    overflow: hidden;
     flex-direction: row;
     align-items: stretch;
+    justify-content: center;
 `

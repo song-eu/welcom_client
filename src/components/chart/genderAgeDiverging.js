@@ -7,6 +7,7 @@ import csvToData from '../../modules/csvDataRead'
 import jsonToData from '../../modules/jsonDataRead'
 import moment from 'moment'
 import { compose } from 'redux'
+import { width } from '@mui/system'
 
 const d3 = {
     ...d3module,
@@ -41,14 +42,9 @@ const GenderAgeDivergingChart = (props) => {
         return 'translate(' + x + ',' + y + ')'
     }
 
-    if (dataloc.includes('OUT') | dataloc.includes('IN')) {
-        var w = 950
-        var h = 500
-    } else {
-        //console.log('AGE/JSON?', data)
-        var w = 900
-        var h = 750
-    }
+    var w = 1070
+    var h = 530
+
     // console.log('outpatient data', getData)
     // the width of each side of the chart
     var regionWidth =
@@ -66,57 +62,23 @@ const GenderAgeDivergingChart = (props) => {
             margin.left -
             margin.left * 2
 
-    //<-------- Tooltips -------->
-    var tip = d3
-        .tip()
-        .attr('class', 'toolTip')
-        // .attr('id', 'toolTip')
-        .style('padding-top', '17px')
-        .style('padding-left', '12px')
-        //.style('background', 'rgba(0, 0, 0, 0.8)')
-        .style('color', '#fff')
-        //.style("display", "inline-block")
-        // .style('left', d3.select(this).attr("cx") + "px")
-        // .style('top', d3.select(this).attr("cy") + "px")
-        // .style("left",(d) => xScale(d.male)  + "px")
-        // .style("top", (d) => yScale(d.group)+ "px")
-        .offset([-10, 0])
-
-    var fTip = d3
-        .tip()
-        .attr('class', 'toolTipF')
-        // .attr('id', 'toolTipF')
-        .style('padding-top', '17px')
-        .style('padding-left', '12px')
-        //.style('background', 'rgba(0, 0, 0, 0.8)')
-        .style('color', '#fff')
-        //.style("display", "inline-block")
-        // .style('left', d3.select(this).attr("cx") + "px")
-        // .style('top', d3.select(this).attr("cy") + "px")
-        // .style("left",(d) => xScale(d.male)  + "px")
-        // .style("top", (d) => yScale(d.group)+ "px")
-        .offset([-10, 0])
-
     useEffect(async () => {
         // console.log('gender voc_id???', vocId, !vocId)
-        if (!vocId) {
-            var getDatas = await jsonToData(dataloc)
-            var data = getDatas[dateCtrl].slice(0, -1).sort((a, b) => {
-                return (
-                    parseInt(a.group.slice(0, 2)) -
-                    parseInt(b.group.slice(0, 2))
-                )
-            })
-        } else {
-            var getDatas = await jsonToData(dataloc2)
-            var data = getDatas[vocId][dateCtrl].slice(0, -1).sort((a, b) => {
-                return (
-                    parseInt(a.group.slice(0, 2)) -
-                    parseInt(b.group.slice(0, 2))
-                )
-            })
-        }
 
+        var getDatas = await jsonToData(dataloc2)
+        var data = getDatas[vocId][dateCtrl.substring(0, 4)].sort((a, b) => {
+            return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
+        })
+        for (let i = 0; i < data.length; i++) {
+            if (!data[i].female) {
+                // console.log('data? female no', data[i])
+                data[i] = { ...data[i], female: 0 }
+            } else if (!data[i].male) {
+                // console.log('data? male no', data[i])
+                data[i].male = 0
+            }
+        }
+        // console.log('age data?', data)
         // data = data.slice(0, -1)
         // data.sort((a, b) => {
         //     return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
@@ -133,7 +95,7 @@ const GenderAgeDivergingChart = (props) => {
 
         // CREATE SVG
         var svg = d3
-            .selectAll('#negBarChart')
+            .select(svgRef.current)
             .call((g) => g.select('svg').remove())
             .append('svg')
             .attr('width', w - margin.left - margin.right - margin.middle)
@@ -152,6 +114,7 @@ const GenderAgeDivergingChart = (props) => {
             d3.max(data, (d) => d.male),
             d3.max(data, (d) => d.female)
         )
+        console.log('max?', maxValue)
         // SET UP SCALES
         // const color = d3.scaleLinear().domain([0, 1]).range([0.29, 0.74])
 
@@ -269,21 +232,24 @@ const GenderAgeDivergingChart = (props) => {
             })
         } else {
             var getDatas = await jsonToData(dataloc2)
-            var data = getDatas[vocId][dateCtrl].slice(0, -1).sort((a, b) => {
-                return (
-                    parseInt(a.group.slice(0, 2)) -
-                    parseInt(b.group.slice(0, 2))
-                )
-            })
+            var data = getDatas[vocId][dateCtrl.substring(0, 4)].sort(
+                (a, b) => {
+                    return (
+                        parseInt(a.group.slice(0, 2)) -
+                        parseInt(b.group.slice(0, 2))
+                    )
+                }
+            )
             for (let i = 0; i < data.length; i++) {
                 if (!data[i].female) {
                     // console.log('data? female no', data[i])
-                    data[i].female = 0
+                    data[i] = { ...data[i], female: 0 }
                 } else if (!data[i].male) {
                     // console.log('data? male no', data[i])
                     data[i].male = 0
                 }
             }
+
             // console.log('data age?', data)
         }
         // console.log('age_update', vocId, data, dataloc, dataloc2)
@@ -292,16 +258,51 @@ const GenderAgeDivergingChart = (props) => {
             d3.max(data, (d) => d.male),
             d3.max(data, (d) => d.female)
         )
-        var svg = d3
-            .select(svgRef.current)
+        var container = d3.select(svgRef.current)
+        container.selectAll('div').remove()
+        //<-------- Tooltips -------->
+        var tip = container
+            .append('div')
+            .attr('class', 'toolTip')
+            // .attr('id', 'toolTip')
+            .style('padding-top', '17px')
+            .style('padding-left', '12px')
+            //.style('background', 'rgba(0, 0, 0, 0.8)')
+            .style('color', '#fff')
+            .style('display', 'none')
+        //.style("display", "inline-block")
+        // .style('left', d3.select(this).attr("cx") + "px")
+        // .style('top', d3.select(this).attr("cy") + "px")
+        // .style("left",(d) => xScale(d.male)  + "px")
+        // .style("top", (d) => yScale(d.group)+ "px")
+        // .offset([-10, 0])
+
+        var fTip = container
+            .append('div')
+            .attr('class', 'toolTipF')
+            // .attr('id', 'toolTipF')
+            .style('padding-top', '17px')
+            .style('padding-left', '12px')
+            //.style('background', 'rgba(0, 0, 0, 0.8)')
+            .style('color', '#fff')
+            .style('font-size', '20px')
+            .style('display', 'none')
+        //.style("display", "inline-block")
+        // .style('left', d3.select(this).attr("cx") + "px")
+        // .style('top', d3.select(this).attr("cy") + "px")
+        // .style("left",(d) => xScale(d.male)  + "px")
+        // .style("top", (d) => yScale(d.group)+ "px")
+        // .offset([-10, 0])
+
+        var svg = container
             .select('svg')
             // .call((g) => g.select('g').remove())
             .select('g')
         // .call((g) => g.select('g').remove())
         // console.log('data??', data, 'svg', svg)
 
-        svg.call(tip)
-        svg.call(fTip)
+        // svg.call(tip)
+        // svg.call(fTip)
 
         var xScale = d3
             .scaleLinear()
@@ -340,7 +341,7 @@ const GenderAgeDivergingChart = (props) => {
                 // console.log('yScale d.group', d, yScale(d.group))
                 return yScale(d.group)
             })
-            .on('mouseover', function (d, i, n) {
+            .on('mouseover', function (e, i, n) {
                 //console.log(d, n, i)
                 //tip.show(i, this);
                 // d3.selectAll('rect')
@@ -351,24 +352,27 @@ const GenderAgeDivergingChart = (props) => {
                     .node()
                     .getBoundingClientRect().width
 
-                tip.html((d) => {
-                    //console.log('d??', d)
-                    return (
-                        "<strong>Male:</strong> <span style='color:red'>" +
-                        d.male.toLocaleString('ko-KR') +
-                        '</span>'
-                    )
-                }).show(i, this)
+                tip.style('width', 'max-content')
+                    .style('position', 'absolute')
+                    // .style('left', e.pageX - 100 + 'px')
+                    // .style('top', e.pageY - 25 + 'px')
+                    .style('display', null)
+                    .html((d) => {
+                        //console.log('d??', d)
+                        return (
+                            "<strong>Male:</strong> <span style='color:red'><strong>" +
+                            i.male.toLocaleString('ko-KR') +
+                            '</strong></span>'
+                        )
+                    })
+                console.log('window.pageYOffset?', window.pageYOffset, pos)
+                console.log(pos['width'])
 
                 //tip.style('left', xScale(i.male))
-                tip.style(
-                    'left',
-                    `${
-                        pos['width'] < tipNodeWidth + 14
-                            ? pos['left'] - tipNodeWidth - 20
-                            : pos['left'] + 10
-                    }px`
-                ).style('top', `${window.pageYOffset + pos['y'] - 5}px`)
+                tip.style('left', `${pos['left'] - 105}px`).style(
+                    'top',
+                    `${window.pageYOffset + pos['y'] - 5}px`
+                )
 
                 d3.select(this)
                     .transition()
@@ -377,7 +381,7 @@ const GenderAgeDivergingChart = (props) => {
                     .attr('opacity', 0.8)
             })
             .on('mouseleave', function (actual, i) {
-                tip.hide()
+                tip.style('display', 'none')
                 d3.select(this)
                     .transition()
                     .duration(300)
@@ -414,32 +418,38 @@ const GenderAgeDivergingChart = (props) => {
             //     return xScale(d.female)
             // })
             .attr('height', yScale.bandwidth())
-            .on('mouseover', function (d, i, n) {
+            .on('mouseover', function (e, i, n) {
                 let pos = d3.select(this).node().getBoundingClientRect()
                 let tipNodeWidthF = d3
                     .selectAll('.toolTipF')
                     .node()
                     .getBoundingClientRect().width
 
-                fTip.html((d) => {
-                    //console.log('d??', d)
-                    return (
-                        "<strong>Female:</strong> <span style='color:red'>" +
-                        d.female.toLocaleString('ko-KR') +
-                        '</span>'
-                    )
-                }).show(i, this)
+                fTip.style('width', 'max-content')
+                    .style('position', 'absolute')
+                    // .style('left', e.pageX + 'px')
+                    // .style('top', e.pageY - 25 + 'px')
+                    .style('display', null)
+                    .html((d) => {
+                        //console.log('d??', d)
+                        return (
+                            "<strong>Female:</strong> <span style='color:red'><strong>" +
+                            i.female.toLocaleString('ko-KR') +
+                            '</strong></span>'
+                        )
+                    })
 
-                fTip.style('left', xScale(i.female))
+                // fTip.style('left', xScale(i.female))
                 fTip.style(
                     'left',
                     `${
-                        pos['width'] < tipNodeWidthF + 14
-                            ? pos['right'] + 8
-                            : pos['right'] - tipNodeWidthF - 25
+                        pos['width'] < 10
+                            ? +pos['right'] + 80
+                            : +pos['right'] + 5
                     }px`
                 )
                 fTip.style('top', `${window.pageYOffset + pos['y'] - 5}px`)
+                console.log('pos width?', pos['width'], this, tipNodeWidthF)
 
                 d3.select(this)
                     .transition()
@@ -448,7 +458,7 @@ const GenderAgeDivergingChart = (props) => {
                     .attr('opacity', 0.8)
             })
             .on('mouseleave', function (actual, i) {
-                fTip.hide()
+                fTip.style('display', 'none')
                 d3.select(this)
                     .transition()
                     .duration(300)
@@ -468,7 +478,7 @@ const GenderAgeDivergingChart = (props) => {
         <GenderDivergingBarChartSytle>
             <h1>{header}</h1>
             <div id="gendermiddleline"></div>
-            <div id="negBarChart" ref={svgRef}></div>
+            <div ref={svgRef}></div>
         </GenderDivergingBarChartSytle>
     )
 }

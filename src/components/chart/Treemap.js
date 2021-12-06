@@ -22,6 +22,7 @@ import {
     green,
     cyan,
 } from '@mui/material/colors'
+import fetchToData from '../../modules/convertPersonMap'
 
 const d3 = {
     ...d3module,
@@ -42,24 +43,36 @@ const d3 = {
 // 		"PCNT" : 936 }
 const Treemap = (props) => {
     // const { header, dateCtrl, dataloc } = props
-    const { header, dateCtrl, pageInfo } = props
+    const { header, dateCtrl, pageInfo, dataloc, data2, vocId, left } = props
     const svgRef = useRef()
-    const dataLocation = '/outpatientData'
-    const dataloc = dataLocation + '/monthly_dgns_order_by_hsp_pcnt.json'
+    // const dataLocation = '/outpatientData'
+    // const dataloc = dataLocation + '/monthly_dgns_order_by_hsp_pcnt.json'
 
-    const margin = { top: 10, right: 10, bottom: 10, left: 10 },
-        width = 880 - margin.left - margin.right,
-        height = 578 - margin.top - margin.bottom
+    const margin = { top: 10, right: 10, bottom: 10, left: 10 }
 
     useEffect(async () => {
         // const dataset = sampleData.circleCharData.data1
+        if (!vocId) {
+            var getdata = await jsonToData(dataloc)
+            var dataset = getdata[dateCtrl.substring(0, 4)][pageInfo].sort(
+                (a, b) => {
+                    return b.value - a.value
+                }
+            )
+            var width = 880 - margin.left - margin.right,
+                height = 578 - margin.top - margin.bottom
+            // console.log('tree data1?', dataset)
+        } else {
+            var getdata = fetchToData(data2)
 
-        const getdata = await jsonToData(dataloc)
-        const dataset = getdata[dateCtrl.substring(0, 4)][pageInfo].sort(
-            (a, b) => {
+            var dataset = getdata[dateCtrl.substring(0, 4)].sort((a, b) => {
                 return b.value - a.value
-            }
-        )
+            })
+            var width = 880 - margin.left - margin.right,
+                height = 572 - margin.top - margin.bottom
+            // console.log('tree data2?', dataset)
+        }
+
         // console.log('treemap get data', getdata, dateCtrl)
         var colors = []
         let colorBar = [
@@ -121,6 +134,7 @@ const Treemap = (props) => {
 
         const container = d3.select(svgRef.current) //make sure there's a svg element in your html file
         // .call((g) => g.select('svg').remove())
+        // .call((g) => g.select('div').remove())
 
         container.selectAll('svg').remove()
         container.selectAll('div').remove()
@@ -128,10 +142,14 @@ const Treemap = (props) => {
         const treetooltip = container
             .append('div')
             .attr('class', 'treemapTooltip')
-            .attr('id', 'treemapTooltip')
-            .style('opacity', 0)
-            .style('font-size', '20px')
+            // .attr('id', 'treemapTooltip')
             .style('background', '#6b6b83')
+            .style('display', 'none')
+        if (left) {
+            treetooltip.attr('id', 'leftTreemapTooltip')
+        } else {
+            treetooltip.attr('id', 'rightTreemapTooltip')
+        }
 
         const svg = container
             .append('svg')
@@ -149,7 +167,7 @@ const Treemap = (props) => {
             return +d.value
         })
 
-        d3.treemap().size([width, height]).padding(4)(root)
+        d3.treemap().size([width, height]).padding(6)(root)
 
         svg.selectAll('rect')
             .data(root.leaves())
@@ -165,21 +183,63 @@ const Treemap = (props) => {
                     .style('min-width', 80 + 'px')
                     .style('border-radius', '5px')
                     .style('padding', '8px')
-                    .style('opacity', 0.9)
                     .style('position', 'absolute')
-                    .style('left', d.pageX + 'px')
-                    .style('top', d.pageY + 'px')
-                    .style('word-break', 'break-all')
+                // .style('visibility', 'visible')
+                // .style('left', d.pageX + 'px')
+                // .style('top', d.pageY + 'px')
+                // .style('word-break', 'break-all')
+                // .style('display', null)
+                // .style('font-size', '18px')
+                // .html(
+                //     '<strong>' +
+                //         i.data.name_full +
+                //         " : </strong><br/> <span style='color:red'>" +
+                //         i.data.value.toLocaleString('ko-KR') +
+                //         ' 명 </span>'
+                // )
+                // .html(
+                //     '<strong>' +
+                //         i.data.name_full +
+                //         " : </strong><br/> <span style='color:red'>" +
+                //         i.data.value.toLocaleString('ko-KR') +
+                //         ' 명 </span>'
+                // )
 
-                d3.select('.treemapTooltip')
-                    .style('font-size', '18px')
-                    .html(
-                        '<strong>' +
-                            i.data.name_full +
-                            " : </strong><br/> <span style='color:red'>" +
-                            i.data.value.toLocaleString('ko-KR') +
-                            ' 명 </span>'
-                    )
+                // console.log('data tool tip?', 'voc_id', vocId, d, i)
+
+                // d3.select('.treemapTooltip')
+
+                if (left) {
+                    d3.select('#leftTreemapTooltip')
+                        .style('left', d.pageX + 'px')
+                        .style('top', d.pageY + 'px')
+                        .style('word-break', 'break-all')
+                        .style('font-size', '18px')
+                        .style('display', null)
+                        .html(
+                            '<strong>' +
+                                i.data.name_full +
+                                " : </strong><br/> <span style='color:red'>" +
+                                i.data.value.toLocaleString('ko-KR') +
+                                ' 명 </span>'
+                        )
+                    d3.select('#rightTreemapTooltip').style('display', 'none')
+                } else {
+                    d3.select('#rightTreemapTooltip')
+                        .style('left', d.pageX + 'px')
+                        .style('top', d.pageY + 'px')
+                        .style('word-break', 'break-all')
+                        .style('font-size', '18px')
+                        .style('display', null)
+                        .html(
+                            '<strong>' +
+                                i.data.name_full +
+                                " : </strong><br/> <span style='color:red'>" +
+                                i.data.value.toLocaleString('ko-KR') +
+                                ' 명 </span>'
+                        )
+                    d3.select('#leftTreemapTooltip').style('display', 'none')
+                }
 
                 d3.select(d.target)
                     .transition()
@@ -192,7 +252,7 @@ const Treemap = (props) => {
                     .style('left', `${e.pageX + 10}px`)
             )
             .on('mouseleave', (d, i) => {
-                treetooltip.style('opacity', 0)
+                treetooltip.style('display', 'none')
 
                 d3.select(d.target)
                     .transition()
@@ -200,8 +260,9 @@ const Treemap = (props) => {
                     .attr('fill', colorScale(i.data.name))
             })
             .on('click', (e, d) => {
-                // console.log('d??', d)
-                props.onClickEvent(d.id, d.data.voc_id)
+                if (pageInfo) {
+                    props.onClickEvent('DG', d.data.voc_id, d.data.name)
+                }
             })
             .attr('x', (d) => d.x0)
             .attr('y', (d) => d.y0)
@@ -228,21 +289,48 @@ const Treemap = (props) => {
                     .style('min-width', 80 + 'px')
                     .style('border-radius', '5px')
                     .style('padding', '8px')
-                    .style('opacity', 0.9)
+                    // .style('opacity', 0.9)
                     .style('position', 'absolute')
                     .style('left', d.pageX + 'px')
                     .style('top', d.pageY + 'px')
                     .style('word-break', 'break-all')
+                if (left) {
+                    d3.select('#leftTreemapTooltip')
+                        .style('left', d.pageX + 'px')
+                        .style('top', d.pageY + 'px')
+                        .style('word-break', 'break-all')
+                        .style('font-size', '18px')
+                        .style('display', null)
+                        .html(
+                            '<strong>' +
+                                i.data.name_full +
+                                " : </strong><br/> <span style='color:red'>" +
+                                i.data.value.toLocaleString('ko-KR') +
+                                ' 명 </span>'
+                        )
+                    d3.select('#rightTreemapTooltip').style('display', 'none')
+                } else {
+                    d3.select('#rightTreemapTooltip')
+                        .style('left', d.pageX + 'px')
+                        .style('top', d.pageY + 'px')
+                        .style('word-break', 'break-all')
+                        .style('font-size', '18px')
+                        .style('display', null)
+                        .html(
+                            '<strong>' +
+                                i.data.name_full +
+                                " : </strong><br/> <span style='color:red'>" +
+                                i.data.value.toLocaleString('ko-KR') +
+                                ' 명 </span>'
+                        )
+                    d3.select('#leftTreemapTooltip').style('display', 'none')
+                }
 
-                d3.select('.treemapTooltip')
-                    .style('font-size', '18px')
-                    .html(
-                        '<strong>' +
-                            i.data.name_full +
-                            " : </strong><br/> <span style='color:red'>" +
-                            i.data.value.toLocaleString('ko-KR') +
-                            ' 명 </span>'
-                    )
+                // console.log('d?', d)
+                // d3.select(d.fromElement)
+                //     .transition()
+                //     .duration(100)
+                //     .attr('fill', '#ffc500')
             })
             .on('mousemove', (e) =>
                 treetooltip
@@ -250,22 +338,29 @@ const Treemap = (props) => {
                     .style('left', `${e.pageX + 10}px`)
             )
             .on('mouseleave', (d, i) => {
-                treetooltip.style('opacity', 0)
+                treetooltip.style('display', 'none')
+
+                // d3.select(d.fromElement)
+                //     .transition()
+                //     .duration(100)
+                //     .attr('fill', colorScale(i.data.name))
             })
             .on('click', (e, d) => {
+                if (pageInfo) {
+                    props.onClickEvent('DG', d.data.voc_id, d.data.name)
+                }
                 // console.log('d??', d)
-                props.onClickEvent('DG', d.data.voc_id)
             })
-            .attr('font-size', '25px')
+            .attr('font-size', '20px')
             .attr('fill', 'black')
             .style('word-break', 'break-all')
         // }, [dateCtrl])
-    }, [])
+    }, [vocId])
 
     return (
         <TreemapStyle>
             <h1>{header}</h1>
-            <div id="treeMapChar" ref={svgRef}></div>
+            <div ref={svgRef}></div>
         </TreemapStyle>
     )
 }

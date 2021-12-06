@@ -1,0 +1,4453 @@
+{
+"-- 4. OUTPATIENT VISIT BY Department Order by top visits\r\n-- 2_visit_dept_rank__YEAR_OUT.csv\r\nSELECT to_char(MED_DT, 'YYYY') MONTH \r\n\t, MED_DEPT_CD\r\n\t, MED_DEPT_NM \r\n\t, COUNT(*) ROWCNT\r\n\t, COUNT(DISTINCT PT_NO) PCNT\r\n\t, COUNT(CASE WHEN MED_YN = 'Y' THEN 1 END ) MED_Y_CNT -- 진료여부 Y 만..?\r\n\t, COUNT(CASE WHEN MED_YN = 'N' THEN 1 END ) MED_N_CNT -- 진료여부 N 만..?\r\n\t, ROUND(COUNT(CASE WHEN MED_YN != 'Y' THEN 1 END ) \/COUNT(*) * 100, 2) MED_N_RATE\r\nFROM FT_STM_VIST\r\nWHERE 1=1\r\n-- 방문일 설정: 2021년 7월 환자\r\nAND MED_DT BETWEEN to_Date('2020-10', 'YYYY-MM') AND TO_DATE('2021-11-30', 'YYYY-MM-DD')\r\n-- 외래, 입원, 응급\r\n--AND PACT_TP_NM = '외래'\r\nAND PT_BRDY_DT IS NOT  NULL \r\nGROUP BY  to_char(MED_DT, 'YYYY'), MED_DEPT_CD , MED_DEPT_NM \r\nORDER BY 1, 5 desc\r\n": [
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "DR",
+		"MED_DEPT_NM" : "영상의학과",
+		"ROWCNT" : 118841,
+		"PCNT" : 85040,
+		"MED_Y_CNT" : 2118,
+		"MED_N_CNT" : 116723,
+		"MED_N_RATE" : 98.22
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMC",
+		"MED_DEPT_NM" : "순환기내과",
+		"ROWCNT" : 46114,
+		"PCNT" : 30788,
+		"MED_Y_CNT" : 34290,
+		"MED_N_CNT" : 11824,
+		"MED_N_RATE" : 25.64
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "NR",
+		"MED_DEPT_NM" : "신경과",
+		"ROWCNT" : 42294,
+		"PCNT" : 27538,
+		"MED_Y_CNT" : 31278,
+		"MED_N_CNT" : 11016,
+		"MED_N_RATE" : 26.05
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMG",
+		"MED_DEPT_NM" : "소화기내과",
+		"ROWCNT" : 49903,
+		"PCNT" : 25274,
+		"MED_Y_CNT" : 27576,
+		"MED_N_CNT" : 22327,
+		"MED_N_RATE" : 44.74
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "OT",
+		"MED_DEPT_NM" : "안과",
+		"ROWCNT" : 38084,
+		"PCNT" : 22253,
+		"MED_Y_CNT" : 29249,
+		"MED_N_CNT" : 8835,
+		"MED_N_RATE" : 23.2
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IME",
+		"MED_DEPT_NM" : "내분비대사내과",
+		"ROWCNT" : 36295,
+		"PCNT" : 21756,
+		"MED_Y_CNT" : 21624,
+		"MED_N_CNT" : 14671,
+		"MED_N_RATE" : 40.42
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMI",
+		"MED_DEPT_NM" : "감염내과",
+		"ROWCNT" : 23756,
+		"PCNT" : 17901,
+		"MED_Y_CNT" : 21591,
+		"MED_N_CNT" : 2165,
+		"MED_N_RATE" : 9.11
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "NP",
+		"MED_DEPT_NM" : "정신건강의학과",
+		"ROWCNT" : 27545,
+		"PCNT" : 13904,
+		"MED_Y_CNT" : 22100,
+		"MED_N_CNT" : 5445,
+		"MED_N_RATE" : 19.77
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "OG",
+		"MED_DEPT_NM" : "산부인과",
+		"ROWCNT" : 37478,
+		"PCNT" : 13515,
+		"MED_Y_CNT" : 23139,
+		"MED_N_CNT" : 14339,
+		"MED_N_RATE" : 38.26
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMN",
+		"MED_DEPT_NM" : "신장내과",
+		"ROWCNT" : 35503,
+		"PCNT" : 13418,
+		"MED_Y_CNT" : 23155,
+		"MED_N_CNT" : 12348,
+		"MED_N_RATE" : 34.78
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "OS",
+		"MED_DEPT_NM" : "정형외과",
+		"ROWCNT" : 20949,
+		"PCNT" : 12783,
+		"MED_Y_CNT" : 14769,
+		"MED_N_CNT" : 6180,
+		"MED_N_RATE" : 29.5
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMOC1",
+		"MED_DEPT_NM" : "종양내과센터종양내과",
+		"ROWCNT" : 55145,
+		"PCNT" : 12533,
+		"MED_Y_CNT" : 30347,
+		"MED_N_CNT" : 24798,
+		"MED_N_RATE" : 44.97
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HCSO",
+		"MED_DEPT_NM" : "강남클리닉",
+		"ROWCNT" : 25486,
+		"PCNT" : 12084,
+		"MED_Y_CNT" : 3593,
+		"MED_N_CNT" : 21893,
+		"MED_N_RATE" : 85.9
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "BCCGS",
+		"MED_DEPT_NM" : "유방센터외과",
+		"ROWCNT" : 27930,
+		"PCNT" : 12042,
+		"MED_Y_CNT" : 14038,
+		"MED_N_CNT" : 13892,
+		"MED_N_RATE" : 49.74
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "NM",
+		"MED_DEPT_NM" : "핵의학과",
+		"ROWCNT" : 14693,
+		"PCNT" : 11822,
+		"MED_Y_CNT" : 2065,
+		"MED_N_CNT" : 12628,
+		"MED_N_RATE" : 85.95
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HCS",
+		"MED_DEPT_NM" : "강남센터",
+		"ROWCNT" : 12698,
+		"PCNT" : 11058,
+		"MED_Y_CNT" : 12301,
+		"MED_N_CNT" : 397,
+		"MED_N_RATE" : 3.13
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMR",
+		"MED_DEPT_NM" : "호흡기내과",
+		"ROWCNT" : 20290,
+		"PCNT" : 10804,
+		"MED_Y_CNT" : 12002,
+		"MED_N_CNT" : 8288,
+		"MED_N_RATE" : 40.85
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "FM",
+		"MED_DEPT_NM" : "가정의학과",
+		"ROWCNT" : 16216,
+		"PCNT" : 10229,
+		"MED_Y_CNT" : 10863,
+		"MED_N_CNT" : 5353,
+		"MED_N_RATE" : 33.01
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMJ",
+		"MED_DEPT_NM" : "류마티스내과",
+		"ROWCNT" : 16154,
+		"PCNT" : 10025,
+		"MED_Y_CNT" : 12608,
+		"MED_N_CNT" : 3546,
+		"MED_N_RATE" : 21.95
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "UR",
+		"MED_DEPT_NM" : "비뇨의학과",
+		"ROWCNT" : 19313,
+		"PCNT" : 9653,
+		"MED_Y_CNT" : 10577,
+		"MED_N_CNT" : 8736,
+		"MED_N_RATE" : 45.23
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "DM",
+		"MED_DEPT_NM" : "피부과",
+		"ROWCNT" : 18029,
+		"PCNT" : 9652,
+		"MED_Y_CNT" : 14517,
+		"MED_N_CNT" : 3512,
+		"MED_N_RATE" : 19.48
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMZ",
+		"MED_DEPT_NM" : "내과(일반)",
+		"ROWCNT" : 11144,
+		"PCNT" : 9600,
+		"MED_Y_CNT" : 1794,
+		"MED_N_CNT" : 9350,
+		"MED_N_RATE" : 83.9
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "NS",
+		"MED_DEPT_NM" : "신경외과",
+		"ROWCNT" : 17113,
+		"PCNT" : 9509,
+		"MED_Y_CNT" : 10282,
+		"MED_N_CNT" : 6831,
+		"MED_N_RATE" : 39.92
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "OL",
+		"MED_DEPT_NM" : "이비인후과",
+		"ROWCNT" : 15766,
+		"PCNT" : 8637,
+		"MED_Y_CNT" : 9778,
+		"MED_N_CNT" : 5988,
+		"MED_N_RATE" : 37.98
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "AER",
+		"MED_DEPT_NM" : "본원응급실(AER)",
+		"ROWCNT" : 9677,
+		"PCNT" : 8203,
+		"MED_Y_CNT" : 9677,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CVC",
+		"MED_DEPT_NM" : "심혈관센터",
+		"ROWCNT" : 10176,
+		"PCNT" : 8037,
+		"MED_Y_CNT" : 61,
+		"MED_N_CNT" : 10115,
+		"MED_N_RATE" : 99.4
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "EMO",
+		"MED_DEPT_NM" : "응급의학과(EMO)",
+		"ROWCNT" : 11582,
+		"PCNT" : 7151,
+		"MED_Y_CNT" : 719,
+		"MED_N_CNT" : 10863,
+		"MED_N_RATE" : 93.79
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CP",
+		"MED_DEPT_NM" : "진단검사의학과",
+		"ROWCNT" : 8807,
+		"PCNT" : 6852,
+		"MED_Y_CNT" : 7209,
+		"MED_N_CNT" : 1598,
+		"MED_N_RATE" : 18.14
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "POT",
+		"MED_DEPT_NM" : "소아안과",
+		"ROWCNT" : 9695,
+		"PCNT" : 6580,
+		"MED_Y_CNT" : 8268,
+		"MED_N_CNT" : 1427,
+		"MED_N_RATE" : 14.72
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TCIME",
+		"MED_DEPT_NM" : "갑상선센터내분비대사내과",
+		"ROWCNT" : 12473,
+		"PCNT" : 6525,
+		"MED_Y_CNT" : 6541,
+		"MED_N_CNT" : 5932,
+		"MED_N_RATE" : 47.56
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "UPCUR",
+		"MED_DEPT_NM" : "비뇨암센터비뇨의학과",
+		"ROWCNT" : 11459,
+		"PCNT" : 5825,
+		"MED_Y_CNT" : 7263,
+		"MED_N_CNT" : 4196,
+		"MED_N_RATE" : 36.62
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LIIMG",
+		"MED_DEPT_NM" : "간암센터소화기내과",
+		"ROWCNT" : 11251,
+		"PCNT" : 5343,
+		"MED_Y_CNT" : 5803,
+		"MED_N_CNT" : 5448,
+		"MED_N_RATE" : 48.42
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TS",
+		"MED_DEPT_NM" : "흉부외과",
+		"ROWCNT" : 11543,
+		"PCNT" : 5203,
+		"MED_Y_CNT" : 7568,
+		"MED_N_CNT" : 3975,
+		"MED_N_RATE" : 34.44
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PENR",
+		"MED_DEPT_NM" : "소아청소년과(신경)",
+		"ROWCNT" : 7621,
+		"PCNT" : 4921,
+		"MED_Y_CNT" : 6134,
+		"MED_N_CNT" : 1487,
+		"MED_N_RATE" : 19.51
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMA",
+		"MED_DEPT_NM" : "알레르기내과",
+		"ROWCNT" : 6648,
+		"PCNT" : 4651,
+		"MED_Y_CNT" : 4813,
+		"MED_N_CNT" : 1835,
+		"MED_N_RATE" : 27.6
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "RH",
+		"MED_DEPT_NM" : "재활의학과",
+		"ROWCNT" : 12406,
+		"PCNT" : 4602,
+		"MED_Y_CNT" : 4119,
+		"MED_N_CNT" : 8287,
+		"MED_N_RATE" : 66.8
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEEM",
+		"MED_DEPT_NM" : "소아청소년과(내분비대사)",
+		"ROWCNT" : 8290,
+		"PCNT" : 4491,
+		"MED_Y_CNT" : 5546,
+		"MED_N_CNT" : 2744,
+		"MED_N_RATE" : 33.1
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEDC",
+		"MED_DEPT_NM" : "소아청소년과(심장)",
+		"ROWCNT" : 6347,
+		"PCNT" : 4165,
+		"MED_Y_CNT" : 4435,
+		"MED_N_CNT" : 1912,
+		"MED_N_RATE" : 30.12
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CHIMH",
+		"MED_DEPT_NM" : "혈액암센터혈액종양내과",
+		"ROWCNT" : 12425,
+		"PCNT" : 4046,
+		"MED_Y_CNT" : 7211,
+		"MED_N_CNT" : 5214,
+		"MED_N_RATE" : 41.96
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ROCTR",
+		"MED_DEPT_NM" : "방사선종양센터방사선종양학과",
+		"ROWCNT" : 5655,
+		"PCNT" : 4033,
+		"MED_Y_CNT" : 4264,
+		"MED_N_CNT" : 1391,
+		"MED_N_RATE" : 24.6
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PED",
+		"MED_DEPT_NM" : "소아청소년과",
+		"ROWCNT" : 5166,
+		"PCNT" : 4016,
+		"MED_Y_CNT" : 39,
+		"MED_N_CNT" : 5127,
+		"MED_N_RATE" : 99.25
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CCGS",
+		"MED_DEPT_NM" : "대장암센터외과",
+		"ROWCNT" : 6451,
+		"PCNT" : 3881,
+		"MED_Y_CNT" : 4076,
+		"MED_N_CNT" : 2375,
+		"MED_N_RATE" : 36.82
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HBPS",
+		"MED_DEPT_NM" : "간담췌외과",
+		"ROWCNT" : 9018,
+		"PCNT" : 3878,
+		"MED_Y_CNT" : 5389,
+		"MED_N_CNT" : 3629,
+		"MED_N_RATE" : 40.24
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "POS",
+		"MED_DEPT_NM" : "소아정형외과",
+		"ROWCNT" : 5961,
+		"PCNT" : 3870,
+		"MED_Y_CNT" : 4577,
+		"MED_N_CNT" : 1384,
+		"MED_N_RATE" : 23.22
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "SLEG",
+		"MED_DEPT_NM" : "소화기내시경센터(암병원)",
+		"ROWCNT" : 4723,
+		"PCNT" : 3858,
+		"MED_Y_CNT" : 2176,
+		"MED_N_CNT" : 2547,
+		"MED_N_RATE" : 53.93
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TVS",
+		"MED_DEPT_NM" : "이식혈관외과",
+		"ROWCNT" : 7985,
+		"PCNT" : 3759,
+		"MED_Y_CNT" : 5587,
+		"MED_N_CNT" : 2398,
+		"MED_N_RATE" : 30.03
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CTC",
+		"MED_DEPT_NM" : "임상시험센터외래",
+		"ROWCNT" : 6868,
+		"PCNT" : 3430,
+		"MED_Y_CNT" : 5351,
+		"MED_N_CNT" : 1517,
+		"MED_N_RATE" : 22.09
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CHP",
+		"MED_DEPT_NM" : "소아정신과",
+		"ROWCNT" : 6691,
+		"PCNT" : 3378,
+		"MED_Y_CNT" : 5144,
+		"MED_N_CNT" : 1547,
+		"MED_N_RATE" : 23.12
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LUTS",
+		"MED_DEPT_NM" : "폐암센터흉부외과",
+		"ROWCNT" : 6403,
+		"PCNT" : 3280,
+		"MED_Y_CNT" : 3612,
+		"MED_N_CNT" : 2791,
+		"MED_N_RATE" : 43.59
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "GYCOG",
+		"MED_DEPT_NM" : "부인암센터산부인과",
+		"ROWCNT" : 4943,
+		"PCNT" : 3254,
+		"MED_Y_CNT" : 3687,
+		"MED_N_CNT" : 1256,
+		"MED_N_RATE" : 25.41
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ANO2",
+		"MED_DEPT_NM" : "통증센터",
+		"ROWCNT" : 6527,
+		"PCNT" : 3097,
+		"MED_Y_CNT" : 5479,
+		"MED_N_CNT" : 1048,
+		"MED_N_RATE" : 16.06
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LUIMR",
+		"MED_DEPT_NM" : "폐암센터호흡기내과",
+		"ROWCNT" : 5419,
+		"PCNT" : 3079,
+		"MED_Y_CNT" : 3338,
+		"MED_N_CNT" : 2081,
+		"MED_N_RATE" : 38.4
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "GAGS",
+		"MED_DEPT_NM" : "위암센터외과",
+		"ROWCNT" : 6666,
+		"PCNT" : 2869,
+		"MED_Y_CNT" : 3250,
+		"MED_N_CNT" : 3416,
+		"MED_N_RATE" : 51.25
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMH",
+		"MED_DEPT_NM" : "혈액종양내과",
+		"ROWCNT" : 6126,
+		"PCNT" : 2685,
+		"MED_Y_CNT" : 3192,
+		"MED_N_CNT" : 2934,
+		"MED_N_RATE" : 47.89
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TOHOL",
+		"MED_DEPT_NM" : "갑상선\/구강\/두경부암센터이비인후과",
+		"ROWCNT" : 5044,
+		"PCNT" : 2683,
+		"MED_Y_CNT" : 3251,
+		"MED_N_CNT" : 1793,
+		"MED_N_RATE" : 35.55
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "POL",
+		"MED_DEPT_NM" : "소아이비인후과",
+		"ROWCNT" : 4755,
+		"PCNT" : 2463,
+		"MED_Y_CNT" : 3138,
+		"MED_N_CNT" : 1617,
+		"MED_N_RATE" : 34.01
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HPC",
+		"MED_DEPT_NM" : "건강증진센터",
+		"ROWCNT" : 4415,
+		"PCNT" : 2374,
+		"MED_Y_CNT" : 3271,
+		"MED_N_CNT" : 1144,
+		"MED_N_RATE" : 25.91
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PDER",
+		"MED_DEPT_NM" : "소아응급실(PDER)",
+		"ROWCNT" : 2637,
+		"PCNT" : 2308,
+		"MED_Y_CNT" : 2637,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TCGS",
+		"MED_DEPT_NM" : "갑상선센터외과",
+		"ROWCNT" : 4894,
+		"PCNT" : 2207,
+		"MED_Y_CNT" : 2540,
+		"MED_N_CNT" : 2354,
+		"MED_N_RATE" : 48.1
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PNS",
+		"MED_DEPT_NM" : "소아신경외과",
+		"ROWCNT" : 3892,
+		"PCNT" : 2160,
+		"MED_Y_CNT" : 2403,
+		"MED_N_CNT" : 1489,
+		"MED_N_RATE" : 38.26
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PDM",
+		"MED_DEPT_NM" : "소아피부과",
+		"ROWCNT" : 2956,
+		"PCNT" : 2103,
+		"MED_Y_CNT" : 2467,
+		"MED_N_CNT" : 489,
+		"MED_N_RATE" : 16.54
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CCIMG",
+		"MED_DEPT_NM" : "대장암센터소화기내과",
+		"ROWCNT" : 3627,
+		"PCNT" : 2071,
+		"MED_Y_CNT" : 2198,
+		"MED_N_CNT" : 1429,
+		"MED_N_RATE" : 39.4
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PS",
+		"MED_DEPT_NM" : "성형외과",
+		"ROWCNT" : 5046,
+		"PCNT" : 2044,
+		"MED_Y_CNT" : 3912,
+		"MED_N_CNT" : 1134,
+		"MED_N_RATE" : 22.47
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CRS",
+		"MED_DEPT_NM" : "대장항문외과",
+		"ROWCNT" : 3799,
+		"PCNT" : 2006,
+		"MED_Y_CNT" : 2000,
+		"MED_N_CNT" : 1799,
+		"MED_N_RATE" : 47.35
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PENP",
+		"MED_DEPT_NM" : "소아청소년과(신장)",
+		"ROWCNT" : 4451,
+		"PCNT" : 1999,
+		"MED_Y_CNT" : 3014,
+		"MED_N_CNT" : 1437,
+		"MED_N_RATE" : 32.28
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PUR",
+		"MED_DEPT_NM" : "소아비뇨의학과",
+		"ROWCNT" : 3072,
+		"PCNT" : 1948,
+		"MED_Y_CNT" : 2285,
+		"MED_N_CNT" : 787,
+		"MED_N_RATE" : 25.62
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ESCOS",
+		"MED_DEPT_NM" : "근골격종양센터정형외과",
+		"ROWCNT" : 3253,
+		"PCNT" : 1918,
+		"MED_Y_CNT" : 2034,
+		"MED_N_CNT" : 1219,
+		"MED_N_RATE" : 37.47
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "EMPO",
+		"MED_DEPT_NM" : "소아응급(EMPO)",
+		"ROWCNT" : 2383,
+		"PCNT" : 1892,
+		"MED_Y_CNT" : 27,
+		"MED_N_CNT" : 2356,
+		"MED_N_RATE" : 98.87
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "BSCNS",
+		"MED_DEPT_NM" : "뇌종양센터신경외과",
+		"ROWCNT" : 3021,
+		"PCNT" : 1868,
+		"MED_Y_CNT" : 1676,
+		"MED_N_CNT" : 1345,
+		"MED_N_RATE" : 44.52
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEHOO",
+		"MED_DEPT_NM" : "소아청소년암센터외래",
+		"ROWCNT" : 8210,
+		"PCNT" : 1763,
+		"MED_Y_CNT" : 5543,
+		"MED_N_CNT" : 2667,
+		"MED_N_RATE" : 32.48
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "OTS",
+		"MED_DEPT_NM" : "장기이식센터",
+		"ROWCNT" : 3795,
+		"PCNT" : 1760,
+		"MED_Y_CNT" : 2577,
+		"MED_N_CNT" : 1218,
+		"MED_N_RATE" : 32.09
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "NUGDW",
+		"MED_DEPT_NM" : "암병원 항암낮병동",
+		"ROWCNT" : 5309,
+		"PCNT" : 1756,
+		"MED_Y_CNT" : 5303,
+		"MED_N_CNT" : 6,
+		"MED_N_RATE" : 0.11
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CCTCO",
+		"MED_DEPT_NM" : "종양임상시험센터외래",
+		"ROWCNT" : 8527,
+		"PCNT" : 1667,
+		"MED_Y_CNT" : 6154,
+		"MED_N_CNT" : 2373,
+		"MED_N_RATE" : 27.83
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "GAIMG",
+		"MED_DEPT_NM" : "위암센터소화기내과",
+		"ROWCNT" : 2940,
+		"PCNT" : 1601,
+		"MED_Y_CNT" : 1697,
+		"MED_N_CNT" : 1243,
+		"MED_N_RATE" : 42.28
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PDS",
+		"MED_DEPT_NM" : "소아외과",
+		"ROWCNT" : 4314,
+		"PCNT" : 1495,
+		"MED_Y_CNT" : 2370,
+		"MED_N_CNT" : 1944,
+		"MED_N_RATE" : 45.06
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PRH",
+		"MED_DEPT_NM" : "소아재활의학과",
+		"ROWCNT" : 4033,
+		"PCNT" : 1485,
+		"MED_Y_CNT" : 1639,
+		"MED_N_CNT" : 2394,
+		"MED_N_RATE" : 59.36
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEGI",
+		"MED_DEPT_NM" : "소아청소년과(소화기영양)",
+		"ROWCNT" : 3517,
+		"PCNT" : 1463,
+		"MED_Y_CNT" : 1960,
+		"MED_N_CNT" : 1557,
+		"MED_N_RATE" : 44.27
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "OSHS",
+		"MED_DEPT_NM" : "정형(수부)외과",
+		"ROWCNT" : 2357,
+		"PCNT" : 1439,
+		"MED_Y_CNT" : 1801,
+		"MED_N_CNT" : 556,
+		"MED_N_RATE" : 23.59
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TRC",
+		"MED_DEPT_NM" : "방사선치료센터",
+		"ROWCNT" : 15516,
+		"PCNT" : 1430,
+		"MED_Y_CNT" : 14236,
+		"MED_N_CNT" : 1280,
+		"MED_N_RATE" : 8.25
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PBIMG",
+		"MED_DEPT_NM" : "췌장\/담도암센터소화기내과",
+		"ROWCNT" : 5070,
+		"PCNT" : 1331,
+		"MED_Y_CNT" : 2630,
+		"MED_N_CNT" : 2440,
+		"MED_N_RATE" : 48.13
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CICDR",
+		"MED_DEPT_NM" : "종양영상센터영상의학과",
+		"ROWCNT" : 1964,
+		"PCNT" : 1318,
+		"MED_Y_CNT" : 1278,
+		"MED_N_CNT" : 686,
+		"MED_N_RATE" : 34.93
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PMCRH",
+		"MED_DEPT_NM" : "암통합케어센터암재활센터",
+		"ROWCNT" : 5501,
+		"PCNT" : 1221,
+		"MED_Y_CNT" : 1244,
+		"MED_N_CNT" : 4257,
+		"MED_N_RATE" : 77.39
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEDZ",
+		"MED_DEPT_NM" : "소아청소년과(일반)",
+		"ROWCNT" : 1548,
+		"PCNT" : 1193,
+		"MED_Y_CNT" : 1149,
+		"MED_N_CNT" : 399,
+		"MED_N_RATE" : 25.78
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PBGS",
+		"MED_DEPT_NM" : "췌장\/담도암센터외과",
+		"ROWCNT" : 2057,
+		"PCNT" : 1159,
+		"MED_Y_CNT" : 1141,
+		"MED_N_CNT" : 916,
+		"MED_N_RATE" : 44.53
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "STCOS",
+		"MED_DEPT_NM" : "척추종양센터정형외과",
+		"ROWCNT" : 1497,
+		"PCNT" : 1143,
+		"MED_Y_CNT" : 1099,
+		"MED_N_CNT" : 398,
+		"MED_N_RATE" : 26.59
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "GSZ",
+		"MED_DEPT_NM" : "외과(일반)",
+		"ROWCNT" : 1737,
+		"PCNT" : 1134,
+		"MED_Y_CNT" : 1275,
+		"MED_N_CNT" : 462,
+		"MED_N_RATE" : 26.6
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PMCNP",
+		"MED_DEPT_NM" : "암통합케어센터정신건강센터",
+		"ROWCNT" : 1843,
+		"PCNT" : 1111,
+		"MED_Y_CNT" : 1616,
+		"MED_N_CNT" : 227,
+		"MED_N_RATE" : 12.32
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PTS",
+		"MED_DEPT_NM" : "소아흉부외과",
+		"ROWCNT" : 1849,
+		"PCNT" : 1104,
+		"MED_Y_CNT" : 1221,
+		"MED_N_CNT" : 628,
+		"MED_N_RATE" : 33.96
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PPS",
+		"MED_DEPT_NM" : "소아성형외과",
+		"ROWCNT" : 2044,
+		"PCNT" : 1093,
+		"MED_Y_CNT" : 1583,
+		"MED_N_CNT" : 461,
+		"MED_N_RATE" : 22.55
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PARD",
+		"MED_DEPT_NM" : "소아청소년과(호흡알레르기)",
+		"ROWCNT" : 1613,
+		"PCNT" : 1018,
+		"MED_Y_CNT" : 1202,
+		"MED_N_CNT" : 411,
+		"MED_N_RATE" : 25.48
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "STCNS",
+		"MED_DEPT_NM" : "척추종양센터신경외과",
+		"ROWCNT" : 1379,
+		"PCNT" : 973,
+		"MED_Y_CNT" : 925,
+		"MED_N_CNT" : 454,
+		"MED_N_RATE" : 32.92
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HPFM2",
+		"MED_DEPT_NM" : "암건강증진센터가정의학과(대한외래)",
+		"ROWCNT" : 1637,
+		"PCNT" : 968,
+		"MED_Y_CNT" : 916,
+		"MED_N_CNT" : 721,
+		"MED_N_RATE" : 44.04
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PENE",
+		"MED_DEPT_NM" : "소아청소년과(신생아)",
+		"ROWCNT" : 1536,
+		"PCNT" : 966,
+		"MED_Y_CNT" : 1123,
+		"MED_N_CNT" : 413,
+		"MED_N_RATE" : 26.89
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEGD",
+		"MED_DEPT_NM" : "소아청소년과(유전)",
+		"ROWCNT" : 1404,
+		"PCNT" : 953,
+		"MED_Y_CNT" : 1140,
+		"MED_N_CNT" : 264,
+		"MED_N_RATE" : 18.8
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMHM",
+		"MED_DEPT_NM" : "내과(입원의학)",
+		"ROWCNT" : 3407,
+		"PCNT" : 902,
+		"MED_Y_CNT" : 1219,
+		"MED_N_CNT" : 2188,
+		"MED_N_RATE" : 64.22
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSFM",
+		"MED_DEPT_NM" : "(강남)가정의학과",
+		"ROWCNT" : 1081,
+		"PCNT" : 867,
+		"MED_Y_CNT" : 865,
+		"MED_N_CNT" : 216,
+		"MED_N_RATE" : 19.98
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PMCNR",
+		"MED_DEPT_NM" : "암통합케어센터신경센터",
+		"ROWCNT" : 1380,
+		"PCNT" : 865,
+		"MED_Y_CNT" : 1019,
+		"MED_N_CNT" : 361,
+		"MED_N_RATE" : 26.16
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PDID",
+		"MED_DEPT_NM" : "소아청소년과(감염)",
+		"ROWCNT" : 1484,
+		"PCNT" : 863,
+		"MED_Y_CNT" : 1169,
+		"MED_N_CNT" : 315,
+		"MED_N_RATE" : 21.23
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEF0",
+		"MED_DEPT_NM" : "소아청소년과(전임의)",
+		"ROWCNT" : 2767,
+		"PCNT" : 839,
+		"MED_Y_CNT" : 1290,
+		"MED_N_CNT" : 1477,
+		"MED_N_RATE" : 53.38
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PMCPA",
+		"MED_DEPT_NM" : "암통합케어센터암성통증센터",
+		"ROWCNT" : 1817,
+		"PCNT" : 836,
+		"MED_Y_CNT" : 1575,
+		"MED_N_CNT" : 242,
+		"MED_N_RATE" : 13.32
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LIGS",
+		"MED_DEPT_NM" : "간암센터외과",
+		"ROWCNT" : 1479,
+		"PCNT" : 795,
+		"MED_Y_CNT" : 905,
+		"MED_N_CNT" : 574,
+		"MED_N_RATE" : 38.81
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEIR",
+		"MED_DEPT_NM" : "소아청소년과(면역류마티스)",
+		"ROWCNT" : 1560,
+		"PCNT" : 793,
+		"MED_Y_CNT" : 1177,
+		"MED_N_CNT" : 383,
+		"MED_N_RATE" : 24.55
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSIMC",
+		"MED_DEPT_NM" : "(강남)순환기내과",
+		"ROWCNT" : 941,
+		"PCNT" : 767,
+		"MED_Y_CNT" : 779,
+		"MED_N_CNT" : 162,
+		"MED_N_RATE" : 17.22
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSIME",
+		"MED_DEPT_NM" : "(강남)내분비대사내과",
+		"ROWCNT" : 1067,
+		"PCNT" : 737,
+		"MED_Y_CNT" : 724,
+		"MED_N_CNT" : 343,
+		"MED_N_RATE" : 32.15
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "BCCPS",
+		"MED_DEPT_NM" : "유방센터성형외과",
+		"ROWCNT" : 808,
+		"PCNT" : 601,
+		"MED_Y_CNT" : 745,
+		"MED_N_CNT" : 63,
+		"MED_N_RATE" : 7.8
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HPC99",
+		"MED_DEPT_NM" : "건강의학과",
+		"ROWCNT" : 721,
+		"PCNT" : 595,
+		"MED_Y_CNT" : 83,
+		"MED_N_CNT" : 638,
+		"MED_N_RATE" : 88.49
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HIP",
+		"MED_DEPT_NM" : "직원신체검사",
+		"ROWCNT" : 579,
+		"PCNT" : 579,
+		"MED_Y_CNT" : 28,
+		"MED_N_CNT" : 551,
+		"MED_N_RATE" : 95.16
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "EQLC",
+		"MED_DEPT_NM" : "감성센터",
+		"ROWCNT" : 1068,
+		"PCNT" : 574,
+		"MED_Y_CNT" : 773,
+		"MED_N_CNT" : 295,
+		"MED_N_RATE" : 27.62
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "SCCDM",
+		"MED_DEPT_NM" : "피부암\/항암제특이반응센터피부과",
+		"ROWCNT" : 889,
+		"PCNT" : 563,
+		"MED_Y_CNT" : 723,
+		"MED_N_CNT" : 166,
+		"MED_N_RATE" : 18.67
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "POSHS",
+		"MED_DEPT_NM" : "소아정형(수부)외과",
+		"ROWCNT" : 738,
+		"PCNT" : 558,
+		"MED_Y_CNT" : 658,
+		"MED_N_CNT" : 80,
+		"MED_N_RATE" : 10.84
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PA",
+		"MED_DEPT_NM" : "병리과",
+		"ROWCNT" : 559,
+		"PCNT" : 528,
+		"MED_Y_CNT" : 551,
+		"MED_N_CNT" : 8,
+		"MED_N_RATE" : 1.43
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CVCC",
+		"MED_DEPT_NM" : "(성남)생활치료센터",
+		"ROWCNT" : 4047,
+		"PCNT" : 526,
+		"MED_Y_CNT" : 4043,
+		"MED_N_CNT" : 4,
+		"MED_N_RATE" : 0.1
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HPFM1",
+		"MED_DEPT_NM" : "암건강증진센터가정의학과",
+		"ROWCNT" : 924,
+		"PCNT" : 516,
+		"MED_Y_CNT" : 461,
+		"MED_N_CNT" : 463,
+		"MED_N_RATE" : 50.11
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "GIS",
+		"MED_DEPT_NM" : "위장관외과",
+		"ROWCNT" : 1226,
+		"PCNT" : 510,
+		"MED_Y_CNT" : 531,
+		"MED_N_CNT" : 695,
+		"MED_N_RATE" : 56.69
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSIMG",
+		"MED_DEPT_NM" : "(강남)소화기내과",
+		"ROWCNT" : 581,
+		"PCNT" : 461,
+		"MED_Y_CNT" : 439,
+		"MED_N_CNT" : 142,
+		"MED_N_RATE" : 24.44
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "NPPSG",
+		"MED_DEPT_NM" : "수면의학센터",
+		"ROWCNT" : 505,
+		"PCNT" : 441,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 505,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TCNM",
+		"MED_DEPT_NM" : "갑상선센터핵의학과",
+		"ROWCNT" : 1201,
+		"PCNT" : 424,
+		"MED_Y_CNT" : 573,
+		"MED_N_CNT" : 628,
+		"MED_N_RATE" : 52.29
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "NB",
+		"MED_DEPT_NM" : "신생아실(소아청소년과)",
+		"ROWCNT" : 1292,
+		"PCNT" : 419,
+		"MED_Y_CNT" : 303,
+		"MED_N_CNT" : 989,
+		"MED_N_RATE" : 76.55
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "POG",
+		"MED_DEPT_NM" : "소아청소년여성클리닉",
+		"ROWCNT" : 566,
+		"PCNT" : 345,
+		"MED_Y_CNT" : 346,
+		"MED_N_CNT" : 220,
+		"MED_N_RATE" : 38.87
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IHC",
+		"MED_DEPT_NM" : "국제진료센터",
+		"ROWCNT" : 363,
+		"PCNT" : 297,
+		"MED_Y_CNT" : 318,
+		"MED_N_CNT" : 45,
+		"MED_N_RATE" : 12.4
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ENVR",
+		"MED_DEPT_NM" : "공공진료센터 환경의학클리닉",
+		"ROWCNT" : 440,
+		"PCNT" : 293,
+		"MED_Y_CNT" : 300,
+		"MED_N_CNT" : 140,
+		"MED_N_RATE" : 31.82
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PCTC",
+		"MED_DEPT_NM" : "소아임상시험실",
+		"ROWCNT" : 571,
+		"PCNT" : 289,
+		"MED_Y_CNT" : 429,
+		"MED_N_CNT" : 142,
+		"MED_N_RATE" : 24.87
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CPU",
+		"MED_DEPT_NM" : "임상약리학과",
+		"ROWCNT" : 637,
+		"PCNT" : 272,
+		"MED_Y_CNT" : 623,
+		"MED_N_CNT" : 14,
+		"MED_N_RATE" : 2.2
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEHOD",
+		"MED_DEPT_NM" : "소아청소년암센터낮병동",
+		"ROWCNT" : 1716,
+		"PCNT" : 271,
+		"MED_Y_CNT" : 1613,
+		"MED_N_CNT" : 103,
+		"MED_N_RATE" : 6
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TCDR",
+		"MED_DEPT_NM" : "갑상선센터영상의학과",
+		"ROWCNT" : 319,
+		"PCNT" : 251,
+		"MED_Y_CNT" : 251,
+		"MED_N_CNT" : 68,
+		"MED_N_RATE" : 21.32
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "GS",
+		"MED_DEPT_NM" : "외과",
+		"ROWCNT" : 328,
+		"PCNT" : 248,
+		"MED_Y_CNT" : 18,
+		"MED_N_CNT" : 310,
+		"MED_N_RATE" : 94.51
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "AN",
+		"MED_DEPT_NM" : "마취통증의학과",
+		"ROWCNT" : 254,
+		"PCNT" : 240,
+		"MED_Y_CNT" : 216,
+		"MED_N_CNT" : 38,
+		"MED_N_RATE" : 14.96
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEHO",
+		"MED_DEPT_NM" : "소아청소년과(혈액종양)",
+		"ROWCNT" : 1349,
+		"PCNT" : 234,
+		"MED_Y_CNT" : 425,
+		"MED_N_CNT" : 924,
+		"MED_N_RATE" : 68.5
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PPCT",
+		"MED_DEPT_NM" : "소아청소년과(완화의료)",
+		"ROWCNT" : 547,
+		"PCNT" : 221,
+		"MED_Y_CNT" : 491,
+		"MED_N_CNT" : 56,
+		"MED_N_RATE" : 10.24
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSIMA",
+		"MED_DEPT_NM" : "(강남)알레르기내과",
+		"ROWCNT" : 283,
+		"PCNT" : 219,
+		"MED_Y_CNT" : 262,
+		"MED_N_CNT" : 21,
+		"MED_N_RATE" : 7.42
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSNP",
+		"MED_DEPT_NM" : "(강남)정신건강의학과",
+		"ROWCNT" : 369,
+		"PCNT" : 210,
+		"MED_Y_CNT" : 358,
+		"MED_N_CNT" : 11,
+		"MED_N_RATE" : 2.98
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSNR",
+		"MED_DEPT_NM" : "(강남)신경과",
+		"ROWCNT" : 244,
+		"PCNT" : 209,
+		"MED_Y_CNT" : 227,
+		"MED_N_CNT" : 17,
+		"MED_N_RATE" : 6.97
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ICS",
+		"MED_DEPT_NM" : "감염관리센터",
+		"ROWCNT" : 372,
+		"PCNT" : 194,
+		"MED_Y_CNT" : 258,
+		"MED_N_CNT" : 114,
+		"MED_N_RATE" : 30.65
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "COCC",
+		"MED_DEPT_NM" : "공공진료센터 통합케어클리닉",
+		"ROWCNT" : 786,
+		"PCNT" : 187,
+		"MED_Y_CNT" : 761,
+		"MED_N_CNT" : 25,
+		"MED_N_RATE" : 3.18
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSOT",
+		"MED_DEPT_NM" : "(강남)안과",
+		"ROWCNT" : 226,
+		"PCNT" : 185,
+		"MED_Y_CNT" : 181,
+		"MED_N_CNT" : 45,
+		"MED_N_RATE" : 19.91
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "BCCRH",
+		"MED_DEPT_NM" : "유방센터재활의학과",
+		"ROWCNT" : 1103,
+		"PCNT" : 171,
+		"MED_Y_CNT" : 129,
+		"MED_N_CNT" : 974,
+		"MED_N_RATE" : 88.3
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PMCCM",
+		"MED_DEPT_NM" : "암통합케어센터완화의료센터(가정의학과)",
+		"ROWCNT" : 260,
+		"PCNT" : 169,
+		"MED_Y_CNT" : 152,
+		"MED_N_CNT" : 108,
+		"MED_N_RATE" : 41.54
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HP",
+		"MED_DEPT_NM" : "완화의료·임상윤리센터",
+		"ROWCNT" : 288,
+		"PCNT" : 165,
+		"MED_Y_CNT" : 227,
+		"MED_N_CNT" : 61,
+		"MED_N_RATE" : 21.18
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PCBS",
+		"MED_DEPT_NM" : "암맞춤치료센터유방외과",
+		"ROWCNT" : 197,
+		"PCNT" : 156,
+		"MED_Y_CNT" : 178,
+		"MED_N_CNT" : 19,
+		"MED_N_RATE" : 9.64
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSUR",
+		"MED_DEPT_NM" : "(강남)비뇨의학과",
+		"ROWCNT" : 213,
+		"PCNT" : 155,
+		"MED_Y_CNT" : 158,
+		"MED_N_CNT" : 55,
+		"MED_N_RATE" : 25.82
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CHO1",
+		"MED_DEPT_NM" : "조혈모세포이식외래(암병원)",
+		"ROWCNT" : 571,
+		"PCNT" : 152,
+		"MED_Y_CNT" : 353,
+		"MED_N_CNT" : 218,
+		"MED_N_RATE" : 38.18
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSGS1",
+		"MED_DEPT_NM" : "(강남)유방진료실",
+		"ROWCNT" : 178,
+		"PCNT" : 131,
+		"MED_Y_CNT" : 122,
+		"MED_N_CNT" : 56,
+		"MED_N_RATE" : 31.46
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PDR",
+		"MED_DEPT_NM" : "소아영상의학과",
+		"ROWCNT" : 127,
+		"PCNT" : 126,
+		"MED_Y_CNT" : 28,
+		"MED_N_CNT" : 99,
+		"MED_N_RATE" : 77.95
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PHCT",
+		"MED_DEPT_NM" : "소아재택의료",
+		"ROWCNT" : 733,
+		"PCNT" : 111,
+		"MED_Y_CNT" : 615,
+		"MED_N_CNT" : 118,
+		"MED_N_RATE" : 16.1
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEIC",
+		"MED_DEPT_NM" : "소아청소년과(중환자)",
+		"ROWCNT" : 145,
+		"PCNT" : 107,
+		"MED_Y_CNT" : 127,
+		"MED_N_CNT" : 18,
+		"MED_N_RATE" : 12.41
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "BSCC3",
+		"MED_DEPT_NM" : "뇌종양센터협진(종양내과)",
+		"ROWCNT" : 133,
+		"PCNT" : 96,
+		"MED_Y_CNT" : 52,
+		"MED_N_CNT" : 81,
+		"MED_N_RATE" : 60.9
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "BSCC1",
+		"MED_DEPT_NM" : "뇌종양센터협진(신경외과)",
+		"ROWCNT" : 126,
+		"PCNT" : 91,
+		"MED_Y_CNT" : 67,
+		"MED_N_CNT" : 59,
+		"MED_N_RATE" : 46.83
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "BSCC2",
+		"MED_DEPT_NM" : "뇌종양센터협진(방사선종양학과)",
+		"ROWCNT" : 110,
+		"PCNT" : 79,
+		"MED_Y_CNT" : 54,
+		"MED_N_CNT" : 56,
+		"MED_N_RATE" : 50.91
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TMUH2",
+		"MED_DEPT_NM" : "(원격진료)피부과",
+		"ROWCNT" : 85,
+		"PCNT" : 77,
+		"MED_Y_CNT" : 84,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 1.18
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "BSCC5",
+		"MED_DEPT_NM" : "뇌종양센터협진(신경과)",
+		"ROWCNT" : 114,
+		"PCNT" : 74,
+		"MED_Y_CNT" : 46,
+		"MED_N_CNT" : 68,
+		"MED_N_RATE" : 59.65
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "WMHE",
+		"MED_DEPT_NM" : "공공진료센터 일마음건강클리닉",
+		"ROWCNT" : 234,
+		"PCNT" : 69,
+		"MED_Y_CNT" : 223,
+		"MED_N_CNT" : 11,
+		"MED_N_RATE" : 4.7
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSRH",
+		"MED_DEPT_NM" : "(강남)재활의학과",
+		"ROWCNT" : 86,
+		"PCNT" : 62,
+		"MED_Y_CNT" : 74,
+		"MED_N_CNT" : 12,
+		"MED_N_RATE" : 13.95
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSDR",
+		"MED_DEPT_NM" : "(강남)영상의학과",
+		"ROWCNT" : 60,
+		"PCNT" : 59,
+		"MED_Y_CNT" : 58,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 3.33
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "NPDCC",
+		"MED_DEPT_NM" : "정신건강주간치료실",
+		"ROWCNT" : 231,
+		"PCNT" : 50,
+		"MED_Y_CNT" : 169,
+		"MED_N_CNT" : 62,
+		"MED_N_RATE" : 26.84
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TMUH1",
+		"MED_DEPT_NM" : "(원격진료)정신과",
+		"ROWCNT" : 176,
+		"PCNT" : 43,
+		"MED_Y_CNT" : 176,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "DMC",
+		"MED_DEPT_NM" : "약물안전센터",
+		"ROWCNT" : 46,
+		"PCNT" : 38,
+		"MED_Y_CNT" : 39,
+		"MED_N_CNT" : 7,
+		"MED_N_RATE" : 15.22
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PCIMH",
+		"MED_DEPT_NM" : "암맞춤치료센터혈액종양내과",
+		"ROWCNT" : 91,
+		"PCNT" : 38,
+		"MED_Y_CNT" : 37,
+		"MED_N_CNT" : 54,
+		"MED_N_RATE" : 59.34
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CVHC",
+		"MED_DEPT_NM" : "코로나재택의료",
+		"ROWCNT" : 324,
+		"PCNT" : 37,
+		"MED_Y_CNT" : 324,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEDH",
+		"MED_DEPT_NM" : "소아청소년과(입원의학)",
+		"ROWCNT" : 122,
+		"PCNT" : 32,
+		"MED_Y_CNT" : 33,
+		"MED_N_CNT" : 89,
+		"MED_N_RATE" : 72.95
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PTR",
+		"MED_DEPT_NM" : "소아방사선종양학과",
+		"ROWCNT" : 49,
+		"PCNT" : 24,
+		"MED_Y_CNT" : 17,
+		"MED_N_CNT" : 32,
+		"MED_N_RATE" : 65.31
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSGS",
+		"MED_DEPT_NM" : "(강남)외과",
+		"ROWCNT" : 31,
+		"PCNT" : 22,
+		"MED_Y_CNT" : 26,
+		"MED_N_CNT" : 5,
+		"MED_N_RATE" : 16.13
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PCP",
+		"MED_DEPT_NM" : "소아진단검사의학과",
+		"ROWCNT" : 17,
+		"PCNT" : 17,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 17,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "CPCC",
+		"MED_DEPT_NM" : "(성남)소아생활치료센터",
+		"ROWCNT" : 109,
+		"PCNT" : 15,
+		"MED_Y_CNT" : 107,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 1.83
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEHO1",
+		"MED_DEPT_NM" : "소아청소년암센터협진(소아외과)",
+		"ROWCNT" : 14,
+		"PCNT" : 13,
+		"MED_Y_CNT" : 8,
+		"MED_N_CNT" : 6,
+		"MED_N_RATE" : 42.86
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEHO2",
+		"MED_DEPT_NM" : "소아청소년암센터협진(영상의학과)",
+		"ROWCNT" : 12,
+		"PCNT" : 11,
+		"MED_Y_CNT" : 6,
+		"MED_N_CNT" : 6,
+		"MED_N_RATE" : 50
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "REDGS",
+		"MED_DEPT_NM" : "응급의료센터(외과)",
+		"ROWCNT" : 24,
+		"PCNT" : 10,
+		"MED_Y_CNT" : 10,
+		"MED_N_CNT" : 14,
+		"MED_N_RATE" : 58.33
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEHO0",
+		"MED_DEPT_NM" : "소아청소년암센터협진(소아청소년암센터)",
+		"ROWCNT" : 10,
+		"PCNT" : 10,
+		"MED_Y_CNT" : 6,
+		"MED_N_CNT" : 4,
+		"MED_N_RATE" : 40
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "SMK",
+		"MED_DEPT_NM" : "금연클리닉",
+		"ROWCNT" : 17,
+		"PCNT" : 10,
+		"MED_Y_CNT" : 16,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 5.88
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LUCC2",
+		"MED_DEPT_NM" : "폐암센터협진(호흡기내과)",
+		"ROWCNT" : 8,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 8,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LUCC3",
+		"MED_DEPT_NM" : "폐암센터협진(종양내과)",
+		"ROWCNT" : 8,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 8,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LUCC4",
+		"MED_DEPT_NM" : "폐암센터협진(방사선종양학과)",
+		"ROWCNT" : 8,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 8,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LUCC6",
+		"MED_DEPT_NM" : "폐암센터협진(핵의학과)",
+		"ROWCNT" : 8,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 8,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LUCC5",
+		"MED_DEPT_NM" : "폐암센터협진(영상의학과)",
+		"ROWCNT" : 8,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 6,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 25
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LUCC1",
+		"MED_DEPT_NM" : "폐암센터협진(흉부외과)",
+		"ROWCNT" : 8,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 7,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 12.5
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "BEN",
+		"MED_DEPT_NM" : "유방내분비외과",
+		"ROWCNT" : 14,
+		"PCNT" : 7,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 10,
+		"MED_N_RATE" : 71.43
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PCCRS",
+		"MED_DEPT_NM" : "암맞춤치료센터대장항문외과",
+		"ROWCNT" : 10,
+		"PCNT" : 7,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 5,
+		"MED_N_RATE" : 50
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ICUGS",
+		"MED_DEPT_NM" : "중환자진료(외과)",
+		"ROWCNT" : 6,
+		"PCNT" : 6,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 33.33
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ICUNS",
+		"MED_DEPT_NM" : "중환자진료(신경외과)",
+		"ROWCNT" : 10,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 5,
+		"MED_N_RATE" : 50
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "NRHM",
+		"MED_DEPT_NM" : "신경과(입원의학)",
+		"ROWCNT" : 10,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 7,
+		"MED_N_RATE" : 70
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ICUNR",
+		"MED_DEPT_NM" : "중환자진료(신경과)",
+		"ROWCNT" : 7,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 42.86
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSIMR",
+		"MED_DEPT_NM" : "(강남)호흡기내과",
+		"ROWCNT" : 6,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 6,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ICUAN",
+		"MED_DEPT_NM" : "중환자진료(마취통증의학과)",
+		"ROWCNT" : 5,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 40
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "SCC6",
+		"MED_DEPT_NM" : "피부암센터협진외래(병리과)",
+		"ROWCNT" : 5,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 4,
+		"MED_N_RATE" : 80
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ADPNS",
+		"MED_DEPT_NM" : "청소년암센터소아신경외과",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "SCC2",
+		"MED_DEPT_NM" : "피부암센터협진외래(성형외과)",
+		"ROWCNT" : 8,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 6,
+		"MED_N_RATE" : 75
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TR",
+		"MED_DEPT_NM" : "방사선종양학과",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSIMN",
+		"MED_DEPT_NM" : "(강남)신장내과",
+		"ROWCNT" : 4,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 50
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "EM",
+		"MED_DEPT_NM" : "응급의학과",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "SCC1",
+		"MED_DEPT_NM" : "피부암센터협진외래(피부과)",
+		"ROWCNT" : 4,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 25
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "GSO1",
+		"MED_DEPT_NM" : "유방진료실",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HSCP",
+		"MED_DEPT_NM" : "(강남)진단검사의학과",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "REDNR",
+		"MED_DEPT_NM" : "응급의료센터(신경과)",
+		"ROWCNT" : 6,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 4,
+		"MED_N_RATE" : 66.67
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "HCS08",
+		"MED_DEPT_NM" : "신체계측",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "IMHBM",
+		"MED_DEPT_NM" : "조혈모세포이식외래",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "LUCAS",
+		"MED_DEPT_NM" : "폐암검진사업",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PCGS",
+		"MED_DEPT_NM" : "암맞춤치료센터외과",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ICUNS",
+		"MED_DEPT_NM" : "중환자의학(신경외과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ICUGS",
+		"MED_DEPT_NM" : "중환자의학(외과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "PEDH",
+		"MED_DEPT_NM" : "소아청소년과(입원전담전문의)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "SCC4",
+		"MED_DEPT_NM" : "피부암센터협진외래(종양내과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "GHCS1",
+		"MED_DEPT_NM" : "강남센터숙박검진과",
+		"ROWCNT" : 3,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 33.33
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "TC1",
+		"MED_DEPT_NM" : "갑상선센터협진(내분비대사내과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2020",
+		"MED_DEPT_CD" : "ENVR",
+		"MED_DEPT_NM" : "환경의학클리닉",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "DR",
+		"MED_DEPT_NM" : "영상의학과",
+		"ROWCNT" : 451465,
+		"PCNT" : 216976,
+		"MED_Y_CNT" : 7651,
+		"MED_N_CNT" : 443814,
+		"MED_N_RATE" : 98.31
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMG",
+		"MED_DEPT_NM" : "소화기내과",
+		"ROWCNT" : 190701,
+		"PCNT" : 61422,
+		"MED_Y_CNT" : 106347,
+		"MED_N_CNT" : 84354,
+		"MED_N_RATE" : 44.23
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMC",
+		"MED_DEPT_NM" : "순환기내과",
+		"ROWCNT" : 177892,
+		"PCNT" : 59029,
+		"MED_Y_CNT" : 132556,
+		"MED_N_CNT" : 45336,
+		"MED_N_RATE" : 25.49
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "NR",
+		"MED_DEPT_NM" : "신경과",
+		"ROWCNT" : 163574,
+		"PCNT" : 54586,
+		"MED_Y_CNT" : 122152,
+		"MED_N_CNT" : 41422,
+		"MED_N_RATE" : 25.32
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "OT",
+		"MED_DEPT_NM" : "안과",
+		"ROWCNT" : 136266,
+		"PCNT" : 51735,
+		"MED_Y_CNT" : 108515,
+		"MED_N_CNT" : 27751,
+		"MED_N_RATE" : 20.37
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IME",
+		"MED_DEPT_NM" : "내분비대사내과",
+		"ROWCNT" : 136792,
+		"PCNT" : 41488,
+		"MED_Y_CNT" : 82698,
+		"MED_N_CNT" : 54094,
+		"MED_N_RATE" : 39.54
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMI",
+		"MED_DEPT_NM" : "감염내과",
+		"ROWCNT" : 64912,
+		"PCNT" : 39803,
+		"MED_Y_CNT" : 59201,
+		"MED_N_CNT" : 5711,
+		"MED_N_RATE" : 8.8
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMZ",
+		"MED_DEPT_NM" : "내과(일반)",
+		"ROWCNT" : 49866,
+		"PCNT" : 38136,
+		"MED_Y_CNT" : 7512,
+		"MED_N_CNT" : 42354,
+		"MED_N_RATE" : 84.94
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMR",
+		"MED_DEPT_NM" : "호흡기내과",
+		"ROWCNT" : 97557,
+		"PCNT" : 36957,
+		"MED_Y_CNT" : 46730,
+		"MED_N_CNT" : 50827,
+		"MED_N_RATE" : 52.1
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "NM",
+		"MED_DEPT_NM" : "핵의학과",
+		"ROWCNT" : 56182,
+		"PCNT" : 36516,
+		"MED_Y_CNT" : 7883,
+		"MED_N_CNT" : 48299,
+		"MED_N_RATE" : 85.97
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "OS",
+		"MED_DEPT_NM" : "정형외과",
+		"ROWCNT" : 79976,
+		"PCNT" : 32559,
+		"MED_Y_CNT" : 57097,
+		"MED_N_CNT" : 22879,
+		"MED_N_RATE" : 28.61
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HCS",
+		"MED_DEPT_NM" : "강남센터",
+		"ROWCNT" : 43323,
+		"PCNT" : 31837,
+		"MED_Y_CNT" : 37444,
+		"MED_N_CNT" : 5879,
+		"MED_N_RATE" : 13.57
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "OG",
+		"MED_DEPT_NM" : "산부인과",
+		"ROWCNT" : 138967,
+		"PCNT" : 30773,
+		"MED_Y_CNT" : 86289,
+		"MED_N_CNT" : 52678,
+		"MED_N_RATE" : 37.91
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HCSO",
+		"MED_DEPT_NM" : "강남클리닉",
+		"ROWCNT" : 79665,
+		"PCNT" : 30613,
+		"MED_Y_CNT" : 12057,
+		"MED_N_CNT" : 67608,
+		"MED_N_RATE" : 84.87
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BCCGS",
+		"MED_DEPT_NM" : "유방센터외과",
+		"ROWCNT" : 104406,
+		"PCNT" : 28909,
+		"MED_Y_CNT" : 53650,
+		"MED_N_CNT" : 50756,
+		"MED_N_RATE" : 48.61
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "AER",
+		"MED_DEPT_NM" : "본원응급실(AER)",
+		"ROWCNT" : 34527,
+		"PCNT" : 26500,
+		"MED_Y_CNT" : 34527,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMN",
+		"MED_DEPT_NM" : "신장내과",
+		"ROWCNT" : 136107,
+		"PCNT" : 25763,
+		"MED_Y_CNT" : 90146,
+		"MED_N_CNT" : 45961,
+		"MED_N_RATE" : 33.77
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CVC",
+		"MED_DEPT_NM" : "심혈관센터",
+		"ROWCNT" : 40777,
+		"PCNT" : 25485,
+		"MED_Y_CNT" : 131,
+		"MED_N_CNT" : 40646,
+		"MED_N_RATE" : 99.68
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "NS",
+		"MED_DEPT_NM" : "신경외과",
+		"ROWCNT" : 64501,
+		"PCNT" : 24873,
+		"MED_Y_CNT" : 38978,
+		"MED_N_CNT" : 25523,
+		"MED_N_RATE" : 39.57
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CP",
+		"MED_DEPT_NM" : "진단검사의학과",
+		"ROWCNT" : 34940,
+		"PCNT" : 24562,
+		"MED_Y_CNT" : 27781,
+		"MED_N_CNT" : 7159,
+		"MED_N_RATE" : 20.49
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "FM",
+		"MED_DEPT_NM" : "가정의학과",
+		"ROWCNT" : 59449,
+		"PCNT" : 23998,
+		"MED_Y_CNT" : 41147,
+		"MED_N_CNT" : 18302,
+		"MED_N_RATE" : 30.79
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "OL",
+		"MED_DEPT_NM" : "이비인후과",
+		"ROWCNT" : 62157,
+		"PCNT" : 22968,
+		"MED_Y_CNT" : 38985,
+		"MED_N_CNT" : 23172,
+		"MED_N_RATE" : 37.28
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "EMO",
+		"MED_DEPT_NM" : "응급의학과(EMO)",
+		"ROWCNT" : 39757,
+		"PCNT" : 22724,
+		"MED_Y_CNT" : 2138,
+		"MED_N_CNT" : 37619,
+		"MED_N_RATE" : 94.62
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "UR",
+		"MED_DEPT_NM" : "비뇨의학과",
+		"ROWCNT" : 70148,
+		"PCNT" : 22335,
+		"MED_Y_CNT" : 38414,
+		"MED_N_CNT" : 31734,
+		"MED_N_RATE" : 45.24
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "DM",
+		"MED_DEPT_NM" : "피부과",
+		"ROWCNT" : 66994,
+		"PCNT" : 22022,
+		"MED_Y_CNT" : 55143,
+		"MED_N_CNT" : 11851,
+		"MED_N_RATE" : 17.69
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "NP",
+		"MED_DEPT_NM" : "정신건강의학과",
+		"ROWCNT" : 105542,
+		"PCNT" : 21731,
+		"MED_Y_CNT" : 84846,
+		"MED_N_CNT" : 20696,
+		"MED_N_RATE" : 19.61
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMOC1",
+		"MED_DEPT_NM" : "종양내과센터종양내과",
+		"ROWCNT" : 201128,
+		"PCNT" : 20772,
+		"MED_Y_CNT" : 114405,
+		"MED_N_CNT" : 86723,
+		"MED_N_RATE" : 43.12
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "POT",
+		"MED_DEPT_NM" : "소아안과",
+		"ROWCNT" : 38194,
+		"PCNT" : 17451,
+		"MED_Y_CNT" : 33096,
+		"MED_N_CNT" : 5098,
+		"MED_N_RATE" : 13.35
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMJ",
+		"MED_DEPT_NM" : "류마티스내과",
+		"ROWCNT" : 62962,
+		"PCNT" : 15658,
+		"MED_Y_CNT" : 48418,
+		"MED_N_CNT" : 14544,
+		"MED_N_RATE" : 23.1
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TCIME",
+		"MED_DEPT_NM" : "갑상선센터내분비대사내과",
+		"ROWCNT" : 42859,
+		"PCNT" : 15315,
+		"MED_Y_CNT" : 21865,
+		"MED_N_CNT" : 20994,
+		"MED_N_RATE" : 48.98
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "UPCUR",
+		"MED_DEPT_NM" : "비뇨암센터비뇨의학과",
+		"ROWCNT" : 46213,
+		"PCNT" : 12669,
+		"MED_Y_CNT" : 28946,
+		"MED_N_CNT" : 17267,
+		"MED_N_RATE" : 37.36
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PED",
+		"MED_DEPT_NM" : "소아청소년과",
+		"ROWCNT" : 20703,
+		"PCNT" : 12660,
+		"MED_Y_CNT" : 99,
+		"MED_N_CNT" : 20604,
+		"MED_N_RATE" : 99.52
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "MCI",
+		"MED_DEPT_NM" : "제증명발급",
+		"ROWCNT" : 14612,
+		"PCNT" : 12394,
+		"MED_Y_CNT" : 750,
+		"MED_N_CNT" : 13862,
+		"MED_N_RATE" : 94.87
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "POS",
+		"MED_DEPT_NM" : "소아정형외과",
+		"ROWCNT" : 24377,
+		"PCNT" : 11548,
+		"MED_Y_CNT" : 18968,
+		"MED_N_CNT" : 5409,
+		"MED_N_RATE" : 22.19
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "SLEG",
+		"MED_DEPT_NM" : "소화기내시경센터(암병원)",
+		"ROWCNT" : 15911,
+		"PCNT" : 11517,
+		"MED_Y_CNT" : 7101,
+		"MED_N_CNT" : 8810,
+		"MED_N_RATE" : 55.37
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEDC",
+		"MED_DEPT_NM" : "소아청소년과(심장)",
+		"ROWCNT" : 24652,
+		"PCNT" : 10728,
+		"MED_Y_CNT" : 17494,
+		"MED_N_CNT" : 7158,
+		"MED_N_RATE" : 29.04
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "RH",
+		"MED_DEPT_NM" : "재활의학과",
+		"ROWCNT" : 46517,
+		"PCNT" : 10639,
+		"MED_Y_CNT" : 16125,
+		"MED_N_CNT" : 30392,
+		"MED_N_RATE" : 65.34
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PENR",
+		"MED_DEPT_NM" : "소아청소년과(신경)",
+		"ROWCNT" : 29682,
+		"PCNT" : 10304,
+		"MED_Y_CNT" : 23683,
+		"MED_N_CNT" : 5999,
+		"MED_N_RATE" : 20.21
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LIIMG",
+		"MED_DEPT_NM" : "간암센터소화기내과",
+		"ROWCNT" : 41110,
+		"PCNT" : 9907,
+		"MED_Y_CNT" : 21975,
+		"MED_N_CNT" : 19135,
+		"MED_N_RATE" : 46.55
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMA",
+		"MED_DEPT_NM" : "알레르기내과",
+		"ROWCNT" : 23416,
+		"PCNT" : 9573,
+		"MED_Y_CNT" : 17498,
+		"MED_N_CNT" : 5918,
+		"MED_N_RATE" : 25.27
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ROCTR",
+		"MED_DEPT_NM" : "방사선종양센터방사선종양학과",
+		"ROWCNT" : 20609,
+		"PCNT" : 9194,
+		"MED_Y_CNT" : 15686,
+		"MED_N_CNT" : 4923,
+		"MED_N_RATE" : 23.89
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HPC",
+		"MED_DEPT_NM" : "건강증진센터",
+		"ROWCNT" : 22900,
+		"PCNT" : 9157,
+		"MED_Y_CNT" : 17267,
+		"MED_N_CNT" : 5633,
+		"MED_N_RATE" : 24.6
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEEM",
+		"MED_DEPT_NM" : "소아청소년과(내분비대사)",
+		"ROWCNT" : 31206,
+		"PCNT" : 8832,
+		"MED_Y_CNT" : 20353,
+		"MED_N_CNT" : 10853,
+		"MED_N_RATE" : 34.78
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CTC",
+		"MED_DEPT_NM" : "임상시험센터외래",
+		"ROWCNT" : 25650,
+		"PCNT" : 8809,
+		"MED_Y_CNT" : 21158,
+		"MED_N_CNT" : 4492,
+		"MED_N_RATE" : 17.51
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PDER",
+		"MED_DEPT_NM" : "소아응급실(PDER)",
+		"ROWCNT" : 11205,
+		"PCNT" : 8650,
+		"MED_Y_CNT" : 11205,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CCGS",
+		"MED_DEPT_NM" : "대장암센터외과",
+		"ROWCNT" : 25359,
+		"PCNT" : 8605,
+		"MED_Y_CNT" : 15990,
+		"MED_N_CNT" : 9369,
+		"MED_N_RATE" : 36.95
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GYCOG",
+		"MED_DEPT_NM" : "부인암센터산부인과",
+		"ROWCNT" : 18958,
+		"PCNT" : 8287,
+		"MED_Y_CNT" : 13595,
+		"MED_N_CNT" : 5363,
+		"MED_N_RATE" : 28.29
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LUIMR",
+		"MED_DEPT_NM" : "폐암센터호흡기내과",
+		"ROWCNT" : 20762,
+		"PCNT" : 8159,
+		"MED_Y_CNT" : 13138,
+		"MED_N_CNT" : 7624,
+		"MED_N_RATE" : 36.72
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TS",
+		"MED_DEPT_NM" : "흉부외과",
+		"ROWCNT" : 36364,
+		"PCNT" : 8066,
+		"MED_Y_CNT" : 22724,
+		"MED_N_CNT" : 13640,
+		"MED_N_RATE" : 37.51
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LUTS",
+		"MED_DEPT_NM" : "폐암센터흉부외과",
+		"ROWCNT" : 24439,
+		"PCNT" : 7980,
+		"MED_Y_CNT" : 14464,
+		"MED_N_CNT" : 9975,
+		"MED_N_RATE" : 40.82
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TVS",
+		"MED_DEPT_NM" : "이식혈관외과",
+		"ROWCNT" : 30821,
+		"PCNT" : 7806,
+		"MED_Y_CNT" : 22389,
+		"MED_N_CNT" : 8432,
+		"MED_N_RATE" : 27.36
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HBPS",
+		"MED_DEPT_NM" : "간담췌외과",
+		"ROWCNT" : 34065,
+		"PCNT" : 7702,
+		"MED_Y_CNT" : 20164,
+		"MED_N_CNT" : 13901,
+		"MED_N_RATE" : 40.81
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "EMPO",
+		"MED_DEPT_NM" : "소아응급(EMPO)",
+		"ROWCNT" : 10363,
+		"PCNT" : 7457,
+		"MED_Y_CNT" : 134,
+		"MED_N_CNT" : 10229,
+		"MED_N_RATE" : 98.71
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CHIMH",
+		"MED_DEPT_NM" : "혈액암센터혈액종양내과",
+		"ROWCNT" : 49316,
+		"PCNT" : 7226,
+		"MED_Y_CNT" : 28207,
+		"MED_N_CNT" : 21109,
+		"MED_N_RATE" : 42.8
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMH",
+		"MED_DEPT_NM" : "혈액종양내과",
+		"ROWCNT" : 25744,
+		"PCNT" : 6954,
+		"MED_Y_CNT" : 13666,
+		"MED_N_CNT" : 12078,
+		"MED_N_RATE" : 46.92
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TOHOL",
+		"MED_DEPT_NM" : "갑상선\/구강\/두경부암센터이비인후과",
+		"ROWCNT" : 19813,
+		"PCNT" : 6948,
+		"MED_Y_CNT" : 12685,
+		"MED_N_CNT" : 7128,
+		"MED_N_RATE" : 35.98
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CHP",
+		"MED_DEPT_NM" : "소아정신과",
+		"ROWCNT" : 24199,
+		"PCNT" : 6719,
+		"MED_Y_CNT" : 18886,
+		"MED_N_CNT" : 5313,
+		"MED_N_RATE" : 21.96
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "POL",
+		"MED_DEPT_NM" : "소아이비인후과",
+		"ROWCNT" : 17888,
+		"PCNT" : 6556,
+		"MED_Y_CNT" : 12202,
+		"MED_N_CNT" : 5686,
+		"MED_N_RATE" : 31.79
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PNS",
+		"MED_DEPT_NM" : "소아신경외과",
+		"ROWCNT" : 15379,
+		"PCNT" : 6483,
+		"MED_Y_CNT" : 9921,
+		"MED_N_CNT" : 5458,
+		"MED_N_RATE" : 35.49
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ANO2",
+		"MED_DEPT_NM" : "통증센터",
+		"ROWCNT" : 28614,
+		"PCNT" : 6086,
+		"MED_Y_CNT" : 24324,
+		"MED_N_CNT" : 4290,
+		"MED_N_RATE" : 14.99
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TCGS",
+		"MED_DEPT_NM" : "갑상선센터외과",
+		"ROWCNT" : 19722,
+		"PCNT" : 5699,
+		"MED_Y_CNT" : 10349,
+		"MED_N_CNT" : 9373,
+		"MED_N_RATE" : 47.53
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PDM",
+		"MED_DEPT_NM" : "소아피부과",
+		"ROWCNT" : 11294,
+		"PCNT" : 5444,
+		"MED_Y_CNT" : 9646,
+		"MED_N_CNT" : 1648,
+		"MED_N_RATE" : 14.59
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GAGS",
+		"MED_DEPT_NM" : "위암센터외과",
+		"ROWCNT" : 21969,
+		"PCNT" : 5325,
+		"MED_Y_CNT" : 10852,
+		"MED_N_CNT" : 11117,
+		"MED_N_RATE" : 50.6
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PS",
+		"MED_DEPT_NM" : "성형외과",
+		"ROWCNT" : 21110,
+		"PCNT" : 5263,
+		"MED_Y_CNT" : 16722,
+		"MED_N_CNT" : 4388,
+		"MED_N_RATE" : 20.79
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CRS",
+		"MED_DEPT_NM" : "대장항문외과",
+		"ROWCNT" : 14041,
+		"PCNT" : 5170,
+		"MED_Y_CNT" : 7284,
+		"MED_N_CNT" : 6757,
+		"MED_N_RATE" : 48.12
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PUR",
+		"MED_DEPT_NM" : "소아비뇨의학과",
+		"ROWCNT" : 12544,
+		"PCNT" : 5160,
+		"MED_Y_CNT" : 9719,
+		"MED_N_CNT" : 2825,
+		"MED_N_RATE" : 22.52
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BSCNS",
+		"MED_DEPT_NM" : "뇌종양센터신경외과",
+		"ROWCNT" : 12428,
+		"PCNT" : 5123,
+		"MED_Y_CNT" : 7137,
+		"MED_N_CNT" : 5291,
+		"MED_N_RATE" : 42.57
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ESCOS",
+		"MED_DEPT_NM" : "근골격종양센터정형외과",
+		"ROWCNT" : 12889,
+		"PCNT" : 4961,
+		"MED_Y_CNT" : 8177,
+		"MED_N_CNT" : 4712,
+		"MED_N_RATE" : 36.56
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "NUGDW",
+		"MED_DEPT_NM" : "암병원 항암낮병동",
+		"ROWCNT" : 20563,
+		"PCNT" : 4483,
+		"MED_Y_CNT" : 20028,
+		"MED_N_CNT" : 535,
+		"MED_N_RATE" : 2.6
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PENP",
+		"MED_DEPT_NM" : "소아청소년과(신장)",
+		"ROWCNT" : 16235,
+		"PCNT" : 4474,
+		"MED_Y_CNT" : 11051,
+		"MED_N_CNT" : 5184,
+		"MED_N_RATE" : 31.93
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TRC",
+		"MED_DEPT_NM" : "방사선치료센터",
+		"ROWCNT" : 68668,
+		"PCNT" : 4438,
+		"MED_Y_CNT" : 63088,
+		"MED_N_CNT" : 5580,
+		"MED_N_RATE" : 8.13
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CCIMG",
+		"MED_DEPT_NM" : "대장암센터소화기내과",
+		"ROWCNT" : 11053,
+		"PCNT" : 4251,
+		"MED_Y_CNT" : 6500,
+		"MED_N_CNT" : 4553,
+		"MED_N_RATE" : 41.19
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GAIMG",
+		"MED_DEPT_NM" : "위암센터소화기내과",
+		"ROWCNT" : 9211,
+		"PCNT" : 3953,
+		"MED_Y_CNT" : 5288,
+		"MED_N_CNT" : 3923,
+		"MED_N_RATE" : 42.59
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CICDR",
+		"MED_DEPT_NM" : "종양영상센터영상의학과",
+		"ROWCNT" : 7503,
+		"PCNT" : 3783,
+		"MED_Y_CNT" : 5144,
+		"MED_N_CNT" : 2359,
+		"MED_N_RATE" : 31.44
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PRH",
+		"MED_DEPT_NM" : "소아재활의학과",
+		"ROWCNT" : 15952,
+		"PCNT" : 3591,
+		"MED_Y_CNT" : 6906,
+		"MED_N_CNT" : 9046,
+		"MED_N_RATE" : 56.71
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEDZ",
+		"MED_DEPT_NM" : "소아청소년과(일반)",
+		"ROWCNT" : 5459,
+		"PCNT" : 3581,
+		"MED_Y_CNT" : 3695,
+		"MED_N_CNT" : 1764,
+		"MED_N_RATE" : 32.31
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEGI",
+		"MED_DEPT_NM" : "소아청소년과(소화기영양)",
+		"ROWCNT" : 14383,
+		"PCNT" : 3458,
+		"MED_Y_CNT" : 8412,
+		"MED_N_CNT" : 5971,
+		"MED_N_RATE" : 41.51
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEHOO",
+		"MED_DEPT_NM" : "소아청소년암센터외래",
+		"ROWCNT" : 31456,
+		"PCNT" : 3443,
+		"MED_Y_CNT" : 21722,
+		"MED_N_CNT" : 9734,
+		"MED_N_RATE" : 30.94
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "OSHS",
+		"MED_DEPT_NM" : "정형(수부)외과",
+		"ROWCNT" : 7816,
+		"PCNT" : 3350,
+		"MED_Y_CNT" : 6085,
+		"MED_N_CNT" : 1731,
+		"MED_N_RATE" : 22.15
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GSZ",
+		"MED_DEPT_NM" : "외과(일반)",
+		"ROWCNT" : 6473,
+		"PCNT" : 3347,
+		"MED_Y_CNT" : 5025,
+		"MED_N_CNT" : 1448,
+		"MED_N_RATE" : 22.37
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PDS",
+		"MED_DEPT_NM" : "소아외과",
+		"ROWCNT" : 15975,
+		"PCNT" : 3332,
+		"MED_Y_CNT" : 8407,
+		"MED_N_CNT" : 7568,
+		"MED_N_RATE" : 47.37
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CCTCO",
+		"MED_DEPT_NM" : "종양임상시험센터외래",
+		"ROWCNT" : 34703,
+		"PCNT" : 3306,
+		"MED_Y_CNT" : 25337,
+		"MED_N_CNT" : 9366,
+		"MED_N_RATE" : 26.99
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PTS",
+		"MED_DEPT_NM" : "소아흉부외과",
+		"ROWCNT" : 7655,
+		"PCNT" : 3204,
+		"MED_Y_CNT" : 4916,
+		"MED_N_CNT" : 2739,
+		"MED_N_RATE" : 35.78
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CVCC",
+		"MED_DEPT_NM" : "(성남)생활치료센터",
+		"ROWCNT" : 24362,
+		"PCNT" : 3182,
+		"MED_Y_CNT" : 11913,
+		"MED_N_CNT" : 12449,
+		"MED_N_RATE" : 51.1
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PBIMG",
+		"MED_DEPT_NM" : "췌장\/담도암센터소화기내과",
+		"ROWCNT" : 21526,
+		"PCNT" : 2909,
+		"MED_Y_CNT" : 10922,
+		"MED_N_CNT" : 10604,
+		"MED_N_RATE" : 49.26
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PPS",
+		"MED_DEPT_NM" : "소아성형외과",
+		"ROWCNT" : 7107,
+		"PCNT" : 2845,
+		"MED_Y_CNT" : 5526,
+		"MED_N_CNT" : 1581,
+		"MED_N_RATE" : 22.25
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PBGS",
+		"MED_DEPT_NM" : "췌장\/담도암센터외과",
+		"ROWCNT" : 7935,
+		"PCNT" : 2820,
+		"MED_Y_CNT" : 4414,
+		"MED_N_CNT" : 3521,
+		"MED_N_RATE" : 44.37
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "STCNS",
+		"MED_DEPT_NM" : "척추종양센터신경외과",
+		"ROWCNT" : 5302,
+		"PCNT" : 2756,
+		"MED_Y_CNT" : 3762,
+		"MED_N_CNT" : 1540,
+		"MED_N_RATE" : 29.05
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PENE",
+		"MED_DEPT_NM" : "소아청소년과(신생아)",
+		"ROWCNT" : 5678,
+		"PCNT" : 2582,
+		"MED_Y_CNT" : 4054,
+		"MED_N_CNT" : 1624,
+		"MED_N_RATE" : 28.6
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "STCOS",
+		"MED_DEPT_NM" : "척추종양센터정형외과",
+		"ROWCNT" : 5220,
+		"PCNT" : 2577,
+		"MED_Y_CNT" : 3805,
+		"MED_N_CNT" : 1415,
+		"MED_N_RATE" : 27.11
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HPFM2",
+		"MED_DEPT_NM" : "암건강증진센터가정의학과(대한외래)",
+		"ROWCNT" : 6201,
+		"PCNT" : 2565,
+		"MED_Y_CNT" : 3400,
+		"MED_N_CNT" : 2801,
+		"MED_N_RATE" : 45.17
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEF0",
+		"MED_DEPT_NM" : "소아청소년과(전임의)",
+		"ROWCNT" : 10540,
+		"PCNT" : 2482,
+		"MED_Y_CNT" : 5020,
+		"MED_N_CNT" : 5520,
+		"MED_N_RATE" : 52.37
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEGD",
+		"MED_DEPT_NM" : "소아청소년과(유전)",
+		"ROWCNT" : 4978,
+		"PCNT" : 2477,
+		"MED_Y_CNT" : 4136,
+		"MED_N_CNT" : 842,
+		"MED_N_RATE" : 16.91
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "OTS",
+		"MED_DEPT_NM" : "장기이식센터",
+		"ROWCNT" : 11004,
+		"PCNT" : 2378,
+		"MED_Y_CNT" : 6754,
+		"MED_N_CNT" : 4250,
+		"MED_N_RATE" : 38.62
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PDID",
+		"MED_DEPT_NM" : "소아청소년과(감염)",
+		"ROWCNT" : 5476,
+		"PCNT" : 2262,
+		"MED_Y_CNT" : 4355,
+		"MED_N_CNT" : 1121,
+		"MED_N_RATE" : 20.47
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMHM",
+		"MED_DEPT_NM" : "내과(입원의학)",
+		"ROWCNT" : 8502,
+		"PCNT" : 2252,
+		"MED_Y_CNT" : 3035,
+		"MED_N_CNT" : 5467,
+		"MED_N_RATE" : 64.3
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PARD",
+		"MED_DEPT_NM" : "소아청소년과(호흡알레르기)",
+		"ROWCNT" : 6207,
+		"PCNT" : 2132,
+		"MED_Y_CNT" : 4735,
+		"MED_N_CNT" : 1472,
+		"MED_N_RATE" : 23.72
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PA",
+		"MED_DEPT_NM" : "병리과",
+		"ROWCNT" : 2128,
+		"PCNT" : 1990,
+		"MED_Y_CNT" : 2103,
+		"MED_N_CNT" : 25,
+		"MED_N_RATE" : 1.17
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "DMC",
+		"MED_DEPT_NM" : "약물안전센터",
+		"ROWCNT" : 2345,
+		"PCNT" : 1879,
+		"MED_Y_CNT" : 2117,
+		"MED_N_CNT" : 228,
+		"MED_N_RATE" : 9.72
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HPFM1",
+		"MED_DEPT_NM" : "암건강증진센터가정의학과",
+		"ROWCNT" : 4034,
+		"PCNT" : 1832,
+		"MED_Y_CNT" : 2344,
+		"MED_N_CNT" : 1690,
+		"MED_N_RATE" : 41.89
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "SCCDM",
+		"MED_DEPT_NM" : "피부암\/항암제특이반응센터피부과",
+		"ROWCNT" : 3497,
+		"PCNT" : 1802,
+		"MED_Y_CNT" : 2913,
+		"MED_N_CNT" : 584,
+		"MED_N_RATE" : 16.7
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HIP",
+		"MED_DEPT_NM" : "직원신체검사",
+		"ROWCNT" : 1918,
+		"PCNT" : 1778,
+		"MED_Y_CNT" : 18,
+		"MED_N_CNT" : 1900,
+		"MED_N_RATE" : 99.06
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PMCRH",
+		"MED_DEPT_NM" : "암통합케어센터암재활센터",
+		"ROWCNT" : 17523,
+		"PCNT" : 1765,
+		"MED_Y_CNT" : 3858,
+		"MED_N_CNT" : 13665,
+		"MED_N_RATE" : 77.98
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PMCNP",
+		"MED_DEPT_NM" : "암통합케어센터정신건강센터",
+		"ROWCNT" : 6569,
+		"PCNT" : 1764,
+		"MED_Y_CNT" : 5734,
+		"MED_N_CNT" : 835,
+		"MED_N_RATE" : 12.71
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IHC",
+		"MED_DEPT_NM" : "국제진료센터",
+		"ROWCNT" : 2363,
+		"PCNT" : 1740,
+		"MED_Y_CNT" : 2139,
+		"MED_N_CNT" : 224,
+		"MED_N_RATE" : 9.48
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "POSHS",
+		"MED_DEPT_NM" : "소아정형(수부)외과",
+		"ROWCNT" : 2975,
+		"PCNT" : 1726,
+		"MED_Y_CNT" : 2609,
+		"MED_N_CNT" : 366,
+		"MED_N_RATE" : 12.3
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEIR",
+		"MED_DEPT_NM" : "소아청소년과(면역류마티스)",
+		"ROWCNT" : 6805,
+		"PCNT" : 1700,
+		"MED_Y_CNT" : 4858,
+		"MED_N_CNT" : 1947,
+		"MED_N_RATE" : 28.61
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LIGS",
+		"MED_DEPT_NM" : "간암센터외과",
+		"ROWCNT" : 5545,
+		"PCNT" : 1646,
+		"MED_Y_CNT" : 3548,
+		"MED_N_CNT" : 1997,
+		"MED_N_RATE" : 36.01
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSFM",
+		"MED_DEPT_NM" : "(강남)가정의학과",
+		"ROWCNT" : 3426,
+		"PCNT" : 1618,
+		"MED_Y_CNT" : 2600,
+		"MED_N_CNT" : 826,
+		"MED_N_RATE" : 24.11
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BSCNR",
+		"MED_DEPT_NM" : "뇌종양센터신경과",
+		"ROWCNT" : 4101,
+		"PCNT" : 1549,
+		"MED_Y_CNT" : 3047,
+		"MED_N_CNT" : 1054,
+		"MED_N_RATE" : 25.7
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BCCPS",
+		"MED_DEPT_NM" : "유방센터성형외과",
+		"ROWCNT" : 3193,
+		"PCNT" : 1517,
+		"MED_Y_CNT" : 2899,
+		"MED_N_CNT" : 294,
+		"MED_N_RATE" : 9.21
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSIMC",
+		"MED_DEPT_NM" : "(강남)순환기내과",
+		"ROWCNT" : 3923,
+		"PCNT" : 1420,
+		"MED_Y_CNT" : 3244,
+		"MED_N_CNT" : 679,
+		"MED_N_RATE" : 17.31
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "EQLC",
+		"MED_DEPT_NM" : "감성센터",
+		"ROWCNT" : 4420,
+		"PCNT" : 1376,
+		"MED_Y_CNT" : 3265,
+		"MED_N_CNT" : 1155,
+		"MED_N_RATE" : 26.13
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GIS",
+		"MED_DEPT_NM" : "위장관외과",
+		"ROWCNT" : 4608,
+		"PCNT" : 1335,
+		"MED_Y_CNT" : 2025,
+		"MED_N_CNT" : 2583,
+		"MED_N_RATE" : 56.05
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "NB",
+		"MED_DEPT_NM" : "신생아실(소아청소년과)",
+		"ROWCNT" : 4852,
+		"PCNT" : 1300,
+		"MED_Y_CNT" : 1193,
+		"MED_N_CNT" : 3659,
+		"MED_N_RATE" : 75.41
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "NPPSG",
+		"MED_DEPT_NM" : "수면의학센터",
+		"ROWCNT" : 1864,
+		"PCNT" : 1288,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 1864,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSIME",
+		"MED_DEPT_NM" : "(강남)내분비대사내과",
+		"ROWCNT" : 3996,
+		"PCNT" : 1229,
+		"MED_Y_CNT" : 2792,
+		"MED_N_CNT" : 1204,
+		"MED_N_RATE" : 30.13
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TCNM",
+		"MED_DEPT_NM" : "갑상선센터핵의학과",
+		"ROWCNT" : 5032,
+		"PCNT" : 1029,
+		"MED_Y_CNT" : 2266,
+		"MED_N_CNT" : 2766,
+		"MED_N_RATE" : 54.97
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HPC99",
+		"MED_DEPT_NM" : "건강의학과",
+		"ROWCNT" : 1485,
+		"PCNT" : 1002,
+		"MED_Y_CNT" : 215,
+		"MED_N_CNT" : 1270,
+		"MED_N_RATE" : 85.52
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSIMG",
+		"MED_DEPT_NM" : "(강남)소화기내과",
+		"ROWCNT" : 1683,
+		"PCNT" : 996,
+		"MED_Y_CNT" : 1270,
+		"MED_N_CNT" : 413,
+		"MED_N_RATE" : 24.54
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "POG",
+		"MED_DEPT_NM" : "소아청소년여성클리닉",
+		"ROWCNT" : 2661,
+		"PCNT" : 877,
+		"MED_Y_CNT" : 1629,
+		"MED_N_CNT" : 1032,
+		"MED_N_RATE" : 38.78
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TCDR",
+		"MED_DEPT_NM" : "갑상선센터영상의학과",
+		"ROWCNT" : 1444,
+		"PCNT" : 867,
+		"MED_Y_CNT" : 1121,
+		"MED_N_CNT" : 323,
+		"MED_N_RATE" : 22.37
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "AN",
+		"MED_DEPT_NM" : "마취통증의학과",
+		"ROWCNT" : 930,
+		"PCNT" : 867,
+		"MED_Y_CNT" : 856,
+		"MED_N_CNT" : 74,
+		"MED_N_RATE" : 7.96
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PCTC",
+		"MED_DEPT_NM" : "소아임상시험실",
+		"ROWCNT" : 2646,
+		"PCNT" : 850,
+		"MED_Y_CNT" : 1954,
+		"MED_N_CNT" : 692,
+		"MED_N_RATE" : 26.15
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "RHMSK",
+		"MED_DEPT_NM" : "근골격재활시술",
+		"ROWCNT" : 1408,
+		"PCNT" : 737,
+		"MED_Y_CNT" : 1256,
+		"MED_N_CNT" : 152,
+		"MED_N_RATE" : 10.8
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CPU",
+		"MED_DEPT_NM" : "임상약리학과",
+		"ROWCNT" : 1770,
+		"PCNT" : 721,
+		"MED_Y_CNT" : 1706,
+		"MED_N_CNT" : 64,
+		"MED_N_RATE" : 3.62
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PDR",
+		"MED_DEPT_NM" : "소아영상의학과",
+		"ROWCNT" : 641,
+		"PCNT" : 627,
+		"MED_Y_CNT" : 38,
+		"MED_N_CNT" : 603,
+		"MED_N_RATE" : 94.07
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HP",
+		"MED_DEPT_NM" : "완화의료·임상윤리센터",
+		"ROWCNT" : 1288,
+		"PCNT" : 573,
+		"MED_Y_CNT" : 1009,
+		"MED_N_CNT" : 279,
+		"MED_N_RATE" : 21.66
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ENVR",
+		"MED_DEPT_NM" : "공공진료센터 환경의학클리닉",
+		"ROWCNT" : 653,
+		"PCNT" : 560,
+		"MED_Y_CNT" : 603,
+		"MED_N_CNT" : 50,
+		"MED_N_RATE" : 7.66
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CPCC",
+		"MED_DEPT_NM" : "(성남)소아생활치료센터",
+		"ROWCNT" : 4466,
+		"PCNT" : 552,
+		"MED_Y_CNT" : 1745,
+		"MED_N_CNT" : 2721,
+		"MED_N_RATE" : 60.93
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PCBS",
+		"MED_DEPT_NM" : "암맞춤치료센터유방외과",
+		"ROWCNT" : 821,
+		"PCNT" : 540,
+		"MED_Y_CNT" : 752,
+		"MED_N_CNT" : 69,
+		"MED_N_RATE" : 8.4
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PMCPA",
+		"MED_DEPT_NM" : "암통합케어센터암성통증센터",
+		"ROWCNT" : 664,
+		"PCNT" : 472,
+		"MED_Y_CNT" : 522,
+		"MED_N_CNT" : 142,
+		"MED_N_RATE" : 21.39
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEHOD",
+		"MED_DEPT_NM" : "소아청소년암센터낮병동",
+		"ROWCNT" : 7767,
+		"PCNT" : 462,
+		"MED_Y_CNT" : 7232,
+		"MED_N_CNT" : 535,
+		"MED_N_RATE" : 6.89
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "COCC",
+		"MED_DEPT_NM" : "공공진료센터 통합케어클리닉",
+		"ROWCNT" : 3704,
+		"PCNT" : 456,
+		"MED_Y_CNT" : 3539,
+		"MED_N_CNT" : 165,
+		"MED_N_RATE" : 4.45
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSNR",
+		"MED_DEPT_NM" : "(강남)신경과",
+		"ROWCNT" : 888,
+		"PCNT" : 446,
+		"MED_Y_CNT" : 834,
+		"MED_N_CNT" : 54,
+		"MED_N_RATE" : 6.08
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BCCRH",
+		"MED_DEPT_NM" : "유방센터재활의학과",
+		"ROWCNT" : 4219,
+		"PCNT" : 434,
+		"MED_Y_CNT" : 463,
+		"MED_N_CNT" : 3756,
+		"MED_N_RATE" : 89.03
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEHO",
+		"MED_DEPT_NM" : "소아청소년과(혈액종양)",
+		"ROWCNT" : 4804,
+		"PCNT" : 429,
+		"MED_Y_CNT" : 1418,
+		"MED_N_CNT" : 3386,
+		"MED_N_RATE" : 70.48
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSIMA",
+		"MED_DEPT_NM" : "(강남)알레르기내과",
+		"ROWCNT" : 1184,
+		"PCNT" : 422,
+		"MED_Y_CNT" : 1096,
+		"MED_N_CNT" : 88,
+		"MED_N_RATE" : 7.43
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PPCT",
+		"MED_DEPT_NM" : "소아청소년과(완화의료)",
+		"ROWCNT" : 2439,
+		"PCNT" : 405,
+		"MED_Y_CNT" : 2055,
+		"MED_N_CNT" : 384,
+		"MED_N_RATE" : 15.74
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PMCCM",
+		"MED_DEPT_NM" : "암통합케어센터완화의료센터(가정의학과)",
+		"ROWCNT" : 826,
+		"PCNT" : 400,
+		"MED_Y_CNT" : 411,
+		"MED_N_CNT" : 415,
+		"MED_N_RATE" : 50.24
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSNP",
+		"MED_DEPT_NM" : "(강남)정신건강의학과",
+		"ROWCNT" : 1590,
+		"PCNT" : 383,
+		"MED_Y_CNT" : 1517,
+		"MED_N_CNT" : 73,
+		"MED_N_RATE" : 4.59
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSOT",
+		"MED_DEPT_NM" : "(강남)안과",
+		"ROWCNT" : 883,
+		"PCNT" : 372,
+		"MED_Y_CNT" : 666,
+		"MED_N_CNT" : 217,
+		"MED_N_RATE" : 24.58
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSUR",
+		"MED_DEPT_NM" : "(강남)비뇨의학과",
+		"ROWCNT" : 715,
+		"PCNT" : 323,
+		"MED_Y_CNT" : 540,
+		"MED_N_CNT" : 175,
+		"MED_N_RATE" : 24.48
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "COCC",
+		"MED_DEPT_NM" : "통합케어클리닉",
+		"ROWCNT" : 1068,
+		"PCNT" : 285,
+		"MED_Y_CNT" : 1007,
+		"MED_N_CNT" : 61,
+		"MED_N_RATE" : 5.71
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PMCNR",
+		"MED_DEPT_NM" : "암통합케어센터신경센터",
+		"ROWCNT" : 369,
+		"PCNT" : 275,
+		"MED_Y_CNT" : 15,
+		"MED_N_CNT" : 354,
+		"MED_N_RATE" : 95.93
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TMUH2",
+		"MED_DEPT_NM" : "(원격진료)피부과",
+		"ROWCNT" : 453,
+		"PCNT" : 259,
+		"MED_Y_CNT" : 453,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GS",
+		"MED_DEPT_NM" : "외과",
+		"ROWCNT" : 393,
+		"PCNT" : 250,
+		"MED_Y_CNT" : 28,
+		"MED_N_CNT" : 365,
+		"MED_N_RATE" : 92.88
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICS",
+		"MED_DEPT_NM" : "감염관리센터",
+		"ROWCNT" : 359,
+		"PCNT" : 244,
+		"MED_Y_CNT" : 252,
+		"MED_N_CNT" : 107,
+		"MED_N_RATE" : 29.81
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CHO1",
+		"MED_DEPT_NM" : "조혈모세포이식외래(암병원)",
+		"ROWCNT" : 1934,
+		"PCNT" : 224,
+		"MED_Y_CNT" : 1230,
+		"MED_N_CNT" : 704,
+		"MED_N_RATE" : 36.4
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEIC",
+		"MED_DEPT_NM" : "소아청소년과(중환자)",
+		"ROWCNT" : 589,
+		"PCNT" : 223,
+		"MED_Y_CNT" : 473,
+		"MED_N_CNT" : 116,
+		"MED_N_RATE" : 19.69
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BSCC2",
+		"MED_DEPT_NM" : "뇌종양센터협진(방사선종양학과)",
+		"ROWCNT" : 530,
+		"PCNT" : 214,
+		"MED_Y_CNT" : 253,
+		"MED_N_CNT" : 277,
+		"MED_N_RATE" : 52.26
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "WMHE",
+		"MED_DEPT_NM" : "공공진료센터 일마음건강클리닉",
+		"ROWCNT" : 828,
+		"PCNT" : 198,
+		"MED_Y_CNT" : 772,
+		"MED_N_CNT" : 56,
+		"MED_N_RATE" : 6.76
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BSCC3",
+		"MED_DEPT_NM" : "뇌종양센터협진(종양내과)",
+		"ROWCNT" : 505,
+		"PCNT" : 195,
+		"MED_Y_CNT" : 220,
+		"MED_N_CNT" : 285,
+		"MED_N_RATE" : 56.44
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSRH",
+		"MED_DEPT_NM" : "(강남)재활의학과",
+		"ROWCNT" : 263,
+		"PCNT" : 188,
+		"MED_Y_CNT" : 236,
+		"MED_N_CNT" : 27,
+		"MED_N_RATE" : 10.27
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BSCC1",
+		"MED_DEPT_NM" : "뇌종양센터협진(신경외과)",
+		"ROWCNT" : 478,
+		"PCNT" : 187,
+		"MED_Y_CNT" : 206,
+		"MED_N_CNT" : 272,
+		"MED_N_RATE" : 56.9
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ENVR",
+		"MED_DEPT_NM" : "환경의학클리닉",
+		"ROWCNT" : 187,
+		"PCNT" : 172,
+		"MED_Y_CNT" : 175,
+		"MED_N_CNT" : 12,
+		"MED_N_RATE" : 6.42
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSGS1",
+		"MED_DEPT_NM" : "(강남)유방진료실",
+		"ROWCNT" : 257,
+		"PCNT" : 162,
+		"MED_Y_CNT" : 151,
+		"MED_N_CNT" : 106,
+		"MED_N_RATE" : 41.25
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PHCT",
+		"MED_DEPT_NM" : "소아재택의료",
+		"ROWCNT" : 2835,
+		"PCNT" : 148,
+		"MED_Y_CNT" : 2570,
+		"MED_N_CNT" : 265,
+		"MED_N_RATE" : 9.35
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PCIMH",
+		"MED_DEPT_NM" : "암맞춤치료센터혈액종양내과",
+		"ROWCNT" : 418,
+		"PCNT" : 138,
+		"MED_Y_CNT" : 170,
+		"MED_N_CNT" : 248,
+		"MED_N_RATE" : 59.33
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BSCC5",
+		"MED_DEPT_NM" : "뇌종양센터협진(신경과)",
+		"ROWCNT" : 310,
+		"PCNT" : 134,
+		"MED_Y_CNT" : 123,
+		"MED_N_CNT" : 187,
+		"MED_N_RATE" : 60.32
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSDR",
+		"MED_DEPT_NM" : "(강남)영상의학과",
+		"ROWCNT" : 138,
+		"PCNT" : 131,
+		"MED_Y_CNT" : 133,
+		"MED_N_CNT" : 5,
+		"MED_N_RATE" : 3.62
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "NPDCC",
+		"MED_DEPT_NM" : "정신건강주간치료실",
+		"ROWCNT" : 780,
+		"PCNT" : 127,
+		"MED_Y_CNT" : 711,
+		"MED_N_CNT" : 69,
+		"MED_N_RATE" : 8.85
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GMPED",
+		"MED_DEPT_NM" : "임상유전체의학과(소아청소년과)",
+		"ROWCNT" : 161,
+		"PCNT" : 114,
+		"MED_Y_CNT" : 149,
+		"MED_N_CNT" : 12,
+		"MED_N_RATE" : 7.45
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "WMHE",
+		"MED_DEPT_NM" : "일마음건강클리닉",
+		"ROWCNT" : 200,
+		"PCNT" : 95,
+		"MED_Y_CNT" : 184,
+		"MED_N_CNT" : 16,
+		"MED_N_RATE" : 8
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TMUH1",
+		"MED_DEPT_NM" : "(원격진료)정신과",
+		"ROWCNT" : 597,
+		"PCNT" : 92,
+		"MED_Y_CNT" : 593,
+		"MED_N_CNT" : 4,
+		"MED_N_RATE" : 0.67
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSIMN",
+		"MED_DEPT_NM" : "(강남)신장내과",
+		"ROWCNT" : 167,
+		"PCNT" : 81,
+		"MED_Y_CNT" : 139,
+		"MED_N_CNT" : 28,
+		"MED_N_RATE" : 16.77
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GMNR",
+		"MED_DEPT_NM" : "임상유전체의학과(신경과)",
+		"ROWCNT" : 105,
+		"PCNT" : 64,
+		"MED_Y_CNT" : 82,
+		"MED_N_CNT" : 23,
+		"MED_N_RATE" : 21.9
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PCP",
+		"MED_DEPT_NM" : "소아진단검사의학과",
+		"ROWCNT" : 64,
+		"PCNT" : 62,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 64,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TRS",
+		"MED_DEPT_NM" : "외상외과",
+		"ROWCNT" : 199,
+		"PCNT" : 57,
+		"MED_Y_CNT" : 105,
+		"MED_N_CNT" : 94,
+		"MED_N_RATE" : 47.24
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSGS",
+		"MED_DEPT_NM" : "(강남)외과",
+		"ROWCNT" : 112,
+		"PCNT" : 56,
+		"MED_Y_CNT" : 109,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 2.68
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "SMK",
+		"MED_DEPT_NM" : "금연클리닉",
+		"ROWCNT" : 151,
+		"PCNT" : 52,
+		"MED_Y_CNT" : 142,
+		"MED_N_CNT" : 9,
+		"MED_N_RATE" : 5.96
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PTR",
+		"MED_DEPT_NM" : "소아방사선종양학과",
+		"ROWCNT" : 141,
+		"PCNT" : 46,
+		"MED_Y_CNT" : 50,
+		"MED_N_CNT" : 91,
+		"MED_N_RATE" : 64.54
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LUCC1",
+		"MED_DEPT_NM" : "폐암센터협진(흉부외과)",
+		"ROWCNT" : 42,
+		"PCNT" : 41,
+		"MED_Y_CNT" : 34,
+		"MED_N_CNT" : 8,
+		"MED_N_RATE" : 19.05
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PHPC",
+		"MED_DEPT_NM" : "소아 건강검진",
+		"ROWCNT" : 41,
+		"PCNT" : 41,
+		"MED_Y_CNT" : 41,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEDH",
+		"MED_DEPT_NM" : "소아청소년과(입원의학)",
+		"ROWCNT" : 183,
+		"PCNT" : 39,
+		"MED_Y_CNT" : 55,
+		"MED_N_CNT" : 128,
+		"MED_N_RATE" : 69.95
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LUCC5",
+		"MED_DEPT_NM" : "폐암센터협진(영상의학과)",
+		"ROWCNT" : 36,
+		"PCNT" : 35,
+		"MED_Y_CNT" : 35,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 2.78
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "SCC1",
+		"MED_DEPT_NM" : "피부암센터협진외래(피부과)",
+		"ROWCNT" : 66,
+		"PCNT" : 35,
+		"MED_Y_CNT" : 50,
+		"MED_N_CNT" : 16,
+		"MED_N_RATE" : 24.24
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LUCC2",
+		"MED_DEPT_NM" : "폐암센터협진(호흡기내과)",
+		"ROWCNT" : 38,
+		"PCNT" : 34,
+		"MED_Y_CNT" : 34,
+		"MED_N_CNT" : 4,
+		"MED_N_RATE" : 10.53
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "SCC2",
+		"MED_DEPT_NM" : "피부암센터협진외래(성형외과)",
+		"ROWCNT" : 112,
+		"PCNT" : 34,
+		"MED_Y_CNT" : 41,
+		"MED_N_CNT" : 71,
+		"MED_N_RATE" : 63.39
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICUGS",
+		"MED_DEPT_NM" : "중환자의학(외과)",
+		"ROWCNT" : 62,
+		"PCNT" : 34,
+		"MED_Y_CNT" : 32,
+		"MED_N_CNT" : 30,
+		"MED_N_RATE" : 48.39
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "SCC6",
+		"MED_DEPT_NM" : "피부암센터협진외래(병리과)",
+		"ROWCNT" : 47,
+		"PCNT" : 33,
+		"MED_Y_CNT" : 7,
+		"MED_N_CNT" : 40,
+		"MED_N_RATE" : 85.11
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICUNS",
+		"MED_DEPT_NM" : "중환자의학(신경외과)",
+		"ROWCNT" : 47,
+		"PCNT" : 29,
+		"MED_Y_CNT" : 30,
+		"MED_N_CNT" : 17,
+		"MED_N_RATE" : 36.17
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LUCC6",
+		"MED_DEPT_NM" : "폐암센터협진(핵의학과)",
+		"ROWCNT" : 30,
+		"PCNT" : 29,
+		"MED_Y_CNT" : 29,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 3.33
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LUCC3",
+		"MED_DEPT_NM" : "폐암센터협진(종양내과)",
+		"ROWCNT" : 28,
+		"PCNT" : 27,
+		"MED_Y_CNT" : 27,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 3.57
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "LUCC4",
+		"MED_DEPT_NM" : "폐암센터협진(방사선종양학과)",
+		"ROWCNT" : 24,
+		"PCNT" : 23,
+		"MED_Y_CNT" : 21,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 12.5
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CFPS",
+		"MED_DEPT_NM" : "두개안면기형 협진클리닉(소아성형외과)",
+		"ROWCNT" : 21,
+		"PCNT" : 19,
+		"MED_Y_CNT" : 19,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 9.52
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CFOT",
+		"MED_DEPT_NM" : "두개안면기형 협진클리닉(소아안과)",
+		"ROWCNT" : 19,
+		"PCNT" : 19,
+		"MED_Y_CNT" : 14,
+		"MED_N_CNT" : 5,
+		"MED_N_RATE" : 26.32
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CFNS",
+		"MED_DEPT_NM" : "두개안면기형 협진클리닉(소아신경외과)",
+		"ROWCNT" : 19,
+		"PCNT" : 19,
+		"MED_Y_CNT" : 13,
+		"MED_N_CNT" : 6,
+		"MED_N_RATE" : 31.58
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GMLM",
+		"MED_DEPT_NM" : "임상유전체의학과(진단검사의학과)",
+		"ROWCNT" : 21,
+		"PCNT" : 17,
+		"MED_Y_CNT" : 21,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEHO0",
+		"MED_DEPT_NM" : "소아청소년암센터협진(소아청소년암센터)",
+		"ROWCNT" : 21,
+		"PCNT" : 17,
+		"MED_Y_CNT" : 14,
+		"MED_N_CNT" : 7,
+		"MED_N_RATE" : 33.33
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEHO2",
+		"MED_DEPT_NM" : "소아청소년암센터협진(영상의학과)",
+		"ROWCNT" : 17,
+		"PCNT" : 16,
+		"MED_Y_CNT" : 11,
+		"MED_N_CNT" : 6,
+		"MED_N_RATE" : 35.29
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEHO1",
+		"MED_DEPT_NM" : "소아청소년암센터협진(소아외과)",
+		"ROWCNT" : 23,
+		"PCNT" : 14,
+		"MED_Y_CNT" : 14,
+		"MED_N_CNT" : 9,
+		"MED_N_RATE" : 39.13
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CVHC",
+		"MED_DEPT_NM" : "코로나재택의료",
+		"ROWCNT" : 71,
+		"PCNT" : 14,
+		"MED_Y_CNT" : 30,
+		"MED_N_CNT" : 41,
+		"MED_N_RATE" : 57.75
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "SCC4",
+		"MED_DEPT_NM" : "피부암센터협진외래(종양내과)",
+		"ROWCNT" : 14,
+		"PCNT" : 14,
+		"MED_Y_CNT" : 8,
+		"MED_N_CNT" : 6,
+		"MED_N_RATE" : 42.86
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICUEM",
+		"MED_DEPT_NM" : "중환자의학(응급의학과)",
+		"ROWCNT" : 26,
+		"PCNT" : 14,
+		"MED_Y_CNT" : 14,
+		"MED_N_CNT" : 12,
+		"MED_N_RATE" : 46.15
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GMPNR",
+		"MED_DEPT_NM" : "임상유전체의학과(소아신경)",
+		"ROWCNT" : 14,
+		"PCNT" : 13,
+		"MED_Y_CNT" : 11,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 21.43
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PCCRS",
+		"MED_DEPT_NM" : "암맞춤치료센터대장항문외과",
+		"ROWCNT" : 21,
+		"PCNT" : 11,
+		"MED_Y_CNT" : 9,
+		"MED_N_CNT" : 12,
+		"MED_N_RATE" : 57.14
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSIMR",
+		"MED_DEPT_NM" : "(강남)호흡기내과",
+		"ROWCNT" : 14,
+		"PCNT" : 11,
+		"MED_Y_CNT" : 12,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 14.29
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICUAN",
+		"MED_DEPT_NM" : "중환자의학(마취통증의학과)",
+		"ROWCNT" : 18,
+		"PCNT" : 11,
+		"MED_Y_CNT" : 9,
+		"MED_N_CNT" : 9,
+		"MED_N_RATE" : 50
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "REDNR",
+		"MED_DEPT_NM" : "응급의료센터(신경과)",
+		"ROWCNT" : 24,
+		"PCNT" : 10,
+		"MED_Y_CNT" : 9,
+		"MED_N_CNT" : 15,
+		"MED_N_RATE" : 62.5
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HOHC",
+		"MED_DEPT_NM" : "가정형 호스피스",
+		"ROWCNT" : 26,
+		"PCNT" : 10,
+		"MED_Y_CNT" : 11,
+		"MED_N_CNT" : 15,
+		"MED_N_RATE" : 57.69
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TR",
+		"MED_DEPT_NM" : "방사선종양학과",
+		"ROWCNT" : 13,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 12,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 7.69
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICUGS",
+		"MED_DEPT_NM" : "중환자진료(외과)",
+		"ROWCNT" : 9,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 8,
+		"MED_N_RATE" : 88.89
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "NRHM",
+		"MED_DEPT_NM" : "신경과(입원의학)",
+		"ROWCNT" : 20,
+		"PCNT" : 8,
+		"MED_Y_CNT" : 9,
+		"MED_N_CNT" : 11,
+		"MED_N_RATE" : 55
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "REDGS",
+		"MED_DEPT_NM" : "응급의료센터(외과)",
+		"ROWCNT" : 15,
+		"PCNT" : 7,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 10,
+		"MED_N_RATE" : 66.67
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICUNR",
+		"MED_DEPT_NM" : "중환자의학(신경과)",
+		"ROWCNT" : 13,
+		"PCNT" : 7,
+		"MED_Y_CNT" : 7,
+		"MED_N_CNT" : 6,
+		"MED_N_RATE" : 46.15
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "STC1",
+		"MED_DEPT_NM" : "척추종양센터협진(신경외과)",
+		"ROWCNT" : 16,
+		"PCNT" : 6,
+		"MED_Y_CNT" : 6,
+		"MED_N_CNT" : 10,
+		"MED_N_RATE" : 62.5
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ADPNS",
+		"MED_DEPT_NM" : "청소년암센터소아신경외과",
+		"ROWCNT" : 8,
+		"PCNT" : 6,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 8,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PAN",
+		"MED_DEPT_NM" : "소아마취통증의학과",
+		"ROWCNT" : 5,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 5,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BEN",
+		"MED_DEPT_NM" : "유방내분비외과",
+		"ROWCNT" : 6,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 16.67
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "STC6",
+		"MED_DEPT_NM" : "척추종양센터협진(병리과)",
+		"ROWCNT" : 6,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 5,
+		"MED_N_RATE" : 83.33
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "STC5",
+		"MED_DEPT_NM" : "척추종양센터협진(영상의학과)",
+		"ROWCNT" : 6,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 5,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 16.67
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "TC1",
+		"MED_DEPT_NM" : "갑상선센터협진(내분비대사내과)",
+		"ROWCNT" : 5,
+		"PCNT" : 5,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 40
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICUAN",
+		"MED_DEPT_NM" : "중환자진료(마취통증의학과)",
+		"ROWCNT" : 6,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 4,
+		"MED_N_RATE" : 66.67
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CPHC",
+		"MED_DEPT_NM" : "소아 코로나재택의료",
+		"ROWCNT" : 24,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 6,
+		"MED_N_CNT" : 18,
+		"MED_N_RATE" : 75
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GHCS1",
+		"MED_DEPT_NM" : "강남센터숙박검진과",
+		"ROWCNT" : 10,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 7,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 30
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GMNR",
+		"MED_DEPT_NM" : "임상유전체의학과(신경)",
+		"ROWCNT" : 4,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 25
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "STC3",
+		"MED_DEPT_NM" : "척추종양센터협진(혈액종양내과)",
+		"ROWCNT" : 5,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 20
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PTSHM",
+		"MED_DEPT_NM" : "소아흉부외과(입원의학)",
+		"ROWCNT" : 10,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 6,
+		"MED_N_RATE" : 60
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "OGHM",
+		"MED_DEPT_NM" : "산부인과(입원의학)",
+		"ROWCNT" : 7,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 4,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 42.86
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "URHM",
+		"MED_DEPT_NM" : "비뇨의학과(입원의학)",
+		"ROWCNT" : 7,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 3,
+		"MED_N_CNT" : 4,
+		"MED_N_RATE" : 57.14
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "STC4",
+		"MED_DEPT_NM" : "척추종양센터협진(방사선종양학과)",
+		"ROWCNT" : 5,
+		"PCNT" : 4,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 60
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICUNS",
+		"MED_DEPT_NM" : "중환자진료(신경외과)",
+		"ROWCNT" : 4,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 75
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GSO1",
+		"MED_DEPT_NM" : "유방진료실",
+		"ROWCNT" : 3,
+		"PCNT" : 3,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 3,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GMIME",
+		"MED_DEPT_NM" : "임상유전체의학과(내분비대사내과)",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CACCO",
+		"MED_DEPT_NM" : "(구)소아청소년암센터외래",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PCIMG",
+		"MED_DEPT_NM" : "암맞춤치료센터소화기내과",
+		"ROWCNT" : 3,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 66.67
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GM",
+		"MED_DEPT_NM" : "임상유전체의학과",
+		"ROWCNT" : 3,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 2,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 33.33
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "UPCC1",
+		"MED_DEPT_NM" : "비뇨암센터협진(비뇨의학과)",
+		"ROWCNT" : 2,
+		"PCNT" : 2,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 2,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PEHO3",
+		"MED_DEPT_NM" : "소아청소년암센터협진(완화의료)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "RED",
+		"MED_DEPT_NM" : "권역응급의료센터",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GMPNR",
+		"MED_DEPT_NM" : "임상유전체의학과_소아",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "GMIMH",
+		"MED_DEPT_NM" : "임상유전체의학과(혈액종양내과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "IMHBM",
+		"MED_DEPT_NM" : "조혈모세포이식외래",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ADPED",
+		"MED_DEPT_NM" : "청소년암센터소아청소년과",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "ICUNR",
+		"MED_DEPT_NM" : "중환자진료(신경과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "REDIM",
+		"MED_DEPT_NM" : "응급의료센터(내과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 100
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "BCCG2",
+		"MED_DEPT_NM" : "유방센터협진(외과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PBCC2",
+		"MED_DEPT_NM" : "췌장\/담도암센터협진(소화기내과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "CHS",
+		"MED_DEPT_NM" : "통합케어센터(구.어린이병원학교)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "HSCP",
+		"MED_DEPT_NM" : "(강남)진단검사의학과",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 1,
+		"MED_N_CNT" : 0,
+		"MED_N_RATE" : 0
+	},
+	{
+		"MONTH" : "2021",
+		"MED_DEPT_CD" : "PBCC1",
+		"MED_DEPT_NM" : "췌장\/담도암센터협진(외과)",
+		"ROWCNT" : 1,
+		"PCNT" : 1,
+		"MED_Y_CNT" : 0,
+		"MED_N_CNT" : 1,
+		"MED_N_RATE" : 100
+	}
+]}

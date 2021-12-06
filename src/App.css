@@ -1,3 +1,4 @@
-svg {
-	background-color: lightgray;
+@font-face {
+    font-family: bitro;
+    src: url(./components/style/font/RotisSemiSansStd-ExtraBold.otf);
 }

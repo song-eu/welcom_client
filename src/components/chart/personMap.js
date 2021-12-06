@@ -22,7 +22,7 @@ const d3 = {
 
 const PersonMap = (props) => {
     const svgRef = useRef()
-    const { dataloc, dateCtrl, header, vocId, data2 } = props
+    const { dataloc, dateCtrl, header, vocId, data2, codeId } = props
     // var [data, setData] = useState([])
 
     const thisMonth = moment().subtract(1, 'month').format('YYYY-MM')
@@ -37,14 +37,9 @@ const PersonMap = (props) => {
     // slide bar 의 최소 / 최대 날짜 및 현재 날짜 설정 가능
     // data 기준이 현재날짜 - 12 month 이므로 해당날짜로 설정되어 있으나,
     // 필요에 따라 변경가능
-    if (!data2) {
-        var circleRange = [20, 60]
-    } else {
-        var circleRange = [50, 300]
-    }
 
-    var width = 850,
-        height = 1200
+    var width = 800,
+        height = 1212
 
     var projection = d3
         .geoMercator()
@@ -80,7 +75,6 @@ const PersonMap = (props) => {
 
     useEffect(async () => {
         // console.log('useEffect 실행')
-
         var svg = d3
             .select(svgRef.current)
             // .call((g) => g.select('svg').remove())
@@ -177,40 +171,40 @@ const PersonMap = (props) => {
 
     useEffect(async () => {
         if (!vocId) {
-            var data = await jsonToData(dataloc, geojson)
+            var getData = await jsonToData(dataloc, geojson)
         } else {
-            var getDatas = await fetchToData(data2, geojson)
-            var data = getDatas[vocId]
-            console.log('person map data?', getDatas, 'voc?', vocId)
+            var gets = await fetchToData(data2, geojson)
+            var getData = gets[vocId]
         }
-
+        // console.log('person codeId???', codeId)
+        if (codeId === 'OP') {
+            var circleRange = [100, 400]
+        } else {
+            var circleRange = [50, 150]
+        }
         // console.log('circle effect 실행')
 
-        var tip = d3
-            .tip()
+        const container = d3.select(svgRef.current)
+        // svg.selectAll('path').call(tip)
+        // console.log('map data?', getData, dateCtrl.substring(0, 4))
+        container.selectAll('div').remove()
+        var tip = container
+            .append('div')
             .attr('class', 'toolTipMap')
             // .attr('id', 'toolTipMap')
-            .style('width', 80 + 'px')
+            .style('width', 100 + 'px')
             .style('padding', '10px')
-            .style('background', '#444')
+            // .style('background', '#444')
             .style('color', 'rgb(238, 148, 75)')
             .style('border-radius', '4px')
-            .html((d) => {
-                let content = `<div class="name"> ${d.name}</div>`
-                content += `<div class="cost"> ${
-                    d.cnt.toLocaleString('ko-KR') + ' 명'
-                } </div>`
-                return content
-            })
+            .style('display', 'none')
 
-        const svg = d3.select(svgRef.current)
-        svg.selectAll('path').call(tip)
-
-        svg.select('svg')
+        var svg = container
+            .select('svg')
             .selectAll('circle')
             .attr('id', (d) => `${d.id}`)
             .attr('class', 'population')
-            .data(data[dateCtrl].filter((d) => d.loc))
+            .data(getData[dateCtrl.substring(0, 4)].filter((d) => d.loc))
             .join(
                 (enter) => {
                     // console.log('enter!', enter)
@@ -227,7 +221,19 @@ const PersonMap = (props) => {
             )
             .on('mouseover', function (d, i, n) {
                 // console.log('i?', i, 'this??', this)
-                tip.show(i, this)
+                tip.style('background', '#444')
+                    .style('position', 'absolute')
+                    .html((d) => {
+                        let content = `<div class="name"> ${i.name}</div>`
+                        content += `<div class="cost"> ${
+                            i.cnt.toLocaleString('ko-KR') + ' 명'
+                        } </div>`
+                        return content
+                    })
+                    .style('left', d.pageX + 10 + 'px')
+                    .style('top', d.pageY - 60 + 'px')
+                    // .style('visibility', 'visible')
+                    .style('display', null)
 
                 d3.select(this)
                     .attr('stroke', '#F3F9A7')
@@ -235,8 +241,16 @@ const PersonMap = (props) => {
                     .attr('fill', '#fffbd5')
                     .attr('opacity', 1)
             })
+            .on('mousemove', function (d, i, n) {
+                // console.log('i?', i, 'this??', this)
+                tip.style('top', `${d.pageY - 60}px`).style(
+                    'left',
+                    `${d.pageX + 10}px`
+                )
+            })
             .on('mouseleave', function (actual, i) {
-                tip.hide()
+                tip.style('display', 'none')
+
                 d3.select(this)
                     .attr('fill', 'gray')
                     .attr('fill-opacity', 0.5)
@@ -250,17 +264,17 @@ const PersonMap = (props) => {
             .attr('transform', (d) => `translate(${d.loc})`)
             .attr('cx', (d) => projection(d.loc)[0] - 125)
             .attr('cy', (d) => projection(d.loc)[1] - 40)
-            .attr('r', (d) => d3.scaleSqrt().range(circleRange)(d.cnt) / 100)
             .transition()
-            .duration(1500)
-    }, [dateCtrl, vocId])
+            .duration(1000)
+            .attr('r', (d) => d3.scaleSqrt().range(circleRange)(d.cnt) / 100)
+    }, [vocId, codeId])
 
     return (
         <MapBubbleChartStyle>
             <h1>{header}</h1>
             <div id="mapLine"></div>
-            <div id="mapSlider"></div>
-            <div id="map-canvas" ref={svgRef}></div>
+
+            <div ref={svgRef}></div>
         </MapBubbleChartStyle>
     )
 }
