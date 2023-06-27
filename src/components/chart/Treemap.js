@@ -54,6 +54,7 @@ const Treemap = (props) => {
         // const dataset = sampleData.circleCharData.data1
         if (!vocId) {
             var getdata = await jsonToData(dataloc)
+            console.log('treemap', getdata, 'datactrl', dateCtrl, dataloc)
             var dataset = getdata[dateCtrl.substring(0, 4)][pageInfo].sort(
                 (a, b) => {
                     return b.value - a.value
@@ -63,7 +64,7 @@ const Treemap = (props) => {
                 height = 578 - margin.top - margin.bottom
             // console.log('tree data1?', dataset)
         } else {
-            var getdata = fetchToData(data2)
+            var getdata = await fetchToData(data2)
 
             var dataset = getdata[dateCtrl.substring(0, 4)].sort((a, b) => {
                 return b.value - a.value

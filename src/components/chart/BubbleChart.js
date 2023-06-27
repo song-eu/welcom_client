@@ -52,8 +52,9 @@ const BubbleCircleChart = (props) => {
         // const dataset = sampleData.circleCharData.data1
 
         const getdata = await jsonToData(dataloc)
+        // console.log('bubble?', getdata)
         const dataset = getdata[dateCtrl.substring(0, 4)][pageInfo]
-        // console.log('bubble data?', getdata)
+        console.log('bubble data?', getdata)
 
         const sum = d3
             .stratify()
@@ -216,8 +217,10 @@ const BubbleCircleChart = (props) => {
                             d.data.value.toLocaleString('ko-KR') +
                             ' 명 </span>'
                     )
-                // console.log('e??', e)
-                d3.select(e.path[1])
+                // console.log('e??', e.path[1])
+                // console.log('mouseover event', e)
+                // d3.select(e.path[1])
+                d3.select(e.target)
                     .style('stroke', '#F3F9A7')
                     .attr('stroke-width', 1)
                     .style('opacity', 0.8)
@@ -229,8 +232,9 @@ const BubbleCircleChart = (props) => {
             )
             .on('mouseleave', (e, i) => {
                 bubbleTooltip.style('visibility', 'hidden')
-
-                d3.select(e.path[1])
+                // console.log('mouseleave event', e)
+                // d3.select(e.path[1])
+                d3.select(e.target)
                     // .style('stroke', '#F3F9A7')
                     .attr('stroke-width', 0)
                     .style('opacity', 1)

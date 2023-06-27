@@ -35,7 +35,7 @@ import Typography from '@mui/material/Typography'
 import BubbleCircleChart from './chart/BubbleChart'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
-axios.defaults.baseURL = 'http://172.29.113.6:30003/api/visitOut/'
+axios.defaults.baseURL = 'http://172.29.113.6:30003/verticaRouter/'
 // axios.defaults.withCredentials = true
 
 const VisitOutpatient = (props) => {
@@ -68,7 +68,7 @@ const VisitOutpatient = (props) => {
     const outPatientBubbleHeader = `SNUH Top Procedure Last 1 Year`
 
     const [dataLocation, setDataLocation] = useState('/outpatientData')
-    const outBarchartData = dataLocation + '/1_1year_total_by_hospital_OUT.csv'
+    const outbarchartData = dataLocation + '/1_1year_total_by_hospital_OUT.csv'
     const outDepchartData = dataLocation + '/2_visit_dept_rank_YEAR_OUT.json'
     const outPersonMapData = dataLocation + '/3_1year_Monthly_visits_SIDO.json'
     const outGenderAgeData = dataLocation + '/4_AGE_GENDER_GROUP_OUT.json'
@@ -127,15 +127,29 @@ const VisitOutpatient = (props) => {
     }
 
     const onClickEvent = async (id, voc_id, voc_nm) => {
-        if (id === 'OP') {
-            setOutGenderAgeData2(
-                dataLocation + '/monthly_age_sec_group_order_by_srgr.json'
-            )
-        } else {
-            setOutGenderAgeData2(
-                dataLocation + '/monthly_age_sec_group_order_by_dgns.json'
-            )
-        }
+        // if (id === 'OP') {
+        //     setOutGenderAgeData2(
+        //         dataLocation + '/monthly_age_sec_group_order_by_srgr.json'
+        //     )
+        // } else {
+        //     setOutGenderAgeData2(
+        //         dataLocation + '/monthly_age_sec_group_order_by_dgns.json'
+        //     )
+        // }
+        // console.log(
+        //     'dataJasonAGESAMPE',
+        //     dataLocation + '/monthly_age_sec_group_order_by_srgr.json'
+        // )
+
+        let getAgeData = await axios.get('ageGender', {
+            params: {
+                voc_id: voc_id,
+                id: id,
+                month: selectData,
+            },
+            headers: { 'Contents-type': 'application/json' },
+        })
+        // console.log('age Get data?', getAgeData)
         let getData = await axios.get('personMap', {
             params: {
                 voc_id: voc_id,
@@ -172,6 +186,8 @@ const VisitOutpatient = (props) => {
             headers: { 'Contents-type': 'application/json' },
         })
         // console.log('rank data', getDataLab)
+        // setbarchartData(getbarchartData.data)
+        setOutGenderAgeData2(getAgeData.data)
         setLabData2(getDataLab.data)
         setMonthData2(getDataMonth.data)
         setDeptData2(getDataDept.data)
@@ -185,32 +201,33 @@ const VisitOutpatient = (props) => {
     const fetchData = async (api) => {
         try {
             const response = await axios
-                .get('http://172.29.113.6:30003/api/visitOut')
+                .get('http://172.29.113.6:30003/verticaRouter')
                 .then((res) => {
-                    console.log('respons?', res)
+                    // console.log('respons?', res)
                 })
-            console.log(response)
+            // console.log(response)
         } catch (e) {
-            console.log('error', e)
+            // console.log('error', e)
             setError(true)
         }
     }
 
     var format = d3.format(',d')
     const number = {
-        all: 5871474,
-        HQ: 3352698,
-        children: 891886,
-        cc: 506750,
-        kn: 188919,
+        all: 6351647,
+        HQ: 3575568,
+        children: 943379,
+        cc: 616617,
+        kn: 203602,
     }
     const numberRight = {
-        all: 1113209,
+        all: 1135993,
         allTM: 30656474,
         rdAll: 4379895,
         rdTM: 38841018,
     }
     useEffect(() => {
+        onClickEvent('DG', 'D00002883', 'C73')
         let numAll = d3
             .select('.numberAll')
             .attr('text-anchor', 'middle')
@@ -359,8 +376,6 @@ const VisitOutpatient = (props) => {
             })
             .delay(500)
         // onClickEvent('DG', 'D00002883')
-
-        onClickEvent('DG', 'D00002883', 'C73')
     }, [])
 
     return (
@@ -538,7 +553,7 @@ const VisitOutpatient = (props) => {
                         <RowStyle>
                             <BoxStyle>
                                 <StackedBarChart
-                                    data={outBarchartData}
+                                    data={outbarchartData}
                                     header={outPatientVisitBarChart}
                                 />
 

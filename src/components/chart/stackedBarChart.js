@@ -45,6 +45,9 @@ const StackedBarChart = (props) => {
             var height = 550
         }
         let realdata = await csvToData(props.data)
+        // let realdata = await props.data
+        // console.log(realdata)
+        // console.log('barchart data', realdata)
         var container = d3.select(svgRef.current)
 
         container.selectAll('svg').remove()

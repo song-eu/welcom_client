@@ -3,11 +3,11 @@ import * as moment from 'moment'
 
 const csvToData = (dataloc) => {
     //console.log('dataloc', dataloc)
-    console.log(
-        'data',
-        process.env.PUBLIC_URL + dataloc,
-        process.env.PUBLIC_URL
-    )
+    // console.log(
+    //     'data',
+    //     process.env.PUBLIC_URL + dataloc,
+    //     process.env.PUBLIC_URL
+    // )
     var resultArr = []
 
     //      { sample data

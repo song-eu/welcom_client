@@ -4,7 +4,7 @@ import * as moment from 'moment'
 const jsonToData = (dataloc, geojson) => {
     //console.log('dataloc', dataloc)
     // var data = require('../../public/children/2-1_children_raredisease_count_year_by_disease.json')
-    console.log('data', process.env.PUBLIC_URL + dataloc)
+    // console.log('data', process.env.PUBLIC_URL + dataloc)
     var lastMonth = moment().subtract(3, 'month').format('YYYY-MM') // 2021-07 or 마지막 달
 
     var resultArr = []

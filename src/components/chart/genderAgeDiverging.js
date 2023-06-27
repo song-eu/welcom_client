@@ -8,6 +8,7 @@ import jsonToData from '../../modules/jsonDataRead'
 import moment from 'moment'
 import { compose } from 'redux'
 import { width } from '@mui/system'
+import fetchToData from '../../modules/convertPersonMap'
 
 const d3 = {
     ...d3module,
@@ -64,11 +65,15 @@ const GenderAgeDivergingChart = (props) => {
 
     useEffect(async () => {
         // console.log('gender voc_id???', vocId, !vocId)
+        // console.log('dkfjsldf?', props)
 
-        var getDatas = await jsonToData(dataloc2)
-        var data = getDatas[vocId][dateCtrl.substring(0, 4)].sort((a, b) => {
+        var getDatas = await fetchToData(dataloc2, null, 'AGE')
+        // console.log('data reading error', getDatas)
+        var data = getDatas.sort((a, b) => {
             return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
         })
+        // console.log('ddata??', data)
+
         for (let i = 0; i < data.length; i++) {
             if (!data[i].female) {
                 // console.log('data? female no', data[i])
@@ -114,7 +119,7 @@ const GenderAgeDivergingChart = (props) => {
             d3.max(data, (d) => d.male),
             d3.max(data, (d) => d.female)
         )
-        console.log('max?', maxValue)
+        // console.log('max?', maxValue)
         // SET UP SCALES
         // const color = d3.scaleLinear().domain([0, 1]).range([0.29, 0.74])
 
@@ -222,36 +227,38 @@ const GenderAgeDivergingChart = (props) => {
     }, [vocId])
 
     useEffect(async () => {
-        if (!vocId) {
-            var getDatas = await jsonToData(dataloc)
-            var data = getDatas[dateCtrl].slice(0, -1).sort((a, b) => {
-                return (
-                    parseInt(a.group.slice(0, 2)) -
-                    parseInt(b.group.slice(0, 2))
-                )
-            })
-        } else {
-            var getDatas = await jsonToData(dataloc2)
-            var data = getDatas[vocId][dateCtrl.substring(0, 4)].sort(
-                (a, b) => {
-                    return (
-                        parseInt(a.group.slice(0, 2)) -
-                        parseInt(b.group.slice(0, 2))
-                    )
-                }
-            )
-            for (let i = 0; i < data.length; i++) {
-                if (!data[i].female) {
-                    // console.log('data? female no', data[i])
-                    data[i] = { ...data[i], female: 0 }
-                } else if (!data[i].male) {
-                    // console.log('data? male no', data[i])
-                    data[i].male = 0
-                }
+        // if (!vocId) {
+        //     var getDatas = await jsonToData(dataloc)
+        //     var data = getDatas[dateCtrl].slice(0, -1).sort((a, b) => {
+        //         return (
+        //             parseInt(a.group.slice(0, 2)) -
+        //             parseInt(b.group.slice(0, 2))
+        //         )
+        //     })
+        // } else {
+        var getDatas = await fetchToData(dataloc2, null, 'AGE')
+        // console.log(
+        //     'load data',
+        //     getDatas,
+        //     dateCtrl.substring(0, 4),
+        //     getDatas[vocId][dateCtrl.substring(0, 4)]
+        // )
+        var data = getDatas.sort((a, b) => {
+            return parseInt(a.group.slice(0, 2)) - parseInt(b.group.slice(0, 2))
+        })
+        // console.log('vocID?', data)
+        for (let i = 0; i < data.length; i++) {
+            if (!data[i].female) {
+                // console.log('data? female no', data[i])
+                data[i] = { ...data[i], female: 0 }
+            } else if (!data[i].male) {
+                // console.log('data? male no', data[i])
+                data[i].male = 0
             }
-
-            // console.log('data age?', data)
         }
+
+        // console.log('data age?', data)
+        // }
         // console.log('age_update', vocId, data, dataloc, dataloc2)
 
         var maxValue = Math.max(
@@ -365,8 +372,8 @@ const GenderAgeDivergingChart = (props) => {
                             '</strong></span>'
                         )
                     })
-                console.log('window.pageYOffset?', window.pageYOffset, pos)
-                console.log(pos['width'])
+                // console.log('window.pageYOffset?', window.pageYOffset, pos)
+                // console.log(pos['width'])
 
                 //tip.style('left', xScale(i.male))
                 tip.style('left', `${pos['left'] - 105}px`).style(
@@ -449,7 +456,7 @@ const GenderAgeDivergingChart = (props) => {
                     }px`
                 )
                 fTip.style('top', `${window.pageYOffset + pos['y'] - 5}px`)
-                console.log('pos width?', pos['width'], this, tipNodeWidthF)
+                // console.log('pos width?', pos['width'], this, tipNodeWidthF)
 
                 d3.select(this)
                     .transition()

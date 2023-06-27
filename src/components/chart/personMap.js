@@ -173,6 +173,7 @@ const PersonMap = (props) => {
         if (!vocId) {
             var getData = await jsonToData(dataloc, geojson)
         } else {
+            // console.log('data2?? person_map', data2)
             var gets = await fetchToData(data2, geojson)
             var getData = gets[vocId]
         }

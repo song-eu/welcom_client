@@ -1,11 +1,66 @@
 import * as d3 from 'd3'
 import * as moment from 'moment'
 
-const fetchToData = (data, geojson) => {
+const fetchToData = async (data, geojson, op) => {
     // console.log('fetch data?', data)
 
     var result = {}
     var resultArr = []
+    if (op) {
+        // console.log('data??? call fetch', data, op)
+        if (data) {
+            for (let n = 0; n < data.length; n++) {
+                // console.log('d???', d, resultArr)
+                // { group: '0-9', male: 240, female: 154 }
+                let tempFlag = false
+                if (data[n].AGE_GROUP !== 'OVER 100') {
+                    if (resultArr.length !== 0) {
+                        for (let i = 0; i < resultArr.length; i++) {
+                            // console.log('d???', resultArr[i].group)
+                            if (resultArr[i].group === data[n].age_group) {
+                                // console.log('d???', d)
+                                tempFlag = true
+                                if (data[n].SEX_TP_CD === 'F') {
+                                    resultArr[i]['female'] = parseInt(
+                                        data[n].PCNT
+                                    )
+                                } else {
+                                    resultArr[i]['male'] = parseInt(
+                                        data[n].PCNT
+                                    )
+                                }
+                            }
+                        }
+                        if (!tempFlag) {
+                            let obj = {}
+                            obj['group'] = data[n].age_group
+                            if (data[n].SEX_TP_CD === 'F') {
+                                obj['female'] = parseInt(data[n].PCNT)
+                            } else {
+                                obj['male'] = parseInt(data[n].PCNT)
+                            }
+                            // console.log('temp?')
+                            resultArr.push(obj)
+                        }
+                    } else {
+                        // resultArr = []
+                        let obj = {}
+                        obj['group'] = data[n].age_group
+                        if (data[n].SEX_TP_CD === 'F') {
+                            obj['female'] = parseInt(data[n].PCNT)
+                        } else {
+                            obj['male'] = parseInt(data[n].PCNT)
+                        }
+
+                        resultArr.push(obj)
+                        // console.log('result???', resultArr)
+                    }
+                }
+            }
+        }
+        return resultArr
+    }
+
     data.forEach((d) => {
         if (d.SIDO_ADDR && d.VOC_ID) {
             // console.log('sidodata?', d)

@@ -49,15 +49,15 @@ const DeptHorizonBarChart = (props) => {
         // }
         if (!vocId) {
             var getData = await jsonToData(dataloc)
-            // console.log('get data?', getData)
+            // console.log('get data  vocId?', props)
             var realdata = getData[dateCtrl.substring(0, 4)]
                 .sort((a, b) => {
                     return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
                 })
                 .slice(-46, -1)
         } else {
-            var realdata = fetchToData(data2)
-                [dateCtrl.substring(0, 4)].sort((a, b) => {
+            var getrealdata = await fetchToData(data2)
+            var realdata = getrealdata.[dateCtrl.substring(0, 4)].sort((a, b) => {
                     return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
                 })
                 .slice(-20)
@@ -71,7 +71,7 @@ const DeptHorizonBarChart = (props) => {
         // })
         // console.log('getdatA?', getData, 'realdata', realdata)
         // console.log('realdata???', realdata)
-        //console.log('realdata???', realdata)
+        // console.log('realdata???', realdata)
 
         const xMaxValue = d3.max(realdata, (d) => d.value)
         const color = d3.scaleLinear().domain([0, xMaxValue]).range([0.4, 0.5])
@@ -162,17 +162,17 @@ const DeptHorizonBarChart = (props) => {
                 })
                 .slice(-46, -1)
         } else {
-            var realdata = fetchToData(data2)
-                [dateCtrl.substring(0, 4)].sort((a, b) => {
+            var getrealdata = await fetchToData(data2)
+            var realdata = getrealdata[dateCtrl.substring(0, 4)].sort((a, b) => {
                     return a.value < b.value ? -1 : a.value > b.value ? 1 : 0
                 })
                 .slice(-20)
             // console.log('fetch real data?', realdata, dateCtrl.substring(0, 4))
+            // console.log('real', realdata)
         }
 
         // console.log('dataloc?', data2, vocId, left)
         // console.log('data??', getData, 'real', realdata)
-        // console.log('real', realdata)
 
         const xMaxValue = d3.max(realdata, (d) => d.value)
         const color = d3.scaleLinear().domain([0, xMaxValue]).range([0.2, 0.8])
@@ -260,14 +260,14 @@ const DeptHorizonBarChart = (props) => {
                         ' 명 </span>'
                     )
                 })
-            console.log(
-                'pos?',
-                pos.width,
-                tipNodeWidth,
-                tipNodeheight,
-                pos.right,
-                pos
-            )
+            // console.log(
+            //     'pos?',
+            //     pos.width,
+            //     tipNodeWidth,
+            //     tipNodeheight,
+            //     pos.right,
+            //     pos
+            // )
             // console.log('this???', this)
             //console.log('depToolTip',d3.selectAll('#depToolTip').node().getBoundingClientRect() )
 

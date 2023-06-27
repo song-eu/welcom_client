@@ -42,7 +42,7 @@ const MonthlyBarChart = (props) => {
             // console.log('barchart data?', data)
             var height = 550
         } else {
-            var data = fetchToData(data2)
+            var data = await fetchToData(data2)
             var height = 577.5
             // console.log('data2 bar chart', data, vocId, dateCtrl)
         }

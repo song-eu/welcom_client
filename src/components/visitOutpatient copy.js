@@ -35,7 +35,7 @@ import Typography from '@mui/material/Typography'
 import BubbleCircleChart from './chart/BubbleChart'
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 
-axios.defaults.baseURL = 'http://172.29.113.6:30003/api/visitOut/'
+axios.defaults.baseURL = 'http://172.29.113.6:30003/verticaRouter'
 // axios.defaults.withCredentials = true
 
 const VisitOutpatientCOPY = (props) => {
@@ -131,10 +131,12 @@ const VisitOutpatientCOPY = (props) => {
             setOutGenderAgeData2(
                 dataLocation + '/monthly_age_sec_group_order_by_srgr.json'
             )
+            console.log('OPMAP', outGenderAgeData)
         } else {
             setOutGenderAgeData2(
                 dataLocation + '/monthly_age_sec_group_order_by_dgns.json'
             )
+            console.log('CDMAP', outGenderAgeData)
         }
         let getData = await axios.get('personMap', {
             params: {
@@ -198,11 +200,11 @@ const VisitOutpatientCOPY = (props) => {
 
     var format = d3.format(',d')
     const number = {
-        all: 5871474,
-        HQ: 3352698,
-        children: 891886,
-        cc: 506750,
-        kn: 188919,
+        all: 6203667,
+        HQ: 3518240,
+        children: 929513,
+        cc: 601839,
+        kn: 198639,
     }
     const numberRight = {
         all: 1113209,
